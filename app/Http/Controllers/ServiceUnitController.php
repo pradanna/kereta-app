@@ -23,14 +23,49 @@ class ServiceUnitController extends CustomController
         return $this->jsonSuccessResponse('success', $data);
     }
 
-    public function store()
+    public function getDataByID($id)
+    {
+        $data = ServiceUnit::find($id);
+        if (!$data) {
+            return $this->jsonNotFoundResponse('item not found');
+        }
+        if ($this->request->method() === 'POST') {
+            return $this->patch($data);
+        }
+        return $this->jsonSuccessResponse('success', $data);
+    }
+
+    public function destroy($id)
     {
         try {
-            $data = [
-                'name' => $this->request->request->get('name')
-            ];
-            ServiceUnit::create($data);
+            ServiceUnit::destroy($id);
             return $this->jsonSuccessResponse('success');
+        }catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    private function store()
+    {
+        try {
+            $data_request = [
+               'name' => $this->postField('name')
+            ];
+            ServiceUnit::create($data_request);
+            return $this->jsonCreatedResponse('success');
+        }catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    private function patch($data)
+    {
+        try {
+            $data_request = [
+                'name' => $this->postField('name')
+            ];
+            $data->update($data_request);
+            return $this->jsonCreatedResponse('success');
         }catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
