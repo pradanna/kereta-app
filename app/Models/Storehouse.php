@@ -12,7 +12,7 @@ class Storehouse extends Model
 
     protected $fillable = [
         'name',
-        'type',
+        'storehouse_type_id',
         'area_id',
         'city_id',
         'latitude',
@@ -23,6 +23,11 @@ class Storehouse extends Model
         'latitude' => 'float',
         'longitude' => 'float',
     ];
+
+    public function storehouse_type()
+    {
+        return $this->belongsTo(StorehouseType::class, 'storehouse_type_id');
+    }
 
     public function area()
     {

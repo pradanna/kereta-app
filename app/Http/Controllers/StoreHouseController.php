@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Models\Area;
+use App\Models\City;
 use App\Models\Storehouse;
+use App\Models\StorehouseType;
 
 class StoreHouseController extends CustomController
 {
@@ -16,28 +19,38 @@ class StoreHouseController extends CustomController
 
     public function index()
     {
-        if ($this->request->method() === 'POST') {
-            return $this->store();
+        if ($this->request->ajax()) {
+            $data = Storehouse::with(['storehouse_type', 'area', 'city.province'])->get();
+            return $this->basicDataTables($data);
         }
-        $data = Storehouse::with(['area:id,service_unit_id,name', 'city:id,province_id,name' ,'city.province:id,name'])->get();
-        return $this->jsonSuccessResponse('success', $data);
+        return view('master.storehouse.index');
     }
 
-    private function store()
+    public function store()
     {
-        try {
-            $data_request = [
-                'name' => $this->postField('name'),
-                'type' => $this->postField('type'),
-                'city_id' => $this->postField('city_id'),
-                'area_id' => $this->postField('area_id'),
-                'latitude' => $this->postField('latitude'),
-                'longitude' => $this->postField('longitude'),
-            ];
-            Storehouse::create($data_request);
-            return $this->jsonCreatedResponse('success');
-        }catch (\Exception $e) {
-            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'storehouse_type_id' => $this->postField('storehouse_type'),
+                    'name' => $this->postField('name'),
+                    'city_id' => $this->postField('city'),
+                    'area_id' => $this->postField('area'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
+                ];
+                Storehouse::create($data_request);
+                return redirect()->route('storehouse');
+            } catch (\Exception $e) {
+                return redirect()->back();
+            }
         }
+        $storehouse_types = StorehouseType::all();
+        $cities = City::all();
+        $areas = Area::all();
+        return view('master.storehouse.add')->with([
+            'storehouse_types' => $storehouse_types,
+            'cities' => $cities,
+            'areas' => $areas,
+        ]);
     }
 }
