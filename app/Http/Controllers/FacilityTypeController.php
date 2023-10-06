@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
-use App\Models\Area;
+use App\Models\FacilityType;
 
-class AreaController extends CustomController
+class FacilityTypeController extends CustomController
 {
     public function __construct()
     {
@@ -19,7 +19,7 @@ class AreaController extends CustomController
         if ($this->request->method() === 'POST') {
             return $this->store();
         }
-        $data = Area::with(['service_unit:id,name'])->get();
+        $data = FacilityType::all();
         return $this->jsonSuccessResponse('success', $data);
     }
 
@@ -27,15 +27,13 @@ class AreaController extends CustomController
     {
         try {
             $data_request = [
-                'service_unit_id' => $this->postField('service_unit_id'),
-                'name' => $this->postField('name'),
-                'latitude' => $this->postField('latitude'),
-                'longitude' => $this->postField('longitude'),
+                'name' => $this->postField('name')
             ];
-            Area::create($data_request);
+            FacilityType::create($data_request);
             return $this->jsonCreatedResponse('success');
         }catch (\Exception $e) {
-            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+            return $this->jsonErrorResponse('error ', $e->getMessage());
         }
+
     }
 }

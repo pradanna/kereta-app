@@ -26,18 +26,16 @@ Route::group(['prefix' => 'service_unit'], function (){
 
 Route::group(['prefix' => 'area'], function (){
     Route::match(['post', 'get'], '/', [\App\Http\Controllers\AreaController::class, 'index']);
-    Route::match(['post', 'get'], '/{id}', [\App\Http\Controllers\ServiceUnitController::class, 'getDataByID']);
-    Route::post( '/{id}/delete', [\App\Http\Controllers\ServiceUnitController::class, 'destroy']);
 });
 
 Route::group(['prefix' => 'storehouse'], function (){
     Route::match(['post', 'get'], '/', [\App\Http\Controllers\StoreHouseController::class, 'index']);
-    Route::match(['post', 'get'], '/{id}', [\App\Http\Controllers\ServiceUnitController::class, 'getDataByID']);
-    Route::post( '/{id}/delete', [\App\Http\Controllers\ServiceUnitController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'facility-type'], function (){
+    Route::match(['post', 'get'], '/', [\App\Http\Controllers\FacilityTypeController::class, 'index']);
 });
 
 Route::group(['prefix' => 'facility-certification'], function (){
     Route::match(['post', 'get'], '/', [\App\Http\Controllers\FacilityCertificationController::class, 'index']);
-    Route::match(['post', 'get'], '/{id}', [\App\Http\Controllers\ServiceUnitController::class, 'getDataByID']);
-    Route::post( '/{id}/delete', [\App\Http\Controllers\ServiceUnitController::class, 'destroy']);
 });

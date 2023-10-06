@@ -14,7 +14,7 @@ class FacilityCertification extends Model
     protected $fillable = [
         'area_id',
         'storehouse_id',
-        'type',
+        'facility_type_id',
         'ownership',
         'facility_number',
         'facility_period',
@@ -31,6 +31,11 @@ class FacilityCertification extends Model
     public function storehouse()
     {
         return $this->belongsTo(Storehouse::class, 'storehouse_id');
+    }
+
+    public function facility_type()
+    {
+        return $this->belongsTo(FacilityType::class, 'facility_type_id');
     }
 
     public function getExpiredInAttribute()

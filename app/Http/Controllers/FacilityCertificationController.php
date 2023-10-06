@@ -20,7 +20,7 @@ class FacilityCertificationController extends CustomController
         if ($this->request->method() === 'POST') {
             return $this->store();
         }
-        $data = FacilityCertification::with(['area', 'storehouse'])->get()->append(['expired_in', 'status']);
+        $data = FacilityCertification::with(['area', 'storehouse', 'facility_type'])->get()->append(['expired_in', 'status']);
         return $this->jsonSuccessResponse('success', $data);
     }
 
@@ -30,6 +30,7 @@ class FacilityCertificationController extends CustomController
             $data_request = [
                 'area_id' => $this->postField('area_id'),
                 'storehouse_id' => $this->postField('storehouse_id'),
+                'facility_type_id' => $this->postField('facility_type_id'),
                 'ownership' => $this->postField('ownership'),
                 'facility_number' => $this->postField('facility_number'),
                 'service_start_date' => $this->postField('service_start_date'),

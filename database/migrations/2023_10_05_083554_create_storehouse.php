@@ -19,6 +19,8 @@ class CreateStorehouse extends Migration
             $table->enum('type', ['locomotive', 'train', 'train_supervisor', 'wagon', 'wagon_office', 'electric_train', 'facility_supervisor']);
             $table->foreignUuid('area_id');
             $table->bigInteger('city_id')->unsigned();
+            $table->double('latitude')->default(0);
+            $table->double('longitude')->default(0);
             $table->timestamps();
             $table->foreign('area_id')->references('id')->on('areas');
             $table->foreign('city_id')->references('id')->on('cities');

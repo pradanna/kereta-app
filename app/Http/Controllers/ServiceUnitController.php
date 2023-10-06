@@ -16,12 +16,13 @@ class ServiceUnitController extends CustomController
 
     public function index()
     {
-        if ($this->request->method() === 'POST') {
-            return $this->store();
+        if ($this->request->ajax()) {
+            $data = ServiceUnit::all();
+            return $this->basicDataTables($data);
         }
-        $data = ServiceUnit::all();
-        return $this->jsonSuccessResponse('success', $data);
+        return view('master.service-unit.index');
     }
+
 
     public function getDataByID($id)
     {
@@ -45,17 +46,20 @@ class ServiceUnitController extends CustomController
         }
     }
 
-    private function store()
+    public function store()
     {
-        try {
-            $data_request = [
-               'name' => $this->postField('name')
-            ];
-            ServiceUnit::create($data_request);
-            return $this->jsonCreatedResponse('success');
-        }catch (\Exception $e) {
-            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'name' => $this->postField('name')
+                ];
+                ServiceUnit::create($data_request);
+                return redirect()->route('service-unit');
+            }catch (\Exception $e) {
+                return redirect()->back();
+            }
         }
+        return view('master.service-unit.add');
     }
 
     private function patch($data)

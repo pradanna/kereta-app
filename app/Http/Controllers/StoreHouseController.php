@@ -31,6 +31,8 @@ class StoreHouseController extends CustomController
                 'type' => $this->postField('type'),
                 'city_id' => $this->postField('city_id'),
                 'area_id' => $this->postField('area_id'),
+                'latitude' => $this->postField('latitude'),
+                'longitude' => $this->postField('longitude'),
             ];
             Storehouse::create($data_request);
             return $this->jsonCreatedResponse('success');

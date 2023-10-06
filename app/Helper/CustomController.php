@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
+use Yajra\DataTables\DataTables;
 
 
 class CustomController extends Controller
@@ -187,5 +188,10 @@ class CustomController extends Controller
         Member::where('user_id', '=', Auth::id())->update([
             'last_active' => Carbon::now()
         ]);
+    }
+
+    public function basicDataTables($object)
+    {
+        return DataTables::of($object)->addIndexColumn()->make(true);
     }
 }

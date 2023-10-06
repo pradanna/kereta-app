@@ -12,7 +12,14 @@ class Area extends Model
 
     protected $fillable = [
         'service_unit_id',
-        'name'
+        'name',
+        'latitude',
+        'longitude'
+    ];
+
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
     ];
 
     public function service_unit()
