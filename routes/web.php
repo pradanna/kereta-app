@@ -21,3 +21,8 @@ Route::group(['prefix' => 'satuan-pelayanan'], function (){
     Route::get( '/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
 });
+
+Route::group(['prefix' => 'daerah-operasi'], function (){
+    Route::get( '/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
+});
