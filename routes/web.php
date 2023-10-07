@@ -27,9 +27,10 @@ Route::group(['prefix' => 'daerah-operasi'], function (){
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
 });
 
-Route::group(['prefix' => 'depo-dan-balai-yasa'], function (){
-    Route::get( '/', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('storehouse');
+Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
+    Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('storehouse');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
+});
 
 Route::get('/login', function () {
     return view('auth.login');

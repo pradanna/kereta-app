@@ -11,7 +11,14 @@ class ServiceUnit extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'name'
+        'name',
+        'latitude',
+        'longitude',
+    ];
+
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
     ];
 
     public function areas()

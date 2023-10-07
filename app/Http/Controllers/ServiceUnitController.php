@@ -51,11 +51,14 @@ class ServiceUnitController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'name' => $this->postField('name')
+                    'name' => $this->postField('name'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
                 ];
                 ServiceUnit::create($data_request);
                 return redirect()->route('service-unit');
             }catch (\Exception $e) {
+                dd($e->getMessage());
                 return redirect()->back();
             }
         }
