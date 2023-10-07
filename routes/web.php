@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\berandaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,5 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('auth.login');
 });
+
+Route::get('/admin', [berandaController::class, 'index']);
