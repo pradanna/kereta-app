@@ -31,4 +31,9 @@ Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
 });
 
+Route::group(['prefix' => 'sertifikasi-sarana'], function () {
+    Route::get('/', [\App\Http\Controllers\FacilityCertificationController::class, 'index'])->name('facility-certification');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityCertificationController::class, 'store'])->name('facility-certification.create');
+});
+
 

@@ -61,22 +61,7 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <style>
-        .select2-selection {
-            height: 2.4rem !important;
-            line-height: 40px !important;
-            border: 1px solid #ddd !important;
-        }
-
-        .select2-selection__rendered {
-            height: 2.4rem !important;
-            line-height: 2.4rem !important;
-        }
-
-        .select2-selection__arrow {
-            height: 2.4rem !important;
-        }
-    </style>
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
 @endsection
 
 @section('js')
@@ -84,7 +69,6 @@
     <script>
         $(document).ready(function () {
             $('.select2').select2({
-                placeholder: "Select a state",
                 width: 'resolve',
             });
             $('#btn-save').on('click', function (e) {

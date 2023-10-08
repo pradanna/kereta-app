@@ -49,11 +49,11 @@
                         <thead>
                         <tr>
                             <th width="5%" class="text-center">#</th>
-                            <th width="15%">Daerah Operasi</th>
-                            <th width="12%">Tipe</th>
+                            <th width="15%" class="text-center">Daerah Operasi</th>
+                            <th width="15%" class="text-center">Kota</th>
+                            <th width="15%" class="text-center">Tipe</th>
                             <th>Nama</th>
-                            <th width="15%">Kota</th>
-                            <th width="10%" class="text-center">Aksi</th>
+                            <th width="12%" class="text-center">Aksi</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
@@ -65,9 +65,13 @@
 @endsection
 
 @section('css')
-
+    <script src="{{ asset('js/map-control.js') }}"></script>
 @endsection
+
 @section('js')
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        async></script>
     <script>
         let table;
         let path = '{{ route('storehouse') }}';
@@ -80,6 +84,23 @@
             })
         }
 
+        function getDataStorehouseMap() {
+            let url = path + '?type=map';
+            return $.get(url)
+        }
+
+        function generateMapStorehouse() {
+            getDataStorehouseMap().then((response) => {
+                removeMultiMarker();
+                let data = response.data;
+                if (data.length > 0) {
+                    createMultiMarkerStorehouse(data)
+                }
+            }).catch((e) => {
+                console.log(e)
+            })
+        }
+
         function generateTableStorehouse() {
             table = $('#table-data').DataTable({
                 scrollX: true,
@@ -87,13 +108,16 @@
                 ajax: {
                     type: 'GET',
                     url: path,
+                    'data': function (d) {
+                        d.type = 'table';
+                    }
                 },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
                     {data: 'area.name', name: 'area.name'},
+                    {data: 'city.name', name: 'city.name'},
                     {data: 'storehouse_type.name', name: 'storehouse_type.name'},
                     {data: 'name', name: 'name'},
-                    {data: 'city.name', name: 'city.name'},
                     {
                         data: null, render: function (data) {
                             return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] + '">Edit</a>' +
@@ -103,7 +127,7 @@
                 ],
                 columnDefs: [
                     {
-                        targets: [0, 2, 4, 5],
+                        targets: [0, 1, 2, 3, 5],
                         className: 'text-center'
                     }
                 ],
@@ -112,6 +136,7 @@
         }
         $(document).ready(function () {
             changeTabEvent();
+            generateMapStorehouse();
             generateTableStorehouse();
         })
     </script>

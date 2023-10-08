@@ -21,6 +21,7 @@
     <style>
         body {
             font-family: 'Nunito';
+            background-color: #EEEDDD !important;
         }
     </style>
     @yield('css')
@@ -28,7 +29,7 @@
 </head>
 <body>
 <div class="d-flex flex-column flex-shrink-0 p-3 shadow-sm align-items-center"
-     style="width: 280px; border-right: 1px solid rgba(128, 128, 128, .3); height: 100vh; position: fixed">
+     style="width: 280px; border-right: 1px solid rgba(128, 128, 128, .3); height: 100vh; position: fixed; background-color: white">
     <img src="{{ asset('/images/local/logodishub.png') }}" width="100" alt="image-logo">
     <hr>
     <ul>
@@ -48,14 +49,19 @@
                     <a href="{{ route('storehouse') }}">Depo dan Balai Yasa</a>
                 </li>
             </ul>
-
+        </li>
+        <li>
+            <a href="{{ route('facility-certification') }}">Sertifikasi Sarana</a>
+        </li>
+        <li>
+            <a href="#">Spesifikasi Teknis Sarana</a>
         </li>
     </ul>
 </div>
 
 <div class="w-100 d-flex flex-column" style="min-height: 100vh; padding-left: 280px;">
 
-    <div class="shadow-sm" style="height: 3rem"></div>
+    <div class="shadow-sm" style="height: 3rem; background-color: white"></div>
     <div class="" style="padding: 20px 20px">
         @yield('content')
     </div>

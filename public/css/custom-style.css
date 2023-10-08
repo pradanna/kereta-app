@@ -1,0 +1,14 @@
+.select2-selection {
+    height: 2.4rem !important;
+    line-height: 40px !important;
+    border: 1px solid #ddd !important;
+}
+
+.select2-selection__rendered {
+    height: 2.4rem !important;
+    line-height: 2.4rem !important;
+}
+
+.select2-selection__arrow {
+    height: 2.4rem !important;
+}

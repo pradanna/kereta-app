@@ -46,8 +46,41 @@ function createMultiMarkerArea(data = []) {
         });
         multi_marker.push(areaMarker);
         bounds.extend(areaMarker.position);
-    })
+    });
     map_container.fitBounds(bounds);
+}
+
+function createMultiMarkerStorehouse(data = []) {
+    var bounds = new google.maps.LatLngBounds();
+    data.forEach(function (v, k) {
+        let areaMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(v['latitude'], v['longitude']),
+            map: map_container,
+            icon: v['storehouse_type']['marker_icon'],
+            title: v['name'],
+        });
+        multi_marker.push(areaMarker);
+        let infoWindow = new google.maps.InfoWindow({
+            content: windowContentStorehouseMarker(v),
+        });
+        areaMarker.addListener('click', function () {
+            infoWindow.open({
+                anchor: areaMarker,
+                map_container,
+                shouldFocus: false,
+            });
+
+        });
+        bounds.extend(areaMarker.position);
+    });
+    map_container.fitBounds(bounds);
+}
+
+function windowContentStorehouseMarker(data) {
+    return '<div class="p-1">' +
+        '<p class="mb-1" style="color: #777777; font-size: 12px;">' + data['storehouse_type']['name'] + ' (' + data['area']['name'] + ')</p>' +
+        '<p class="fw-bold" style="color: #222222; font-size: 12px;">' + data['name'] + '</p>' +
+        '</div>';
 }
 
 function createGoogleMapMarker(payload = []) {
@@ -114,10 +147,10 @@ async function generateSingleGoogleMapData(id) {
     try {
         let payload = id;
 
-        if (typeof id == 'string'){
+        if (typeof id == 'string') {
             let response = await $.get('/map/data/' + id);
             payload = response.payload;
-        }else{
+        } else {
             const url = await getUrl(id.id);
             payload.url = url;
         }
@@ -144,7 +177,7 @@ function generateDetail(data) {
     $('#detail-title-tipe').html(data['type']['name']);
     $('#detail-title-nama').html('( ' + data['name'] + ' )');
     $('#single-map-container-street-view').html(data['url']);
-    $('#detail-vendor').val(data['vendor_all']['name']+' ('+data['vendor_all']['brand']+')');
+    $('#detail-vendor').val(data['vendor_all']['name'] + ' (' + data['vendor_all']['brand'] + ')');
     $('#detail-vendor-address').val(data['vendor_all']['address']);
     $('#detail-vendor-email').val(data['vendor_all']['email']);
     $('#detail-vendor-phone').val(data['vendor_all']['phone']);
