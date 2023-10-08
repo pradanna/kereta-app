@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="d-flex justify-content-end mb-3">
+                <div class="d-flex justify-content-end">
                     <a href="#" id="btn-save" class="btn btn-primary d-flex align-items-center justify-content-center">
                         <span class="material-icons-round me-1" style="font-size: 14px;">check</span>
                         Simpan

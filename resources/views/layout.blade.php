@@ -18,7 +18,13 @@
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="{{ asset('/css/sweetalert2.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/sweetalert2.min.js')}}"></script>
+    <style>
+        body {
+            font-family: 'Nunito';
+        }
+    </style>
     @yield('css')
+
 </head>
 <body>
 <div class="d-flex flex-column flex-shrink-0 p-3 shadow-sm align-items-center"
@@ -39,7 +45,7 @@
                     <a href="{{ route('area') }}">Daerah Operasi</a>
                 </li>
                 <li>
-                    <a href="#">Depo dan Balai Yasa</a>
+                    <a href="{{ route('storehouse') }}">Depo dan Balai Yasa</a>
                 </li>
             </ul>
 
