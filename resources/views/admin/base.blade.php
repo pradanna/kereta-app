@@ -75,7 +75,7 @@
                     <img class="w-50" src="{{ asset('images/local/logodishub.png') }}" />
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu {{ request()->is('admin/dashboard') ? 'active' : '' }}"
+                    <a class="nav-link menu {{ request()->is('dashboard') ? 'active' : '' }}"
                         href="{{ route('dashboard') }}">
                         <span class="material-symbols-outlined menu-icon">
                             home
@@ -84,7 +84,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu {{ request()->is('admin/master') ? 'active' : '' }}">
+                    <a class="nav-link menu {{ request()->is('master') ? 'active' : '' }}">
                         <span class="material-symbols-outlined menu-icon">
                             folder_copy
                         </span>
@@ -92,7 +92,7 @@
                     </a>
                     <ul>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('admin/satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
                                 href="{{ route('service-unit') }}">
                                 <span class="material-symbols-outlined menu-icon">
                                     folder
@@ -101,7 +101,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('admin/daerah-operasi') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
                                 href="{{ route('area') }}">
                                 <span class="material-symbols-outlined menu-icon">
                                     folder
@@ -110,7 +110,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('admin/depo-dan-balai-yasa') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
                                 href="{{ route('storehouse') }}">
                                 <span class="material-symbols-outlined menu-icon">
                                     folder
@@ -123,7 +123,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu {{ request()->is('admin/facility-certification') ? 'active' : '' }}"
+                    <a class="nav-link menu {{ request()->is('facility-certification') ? 'active' : '' }}"
                         href="{{ route('facility-certification') }}">
                         <span class="material-symbols-outlined menu-icon">
                             card_membership
