@@ -447,12 +447,14 @@ input.form-control {
 .btn-utama {
   all: unset;
   transition: all 0.5s;
-  display: block;
+  display: flex;
   text-align: center;
   border: none;
   background-color: $primary-color;
   color: white;
   border-radius: 5px;
+  align-items: center;
+  font-weight: bold;
   padding: 10px;
   // box-shadow: 1px 1px 5px $shadow-primary-color;
   cursor: pointer;

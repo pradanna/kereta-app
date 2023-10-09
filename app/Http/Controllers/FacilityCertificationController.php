@@ -26,7 +26,7 @@ class FacilityCertificationController extends CustomController
         }
         $facility_types = FacilityType::all();
         $areas = Area::all();
-        return view('facility-certification.index')->with([
+        return view('admin.facility-certification.index')->with([
             'facility_types' => $facility_types,
             'areas' => $areas,
         ]);
@@ -43,18 +43,18 @@ class FacilityCertificationController extends CustomController
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
-                    'service_expired_date' => Carbon::createFromFormat('d-m-Y',$this->postField('service_expired_date'))->format('Y-m-d'),
+                    'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                 ];
                 FacilityCertification::create($data_request);
                 return redirect()->route('facility-certification');
-            }catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return redirect()->back();
             }
         }
         $facility_types = FacilityType::all();
         $areas = Area::all();
-        return view('facility-certification.add')->with([
+        return view('admin.facility-certification.add')->with([
             'facility_types' => $facility_types,
             'areas' => $areas,
         ]);

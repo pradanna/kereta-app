@@ -31,7 +31,7 @@ class StoreHouseController extends CustomController
                     return $this->jsonSuccessResponse('success', []);
             }
         }
-        return view('master.storehouse.index');
+        return view('admin.master.storehouse.index');
     }
 
     public function store()
@@ -55,7 +55,7 @@ class StoreHouseController extends CustomController
         $storehouse_types = StorehouseType::all();
         $cities = City::all();
         $areas = Area::all();
-        return view('master.storehouse.add')->with([
+        return view('admin.master.storehouse.add')->with([
             'storehouse_types' => $storehouse_types,
             'cities' => $cities,
             'areas' => $areas,

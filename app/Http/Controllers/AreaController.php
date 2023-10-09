@@ -31,7 +31,7 @@ class AreaController extends CustomController
                     return $this->jsonSuccessResponse('success', []);
             }
         }
-        return view('master.area.index');
+        return view('admin.master.area.index');
     }
 
     public function store()
@@ -52,8 +52,7 @@ class AreaController extends CustomController
             }
         }
         $service_units = ServiceUnit::all();
-        return view('master.area.add')->with(['service_units' => $service_units]);
-
+        return view('admin.master.area.add')->with(['service_units' => $service_units]);
     }
 
     public function getStorehouseByAreaID($id)

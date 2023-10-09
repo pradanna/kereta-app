@@ -355,12 +355,14 @@ input.form-control {
 .btn-utama {
   all: unset;
   transition: all 0.5s;
-  display: block;
+  display: flex;
   text-align: center;
   border: none;
   background-color: #4e28f7;
   color: white;
   border-radius: 5px;
+  align-items: center;
+  font-weight: bold;
   padding: 10px;
   cursor: pointer;
 }

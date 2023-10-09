@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Yousee || {{ auth()->user()->role }}</title>
+    <title>Aplikasi Kereta Api</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
     {{-- <link rel="stylesheet"
         href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> --}}
     <meta name="_token" content="{{ csrf_token() }}">
-    <meta name="role" content="{{ auth()->user()->role }}">
+    {{-- <meta name="role" content="{{ auth()->user()->role }}"> --}}
     {{-- ICON --}}
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -51,7 +51,7 @@
             </a>
 
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-                <li><a class="dropdown-item disabled" href="#">{{ auth()->user()->email }}</a></li>
+                <li><a class="dropdown-item disabled" href="#">admin</a></li>
                 <hr>
                 {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
                 <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
@@ -61,7 +61,7 @@
 
 
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
-                <li><a class="dropdown-item disabled" href="#">{{ auth()->user()->nama }}</a></li>
+                <li><a class="dropdown-item disabled" href="#">admin</a></li>
                 <hr>
                 {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
                 <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
@@ -77,82 +77,80 @@
         <nav id="sidebar" class="sidebar card py-2" style="height: 100vh;">
             <ul class="nav flex-column" id="nav_accordion">
 
-
-
-                {{-- <li class="nav-item">
-                <a class="title-role" href="#"> Admin </a>
-            </li>
-            <li class="nav-item has-submenu">
-                <a class="nav-link menu" href="#">
-                    <i class="material-symbols-outlined menu-icon">perm_identity</i>
-                    <p class="menu-text">Admin</p>
-                </a>
-                <ul class="submenu  collapse">
-                    <li><a class="nav-link menu" href="#"><i class="material-symbols-outlined menu-icon">perm_identity</i>
-                            <p class="menu-text">Submenu item 4</p>
-                        </a></li>
-                    <li><a class="nav-link menu" href="#">
-                            <i class="material-symbols-outlined menu-icon">perm_identity</i>
-                            <p class="menu-text">Submenu item 4</p>
-                        </a></li>
-                    <li><a class="nav-link menu" href="#">
-                            <i class="material-symbols-outlined menu-icon">perm_identity</i>
-                            <p class="menu-text">Submenu item 4</p>
-                        </a> </li>
-                </ul>
-            </li> --}}
-
-
-                <li class="mt-4 mb-3">
-                    <img class="w-100" src="{{ asset('images/local/yousee.png') }}" />
+                <li class="mt-4 mb-3 text-center">
+                    <img class="w-50" src="{{ asset('images/local/logodishub.png') }}" />
                 </li>
 
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu @if ($sidebar == 'beranda') active @endif " href="/admin">
+                    <a class="nav-link menu {{ request()->is('admin/dashboard') ? 'active' : '' }}"
+                        href="{{ route('dashboard') }}">
                         <span class="material-symbols-outlined menu-icon">
                             home
                         </span>
                         <p class="menu-text">Beranda</p>
                     </a>
                 </li>
-                @if (auth()->user()->role == 'pimpinan')
-                    <li class="nav-item">
-                        <a class="nav-link menu @if ($sidebar == 'user') active @endif" href="/admin/user">
-                            <i class="material-symbols-outlined menu-icon">person</i>
-                            <p class="menu-text">User</p>
-                        </a>
-                    </li>
-                @endif
 
-
-
-
-                <li class="nav-item has-submenu">
-                    <a class="nav-link menu @if ($sidebar == 'vendor') active @endif" href="/admin/vendor">
-                        <i class="material-symbols-outlined menu-icon">handshake</i>
-                        <p class="menu-text">Vendor</p>
-                    </a>
-                </li>
                 <li class="nav-item">
-                    <a class="nav-link menu @if ($sidebar == 'tipe') active @endif" href="/admin/type">
-                        <i class="material-symbols-outlined menu-icon">open_in_new</i>
-                        <p class="menu-text">Tipe Iklan</p>
+                    <a class="nav-link menu {{ request()->is('admin/master') ? 'active' : '' }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            folder_copy
+                        </span>
+                        <p class="menu-text">Master Data</p>
                     </a>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('admin/satuan-pelayanan') ? 'active' : '' }}"
+                                href="{{ route('service-unit') }}">
+                                <span class="material-symbols-outlined menu-icon">
+                                    folder
+                                </span>
+                                <p class="menu-text">Satuan Pelayanan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('admin/daerah-operasi') ? 'active' : '' }}"
+                                href="{{ route('area') }}">
+                                <span class="material-symbols-outlined menu-icon">
+                                    folder
+                                </span>
+                                <p class="menu-text">Daerah Operasi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('admin/depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('storehouse') }}">
+                                <span class="material-symbols-outlined menu-icon">
+                                    folder
+                                </span>
+                                <p class="menu-text">Depo dan Balai Yasa</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
+
                 <li class="nav-item">
-                    <a class="nav-link menu @if ($sidebar == 'titik') active @endif" href="/admin/titik">
-                        <i class="material-symbols-outlined menu-icon">width_full</i>
-                        <p class="menu-text">Titik Iklan</p>
+                    <a class="nav-link menu {{ request()->is('admin/facility-certification') ? 'active' : '' }}"
+                        href="{{ route('facility-certification') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            card_membership
+                        </span>
+                        <p class="menu-text">Sertifikasi Sarana</p>
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link menu @if ($sidebar == 'project') active @endif" href="/admin/project">
-                        <i class="material-symbols-outlined menu-icon">assignment</i>
-                        <p class="menu-text">Project</p>
+                    <a class="nav-link menu {{ request()->is('') ? 'active' : '' }}" href="#">
+                        <span class="material-symbols-outlined menu-icon">
+                            train
+                        </span>
+                        <p class="menu-text">Spesifikasi Teknis Sarana</p>
                     </a>
                 </li>
+
 
                 <li class="nav-item text-center mt-3 mb-3">
 
@@ -174,9 +172,7 @@
             @yield('content')
         </div>
     </div>
-    <script>
-        var role = '{{ auth()->user()->role }}';
-    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">

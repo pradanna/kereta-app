@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\berandaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,26 +16,38 @@ use Illuminate\Support\Facades\Route;
 
 Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-Route::group(['prefix' => 'satuan-pelayanan'], function () {
-    Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::group(['prefix' => 'satuan-pelayanan'], function () {
+        Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
+    });
+
+    Route::group(['prefix' => 'daerah-operasi'], function () {
+        Route::get('/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
+        Route::get('/{id}/storehouse', [\App\Http\Controllers\AreaController::class, 'getStorehouseByAreaID'])->name('area.storehouse');
+    });
+
+
+    Route::group(['prefix' => 'satuan-pelayanan'], function () {
+        Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
+    });
+
+    Route::group(['prefix' => 'daerah-operasi'], function () {
+        Route::get('/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
+    });
+
+    Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
+        Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('storehouse');
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
+    });
+
+    Route::group(['prefix' => 'sertifikasi-sarana'], function () {
+        Route::get('/', [\App\Http\Controllers\FacilityCertificationController::class, 'index'])->name('facility-certification');
+        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityCertificationController::class, 'store'])->name('facility-certification.create');
+    });
 });
-
-Route::group(['prefix' => 'daerah-operasi'], function () {
-    Route::get('/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
-    Route::get('/{id}/storehouse', [\App\Http\Controllers\AreaController::class, 'getStorehouseByAreaID'])->name('area.storehouse');
-});
-
-Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
-    Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('storehouse');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
-});
-
-Route::group(['prefix' => 'sertifikasi-sarana'], function () {
-    Route::get('/', [\App\Http\Controllers\FacilityCertificationController::class, 'index'])->name('facility-certification');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityCertificationController::class, 'store'])->name('facility-certification.create');
-});
-
-
