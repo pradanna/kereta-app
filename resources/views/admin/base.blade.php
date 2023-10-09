@@ -104,27 +104,21 @@
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
                                 href="{{ route('service-unit') }}">
-                                <span class="material-symbols-outlined menu-icon">
-                                    folder
-                                </span>
+
                                 <p class="menu-text">Satuan Pelayanan</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
                                 href="{{ route('area') }}">
-                                <span class="material-symbols-outlined menu-icon">
-                                    folder
-                                </span>
+
                                 <p class="menu-text">Daerah Operasi</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
                                 href="{{ route('storehouse') }}">
-                                <span class="material-symbols-outlined menu-icon">
-                                    folder
-                                </span>
+
                                 <p class="menu-text">Depo dan Balai Yasa</p>
                             </a>
                         </li>

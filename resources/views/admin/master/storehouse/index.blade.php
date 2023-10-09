@@ -9,8 +9,15 @@
             </ol>
         </nav>
     </div>
-    <div class="card w-100 shadow-sm">
-        <div class="card-body">
+    <div class="panel w-100 shadow-sm">
+
+        <div class="title">
+            <p>Data Depo dan Balai Yasa</p>
+            <a class="btn-utama sml rnd " href="{{ route('storehouse.create') }}">Tambah Data <i
+                    class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i></a>
+        </div>
+
+        <div class="isi">
             <div class="d-flex align-items-center mb-3">
                 <div class="flex-grow-1">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -18,25 +25,21 @@
                             <button class="nav-link active d-flex align-items-center" id="pills-map-tab"
                                 data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
                                 aria-controls="pills-map" aria-selected="false">
-                                <span class="material-icons-round me-1" style="font-size: 14px;">public</span>
-                                Tampilan Peta
+                                Tampilan Peta <span class="material-symbols-outlined menu-icon ms-2 text-white"
+                                    style="font-size: 14px;">map</span>
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link d-flex align-items-center" id="pills-table-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
                                 aria-selected="true">
-                                <span class="material-icons-round me-1" style="font-size: 14px;">view_list</span>
-                                Tampilan Grid
+                                Tampilan Tabel <span class="material-symbols-outlined ms-2 text-white"
+                                    style="font-size: 14px;">view_list</span>
                             </button>
                         </li>
                     </ul>
                 </div>
-                <a href="{{ route('storehouse.create') }}"
-                    class="btn btn-primary d-flex align-items-center justify-content-center">
-                    <span class="material-icons-round me-1" style="font-size: 14px;">add</span>
-                    Tambah
-                </a>
+
             </div>
             <hr>
             <div class="tab-content">

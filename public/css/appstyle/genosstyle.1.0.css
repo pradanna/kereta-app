@@ -304,6 +304,7 @@ input.form-control {
   color: #999;
   border-bottom: 1px solid #f1f1f1;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .panel .title p {

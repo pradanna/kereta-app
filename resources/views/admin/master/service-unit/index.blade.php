@@ -9,14 +9,16 @@
             </ol>
         </nav>
     </div>
-    <div class="card w-100 shadow-sm">
-        <div class="card-body">
-            <div class="d-flex justify-content-end mb-3">
-                <a class="btn-utama sml rnd " href="{{ route('service-unit.create') }}" id="addData">Tambah Data <i
-                        class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i></a>
+    <div class="panel">
+        <div class="title">
+            <p>Data Satuan Pelayanan</p>
+            <a class="btn-utama sml rnd " href="{{ route('service-unit.create') }}">Tambah Data <i
+                    class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i></a>
+        </div>
 
-            </div>
-            <hr>
+
+        <div class="isi">
+
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
                     <tr>

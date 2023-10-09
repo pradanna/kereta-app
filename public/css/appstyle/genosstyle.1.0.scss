@@ -383,6 +383,7 @@ input.form-control {
     color: $font-grey4;
     border-bottom: 1px solid $font-grey7;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
     p {

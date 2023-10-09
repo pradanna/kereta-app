@@ -10,8 +10,12 @@
             </ol>
         </nav>
     </div>
-    <div class="card w-100 shadow-sm">
-        <div class="card-body">
+    <div class="panel">
+        <div class="title">
+            <p>Tambah Data Depo dan Balai Yasa</p>
+        </div>
+
+        <div class="isi">
             <form method="post" id="form-data">
                 @csrf
                 <div class="row mb-1">
@@ -74,11 +78,9 @@
                 </div>
                 <hr>
                 <div class="d-flex justify-content-end">
-                    <a href="#" id="btn-save"
-                        class="btn btn-primary d-flex align-items-center justify-content-center">
-                        <span class="material-icons-round me-1" style="font-size: 14px;">check</span>
-                        Simpan
-                    </a>
+
+                    <a class="btn-utama  rnd " id="btn-save" href="{{ route('service-unit.create') }}">Simpan <i
+                            class="material-symbols-outlined menu-icon ms-2 text-white">save</i></a>
                 </div>
             </form>
         </div>
