@@ -17,7 +17,7 @@ class ServiceUnitController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = ServiceUnit::all();
+            $data = ServiceUnit::with([])->orderBy('created_at', 'ASC')->get();
             return $this->basicDataTables($data);
         }
         return view('admin.master.service-unit.index');

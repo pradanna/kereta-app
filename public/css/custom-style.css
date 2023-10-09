@@ -42,3 +42,19 @@ ul {
 .form-control::placeholder {
     color: #aaaaaa;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #4e28f7 !important;
+    color: white !important;
+}
+
+.nav-link {
+    border-radius: 7px !important;
+    padding: 5px 12px !important;
+    color: #4e28f7 !important;
+}
+
+.nav-item {
+    font-size: 0.8rem !important;
+
+}

@@ -52,8 +52,8 @@
                 <hr>
                 <div class="d-flex justify-content-end">
                     <a href="#" id="btn-save"
-                        class="btn btn-primary d-flex align-items-center justify-content-center">
-                        <span class="material-icons-round me-1" style="font-size: 14px;">check</span>
+                        class="btn-utama sml rnd">
+                        <i class="material-symbols-outlined menu-icon me-1 text-white">check</i>
                         Simpan
                     </a>
                 </div>

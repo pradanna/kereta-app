@@ -18,7 +18,7 @@
                             <button class="nav-link active d-flex align-items-center" id="pills-map-tab"
                                 data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
                                 aria-controls="pills-map" aria-selected="false">
-                                <span class="material-icons-round me-1" style="font-size: 14px;">public</span>
+                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">public</i>
                                 Tampilan Peta
                             </button>
                         </li>
@@ -26,16 +26,16 @@
                             <button class="nav-link d-flex align-items-center" id="pills-table-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
                                 aria-selected="true">
-                                <span class="material-icons-round me-1" style="font-size: 14px;">view_list</span>
+                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
                                 Tampilan Grid
                             </button>
                         </li>
                     </ul>
                 </div>
                 <a href="{{ route('area.create') }}"
-                    class="btn btn-primary d-flex align-items-center justify-content-center">
-                    <span class="material-icons-round me-1" style="font-size: 14px;">add</span>
+                    class="btn-utama sml rnd">
                     Tambah
+                    <i class="material-symbols-outlined menu-icon ms-1 text-white">add_circle</i>
                 </a>
             </div>
             <hr>
@@ -63,6 +63,7 @@
 @endsection
 
 @section('css')
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
     <script src="{{ asset('js/map-control.js') }}"></script>
 @endsection
 
@@ -102,6 +103,8 @@
 
         function generateTableArea() {
             table = $('#table-data').DataTable({
+                "aaSorting": [],
+                "order": [],
                 scrollX: true,
                 processing: true,
                 responsive: true,
