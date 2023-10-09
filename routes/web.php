@@ -18,6 +18,7 @@ Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class,
 
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
 Route::group(['prefix' => 'satuan-pelayanan'], function () {
     Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');

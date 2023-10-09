@@ -12,3 +12,33 @@
 .select2-selection__arrow {
     height: 2.4rem !important;
 }
+
+ul {
+    list-style: none;
+}
+
+.menu-title {
+    color: #666;
+}
+
+
+.breadcrumb-item a {
+    text-decoration: none !important;
+    color: #4e28f7 !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    float: left;
+    content: '\203A';
+    font-weight: bold;
+}
+
+.form-control:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 1px solid #aaaaaa;
+}
+
+.form-control::placeholder {
+    color: #aaaaaa;
+}

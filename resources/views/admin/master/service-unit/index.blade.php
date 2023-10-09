@@ -11,19 +11,21 @@
     </div>
     <div class="card w-100 shadow-sm">
         <div class="card-body">
-            <div class="d-flex justify-content-end mb-3">
-                <a class="btn-utama sml rnd " href="{{ route('service-unit.create') }}" id="addData">Tambah Data <i
-                        class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i></a>
-
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="mb-0 fw-bold menu-title">Data Satuan Pelayanan</p>
+                <a class="btn-utama sml rnd" href="{{ route('service-unit.create') }}">
+                    Tambah Data
+                    <i class="material-symbols-outlined menu-icon ms-1 text-white">add_circle</i>
+                </a>
             </div>
             <hr>
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                    <tr>
-                        <th width="5%" class="text-center">#</th>
-                        <th>Nama</th>
-                        <th width="10%" class="text-center">Aksi</th>
-                    </tr>
+                <tr>
+                    <th width="5%" class="text-center">#</th>
+                    <th>Nama</th>
+                    <th width="10%" class="text-center">Aksi</th>
+                </tr>
                 </thead>
                 <tbody></tbody>
             </table>
@@ -31,12 +33,18 @@
     </div>
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+@endsection
+
 @section('js')
     <script>
         let table;
         let path = '{{ route('service-unit') }}';
-        $(document).ready(function() {
+        $(document).ready(function () {
             table = $('#table-data').DataTable({
+                "aaSorting": [],
+                "order": [],
                 scrollX: true,
                 processing: true,
                 responsive: true,
@@ -45,18 +53,18 @@
                     url: path,
                 },
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        searchable: false,
-                        orderable: false
-                    },
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
                     {
                         data: 'name',
                         name: 'name'
                     },
                     {
                         data: null,
-                        render: function(data) {
+                        render: function (data) {
                             return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete" data-id="' + data['id'] +

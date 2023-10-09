@@ -21,51 +21,44 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
         rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
-    <script src="{{ asset('js/swal.js') }}"></script>
-
+    <link href="{{ asset('/css/sweetalert2.css') }}" rel="stylesheet">
+    <script src="{{ asset('/js/sweetalert2.min.js')}}"></script>
+    <style>
+        ul {
+            list-style:  none;
+        }
+    </style>
     @yield('css')
 </head>
 
 <body>
-
     <div class="header">
         <div class="header-panel-kiri">
             <a class="btn-icon " onclick="openNav()">
                 <span class="material-symbols-outlined">menu
                 </span>
             </a>
-
         </div>
-
         <p class="text-title text-center">
             @yield('title')
         </p>
-
         <div class="header-panel-kanan">
             <a class="profil dropdown-toggle" href="#" role="button" id="dropdownprofile"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{{ asset('images/local/nobody.png') }}" />
             </a>
-
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
                 <li><a class="dropdown-item disabled" href="#">admin</a></li>
                 <hr>
                 {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
                 <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
             </ul>
-
-            </a>
-
-
             <ul class="dropdown-menu custom" aria-labelledby="dropdownprofile">
                 <li><a class="dropdown-item disabled" href="#">admin</a></li>
                 <hr>
-                {{-- <li><a class="dropdown-item" href="#">Another action</a></li> --}}
                 <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
             </ul>
-
         </div>
-
     </div>
 
     <div class="d-flex">

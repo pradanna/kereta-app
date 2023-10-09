@@ -12,6 +12,8 @@
     </div>
     <div class="card w-100 shadow-sm">
         <div class="card-body">
+            <p class="menu-title fw-bold mb-1">Form Satuan Pelayanan</p>
+            <hr>
             <form method="post" id="form-data">
                 @csrf
                 <div class="row mb-1">
@@ -19,7 +21,7 @@
                         <div class="w-100">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Contoh: Satuan Pelayanan Surakarta">
+                                   placeholder="Nama Satuan Pelayanan">
                         </div>
                     </div>
                 </div>
@@ -28,22 +30,22 @@
                         <div class="w-100">
                             <label for="latitude" class="form-label">Latitude</label>
                             <input type="number" step="any" class="form-control" id="latitude" name="latitude"
-                                placeholder="Contoh: 7.1129489">
+                                   placeholder="Contoh: 7.1129489">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="longitude" class="form-label">Longitude</label>
                             <input type="number" step="any" class="form-control" id="longitude" name="longitude"
-                                placeholder="Contoh: 110.1129489">
+                                   placeholder="Contoh: 110.1129489">
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-end">
                     <a href="#" id="btn-save"
-                        class="btn btn-primary d-flex align-items-center justify-content-center">
-                        <span class="material-icons-round me-1" style="font-size: 14px;">check</span>
+                       class="btn-utama sml rnd d-flex align-items-center justify-content-center">
+                        <span class="material-symbols-outlined me-1 menu-icon text-white">check</span>
                         Simpan
                     </a>
                 </div>
@@ -52,10 +54,14 @@
     </div>
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+@endsection
+
 @section('js')
     <script>
-        $(document).ready(function() {
-            $('#btn-save').on('click', function(e) {
+        $(document).ready(function () {
+            $('#btn-save').on('click', function (e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",
