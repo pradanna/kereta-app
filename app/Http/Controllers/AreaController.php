@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Helper\CustomController;
 use App\Models\Area;
 use App\Models\ServiceUnit;
+use App\Models\Storehouse;
 
 class AreaController extends CustomController
 {
@@ -27,7 +28,7 @@ class AreaController extends CustomController
                     return $this->basicDataTables($data);
 
                 default:
-                return $this->jsonSuccessResponse('success', []);
+                    return $this->jsonSuccessResponse('success', []);
             }
         }
         return view('master.area.index');
@@ -53,5 +54,17 @@ class AreaController extends CustomController
         $service_units = ServiceUnit::all();
         return view('master.area.add')->with(['service_units' => $service_units]);
 
+    }
+
+    public function getStorehouseByAreaID($id)
+    {
+        try {
+            $data = Storehouse::with(['storehouse_type', 'area'])
+                ->where('area_id', '=', $id)
+                ->get();
+            return $this->jsonSuccessResponse('success', $data);
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }

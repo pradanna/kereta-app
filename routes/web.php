@@ -13,17 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::match(['post', 'get'],'/', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-Route::group(['prefix' => 'satuan-pelayanan'], function (){
-    Route::get( '/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
+Route::group(['prefix' => 'satuan-pelayanan'], function () {
+    Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
 });
 
-Route::group(['prefix' => 'daerah-operasi'], function (){
-    Route::get( '/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
+Route::group(['prefix' => 'daerah-operasi'], function () {
+    Route::get('/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
+    Route::get('/{id}/storehouse', [\App\Http\Controllers\AreaController::class, 'getStorehouseByAreaID'])->name('area.storehouse');
 });
 
 Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
