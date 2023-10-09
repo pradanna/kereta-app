@@ -9,6 +9,7 @@ use App\Models\Area;
 use App\Models\FacilityCertification;
 use App\Models\FacilityType;
 use App\Models\Storehouse;
+use Carbon\Carbon;
 
 class FacilityCertificationController extends CustomController
 {
@@ -36,19 +37,19 @@ class FacilityCertificationController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'area_id' => $this->postField('area_id'),
-                    'storehouse_id' => $this->postField('storehouse_id'),
-                    'facility_type_id' => $this->postField('facility_type_id'),
+                    'area_id' => $this->postField('area'),
+                    'storehouse_id' => $this->postField('storehouse'),
+                    'facility_type_id' => $this->postField('facility_type'),
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
-                    'service_start_date' => $this->postField('service_start_date'),
-                    'service_expired_date' => $this->postField('service_expired_date'),
+                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
+                    'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                 ];
                 FacilityCertification::create($data_request);
-                return $this->jsonCreatedResponse('success');
+                return redirect()->route('facility-certification');
             } catch (\Exception $e) {
-                return $this->jsonErrorResponse('internal server error', $e->getMessage());
+                return redirect()->back();
             }
         }
         $facility_types = FacilityType::all();
