@@ -116,7 +116,43 @@
                     "aaSorting": [],
                     "order": [],
                     scrollX: true,
-                    processing: true,
+                    processing: true, ajax: {
+                        type: 'GET',
+                        url: path,
+                        'data': function (d) {
+                            d.type = 'table';
+                        }
+                    },
+                    columns: [
+                        {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
+                        {data: 'facility_type.name', name: 'facility_type.name'},
+                        {data: 'ownership', name: 'ownership'},
+                        {data: 'facility_number', name: 'facility_number'},
+                        {data: 'area.name', name: 'area.name'},
+                        {data: 'storehouse.name', name: 'storehouse.name'},
+                        {data: 'service_start_date', name: 'service_start_date'},
+                        {data: 'service_expired_date', name: 'service_expired_date'},
+                        {data: 'testing_number', name: 'testing_number'},
+                        {
+                            data: 'expired_in', name: 'expired_in', render: function (data) {
+                                return data + ' hari';
+                            }
+                        },
+                        {
+                            data: 'status', name: 'status', render: function (data) {
+                                if (data === 'valid') {
+                                    return 'Berlaku';
+                                }
+                                return 'Habis Masa Berlaku';
+                            }
+                        },
+                        {
+                            data: null, render: function (data) {
+                                return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] + '">Edit</a>' +
+                                    '<a href="#" class="btn-delete" data-id="' + data['id'] + '">Delete</a>'
+                            }, orderable: false
+                        }
+                    ],
                     columnDefs: [
                         {width: '30px', targets: 0, className: 'text-center', orderable: false},
                         {width: '250px', targets: 1, className: 'text-center'},
