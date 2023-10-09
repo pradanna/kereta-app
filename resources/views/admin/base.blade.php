@@ -12,10 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/appstyle/genosstyle.1.0.css') }}" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    {{-- <link rel="stylesheet"
-        href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> --}}
     <meta name="_token" content="{{ csrf_token() }}">
-    {{-- <meta name="role" content="{{ auth()->user()->role }}"> --}}
     {{-- ICON --}}
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -72,17 +69,11 @@
     </div>
 
     <div class="d-flex">
-
-        {{-- <div class="sidebar"> --}}
         <nav id="sidebar" class="sidebar card py-2" style="height: 100vh;">
             <ul class="nav flex-column" id="nav_accordion">
-
                 <li class="mt-4 mb-3 text-center">
                     <img class="w-50" src="{{ asset('images/local/logodishub.png') }}" />
                 </li>
-
-
-
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('admin/dashboard') ? 'active' : '' }}"
                         href="{{ route('dashboard') }}">
@@ -92,7 +83,6 @@
                         <p class="menu-text">Beranda</p>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('admin/master') ? 'active' : '' }}">
                         <span class="material-symbols-outlined menu-icon">
@@ -178,41 +168,37 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script src="{{ asset('js/base.js') }}"></script>
-    <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>
+{{--    <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>--}}
 
-    <script src="{{ asset('js/dialog.js?v=2') }}"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>
-    <script src="{{ asset('js/handler_image.js') }}"></script>
-    <script src="{{ asset('js/moment.min.js') }}"></script>
-    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script> --}}
+{{--    <script src="{{ asset('js/dialog.js?v=2') }}"></script>--}}
+{{--    <script type="text/javascript"--}}
+{{--        src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>--}}
+{{--    <script src="{{ asset('js/handler_image.js') }}"></script>--}}
+{{--    <script src="{{ asset('js/moment.min.js') }}"></script>--}}
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    {{-- <script src="{{ asset('datatable/datatables.js') }}"></script> --}}
 
-    {{-- <script src="{{ asset('js/datatable.js') }}"></script> --}}
+{{--    <script>--}}
+{{--        jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {--}}
+{{--            return {--}}
+{{--                "iStart": oSettings._iDisplayStart,--}}
+{{--                "iEnd": oSettings.fnDisplayEnd(),--}}
+{{--                "iLength": oSettings._iDisplayLength,--}}
+{{--                "iTotal": oSettings.fnRecordsTotal(),--}}
+{{--                "iFilteredTotal": oSettings.fnRecordsDisplay(),--}}
+{{--                "iPage": oSettings._iDisplayLength === -1 ?--}}
+{{--                    0 : Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),--}}
+{{--                "iTotalPages": oSettings._iDisplayLength === -1 ?--}}
+{{--                    0 : Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)--}}
+{{--            };--}}
+{{--        };--}}
+{{--    </script>--}}
 
-    <script>
-        jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {
-            return {
-                "iStart": oSettings._iDisplayStart,
-                "iEnd": oSettings.fnDisplayEnd(),
-                "iLength": oSettings._iDisplayLength,
-                "iTotal": oSettings.fnRecordsTotal(),
-                "iFilteredTotal": oSettings.fnRecordsDisplay(),
-                "iPage": oSettings._iDisplayLength === -1 ?
-                    0 : Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
-                "iTotalPages": oSettings._iDisplayLength === -1 ?
-                    0 : Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
-            };
-        };
-    </script>
-
-    @yield('morejs')
+    @yield('js')
 
 </body>
 
