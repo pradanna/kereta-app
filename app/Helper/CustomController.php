@@ -26,6 +26,14 @@ class CustomController extends Controller
         $this->request = Request::createFromGlobals();
     }
 
+    public function isAuth($credentials = [])
+    {
+        if (count($credentials) > 0 && Auth::attempt($credentials)) {
+            return true;
+        }
+        return false;
+    }
+
     public function postField($key)
     {
         return $this->request->request->get($key);

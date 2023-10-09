@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
 Route::group(['prefix' => 'satuan-pelayanan'], function () {
     Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
@@ -33,8 +33,7 @@ Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
+Route::group(['prefix' => 'sertifikasi-sarana'], function () {
+    Route::get('/', [\App\Http\Controllers\FacilityCertificationController::class, 'index'])->name('facility-certification');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityCertificationController::class, 'store'])->name('facility-certification.create');
 });
-
-Route::get('/admin', [berandaController::class, 'index']);

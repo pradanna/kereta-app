@@ -18,8 +18,17 @@ class AreaController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = Area::with(['service_unit:id,name'])->get();
-            return $this->basicDataTables($data);
+            $type = $this->request->query->get('type');
+            $data = Area::with(['service_unit:id,name'])->orderBy('created_at', 'ASC')->get();
+            switch ($type) {
+                case 'map':
+                    return $this->jsonSuccessResponse('success', $data);
+                case 'table':
+                    return $this->basicDataTables($data);
+
+                default:
+                return $this->jsonSuccessResponse('success', []);
+            }
         }
         return view('master.area.index');
     }
@@ -37,6 +46,7 @@ class AreaController extends CustomController
                 Area::create($data_request);
                 return redirect()->route('area');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 return redirect()->back();
             }
         }

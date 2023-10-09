@@ -10,6 +10,7 @@ class StorehouseType extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'marker_icon'
     ];
 }

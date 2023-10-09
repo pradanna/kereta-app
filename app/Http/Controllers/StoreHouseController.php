@@ -20,8 +20,16 @@ class StoreHouseController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = Storehouse::with(['storehouse_type', 'area', 'city.province'])->get();
-            return $this->basicDataTables($data);
+            $type = $this->request->query->get('type');
+            $data = Storehouse::with(['storehouse_type', 'area', 'city.province'])->orderBy('created_at', 'ASC')->get();
+            switch ($type) {
+                case 'map':
+                    return $this->jsonSuccessResponse('success', $data);
+                case 'table':
+                    return $this->basicDataTables($data);
+                default:
+                    return $this->jsonSuccessResponse('success', []);
+            }
         }
         return view('master.storehouse.index');
     }
