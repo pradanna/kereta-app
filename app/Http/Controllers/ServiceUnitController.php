@@ -20,7 +20,7 @@ class ServiceUnitController extends CustomController
             $data = ServiceUnit::all();
             return $this->basicDataTables($data);
         }
-        return view('master.service-unit.index');
+        return view('admin.master.service-unit.index');
     }
 
 
@@ -41,7 +41,7 @@ class ServiceUnitController extends CustomController
         try {
             ServiceUnit::destroy($id);
             return $this->jsonSuccessResponse('success');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
     }
@@ -57,12 +57,12 @@ class ServiceUnitController extends CustomController
                 ];
                 ServiceUnit::create($data_request);
                 return redirect()->route('service-unit');
-            }catch (\Exception $e) {
+            } catch (\Exception $e) {
                 dd($e->getMessage());
                 return redirect()->back();
             }
         }
-        return view('master.service-unit.add');
+        return view('admin.master.service-unit.add');
     }
 
     private function patch($data)
@@ -73,7 +73,7 @@ class ServiceUnitController extends CustomController
             ];
             $data->update($data_request);
             return $this->jsonCreatedResponse('success');
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
     }

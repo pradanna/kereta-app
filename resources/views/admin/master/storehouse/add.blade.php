@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('admin/base')
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -18,8 +18,8 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="area" class="form-label">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area" id="area"  style="width: 100%;">
-                                @foreach($areas as $area)
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
+                                @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
@@ -28,8 +28,9 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="storehouse_type" class="form-label">Tipe</label>
-                            <select class="select2 form-control" name="storehouse_type" id="storehouse_type"  style="width: 100%;">
-                                @foreach($storehouse_types as $storehouse_type)
+                            <select class="select2 form-control" name="storehouse_type" id="storehouse_type"
+                                style="width: 100%;">
+                                @foreach ($storehouse_types as $storehouse_type)
                                     <option value="{{ $storehouse_type->id }}">{{ $storehouse_type->name }}</option>
                                 @endforeach
                             </select>
@@ -40,8 +41,8 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="city" class="form-label">Kota</label>
-                            <select class="select2 form-control" name="city" id="city"  style="width: 100%;">
-                                @foreach($cities as $city)
+                            <select class="select2 form-control" name="city" id="city" style="width: 100%;">
+                                @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
                             </select>
@@ -50,7 +51,8 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="name" class="form-label">Nama Depo / Balai Yasa</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Contoh: SMC">
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Contoh: SMC">
                         </div>
                     </div>
                 </div>
@@ -58,19 +60,22 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="latitude" class="form-label">Latitude</label>
-                            <input type="number" step="any" class="form-control" id="latitude" name="latitude" placeholder="Contoh: 7.1129489">
+                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"
+                                placeholder="Contoh: 7.1129489">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="longitude" class="form-label">Longitude</label>
-                            <input type="number" step="any" class="form-control" id="longitude" name="longitude" placeholder="Contoh: 110.1129489">
+                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"
+                                placeholder="Contoh: 110.1129489">
                         </div>
                     </div>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-end">
-                    <a href="#" id="btn-save" class="btn btn-primary d-flex align-items-center justify-content-center">
+                    <a href="#" id="btn-save"
+                        class="btn btn-primary d-flex align-items-center justify-content-center">
                         <span class="material-icons-round me-1" style="font-size: 14px;">check</span>
                         Simpan
                     </a>
@@ -78,22 +83,21 @@
             </form>
         </div>
     </div>
-
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

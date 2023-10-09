@@ -25,7 +25,7 @@ class FacilityCertificationController extends CustomController
         }
         $facility_types = FacilityType::all();
         $areas = Area::all();
-        return view('facility-certification.index')->with([
+        return view('admin.facility-certification.index')->with([
             'facility_types' => $facility_types,
             'areas' => $areas,
         ]);
@@ -47,13 +47,13 @@ class FacilityCertificationController extends CustomController
                 ];
                 FacilityCertification::create($data_request);
                 return $this->jsonCreatedResponse('success');
-            }catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return $this->jsonErrorResponse('internal server error', $e->getMessage());
             }
         }
         $facility_types = FacilityType::all();
         $areas = Area::all();
-        return view('facility-certification.add')->with([
+        return view('admin.facility-certification.add')->with([
             'facility_types' => $facility_types,
             'areas' => $areas,
         ]);

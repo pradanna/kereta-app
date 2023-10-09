@@ -15,6 +15,6 @@ class DashboardController extends CustomController
 
     public function index()
     {
-        return view('dashboard');
+        return view('admin.beranda');
     }
 }
