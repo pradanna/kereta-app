@@ -49,11 +49,7 @@
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
                             <input type="text" class="form-control" id="ownership" name="ownership"
-<<<<<<< HEAD:resources/views/admin/facility-certification/add.blade.php
                                 placeholder="Contoh: PT. KAI">
-=======
-                                   placeholder="Contoh: PT. KAI">
->>>>>>> f81143b0dd136f1819a9c04d17df9492ca6d1f6c:resources/views/facility-certification/add.blade.php
                         </div>
                     </div>
                 </div>
@@ -62,24 +58,14 @@
                         <div class="form-group w-100">
                             <label for="facility_number" class="form-label">No. Sarana</label>
                             <input type="text" class="form-control" id="facility_number" name="facility_number"
-<<<<<<< HEAD:resources/views/admin/facility-certification/add.blade.php
                                 placeholder="Nomor Sarana">
-=======
-                                   placeholder="Nomor Sarana">
->>>>>>> f81143b0dd136f1819a9c04d17df9492ca6d1f6c:resources/views/facility-certification/add.blade.php
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-<<<<<<< HEAD:resources/views/admin/facility-certification/add.blade.php
-                            <label for="ownership" class="form-label">Kepemilikan</label>
-                            <input type="text" class="form-control" id="ownership" name="ownership"
-                                placeholder="Kepemilikan">
-=======
                             <label for="testing_number" class="form-label">No. BA Pengujian</label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                   placeholder="Nomor BA Pengujian">
->>>>>>> f81143b0dd136f1819a9c04d17df9492ca6d1f6c:resources/views/facility-certification/add.blade.php
+                                placeholder="Nomor BA Pengujian">
                         </div>
                     </div>
                 </div>
@@ -88,31 +74,14 @@
                         <div class="form-group w-100">
                             <label for="service_start_date" class="form-label">Mulai Dinas</label>
                             <input type="text" class="form-control datepicker" id="service_start_date"
-<<<<<<< HEAD:resources/views/admin/facility-certification/add.blade.php
-                                name="service_start_date" placeholder="Mulai Dinas">
-=======
-                                   name="service_start_date" placeholder="dd-mm-yyyy">
->>>>>>> f81143b0dd136f1819a9c04d17df9492ca6d1f6c:resources/views/facility-certification/add.blade.php
+                                name="service_start_date" placeholder="dd-mm-yyyy">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_expired_date" class="form-label">Masa Berlaku</label>
                             <input type="text" class="form-control datepicker" id="service_expired_date"
-<<<<<<< HEAD:resources/views/admin/facility-certification/add.blade.php
-                                name="service_expired_date" placeholder="Masa Berlaku">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-1">
-                    <div class="col-12">
-                        <div class="form-group w-100">
-                            <label for="testing_number" class="form-label">No. BA Pengujian</label>
-                            <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                placeholder="Nomor BA Pengujian">
-=======
-                                   name="service_expired_date" placeholder="dd-mm-yyyy">
->>>>>>> f81143b0dd136f1819a9c04d17df9492ca6d1f6c:resources/views/facility-certification/add.blade.php
+                                name="service_expired_date" placeholder="dd-mm-yyyy">
                         </div>
                     </div>
                 </div>
@@ -130,34 +99,19 @@
 @endsection
 
 @section('css')
-<<<<<<< HEAD:resources/views/admin/facility-certification/add.blade.php
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
         integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-=======
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
-          integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
->>>>>>> f81143b0dd136f1819a9c04d17df9492ca6d1f6c:resources/views/facility-certification/add.blade.php
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
-<<<<<<< HEAD:resources/views/admin/facility-certification/add.blade.php
         integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        $(document).ready(function() {
-=======
-            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         let areaPath = '{{ route('area') }}';
 
@@ -172,7 +126,7 @@
             elOption.empty();
             getStorehouseByAreaID().then((response) => {
                 let data = response.data;
-                $.each(data, function (k, v) {
+                $.each(data, function(k, v) {
                     elOption.append('<option value="' + v['id'] + '">' + v['name'] + '</option>')
                 });
                 $('#storehouse').select2({
@@ -184,8 +138,7 @@
             })
         }
 
-        $(document).ready(function () {
->>>>>>> f81143b0dd136f1819a9c04d17df9492ca6d1f6c:resources/views/facility-certification/add.blade.php
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -193,11 +146,11 @@
                 format: 'dd-mm-yyyy',
             });
             generateStorehouseOption();
-            $('#area').on('change', function (e) {
+            $('#area').on('change', function(e) {
                 generateStorehouseOption();
             });
 
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",
