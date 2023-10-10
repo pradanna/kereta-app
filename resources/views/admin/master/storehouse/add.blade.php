@@ -12,7 +12,7 @@
     </div>
     <div class="panel">
         <div class="title">
-            <p>Tambah Data Depo dan Balai Yasa</p>
+            <p>Form Data Depo dan Balai Yasa</p>
         </div>
 
         <div class="isi">

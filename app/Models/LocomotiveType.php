@@ -11,7 +11,9 @@ class LocomotiveType extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'name'
+        'code',
+        'name',
+        'type',
     ];
 
 

@@ -35,6 +35,16 @@ Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
 });
 
+Route::group(['prefix' => 'jenis-lokomotif'], function () {
+    Route::get('/', [\App\Http\Controllers\LocomotiveTypeController::class, 'index'])->name('locomotive-type');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\LocomotiveTypeController::class, 'store'])->name('locomotive-type.create');
+});
+
+Route::group(['prefix' => 'jenis-kereta'], function () {
+    Route::get('/', [\App\Http\Controllers\TrainTypeController::class, 'index'])->name('train-type');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TrainTypeController::class, 'store'])->name('train-type.create');
+});
+
 Route::group(['prefix' => 'sertifikasi-sarana'], function () {
     Route::get('/', [\App\Http\Controllers\FacilityCertificationController::class, 'index'])->name('facility-certification');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityCertificationController::class, 'store'])->name('facility-certification.create');
@@ -42,6 +52,7 @@ Route::group(['prefix' => 'sertifikasi-sarana'], function () {
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
     Route::get('/', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'index'])->name('technical-specification.locomotive');
+    Route::match(['post', 'get'],'/tambah', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'store'])->name('technical-specification.locomotive.add');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {

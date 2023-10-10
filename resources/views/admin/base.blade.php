@@ -101,14 +101,29 @@
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
                                 href="{{ route('storehouse') }}">
-
                                 <p class="menu-text">Depo dan Balai Yasa</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('locomotive-type') }}">
+                                <p class="menu-text">Jenis Lokomotif</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('train-type') }}">
+                                <p class="menu-text">Jenis Kereta</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('train-type') }}">
+                                <p class="menu-text">Jenis Gerbong</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-
-
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('facility-certification') ? 'active' : '' }}"
                         href="{{ route('facility-certification') }}">
@@ -130,14 +145,12 @@
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
                                 href="{{ route('technical-specification.locomotive') }}">
-
                                 <p class="menu-text">Lokomotif</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
                                 href="{{ route('technical-specification.train') }}">
-
                                 <p class="menu-text">Kereta</p>
                             </a>
                         </li>

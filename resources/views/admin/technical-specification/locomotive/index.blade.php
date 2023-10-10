@@ -9,6 +9,16 @@
             </ol>
         </nav>
     </div>
+    <div class="panel">
+        <div class="title">
+            <p>Data Spesifikasi Teknis Sarana Lokomotif</p>
+            <a class="btn-utama sml rnd " href="{{ route('technical-specification.locomotive.add') }}">Tambah
+                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+            </a>
+        </div>
+        <div class="isi">
+        </div>
+    </div>
 @endsection
 
 @section('css')

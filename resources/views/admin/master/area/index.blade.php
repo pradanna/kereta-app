@@ -10,7 +10,6 @@
         </nav>
     </div>
     <div class="panel">
-
         <div class="title">
             <p>Data Daerah Operasi</p>
             <a class="btn-utama sml rnd " href="{{ route('area.create') }}">Tambah

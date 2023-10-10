@@ -58,7 +58,6 @@ class ServiceUnitController extends CustomController
                 ServiceUnit::create($data_request);
                 return redirect()->route('service-unit');
             } catch (\Exception $e) {
-                dd($e->getMessage());
                 return redirect()->back();
             }
         }
