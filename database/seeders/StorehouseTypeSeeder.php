@@ -16,25 +16,32 @@ class StorehouseTypeSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Depo Lokomotif'
+                'name' => 'Depo Lokomotif',
+                'marker_icon' => '/images/marker/locomotive.png'
             ],
             [
-                'name' => 'Depo Kereta'
+                'name' => 'Depo Kereta',
+                'marker_icon' => '/images/marker/train.png'
             ],
             [
-                'name' => 'Pengawas Urusan Kereta'
+                'name' => 'Pengawas Urusan Kereta',
+                'marker_icon' => '/images/marker/train-supervisor.png'
             ],
             [
-                'name' => 'Depo Gerbong'
+                'name' => 'Depo Gerbong',
+                'marker_icon' => '/images/marker/wagon.png'
             ],
             [
-                'name' => 'Balai Yasa Gerbong'
+                'name' => 'Balai Yasa Gerbong',
+                'marker_icon' => '/images/marker/wagon-office.png'
             ],
             [
-                'name' => 'Depo KRL'
+                'name' => 'Depo KRL',
+                'marker_icon' => '/images/marker/electric-train.png'
             ],
             [
-                'name' => 'Pengawas Urusan Sarana'
+                'name' => 'Pengawas Urusan Sarana',
+                'marker_icon' => '/images/marker/facility-supervisor.png'
             ],
         ];
         foreach ($data as $datum) {
