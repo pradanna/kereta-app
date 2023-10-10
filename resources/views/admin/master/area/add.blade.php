@@ -56,11 +56,10 @@
                 </div>
                 <hr>
                 <div class="d-flex justify-content-end">
-                    <a href="#" id="btn-save"
-                        class="btn-utama sml rnd">
-                        <i class="material-symbols-outlined menu-icon me-1 text-white">check</i>
-                        Simpan
-                    </a>
+                    <div class="d-flex justify-content-end">
+                        <a class="btn-utama  rnd " id="btn-save" href="#">Simpan <i
+                                class="material-symbols-outlined menu-icon ms-2 text-white">save</i></a>
+                    </div>
                 </div>
             </form>
         </div>

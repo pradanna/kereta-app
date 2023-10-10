@@ -12,10 +12,8 @@
     </div>
     <div class="panel ">
         <div class="title">
-            <p>Tambah Data Satuan Pelayanan</p>
+            <p>Form Data Satuan Pelayanan</p>
         </div>
-
-
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf

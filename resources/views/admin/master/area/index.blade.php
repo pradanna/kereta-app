@@ -13,51 +13,48 @@
 
         <div class="title">
             <p>Data Daerah Operasi</p>
-            <a class="btn-utama sml rnd " href="{{ route('area.create') }}">Tambah Data <i
-                    class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i></a>
+            <a class="btn-utama sml rnd " href="{{ route('area.create') }}">Tambah
+                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+            </a>
         </div>
-
         <div class="isi">
             <div class="d-flex align-items-center mb-3">
                 <div class="flex-grow-1">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active d-flex align-items-center" id="pills-map-tab"
-                                data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
-                                aria-controls="pills-map" aria-selected="false">
-                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">public</i>
+                                    data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
+                                    aria-controls="pills-map" aria-selected="false">
+                                <i class="material-symbols-outlined me-1"
+                                   style="font-size: 14px; color: inherit">public</i>
                                 Tampilan Peta
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link d-flex align-items-center" id="pills-table-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
-                                aria-selected="true">
+                            <button class="nav-link d-flex align-items-center" id="pills-table-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
+                                    aria-selected="true">
                                 <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
                                 Tampilan Grid
                             </button>
                         </li>
                     </ul>
                 </div>
-                <a href="{{ route('area.create') }}"
-                    class="btn-utama sml rnd">
-                    Tambah
-                    <i class="material-symbols-outlined menu-icon ms-1 text-white">add_circle</i>
-                </a>
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
-                    <div id="main-map" style="width: 100%; height: calc(100vh - 70px)"></div>
+                    <div id="main-map" style="width: 100%; height: calc(100vh - 70px); border-radius: 10px;"></div>
                 </div>
                 <div class="tab-pane fade" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
                     <table id="table-data" class="display table table-striped w-100">
                         <thead>
-                            <tr>
-                                <th width="5%" class="text-center">#</th>
-                                <th>Satuan Pelayanan</th>
-                                <th>Nama Daerah Operasi</th>
-                                <th width="10%" class="text-center">Aksi</th>
-                            </tr>
+                        <tr>
+                            <th width="5%" class="text-center">#</th>
+                            <th>Satuan Pelayanan</th>
+                            <th>Nama Daerah Operasi</th>
+                            <th width="10%" class="text-center">Aksi</th>
+                        </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -83,7 +80,7 @@
         let path = '{{ route('area') }}';
 
         function changeTabEvent() {
-            $("#pills-tab").on("shown.bs.tab", function(e) {
+            $("#pills-tab").on("shown.bs.tab", function (e) {
                 if (e.target.id === "pills-table-tab") {
                     table.columns.adjust();
                 }
@@ -117,16 +114,16 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function(d) {
+                    'data': function (d) {
                         d.type = 'table';
                     }
                 },
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        searchable: false,
-                        orderable: false
-                    },
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
                     {
                         data: 'service_unit.name',
                         name: 'service_unit.name'
@@ -137,7 +134,7 @@
                     },
                     {
                         data: null,
-                        render: function(data) {
+                        render: function (data) {
                             return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete" data-id="' + data['id'] + '">Delete</a>'
@@ -153,7 +150,7 @@
             })
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             changeTabEvent();
             generateMapArea();
             generateTableArea();

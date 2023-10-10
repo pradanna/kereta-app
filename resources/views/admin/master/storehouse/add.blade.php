@@ -78,7 +78,6 @@
                 </div>
                 <hr>
                 <div class="d-flex justify-content-end">
-
                     <a class="btn-utama  rnd " id="btn-save" href="{{ route('service-unit.create') }}">Simpan <i
                             class="material-symbols-outlined menu-icon ms-2 text-white">save</i></a>
                 </div>
