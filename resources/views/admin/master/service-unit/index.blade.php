@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Satuan Pelayanan</li>
             </ol>
         </nav>
@@ -17,6 +17,18 @@
             </a>
         </div>
         <div class="isi">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <p class="mb-0">Export Data</p>
+                </div>
+                <a class="btn-excel me-2" href="#">
+                    Excel
+                </a>
+                <a class="btn-pdf me-2" href="#">
+                    PDF
+                </a>
+            </div>
+            <hr>
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
                 <tr>

@@ -21,7 +21,7 @@ class FacilityCertificationController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = FacilityCertification::with(['area', 'storehouse', 'facility_type'])->get()->append(['expired_in', 'status']);
+            $data = FacilityCertification::with(['area', 'storehouse.storehouse_type', 'facility_type'])->orderBy('created_at', 'ASC')->get()->append(['expired_in', 'status']);
             return $this->basicDataTables($data);
         }
         $facility_types = FacilityType::all();

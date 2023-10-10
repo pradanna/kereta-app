@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Sertifikasi Sarana</li>
             </ol>
         </nav>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <hr>
-                    <table id="table-data" class="display table table-striped w-100 nowrap">
+                    <table id="table-data" class="display table table-striped">
                         <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -86,6 +86,7 @@
                             <th class="text-center">Kepemilikan</th>
                             <th class="text-center">No. Sarana</th>
                             <th class="text-center">Wilayah</th>
+                            <th class="text-center">Tipe Depo</th>
                             <th class="text-center">Depo Induk</th>
                             <th class="text-center">Mulai Dinas</th>
                             <th class="text-center">Masa Berlaku Sarana</th>
@@ -116,6 +117,32 @@
         let table;
         let path = '{{ route('facility-certification') }}';
 
+        let areaPath = '{{ route('area') }}';
+
+        function getStorehouseByAreaID() {
+            let areaID = $('#area').val();
+            let url = areaPath + '/' + areaID + '/storehouse';
+            return $.get(url);
+        }
+
+        function generateStorehouseOption() {
+            let elOption = $('#storehouse');
+            elOption.empty();
+            getStorehouseByAreaID().then((response) => {
+                let data = response.data;
+                elOption.append('<option value="" selected>Semua</option>');
+                $.each(data, function(k, v) {
+                    elOption.append('<option value="' + v['id'] + '">' + v['name'] + ' ('+v['storehouse_type']['name']+')</option>')
+                });
+                $('#storehouse').select2({
+                    width: 'resolve',
+                });
+                console.log(response);
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+
         function generateTableFacilityCertification() {
             table = $('#table-data').DataTable({
                 "aaSorting": [],
@@ -123,7 +150,6 @@
                 scrollX: true,
                 responsive: true,
                 processing: true,
-                autoWidth: false,
                 ajax: {
                     type: 'GET',
                     url: path,
@@ -132,19 +158,38 @@
                     }
                 },
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
-                    {data: 'facility_type.name', name: 'facility_type.name'},
-                    {data: 'ownership', name: 'ownership', width: '250px',},
-                    {data: 'facility_number', name: 'facility_number', width: '250px',},
-                    {data: 'area.name', name: 'area.name', width: '250px',},
-                    {data: 'storehouse.name', name: 'storehouse.name', width: '250px',},
-                    {data: 'service_start_date', name: 'service_start_date', width: '250px',},
-                    {data: 'service_expired_date', name: 'service_expired_date', width: '250px',},
-                    {data: 'testing_number', name: 'testing_number', width: '250px',},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false, width: '30px'},
+                    {data: 'facility_type.name', name: 'facility_type.name', width: '120px', visible: false,},
+                    {data: 'ownership', name: 'ownership', width: '120px'},
+                    {data: 'facility_number', name: 'facility_number', width: '100px'},
+                    {data: 'area.name', name: 'area.name', width: '150px',},
+                    {data: 'storehouse.storehouse_type.name', name: 'storehouse.storehouse_type.name', width: '120px', visible: false,},
+                    {data: 'storehouse.name', name: 'storehouse.name', width: '120px',},
+                    {
+                        data: 'service_start_date', name: 'service_start_date', render: function (data) {
+                            const v = new Date(data);
+                            return v.toLocaleDateString('id-ID', {
+                                month: '2-digit',
+                                year: 'numeric',
+                                day: '2-digit'
+                            }).split('/').join('-')
+                        }, width: '100px',
+                    },
+                    {
+                        data: 'service_expired_date', name: 'service_expired_date', render: function (data) {
+                            const v = new Date(data);
+                            return v.toLocaleDateString('id-ID', {
+                                month: '2-digit',
+                                year: 'numeric',
+                                day: '2-digit'
+                            }).split('/').join('-')
+                        }, width: '140px',
+                    },
+                    {data: 'testing_number', name: 'testing_number', width: '150px',},
                     {
                         data: 'expired_in', name: 'expired_in', render: function (data) {
                             return data + ' hari';
-                        }, width: '250px',
+                        }, width: '80px',
                     },
                     {
                         data: 'status', name: 'status', render: function (data) {
@@ -152,65 +197,20 @@
                                 return 'Berlaku';
                             }
                             return 'Habis Masa Berlaku';
-                        }, width: '250px',
+                        }, width: '100px',
                     },
                     {
                         data: null, render: function (data) {
                             return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] + '">Edit</a>' +
                                 '<a href="#" class="btn-delete" data-id="' + data['id'] + '">Delete</a>'
-                        }, orderable: false, width: '250px',
+                        }, orderable: false, width: '120px',
                     }
                 ],
-                columnDefs: [{
-                    targets: 0,
-                    className: 'text-center',
-                    orderable: false
-                },
+                columnDefs: [
                     {
-                        "sWidth": '500px',
-                        targets: 1,
+                        targets: '_all',
                         className: 'text-center'
-                    },
-                    {
-                        targets: 2,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 3,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 4,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 5,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 6,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 7,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 8,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 9,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 10,
-                        className: 'text-center'
-                    },
-                    {
-                        targets: 11,
-                        className: 'text-center'
-                    },
+                    }
                 ]
             });
         }
@@ -218,6 +218,10 @@
         $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
+            });
+            generateStorehouseOption();
+            $('#area').on('change', function(e) {
+                generateStorehouseOption();
             });
             generateTableFacilityCertification();
         });

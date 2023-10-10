@@ -58,3 +58,35 @@ ul {
     font-size: 0.8rem !important;
 
 }
+
+.btn-excel {
+    all: unset;
+    transition: all 0.5s;
+    display: flex;
+    text-align: center;
+    border: none;
+    background-color: #097640;
+    color: white;
+    border-radius: 7px;
+    align-items: center;
+    font-weight: bold;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.btn-pdf {
+    all: unset;
+    transition: all 0.5s;
+    display: flex;
+    text-align: center;
+    border: none;
+    background-color: #b61409;
+    color: white;
+    border-radius: 7px;
+    align-items: center;
+    font-weight: bold;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}

@@ -30,17 +30,6 @@ Route::group(['prefix' => 'daerah-operasi'], function () {
     Route::get('/{id}/storehouse', [\App\Http\Controllers\AreaController::class, 'getStorehouseByAreaID'])->name('area.storehouse');
 });
 
-
-Route::group(['prefix' => 'satuan-pelayanan'], function () {
-    Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
-});
-
-Route::group(['prefix' => 'daerah-operasi'], function () {
-    Route::get('/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
-});
-
 Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
     Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('storehouse');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
@@ -49,4 +38,20 @@ Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
 Route::group(['prefix' => 'sertifikasi-sarana'], function () {
     Route::get('/', [\App\Http\Controllers\FacilityCertificationController::class, 'index'])->name('facility-certification');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityCertificationController::class, 'store'])->name('facility-certification.create');
+});
+
+Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
+    Route::get('/', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'index'])->name('technical-specification.locomotive');
+});
+
+Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {
+    Route::get('/', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'index'])->name('technical-specification.train');
+});
+
+Route::group(['prefix' => 'spesifikasi-teknis-sarana-gerbong'], function () {
+    Route::get('/', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'index'])->name('technical-specification.wagon');
+});
+
+Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], function () {
+    Route::get('/', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'index'])->name('technical-specification.special-equipment');
 });

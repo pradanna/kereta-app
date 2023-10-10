@@ -126,9 +126,37 @@
                         </span>
                         <p class="menu-text">Spesifikasi Teknis Sarana</p>
                     </a>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                               href="{{ route('technical-specification.locomotive') }}">
+
+                                <p class="menu-text">Lokomotif</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
+                               href="{{ route('technical-specification.train') }}">
+
+                                <p class="menu-text">Kereta</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                               href="{{ route('technical-specification.wagon') }}">
+
+                                <p class="menu-text">Gerbong</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                               href="{{ route('technical-specification.special-equipment') }}">
+
+                                <p class="menu-text">Peralatan Khusus</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-
-
                 <li class="nav-item text-center mt-3 mb-3">
 
                     <a class="title1-role " href="#"> Login Sebagai </a> <br>
