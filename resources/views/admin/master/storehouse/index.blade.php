@@ -9,8 +9,15 @@
             </ol>
         </nav>
     </div>
-    <div class="card w-100 shadow-sm">
-        <div class="card-body">
+    <div class="panel w-100 shadow-sm">
+
+        <div class="title">
+            <p>Data Depo dan Balai Yasa</p>
+            <a class="btn-utama sml rnd " href="{{ route('storehouse.create') }}">Tambah Data <i
+                    class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i></a>
+        </div>
+
+        <div class="isi">
             <div class="d-flex align-items-center mb-3">
                 <div class="flex-grow-1">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">

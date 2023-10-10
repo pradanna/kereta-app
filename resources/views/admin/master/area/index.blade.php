@@ -9,8 +9,15 @@
             </ol>
         </nav>
     </div>
-    <div class="card w-100 shadow-sm">
-        <div class="card-body">
+    <div class="panel">
+
+        <div class="title">
+            <p>Data Daerah Operasi</p>
+            <a class="btn-utama sml rnd " href="{{ route('area.create') }}">Tambah Data <i
+                    class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i></a>
+        </div>
+
+        <div class="isi">
             <div class="d-flex align-items-center mb-3">
                 <div class="flex-grow-1">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -38,7 +45,6 @@
                     <i class="material-symbols-outlined menu-icon ms-1 text-white">add_circle</i>
                 </a>
             </div>
-            <hr>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
                     <div id="main-map" style="width: 100%; height: calc(100vh - 70px)"></div>

@@ -10,10 +10,13 @@
             </ol>
         </nav>
     </div>
-    <div class="card w-100 shadow-sm">
-        <div class="card-body">
-            <p class="menu-title fw-bold mb-1">Form Satuan Pelayanan</p>
-            <hr>
+    <div class="panel ">
+        <div class="title">
+            <p>Tambah Data Satuan Pelayanan</p>
+        </div>
+
+
+        <div class="isi">
             <form method="post" id="form-data">
                 @csrf
                 <div class="row mb-1">
@@ -43,11 +46,8 @@
                 </div>
                 <hr>
                 <div class="d-flex justify-content-end">
-                    <a href="#" id="btn-save"
-                       class="btn-utama sml rnd d-flex align-items-center justify-content-center">
-                        <span class="material-symbols-outlined me-1 menu-icon text-white">check</span>
-                        Simpan
-                    </a>
+                    <a class="btn-utama  rnd " id="btn-save" href="#">Simpan <i
+                            class="material-symbols-outlined menu-icon ms-2 text-white">save</i></a>
                 </div>
             </form>
         </div>

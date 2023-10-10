@@ -10,8 +10,13 @@
             </ol>
         </nav>
     </div>
-    <div class="card w-100 shadow-sm">
-        <div class="card-body">
+    <div class="panel">
+        <div class="title">
+            <p>Tambah Data Daerah Operasi</p>
+
+        </div>
+
+        <div class="isi">
             <form method="post" id="form-data">
                 @csrf
                 <div class="row mb-1">
