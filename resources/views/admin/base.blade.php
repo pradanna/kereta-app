@@ -22,10 +22,10 @@
         rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     <link href="{{ asset('/css/sweetalert2.css') }}" rel="stylesheet">
-    <script src="{{ asset('/js/sweetalert2.min.js')}}"></script>
+    <script src="{{ asset('/js/sweetalert2.min.js') }}"></script>
     <style>
         ul {
-            list-style:  none;
+            list-style: none;
         }
     </style>
     @yield('css')
@@ -61,8 +61,8 @@
         </div>
     </div>
 
-    <div class="d-flex">
-        <nav id="sidebar" class="sidebar card py-2" style="height: 100vh;">
+    <div class="d-flex flex-nowrap ">
+        <nav id="sidebar" class="sidebar card py-2" style="min-height: 100vh;">
             <ul class="nav flex-column" id="nav_accordion">
                 <li class="mt-4 mb-3 text-center">
                     <img class="w-50" src="{{ asset('images/local/logodishub.png') }}" />
@@ -129,28 +129,28 @@
                     <ul>
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                               href="{{ route('technical-specification.locomotive') }}">
+                                href="{{ route('technical-specification.locomotive') }}">
 
                                 <p class="menu-text">Lokomotif</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
-                               href="{{ route('technical-specification.train') }}">
+                                href="{{ route('technical-specification.train') }}">
 
                                 <p class="menu-text">Kereta</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
-                               href="{{ route('technical-specification.wagon') }}">
+                                href="{{ route('technical-specification.wagon') }}">
 
                                 <p class="menu-text">Gerbong</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
-                               href="{{ route('technical-specification.special-equipment') }}">
+                                href="{{ route('technical-specification.special-equipment') }}">
 
                                 <p class="menu-text">Peralatan Khusus</p>
                             </a>
@@ -173,7 +173,7 @@
         </nav>
 
 
-        <div class="w-100 p-4">
+        <div class="flex-fill p-4">
             @yield('content')
         </div>
     </div>
@@ -187,31 +187,31 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script src="{{ asset('js/base.js') }}"></script>
-{{--    <script src="{{ asset('css/dropify/js/dropify.js') }}"></script>--}}
+    {{--    <script src="{{ asset('css/dropify/js/dropify.js') }}"></script> --}}
 
-{{--    <script src="{{ asset('js/dialog.js?v=2') }}"></script>--}}
-{{--    <script type="text/javascript"--}}
-{{--        src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script>--}}
-{{--    <script src="{{ asset('js/handler_image.js') }}"></script>--}}
-{{--    <script src="{{ asset('js/moment.min.js') }}"></script>--}}
+    {{--    <script src="{{ asset('js/dialog.js?v=2') }}"></script> --}}
+    {{--    <script type="text/javascript" --}}
+    {{--        src="https://cdn.jsdelivr.net/npm/browser-image-compression@latest/dist/browser-image-compression.js"></script> --}}
+    {{--    <script src="{{ asset('js/handler_image.js') }}"></script> --}}
+    {{--    <script src="{{ asset('js/moment.min.js') }}"></script> --}}
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-{{--    <script>--}}
-{{--        jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) {--}}
-{{--            return {--}}
-{{--                "iStart": oSettings._iDisplayStart,--}}
-{{--                "iEnd": oSettings.fnDisplayEnd(),--}}
-{{--                "iLength": oSettings._iDisplayLength,--}}
-{{--                "iTotal": oSettings.fnRecordsTotal(),--}}
-{{--                "iFilteredTotal": oSettings.fnRecordsDisplay(),--}}
-{{--                "iPage": oSettings._iDisplayLength === -1 ?--}}
-{{--                    0 : Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),--}}
-{{--                "iTotalPages": oSettings._iDisplayLength === -1 ?--}}
-{{--                    0 : Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)--}}
-{{--            };--}}
-{{--        };--}}
-{{--    </script>--}}
+    {{--    <script> --}}
+    {{--        jQuery.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings) { --}}
+    {{--            return { --}}
+    {{--                "iStart": oSettings._iDisplayStart, --}}
+    {{--                "iEnd": oSettings.fnDisplayEnd(), --}}
+    {{--                "iLength": oSettings._iDisplayLength, --}}
+    {{--                "iTotal": oSettings.fnRecordsTotal(), --}}
+    {{--                "iFilteredTotal": oSettings.fnRecordsDisplay(), --}}
+    {{--                "iPage": oSettings._iDisplayLength === -1 ? --}}
+    {{--                    0 : Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength), --}}
+    {{--                "iTotalPages": oSettings._iDisplayLength === -1 ? --}}
+    {{--                    0 : Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength) --}}
+    {{--            }; --}}
+    {{--        }; --}}
+    {{--    </script> --}}
 
     @yield('js')
 
