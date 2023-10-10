@@ -28,6 +28,14 @@
                                 Tampilan Grid
                             </button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link d-flex align-items-center" id="pills-table-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab"
+                                    aria-controls="pills-table" aria-selected="true">
+                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">demography</i>
+                                Tampilan Rekapitulasi
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -65,15 +73,12 @@
                                 <select class="select2 form-control" name="storehouse" id="storehouse"
                                         style="width: 100%;">
                                     <option value="" selected>Semua</option>
-                                    {{--                                    @foreach ($cities as $city) --}}
-                                    {{--                                        <option value="{{ $city->id }}">{{ $city->name }}</option> --}}
-                                    {{--                                    @endforeach --}}
                                 </select>
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <table id="table-data" class="display table table-striped w-100">
+                    <table id="table-data" class="display table table-striped w-100 nowrap">
                         <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -116,7 +121,9 @@
                 "aaSorting": [],
                 "order": [],
                 scrollX: true,
+                responsive: true,
                 processing: true,
+                autoWidth: false,
                 ajax: {
                     type: 'GET',
                     url: path,
@@ -127,17 +134,17 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false},
                     {data: 'facility_type.name', name: 'facility_type.name'},
-                    {data: 'ownership', name: 'ownership'},
-                    {data: 'facility_number', name: 'facility_number'},
-                    {data: 'area.name', name: 'area.name'},
-                    {data: 'storehouse.name', name: 'storehouse.name'},
-                    {data: 'service_start_date', name: 'service_start_date'},
-                    {data: 'service_expired_date', name: 'service_expired_date'},
-                    {data: 'testing_number', name: 'testing_number'},
+                    {data: 'ownership', name: 'ownership', width: '250px',},
+                    {data: 'facility_number', name: 'facility_number', width: '250px',},
+                    {data: 'area.name', name: 'area.name', width: '250px',},
+                    {data: 'storehouse.name', name: 'storehouse.name', width: '250px',},
+                    {data: 'service_start_date', name: 'service_start_date', width: '250px',},
+                    {data: 'service_expired_date', name: 'service_expired_date', width: '250px',},
+                    {data: 'testing_number', name: 'testing_number', width: '250px',},
                     {
                         data: 'expired_in', name: 'expired_in', render: function (data) {
                             return data + ' hari';
-                        }
+                        }, width: '250px',
                     },
                     {
                         data: 'status', name: 'status', render: function (data) {
@@ -145,74 +152,63 @@
                                 return 'Berlaku';
                             }
                             return 'Habis Masa Berlaku';
-                        }
+                        }, width: '250px',
                     },
                     {
                         data: null, render: function (data) {
                             return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] + '">Edit</a>' +
                                 '<a href="#" class="btn-delete" data-id="' + data['id'] + '">Delete</a>'
-                        }, orderable: false
+                        }, orderable: false, width: '250px',
                     }
                 ],
                 columnDefs: [{
-                    width: '30px',
                     targets: 0,
                     className: 'text-center',
                     orderable: false
                 },
                     {
-                        width: '250px',
+                        "sWidth": '500px',
                         targets: 1,
                         className: 'text-center'
                     },
                     {
-                        width: 120,
                         targets: 2,
                         className: 'text-center'
                     },
                     {
-                        width: 150,
                         targets: 3,
                         className: 'text-center'
                     },
                     {
-                        width: 180,
                         targets: 4,
                         className: 'text-center'
                     },
                     {
-                        width: 120,
                         targets: 5,
                         className: 'text-center'
                     },
                     {
-                        width: 100,
                         targets: 6,
                         className: 'text-center'
                     },
                     {
-                        width: 100,
                         targets: 7,
                         className: 'text-center'
                     },
                     {
-                        width: 250,
                         targets: 8,
                         className: 'text-center'
                     },
                     {
-                        width: 120,
                         targets: 9,
                         className: 'text-center'
                     },
                     {
-                        width: 120,
                         targets: 10,
                         className: 'text-center'
                     },
                     {
-                        width: 150,
-                        targets: 10,
+                        targets: 11,
                         className: 'text-center'
                     },
                 ]
