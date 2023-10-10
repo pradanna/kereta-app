@@ -81,7 +81,7 @@
                         <span class="material-symbols-outlined menu-icon">
                             folder_copy
                         </span>
-                        <p class="menu-text">Master Data</p>
+                        <p class="menu-text">Master Sarana</p>
                     </a>
                     <ul>
                         <li class="nav-item">
