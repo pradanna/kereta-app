@@ -12,6 +12,7 @@ class WagonSubType extends Model
 
     protected $fillable = [
         'wagon_type_id',
+        'code',
         'name'
     ];
 

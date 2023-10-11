@@ -45,14 +45,21 @@ Route::group(['prefix' => 'jenis-kereta'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TrainTypeController::class, 'store'])->name('train-type.create');
 });
 
-Route::group(['prefix' => 'sertifikasi-sarana'], function () {
-    Route::get('/', [\App\Http\Controllers\FacilityCertificationController::class, 'index'])->name('facility-certification');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityCertificationController::class, 'store'])->name('facility-certification.create');
+Route::group(['prefix' => 'jenis-gerbong'], function () {
+    Route::get('/', [\App\Http\Controllers\WagonTypeController::class, 'index'])->name('wagon-type');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WagonTypeController::class, 'store'])->name('wagon-type.create');
+    Route::get('/{id}/sub-tipe', [\App\Http\Controllers\WagonTypeController::class, 'sub_type'])->name('wagon-type.sub-type');
+    Route::match(['post', 'get'], '/{id}/sub-tipe/tambah', [\App\Http\Controllers\WagonTypeController::class, 'store_sub_type'])->name('wagon-type.sub-type.create');
+});
+
+Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
+    Route::get('/', [\App\Http\Controllers\FacilityLocomotiveController::class, 'index'])->name('facility-certification-locomotive');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('facility-certification-locomotive.create');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
     Route::get('/', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'index'])->name('technical-specification.locomotive');
-    Route::match(['post', 'get'],'/tambah', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'store'])->name('technical-specification.locomotive.add');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'store'])->name('technical-specification.locomotive.add');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {
