@@ -5,14 +5,14 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('facility-certification-locomotive') }}">Sertifikasi Sarana Lokomotif</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train') }}">Sertifikasi Sarana Kereta</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Form Sertifikasi Sarana Lokomotif</p>
+            <p>Form Sertifikasi Sarana Kereta</p>
         </div>
         <div class="isi">
             <form method="post" id="form-data">
@@ -20,11 +20,11 @@
                 <div class="row mb-1">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="locomotive_type" class="form-label">Jenis Sarana</label>
-                            <select class="select2 form-control" name="locomotive_type" id="locomotive_type"
+                            <label for="train_type" class="form-label">Jenis Sarana</label>
+                            <select class="select2 form-control" name="train_type" id="train_type"
                                     style="width: 100%;">
-                                @foreach ($locomotive_types as $locomotive_type)
-                                    <option value="{{ $locomotive_type->id }}">{{ $locomotive_type->name }}</option>
+                                @foreach ($train_types as $train_type)
+                                    <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})</option>
                                 @endforeach
                             </select>
                         </div>

@@ -5,14 +5,14 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Sertifikasi Sarana Lokomotif</li>
+                <li class="breadcrumb-item active" aria-current="page">Sertifikasi Sarana Gerbong</li>
             </ol>
         </nav>
     </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
-            <p>Sertifikasi Sarana Lokomotif</p>
-            <a class="btn-utama sml rnd " href="{{ route('facility-certification-locomotive.create') }}">Tambah
+            <p>Sertifikasi Sarana Gerbong</p>
+            <a class="btn-utama sml rnd " href="{{ route('facility-certification-wagon.create') }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>
         </div>
@@ -46,12 +46,12 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group w-100">
-                                <label for="locomotive_type" class="form-label">Tipe Sarana</label>
-                                <select class="select2 form-control" name="locomotive_type" id="locomotive_type"
+                                <label for="wagon_sub_type" class="form-label">Sub Tipe Gerbong</label>
+                                <select class="select2 form-control" name="wagon_sub_type" id="wagon_sub_type"
                                         style="width: 100%;">
                                     <option value="" selected>Semua</option>
-                                    @foreach ($locomotive_types as $locomotive_type)
-                                        <option value="{{ $locomotive_type->id }}">{{ $locomotive_type->code }}</option>
+                                    @foreach ($wagon_sub_types as $wagon_sub_type)
+                                        <option value="{{ $wagon_sub_type->id }}">{{ $wagon_sub_type->code }} ({{ $wagon_sub_type->name }})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -115,7 +115,7 @@
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script>
         let table;
-        let path = '{{ route('facility-certification-locomotive') }}';
+        let path = '{{ route('facility-certification-wagon') }}';
 
         let areaPath = '{{ route('area') }}';
 
@@ -159,7 +159,7 @@
                 },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false, width: '30px'},
-                    {data: 'locomotive_type.name', name: 'locomotive_type.name', width: '120px', visible: false,},
+                    {data: 'wagon_sub_type.name', name: 'wagon_sub_type.name', width: '120px', visible: false,},
                     {data: 'ownership', name: 'ownership', width: '120px'},
                     {data: 'facility_number', name: 'facility_number', width: '100px'},
                     {data: 'area.name', name: 'area.name', width: '150px',},

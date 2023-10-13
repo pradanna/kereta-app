@@ -6,12 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Models\Area;
-use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
+use App\Models\FacilityTrain;
 use App\Models\LocomotiveType;
+use App\Models\TrainType;
 use Carbon\Carbon;
 
-class FacilityLocomotiveController extends CustomController
+class FacilityTrainController extends CustomController
 {
     public function __construct()
     {
@@ -21,15 +22,15 @@ class FacilityLocomotiveController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type'])
+            $data = FacilityTrain::with(['area', 'storehouse.storehouse_type', 'train_type'])
                 ->orderBy('created_at', 'ASC')
                 ->get()->append(['expired_in', 'status']);
             return $this->basicDataTables($data);
         }
-        $locomotive_types = LocomotiveType::all();
+        $train_types = TrainType::all();
         $areas = Area::all();
-        return view('admin.facility-certification.locomotive.index')->with([
-            'locomotive_types' => $locomotive_types,
+        return view('admin.facility-certification.train.index')->with([
+            'train_types' => $train_types,
             'areas' => $areas,
         ]);
     }
@@ -41,23 +42,23 @@ class FacilityLocomotiveController extends CustomController
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
-                    'locomotive_type_id' => $this->postField('locomotive_type'),
+                    'train_type_id' => $this->postField('train_type'),
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                 ];
-                FacilityLocomotive::create($data_request);
-                return redirect()->route('facility-certification-locomotive');
+                FacilityTrain::create($data_request);
+                return redirect()->route('facility-certification-train');
             } catch (\Exception $e) {
                 return redirect()->back();
             }
         }
-        $locomotive_types = LocomotiveType::all();
+        $train_types = TrainType::all();
         $areas = Area::all();
-        return view('admin.facility-certification.locomotive.add')->with([
-            'locomotive_types' => $locomotive_types,
+        return view('admin.facility-certification.train.add')->with([
+            'train_types' => $train_types,
             'areas' => $areas
         ]);
     }

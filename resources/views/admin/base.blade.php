@@ -141,13 +141,13 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                           href="{{ route('service-unit') }}">
+                           href="{{ route('facility-certification-train') }}">
                             <p class="menu-text">Kereta</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                           href="{{ route('service-unit') }}">
+                           href="{{ route('facility-certification-wagon') }}">
                             <p class="menu-text">Gerbong</p>
                         </a>
                     </li>
