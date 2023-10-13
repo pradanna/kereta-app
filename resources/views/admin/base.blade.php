@@ -147,6 +147,18 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                           href="{{ route('facility-certification-train-diesel') }}">
+                            <p class="menu-text">KRD</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                           href="{{ route('facility-certification-train-electric') }}">
+                            <p class="menu-text">KRL</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
                            href="{{ route('facility-certification-wagon') }}">
                             <p class="menu-text">Gerbong</p>
                         </a>
@@ -159,15 +171,6 @@
                     </li>
                 </ul>
             </li>
-            {{--            <li class="nav-item">--}}
-            {{--                <a class="nav-link menu {{ request()->is('facility-certification') ? 'active' : '' }}"--}}
-            {{--                   href="{{ route('facility-certification') }}">--}}
-            {{--                        <span class="material-symbols-outlined menu-icon">--}}
-            {{--                            card_membership--}}
-            {{--                        </span>--}}
-            {{--                    <p class="menu-text">Sertifikasi Sarana</p>--}}
-            {{--                </a>--}}
-            {{--            </li>--}}
 
             <li class="nav-item">
                 <a class="nav-link menu {{ request()->is('') ? 'active' : '' }}" href="#">

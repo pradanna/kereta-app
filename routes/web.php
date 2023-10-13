@@ -62,6 +62,16 @@ Route::group(['prefix' => 'sertifikasi-sarana-kereta'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityTrainController::class, 'store'])->name('facility-certification-train.create');
 });
 
+Route::group(['prefix' => 'sertifikasi-sarana-kereta-diesel'], function () {
+    Route::get('/', [\App\Http\Controllers\FacilityDieselTrainController::class, 'index'])->name('facility-certification-train-diesel');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityDieselTrainController::class, 'store'])->name('facility-certification-train-diesel.create');
+});
+
+Route::group(['prefix' => 'sertifikasi-sarana-kereta-listrik'], function () {
+    Route::get('/', [\App\Http\Controllers\FacilityElectricTrainController::class, 'index'])->name('facility-certification-train-electric');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityElectricTrainController::class, 'store'])->name('facility-certification-train-electric.create');
+});
+
 Route::group(['prefix' => 'sertifikasi-sarana-gerbong'], function () {
     Route::get('/', [\App\Http\Controllers\FacilityWagonController::class, 'index'])->name('facility-certification-wagon');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityWagonController::class, 'store'])->name('facility-certification-wagon.create');
