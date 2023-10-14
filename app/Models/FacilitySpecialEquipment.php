@@ -11,10 +11,10 @@ class FacilitySpecialEquipment extends Model
 {
     use HasFactory, Uuids;
 
-    protected $table = 'facility_special_equipments';
-
     protected $fillable = [
+        'special_equipment_type_id',
         'area_id',
+        'storehouse_id',
         'ownership',
         'new_facility_number',
         'old_facility_number',
@@ -25,6 +25,16 @@ class FacilitySpecialEquipment extends Model
     public function area()
     {
         return $this->belongsTo(Area::class, 'area_id');
+    }
+
+    public function storehouse()
+    {
+        return $this->belongsTo(Storehouse::class, 'storehouse_id');
+    }
+
+    public function special_equipment_type()
+    {
+        return $this->belongsTo(SpecialEquipmentType::class, 'special_equipment_type_id');
     }
 
     public function getExpiredInAttribute()

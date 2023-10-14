@@ -122,6 +122,12 @@
                                 <p class="menu-text">Jenis Gerbong</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('special-equipment-type') }}">
+                                <p class="menu-text">Jenis Peralatan Khusus</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

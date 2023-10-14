@@ -52,6 +52,11 @@ Route::group(['prefix' => 'jenis-gerbong'], function () {
     Route::match(['post', 'get'], '/{id}/sub-tipe/tambah', [\App\Http\Controllers\WagonTypeController::class, 'store_sub_type'])->name('wagon-type.sub-type.create');
 });
 
+Route::group(['prefix' => 'jenis-peralatan-khusus'], function () {
+    Route::get('/', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'index'])->name('special-equipment-type');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'store'])->name('special-equipment-type.create');
+});
+
 Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
     Route::get('/', [\App\Http\Controllers\FacilityLocomotiveController::class, 'index'])->name('facility-certification-locomotive');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('facility-certification-locomotive.create');

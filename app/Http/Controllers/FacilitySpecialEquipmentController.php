@@ -8,6 +8,7 @@ use App\Helper\CustomController;
 use App\Models\Area;
 use App\Models\FacilityElectricTrain;
 use App\Models\FacilitySpecialEquipment;
+use App\Models\SpecialEquipmentType;
 use App\Models\TrainType;
 use Carbon\Carbon;
 
@@ -21,13 +22,15 @@ class FacilitySpecialEquipmentController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = FacilitySpecialEquipment::with(['area'])
+            $data = FacilitySpecialEquipment::with(['area', 'storehouse.storehouse_type', 'special_equipment_type'])
                 ->orderBy('created_at', 'ASC')
                 ->get()->append(['expired_in', 'status']);
             return $this->basicDataTables($data);
         }
+        $special_equipment_types = SpecialEquipmentType::all();
         $areas = Area::all();
         return view('admin.facility-certification.special-equipment.index')->with([
+            'special_equipment_types' => $special_equipment_types,
             'areas' => $areas,
         ]);
     }
@@ -49,9 +52,11 @@ class FacilitySpecialEquipmentController extends CustomController
                 return redirect()->back();
             }
         }
+        $special_equipment_types = SpecialEquipmentType::all();
         $areas = Area::all();
         return view('admin.facility-certification.special-equipment.add')->with([
-            'areas' => $areas
+            'special_equipment_types' => $special_equipment_types,
+            'areas' => $areas,
         ]);
     }
 }
