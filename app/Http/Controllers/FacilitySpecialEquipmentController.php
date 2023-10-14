@@ -40,13 +40,15 @@ class FacilitySpecialEquipmentController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
+                    'special_equipment_type_id' => $this->postField('special_equipment_type'),
                     'area_id' => $this->postField('area'),
                     'ownership' => $this->postField('ownership'),
                     'new_facility_number' => $this->postField('new_facility_number'),
+                    'old_facility_number' => $this->postField('old_facility_number'),
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number') !== '' ? $this->postField('testing_number') : null,
                 ];
-                FacilityElectricTrain::create($data_request);
+                FacilitySpecialEquipment::create($data_request);
                 return redirect()->route('facility-certification-special-equipment');
             } catch (\Exception $e) {
                 return redirect()->back();

@@ -1,6 +1,11 @@
 @extends('admin.base')
 
 @section('content')
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
     <div class="d-flex justify-content-between align-items-center mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -21,12 +26,12 @@
                 <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="facility_certification" class="form-label">Identitas Sarana</label>
-                            <select class="select2 form-control" name="facility_certification"
-                                    id="facility_certification" style="width: 100%;">
-                                @foreach ($facility_certifications as $facility_certification)
+                            <label for="facility_locomotive" class="form-label">Identitas Sarana</label>
+                            <select class="select2 form-control" name="facility_locomotive"
+                                    id="facility_locomotive" style="width: 100%;">
+                                @foreach ($facility_locomotives as $facility_locomotive)
                                     <option
-                                        value="{{ $facility_certification->id }}">{{ $facility_certification->facility_number }}</option>
+                                        value="{{ $facility_locomotive->id }}">{{ $facility_locomotive->facility_number }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -127,6 +132,24 @@
         $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
+            });
+
+            $('#btn-save').on('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menyimpan data?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        $('#form-data').submit()
+                    }
+                });
             });
         });
     </script>

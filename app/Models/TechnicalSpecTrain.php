@@ -11,8 +11,7 @@ class TechnicalSpecTrain extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'facility_certification_id',
-        'train_type_id',
+        'facility_train_id',
         'empty_weight',
         'maximum_speed',
         'passenger_capacity',
@@ -25,9 +24,9 @@ class TechnicalSpecTrain extends Model
         'spoor_width',
     ];
 
-    public function facility_certification()
+    public function facility_train()
     {
-        return $this->belongsTo(FacilityCertification::class, 'facility_certification_id');
+        return $this->belongsTo(FacilityTrain::class, 'facility_train_id');
     }
 
     public function train_type()

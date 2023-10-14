@@ -61,10 +61,11 @@
                         <thead>
                         <tr>
                             <th class="text-center">#</th>
+                            <th class="text-center">Wilayah</th>
                             <th class="text-center">Kepemilikan</th>
+                            <th class="text-center">Jenis Sarana</th>
                             <th class="text-center">No. Sarana Baru</th>
                             <th class="text-center">No. Sarana Lama</th>
-                            <th class="text-center">Wilayah</th>
                             <th class="text-center">Masa Berlaku Sarana</th>
                             <th class="text-center">No. BA Pengujian</th>
                             <th class="text-center">Akan Habis (Hari)</th>
@@ -111,10 +112,11 @@
                 },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false, width: '30px'},
-                    {data: 'ownership', name: 'ownership', width: '120px'},
-                    {data: 'new_facility_number', name: 'new_facility_number', width: '100px'},
-                    {data: 'old_facility_number', name: 'old_facility_number', width: '100px'},
                     {data: 'area.name', name: 'area.name', width: '150px',},
+                    {data: 'ownership', name: 'ownership', width: '120px'},
+                    {data: 'special_equipment_type.name', name: 'special_equipment_type.name', width: '120px'},
+                    {data: 'new_facility_number', name: 'new_facility_number', width: '120px'},
+                    {data: 'old_facility_number', name: 'old_facility_number', width: '120px'},
                     {
                         data: 'service_expired_date', name: 'service_expired_date', render: function (data) {
                             const v = new Date(data);
