@@ -77,6 +77,11 @@ Route::group(['prefix' => 'sertifikasi-sarana-gerbong'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityWagonController::class, 'store'])->name('facility-certification-wagon.create');
 });
 
+Route::group(['prefix' => 'sertifikasi-sarana-peralatan-khusus'], function () {
+    Route::get('/', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'index'])->name('facility-certification-special-equipment');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'store'])->name('facility-certification-special-equipment.create');
+});
+
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
     Route::get('/', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'index'])->name('technical-specification.locomotive');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'store'])->name('technical-specification.locomotive.add');
