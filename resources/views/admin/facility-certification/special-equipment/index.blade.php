@@ -5,14 +5,14 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Sertifikasi Sarana Kereta</li>
+                <li class="breadcrumb-item active" aria-current="page">Sertifikasi Sarana Peralatan Khusus</li>
             </ol>
         </nav>
     </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
-            <p>Sertifikasi Sarana Kereta</p>
-            <a class="btn-utama sml rnd " href="{{ route('facility-certification-train.create') }}">Tambah
+            <p>Sertifikasi Sarana Peralatan Khusus</p>
+            <a class="btn-utama sml rnd " href="{{ route('facility-certification-special-equipment.create') }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>
         </div>
@@ -44,19 +44,7 @@
                 <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
                      aria-labelledby="pills-table-tab">
                     <div class="row">
-                        <div class="col-4">
-                            <div class="form-group w-100">
-                                <label for="train_type" class="form-label">Tipe Sarana</label>
-                                <select class="select2 form-control" name="train_type" id="train_type"
-                                        style="width: 100%;">
-                                    <option value="" selected>Semua</option>
-                                    @foreach ($train_types as $train_type)
-                                        <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
+                        <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="area" class="form-label">Wilayah</label>
                                 <select class="select2 form-control" name="area" id="area" style="width: 100%;">
@@ -67,28 +55,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="form-group w-100">
-                                <label for="storehouse" class="form-label">Depo Induk</label>
-                                <select class="select2 form-control" name="storehouse" id="storehouse"
-                                        style="width: 100%;">
-                                    <option value="" selected>Semua</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <hr>
                     <table id="table-data" class="display table table-striped">
                         <thead>
                         <tr>
                             <th class="text-center">#</th>
-                            <th class="text-center">Tipe Sarana</th>
                             <th class="text-center">Kepemilikan</th>
-                            <th class="text-center">No. Sarana</th>
+                            <th class="text-center">No. Sarana Baru</th>
+                            <th class="text-center">No. Sarana Lama</th>
                             <th class="text-center">Wilayah</th>
-                            <th class="text-center">Tipe Depo</th>
-                            <th class="text-center">Depo Induk</th>
-                            <th class="text-center">Mulai Dinas</th>
                             <th class="text-center">Masa Berlaku Sarana</th>
                             <th class="text-center">No. BA Pengujian</th>
                             <th class="text-center">Akan Habis (Hari)</th>
@@ -115,33 +91,9 @@
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script>
         let table;
-        let path = '{{ route('facility-certification-train') }}';
+        let path = '{{ route('facility-certification-special-equipment') }}';
 
         let areaPath = '{{ route('area') }}';
-
-        function getStorehouseByAreaID() {
-            let areaID = $('#area').val();
-            let url = areaPath + '/' + areaID + '/storehouse';
-            return $.get(url);
-        }
-
-        function generateStorehouseOption() {
-            let elOption = $('#storehouse');
-            elOption.empty();
-            getStorehouseByAreaID().then((response) => {
-                let data = response.data;
-                elOption.append('<option value="" selected>Semua</option>');
-                $.each(data, function(k, v) {
-                    elOption.append('<option value="' + v['id'] + '">' + v['name'] + ' ('+v['storehouse_type']['name']+')</option>')
-                });
-                $('#storehouse').select2({
-                    width: 'resolve',
-                });
-                console.log(response);
-            }).catch((error) => {
-                console.log(error)
-            })
-        }
 
         function generateTableFacilityCertification() {
             table = $('#table-data').DataTable({
@@ -159,22 +111,10 @@
                 },
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false, orderable: false, width: '30px'},
-                    {data: 'train_type.name', name: 'train_type.name', width: '120px', visible: false,},
                     {data: 'ownership', name: 'ownership', width: '120px'},
-                    {data: 'facility_number', name: 'facility_number', width: '100px'},
+                    {data: 'new_facility_number', name: 'new_facility_number', width: '100px'},
+                    {data: 'old_facility_number', name: 'old_facility_number', width: '100px'},
                     {data: 'area.name', name: 'area.name', width: '150px',},
-                    {data: 'storehouse.storehouse_type.name', name: 'storehouse.storehouse_type.name', width: '120px', visible: false,},
-                    {data: 'storehouse.name', name: 'storehouse.name', width: '120px',},
-                    {
-                        data: 'service_start_date', name: 'service_start_date', render: function (data) {
-                            const v = new Date(data);
-                            return v.toLocaleDateString('id-ID', {
-                                month: '2-digit',
-                                year: 'numeric',
-                                day: '2-digit'
-                            }).split('/').join('-')
-                        }, width: '100px',
-                    },
                     {
                         data: 'service_expired_date', name: 'service_expired_date', render: function (data) {
                             const v = new Date(data);
@@ -218,10 +158,6 @@
         $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
-            });
-            generateStorehouseOption();
-            $('#area').on('change', function(e) {
-                generateStorehouseOption();
             });
             generateTableFacilityCertification();
         });

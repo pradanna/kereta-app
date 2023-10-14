@@ -165,7 +165,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                           href="{{ route('service-unit') }}">
+                           href="{{ route('facility-certification-special-equipment') }}">
                             <p class="menu-text">Peralatan Khusus</p>
                         </a>
                     </li>
