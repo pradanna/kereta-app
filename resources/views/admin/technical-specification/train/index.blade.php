@@ -12,7 +12,7 @@
     <div class="panel">
         <div class="title">
             <p>Data Spesifikasi Teknis Sarana Kereta</p>
-            <a class="btn-utama sml rnd " href="{{ route('technical-specification.train') }}">Tambah
+            <a class="btn-utama sml rnd " href="{{ route('technical-specification.train.add') }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>
         </div>
@@ -83,26 +83,18 @@
                     width: '30px'
                 },
                     {
-                        data: 'facility_locomotive.facility_number',
-                        name: 'facility_locomotive.facility_number',
+                        data: 'facility_train.facility_number',
+                        name: 'facility_train.facility_number',
                         width: '120px',
                     },
                     {
-                        data: 'facility_locomotive.locomotive_type.name',
-                        name: 'facility_locomotive.locomotive_type.name',
+                        data: 'facility_train.train_type.name',
+                        name: 'facility_train.train_type.name',
                         width: '120px'
                     },
                     {
                         data: 'empty_weight',
                         name: 'empty_weight',
-                        width: '100px',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'house_power',
-                        name: 'house_power',
                         width: '100px',
                         render: function (data) {
                             return data.toLocaleString('id-ID');
@@ -117,12 +109,17 @@
                         }
                     },
                     {
-                        data: 'fuel_consumption',
-                        name: 'fuel_consumption',
+                        data: 'passenger_capacity',
+                        name: 'passenger_capacity',
                         width: '100px',
                         render: function (data) {
                             return data.toLocaleString('id-ID');
                         }
+                    },
+                    {
+                        data: 'air_conditioner',
+                        name: 'air_conditioner',
+                        width: '100px'
                     },
                     {
                         data: 'long',
@@ -157,16 +154,16 @@
                         }
                     },
                     {
-                        data: 'wheel_diameter',
-                        name: 'wheel_diameter',
+                        data: 'axle_load',
+                        name: 'axle_load',
                         width: '100px',
                         render: function (data) {
                             return data.toLocaleString('id-ID');
                         }
                     },
                     {
-                        data: 'wheel_diameter',
-                        name: 'wheel_diameter',
+                        data: 'spoor_width',
+                        name: 'spoor_width',
                         width: '100px',
                         render: function (data) {
                             return data.toLocaleString('id-ID');

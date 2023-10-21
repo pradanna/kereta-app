@@ -94,10 +94,12 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {
     Route::get('/', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'index'])->name('technical-specification.train');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'store'])->name('technical-specification.train.add');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-gerbong'], function () {
     Route::get('/', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'index'])->name('technical-specification.wagon');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'store'])->name('technical-specification.wagon.add');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], function () {

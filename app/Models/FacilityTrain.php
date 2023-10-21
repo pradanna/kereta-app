@@ -35,7 +35,7 @@ class FacilityTrain extends Model
 
     public function train_type()
     {
-        return $this->belongsTo(LocomotiveType::class, 'train_type_id');
+        return $this->belongsTo(TrainType::class, 'train_type_id');
     }
 
     public function getExpiredInAttribute()

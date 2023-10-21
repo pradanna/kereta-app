@@ -11,8 +11,7 @@ class TechnicalSpecWagon extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'facility_certification_id',
-        'wagon_sub_type_id',
+        'facility_wagon_id',
         'loading_weight',
         'empty_weight',
         'maximum_speed',
@@ -24,13 +23,8 @@ class TechnicalSpecWagon extends Model
         'usability',
     ];
 
-    public function facility_certification()
+    public function facility_wagon()
     {
-        return $this->belongsTo(FacilityCertification::class, 'facility_certification_id');
-    }
-
-    public function wagon_sub_type()
-    {
-        return $this->belongsTo(WagonSubType::class, 'wagon_sub_type_id');
+        return $this->belongsTo(FacilityWagon::class, 'facility_wagon_id');
     }
 }
