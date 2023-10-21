@@ -104,4 +104,5 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-gerbong'], function () {
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], function () {
     Route::get('/', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'index'])->name('technical-specification.special-equipment');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'store'])->name('technical-specification.special-equipment.add');
 });
