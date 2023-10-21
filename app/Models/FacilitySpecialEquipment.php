@@ -7,18 +7,17 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FacilityTrain extends Model
+class FacilitySpecialEquipment extends Model
 {
     use HasFactory, Uuids;
 
     protected $fillable = [
+        'special_equipment_type_id',
         'area_id',
         'storehouse_id',
-        'train_type_id',
         'ownership',
-        'facility_number',
-        'facility_period',
-        'service_start_date',
+        'new_facility_number',
+        'old_facility_number',
         'service_expired_date',
         'testing_number',
     ];
@@ -33,9 +32,9 @@ class FacilityTrain extends Model
         return $this->belongsTo(Storehouse::class, 'storehouse_id');
     }
 
-    public function train_type()
+    public function special_equipment_type()
     {
-        return $this->belongsTo(TrainType::class, 'train_type_id');
+        return $this->belongsTo(SpecialEquipmentType::class, 'special_equipment_type_id');
     }
 
     public function getExpiredInAttribute()

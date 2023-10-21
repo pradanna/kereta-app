@@ -24,18 +24,21 @@
             <form method="post" id="form-data">
                 @csrf
                 <div class="row mb-2">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="form-group w-100">
-                            <label for="facility_locomotive" class="form-label">Identitas Sarana</label>
-                            <select class="select2 form-control" name="facility_locomotive"
-                                    id="facility_locomotive" style="width: 100%;">
-                                @foreach ($facility_locomotives as $facility_locomotive)
+                            <label for="facility_train" class="form-label">Identitas Sarana</label>
+                            <select class="select2 form-control" name="facility_train"
+                                    id="facility_train" style="width: 100%;">
+                                @foreach ($facility_trains as $facility_train)
                                     <option
-                                        value="{{ $facility_locomotive->id }}">{{ $facility_locomotive->facility_number }}</option>
+                                        value="{{ $facility_train->id }}">{{ $facility_train->facility_number }} ({{ $facility_train->train_type->name }})</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+
+                </div>
+                <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
@@ -43,15 +46,16 @@
                                    placeholder="Berat Kosong">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="house_power" class="form-label">Horse Power (HP)</label>
-                            <input type="number" step="any" class="form-control" id="house_power" name="house_power"
-                                   placeholder="Horse Power">
+                            <label for="passenger_capacity" class="form-label">Kapasitas Penumpang</label>
+                            <input type="number" step="any" class="form-control" id="passenger_capacity" name="passenger_capacity"
+                                   placeholder="Kapasitas Penumpang">
                         </div>
                     </div>
+
+                </div>
+                <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
@@ -59,53 +63,64 @@
                                    placeholder="Kecepatan Maksimum (VMax)">
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="air_conditioner" class="form-label">Jenis AC</label>
+                            <input type="text" class="form-control" id="air_conditioner"
+                                   name="air_conditioner"
+                                   placeholder="Jenis AC">
+                        </div>
+                    </div>
+
                 </div>
+                <hr>
+                <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
                 <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="fuel_consumption" class="form-label">Konsumsi BBM (Lt/Jam)</label>
-                            <input type="number" step="any" class="form-control" id="fuel_consumption"
-                                   name="fuel_consumption"
-                                   placeholder="Konsumsi BBM">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="long" class="form-label">Panjang Lokomotif (mm)</label>
+                            <label for="long" class="form-label">Panjang Kereta (mm)</label>
                             <input type="number" step="any" class="form-control" id="long" name="long"
-                                   placeholder="Panjang Lokomotif">
+                                   placeholder="Panjang Kereta">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="width" class="form-label">Lebar Lokomotif (mm)</label>
+                            <label for="width" class="form-label">Lebar Kereta (mm)</label>
                             <input type="number" step="any" class="form-control" id="width" name="width"
-                                   placeholder="Lebar Lokomotif">
+                                   placeholder="Lebar Kereta">
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="height" class="form-label">Tinggi Maksimum (mm)</label>
-                            <input type="number" step="any" class="form-control" id="height" name="height"
-                                   placeholder="Tinggi Maksimum">
-                        </div>
-                    </div>
+
                 </div>
                 <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="coupler_height" class="form-label">Tinggi Coupler (mm)</label>
-                            <input type="number" step="any" class="form-control" id="coupler_height" name="coupler_height"
-                                   placeholder="Tinggi Coupler">
+                            <label for="height" class="form-label">Tinggi Kereta (mm)</label>
+                            <input type="number" step="any" class="form-control" id="height" name="height"
+                                   placeholder="Tinggi Kereta">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="wheel_diameter" class="form-label">Diameter Roda (mm)</label>
-                            <input type="number" step="any" class="form-control" id="wheel_diameter" name="wheel_diameter"
-                                   placeholder="Diameter Roda">
+                            <label for="coupler_height" class="form-label">Tinggi Alat Perangkai (mm)</label>
+                            <input type="number" step="any" class="form-control" id="coupler_height" name="coupler_height"
+                                   placeholder="Tinggi Alat Perangkai">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="axle_load" class="form-label">Beban Gandar (Ton)</label>
+                            <input type="number" step="any" class="form-control" id="axle_load" name="axle_load"
+                                   placeholder="Beban Gandar">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="spoor_width" class="form-label">Lebar Spoor (mm)</label>
+                            <input type="number" step="any" class="form-control" id="spoor_width" name="spoor_width"
+                                   placeholder="Lebar Spoor">
                         </div>
                     </div>
                 </div>

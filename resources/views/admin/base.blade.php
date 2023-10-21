@@ -116,105 +116,112 @@
                                 <p class="menu-text">Jenis Kereta</p>
                             </a>
                         </li>
-                        <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
-                            href="{{ route('wagon-type') }}">
-                            <p class="menu-text">Jenis Gerbong</p>
-                        </a>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('wagon-type') }}">
+                                <p class="menu-text">Jenis Gerbong</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('special-equipment-type') }}">
+                                <p class="menu-text">Jenis Peralatan Khusus</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-            </ul>
-            </li>
 
-            <li class="nav-item ">
-                <a class="nav-link menu {{ explode('-', Request::path(), 2)[0] == 'sertifikasi' ? 'active' : '' }}">
-                    <span class="material-symbols-outlined menu-icon">
-                        card_membership
-                    </span>
-                    <p class="menu-text">Sertifikasi Sarana</p>
-                </a>
-                <ul class="collapse {{ explode('-', Request::path(), 2)[0] == 'sertifikasi' ? 'show' : '' }} ">
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                            href="{{ route('facility-certification-locomotive') }}">
-                            <p class="menu-text">Lokomotif</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                            href="{{ route('facility-certification-train') }}">
-                            <p class="menu-text">Kereta</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                            href="{{ route('facility-certification-train-diesel') }}">
-                            <p class="menu-text">KRD</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                            href="{{ route('facility-certification-train-electric') }}">
-                            <p class="menu-text">KRL</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                            href="{{ route('facility-certification-wagon') }}">
-                            <p class="menu-text">Gerbong</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                            href="{{ route('service-unit') }}">
-                            <p class="menu-text">Peralatan Khusus</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('master') ? 'active' : '' }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            card_membership
+                        </span>
+                        <p class="menu-text">Sertifikasi Sarana</p>
+                    </a>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                                href="{{ route('facility-certification-locomotive') }}">
+                                <p class="menu-text">Lokomotif</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                                href="{{ route('facility-certification-train') }}">
+                                <p class="menu-text">Kereta</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                                href="{{ route('facility-certification-train-diesel') }}">
+                                <p class="menu-text">KRD</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                                href="{{ route('facility-certification-train-electric') }}">
+                                <p class="menu-text">KRL</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                                href="{{ route('facility-certification-wagon') }}">
+                                <p class="menu-text">Gerbong</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                                href="{{ route('facility-certification-special-equipment') }}">
+                                <p class="menu-text">Peralatan Khusus</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link menu {{ explode('-', Request::path(), 2)[0] == 'spesifikasi' ? 'active' : '' }}"
-                    href="#">
-                    <span class="material-symbols-outlined menu-icon">
-                        train
-                    </span>
-                    <p class="menu-text">Spesifikasi Teknis Sarana</p>
-                </a>
-                <ul class="collapse {{ explode('-', Request::path(), 2)[0] == 'spesifikasi' ? 'show' : '' }}">
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
-                            href="{{ route('technical-specification.locomotive') }}">
-                            <p class="menu-text">Lokomotif</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
-                            href="{{ route('technical-specification.train') }}">
-                            <p class="menu-text">Kereta</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
-                            href="{{ route('technical-specification.wagon') }}">
+                <li class="nav-item">
+                    <a class="nav-link menu {{ explode('-', Request::path(), 2)[0] == 'spesifikasi' ? 'active' : '' }}"
+                        href="#">
+                        <span class="material-symbols-outlined menu-icon">
+                            train
+                        </span>
+                        <p class="menu-text">Spesifikasi Teknis Sarana</p>
+                    </a>
+                    <ul class="collapse {{ explode('-', Request::path(), 2)[0] == 'spesifikasi' ? 'show' : '' }}">
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                                href="{{ route('technical-specification.locomotive') }}">
+                                <p class="menu-text">Lokomotif</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
+                                href="{{ route('technical-specification.train') }}">
+                                <p class="menu-text">Kereta</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('technical-specification.wagon') }}">
 
-                            <p class="menu-text">Gerbong</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
-                            href="{{ route('technical-specification.special-equipment') }}">
+                                <p class="menu-text">Gerbong</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('technical-specification.special-equipment') }}">
 
-                            <p class="menu-text">Peralatan Khusus</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item text-center mt-3 mb-3">
+                                <p class="menu-text">Peralatan Khusus</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item text-center mt-3 mb-3">
 
-                <a class="title1-role " href="#"> Login Sebagai </a> <br>
-                <a class="title-role " href="#"> Admin </a>
-            </li>
+                    <a class="title1-role " href="#"> Login Sebagai </a> <br>
+                    <a class="title-role " href="#"> Admin </a>
+                </li>
 
-            {{-- <li class="nav-item">
+                {{-- <li class="nav-item">
             <a class="nav-link menu" href="/logout">
                 <i class="material-symbols-outlined menu-icon">person</i>
                 <p class="menu-text">Logout</p>
