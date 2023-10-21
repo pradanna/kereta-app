@@ -5,15 +5,15 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train-diesel') }}">Sertifikasi Sarana
-                        Kereta Diesel</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train-electric') }}">Sertifikasi Sarana
+                        Kereta Listrik</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Form Sertifikasi Sarana Kereta Diesel</p>
+            <p>Form Sertifikasi Sarana Kereta Listrik</p>
         </div>
         <div class="isi">
             <form method="post" id="form-data">

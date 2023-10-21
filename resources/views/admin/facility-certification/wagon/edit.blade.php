@@ -5,15 +5,15 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train-diesel') }}">Sertifikasi Sarana
-                        Kereta Diesel</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train') }}">Sertifikasi Sarana
+                        Gerbong</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Form Sertifikasi Sarana Kereta Diesel</p>
+            <p>Form Sertifikasi Sarana Gerbong</p>
         </div>
         <div class="isi">
             <form method="post" id="form-data">
@@ -21,11 +21,12 @@
                 <div class="row mb-1">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="train_type" class="form-label">Jenis Kereta</label>
-                            <select class="select2 form-control" name="train_type" id="train_type" style="width: 100%;">
-                                @foreach ($train_types as $train_type)
-                                    <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})
-                                    </option>
+                            <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
+                            <select class="select2 form-control" name="wagon_sub_type" id="wagon_sub_type"
+                                style="width: 100%;">
+                                @foreach ($wagon_sub_types as $wagon_sub_type)
+                                    <option value="{{ $wagon_sub_type->id }}">{{ $wagon_sub_type->code }}
+                                        ({{ $wagon_sub_type->wagon_type->code }})</option>
                                 @endforeach
                             </select>
                         </div>

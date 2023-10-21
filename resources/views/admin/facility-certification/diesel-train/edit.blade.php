@@ -5,9 +5,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train-diesel') }}">Sertifikasi Sarana
-                        Kereta Diesel</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train-diesel') }}">Sertifikasi Sarana Kereta Diesel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
     </div>
@@ -22,10 +21,10 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="train_type" class="form-label">Jenis Kereta</label>
-                            <select class="select2 form-control" name="train_type" id="train_type" style="width: 100%;">
+                            <select class="select2 form-control" name="train_type" id="train_type"
+                                    style="width: 100%;">
                                 @foreach ($train_types as $train_type)
-                                    <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})
-                                    </option>
+                                    <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -53,7 +52,7 @@
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
                             <input type="text" class="form-control" id="ownership" name="ownership"
-                                placeholder="Contoh: PT. KAI">
+                                   placeholder="Contoh: PT. KAI">
                         </div>
                     </div>
                 </div>
@@ -62,14 +61,14 @@
                         <div class="form-group w-100">
                             <label for="facility_number" class="form-label">No. Sarana</label>
                             <input type="text" class="form-control" id="facility_number" name="facility_number"
-                                placeholder="Nomor Sarana">
+                                   placeholder="Nomor Sarana">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="testing_number" class="form-label">No. BA Pengujian</label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                placeholder="Nomor BA Pengujian">
+                                   placeholder="Nomor BA Pengujian">
                         </div>
                     </div>
                 </div>
@@ -78,14 +77,14 @@
                         <div class="form-group w-100">
                             <label for="service_start_date" class="form-label">Mulai Dinas</label>
                             <input type="text" class="form-control datepicker" id="service_start_date"
-                                name="service_start_date" placeholder="dd-mm-yyyy">
+                                   name="service_start_date" placeholder="dd-mm-yyyy">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_expired_date" class="form-label">Masa Berlaku</label>
                             <input type="text" class="form-control datepicker" id="service_expired_date"
-                                name="service_expired_date" placeholder="dd-mm-yyyy">
+                                   name="service_expired_date" placeholder="dd-mm-yyyy">
                         </div>
                     </div>
                 </div>
@@ -128,8 +127,7 @@
             getStorehouseByAreaID().then((response) => {
                 let data = response.data;
                 $.each(data, function(k, v) {
-                    elOption.append('<option value="' + v['id'] + '">' + v['name'] + ' (' + v[
-                        'storehouse_type']['name'] + ')</option>')
+                    elOption.append('<option value="' + v['id'] + '">' + v['name'] + ' ('+v['storehouse_type']['name']+')</option>')
                 });
                 $('#storehouse').select2({
                     width: 'resolve',
