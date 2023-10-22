@@ -64,6 +64,18 @@ Route::group(['prefix' => 'jenis-peralatan-khusus'], function () {
     Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'store'])->name('special-equipment-type.edit');
 });
 
+Route::group(['prefix' => 'perlintasan'], function () {
+    Route::get('/', [\App\Http\Controllers\TrackController::class, 'index'])->name('track');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TrackController::class, 'store'])->name('track.create');
+    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\TrackController::class, 'store'])->name('special-equipment-type.edit');
+});
+
+Route::group(['prefix' => 'lintas-antara'], function () {
+    Route::get('/', [\App\Http\Controllers\SubTrackController::class, 'index'])->name('sub-track');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\SubTrackController::class, 'store'])->name('sub-track.create');
+    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\TrackController::class, 'store'])->name('special-equipment-type.edit');
+});
+
 Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
     Route::get('/', [\App\Http\Controllers\FacilityLocomotiveController::class, 'index'])->name('facility-certification-locomotive');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('facility-certification-locomotive.create');
@@ -121,4 +133,9 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-gerbong'], function () {
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], function () {
     Route::get('/', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'index'])->name('technical-specification.special-equipment');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'store'])->name('technical-specification.special-equipment.add');
+});
+
+Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {
+    Route::get('/', [\App\Http\Controllers\DirectPassageController::class, 'index'])->name('direct-passage');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageController::class, 'store'])->name('direct-passage.add');
 });

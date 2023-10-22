@@ -90,3 +90,11 @@ ul {
     font-size: 0.8rem;
     cursor: pointer;
 }
+
+input.form-control {
+    padding: 0.56rem 0.75rem !important;
+}
+
+.middle-header {
+    vertical-align: middle;
+}

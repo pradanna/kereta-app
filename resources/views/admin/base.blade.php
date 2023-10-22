@@ -73,7 +73,7 @@
                         <span class="material-symbols-outlined menu-icon">
                             home
                         </span>
-                        <p class="menu-text">Beranda</p>
+                        <p class="menu-text">Dashboard</p>
                     </a>
                 </li>
                 <li class="nav-item ">
@@ -126,6 +126,18 @@
                             <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
                                 href="{{ route('special-equipment-type') }}">
                                 <p class="menu-text">Jenis Peralatan Khusus</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('track') }}">
+                                <p class="menu-text">Perlintasan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                                href="{{ route('sub-track') }}">
+                                <p class="menu-text">Lintas Antara</p>
                             </a>
                         </li>
                     </ul>
@@ -214,6 +226,15 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('dashboard') ? 'active' : '' }}"
+                       href="{{ route('direct-passage') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            home
+                        </span>
+                        <p class="menu-text">Jalur Perlintasan Langsung</p>
+                    </a>
                 </li>
                 <li class="nav-item text-center mt-3 mb-3">
 
