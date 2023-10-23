@@ -13,6 +13,22 @@
     height: 2.2rem !important;
 }
 
+.btn-table-action {
+    text-decoration: none;
+    color: #666;
+}
+
+
+
+.btn-table-action:hover {
+    color: #444;
+}
+
+.btn-table-action > .menu-icon {
+    color: #666;
+    font-size: 0.725rem !important;
+}
+
 ul {
     list-style: none;
 }
@@ -21,6 +37,11 @@ ul {
     color: #666;
 }
 
+
+.breadcrumb-item {
+    font-size: 0.8rem;
+    letter-spacing: 0.05rem;
+}
 
 .breadcrumb-item a {
     text-decoration: none !important;
@@ -97,4 +118,15 @@ input.form-control {
 
 .middle-header {
     vertical-align: middle;
+}
+
+.page-title-container > h1 {
+    color: #888;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.page-title-container > p {
+    color: #888;
+    font-size: 0.8rem;
 }

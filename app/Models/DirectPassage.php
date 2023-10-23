@@ -12,23 +12,36 @@ class DirectPassage extends Model
 
     protected $fillable = [
         'sub_track_id',
+        'city_id',
         'name',
         'stakes',
         'width',
         'road_construction',
         'road_name',
-        'city_id',
-        'is_verified_by_operator',
-        'is_verified_by_unit_track_and_bridge',
-        'is_verified_by_institution',
-        'is_verified_by_independent',
-        'is_verified_by_unguarded',
-        'is_illegal',
         'is_closed',
         'is_not_found',
         'is_underpass',
+        'arrangement_proposal',
+        'accident_history',
+        'latitude',
+        'longitude',
         'description',
     ];
+
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
+
+    public function direct_passage_guard()
+    {
+        return $this->hasOne(DirectPassageGuard::class, 'direct_passage_id');
+    }
+
+    public function sign_equipment()
+    {
+        return $this->hasOne(DirectPassageSignEquipment::class, 'direct_passage_id');
+    }
 
     public function sub_track()
     {

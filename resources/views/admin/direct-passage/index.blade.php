@@ -1,7 +1,11 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">JALUR PERLINTASAN LANGSUNG</h1>
+            <p class="mb-0">Data Jalur Perlintasan Langsung</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -30,15 +34,9 @@
                     <th class="text-center middle-header">Konstruksi Jalan</th>
                     <th class="text-center middle-header">Nama Jalan</th>
                     <th class="text-center middle-header">Kodya / Kabupaten</th>
-                    <th class="text-center middle-header">Resmi Di Jaga KAI OP</th>
-                    <th class="text-center middle-header">Resmi Di Jaga JJ</th>
-                    <th class="text-center middle-header">Resmi Di Jaga Pemda / Instansi Lain</th>
-                    <th class="text-center middle-header">Resmi Di Jaga Swadaya</th>
-                    <th class="text-center middle-header">Resmi Tidak Di Jaga</th>
-                    <th class="text-center middle-header">Liar</th>
-                    <th class="text-center middle-header">Di Tutup</th>
-                    <th class="text-center middle-header">Tidak Ditemukan</th>
-                    <th class="text-center middle-header">Underpass</th>
+                    <th class="text-center middle-header">Koordinat</th>
+                    <th class="text-center middle-header">Usulan Penataan</th>
+                    <th class="text-center middle-header">Riwayat Kecelakaan</th>
                     <th class="text-center middle-header">Keterangan</th>
                     <th class="text-center middle-header">Aksi</th>
                 </tr>
@@ -121,42 +119,23 @@
                         width: '100px',
                     },
                     {
-                        data: 'is_verified_by_operator',
-                        name: 'is_verified_by_operator',
+                        data: null,
                         width: '100px',
-                    },{
-                        data: 'is_verified_by_unit_track_and_bridge',
-                        name: 'is_verified_by_unit_track_and_bridge',
+                        render: function (data) {
+                            return '-';
+                        }
+                    },
+                    {
+                        data: 'arrangement_proposal',
+                        name: 'arrangement_proposal',
                         width: '100px',
-                    },{
-                        data: 'is_verified_by_institution',
-                        name: 'is_verified_by_institution',
+                    },
+                    {
+                        data: 'accident_history',
+                        name: 'accident_history',
                         width: '100px',
-                    },{
-                        data: 'is_verified_by_independent',
-                        name: 'is_verified_by_independent',
-                        width: '100px',
-                    },{
-                        data: 'is_verified_by_unguarded',
-                        name: 'is_verified_by_unguarded',
-                        width: '100px',
-                    },{
-                        data: 'is_illegal',
-                        name: 'is_illegal',
-                        width: '100px',
-                    },{
-                        data: 'is_closed',
-                        name: 'is_closed',
-                        width: '100px',
-                    },{
-                        data: 'is_not_found',
-                        name: 'is_not_found',
-                        width: '100px',
-                    },{
-                        data: 'is_underpass',
-                        name: 'is_underpass',
-                        width: '100px',
-                    },{
+                    },
+                    {
                         data: 'description',
                         name: 'description',
                         width: '100px',

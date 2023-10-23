@@ -1,7 +1,11 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">MASTER DAERAH OPERASI</h1>
+            <p class="mb-0">Manajemen Data Master Daerah Operasi</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -50,9 +54,9 @@
                         <thead>
                         <tr>
                             <th width="5%" class="text-center">#</th>
-                            <th>Satuan Pelayanan</th>
+                            <th width="15%">Satuan Pelayanan</th>
                             <th>Nama Daerah Operasi</th>
-                            <th width="10%" class="text-center">Aksi</th>
+                            <th width="12%" class="text-center">Aksi</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
@@ -134,15 +138,15 @@
                     {
                         data: null,
                         render: function (data) {
-                            return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] +
+                            return '<a href="#" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
-                                '<a href="#" class="btn-delete" data-id="' + data['id'] + '">Delete</a>'
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] + '">Delete</a>'
                         },
                         orderable: false
                     }
                 ],
                 columnDefs: [{
-                    targets: [0, 3],
+                    targets: [0, 1, 3],
                     className: 'text-center'
                 }],
                 paging: true,

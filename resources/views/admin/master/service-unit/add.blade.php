@@ -1,7 +1,11 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
+            <p class="mb-0">Manajemen Tambah Data Master Satuan Pelayanan</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
