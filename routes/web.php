@@ -22,7 +22,7 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
 Route::group(['prefix' => 'satuan-pelayanan'], function () {
     Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.edit');
 });
 
 Route::group(['prefix' => 'daerah-operasi'], function () {

@@ -64,6 +64,12 @@ class ServiceUnitController extends CustomController
         return view('admin.master.service-unit.add');
     }
 
+    public function edit($id)
+    {
+        $data = ServiceUnit::findOrFail($id);
+
+    }
+
     private function patch($data)
     {
         try {
