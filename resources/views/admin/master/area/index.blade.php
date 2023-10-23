@@ -138,7 +138,8 @@
                     {
                         data: null,
                         render: function (data) {
-                            return '<a href="#" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                            let urlEdit = path + '/' + data['id'] + '/edit';
+                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] + '">Delete</a>'
                         },

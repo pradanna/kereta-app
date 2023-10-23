@@ -1,7 +1,28 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Menambahkan Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('area') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">MASTER DAERAH OPERASI</h1>
+            <p class="mb-0">Manajemen Tambah Data Master Daerah Operasi</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -13,9 +34,7 @@
     <div class="panel">
         <div class="title">
             <p>Tambah Data Daerah Operasi</p>
-
         </div>
-
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
@@ -34,7 +53,7 @@
                         <div class="w-100">
                             <label for="name" class="form-label">Nama Daerah Operasi</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Contoh: DAOP 6 Semarang">
+                                placeholder="Contoh: DAOP 6">
                         </div>
                     </div>
                 </div>

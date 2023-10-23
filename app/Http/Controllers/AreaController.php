@@ -45,14 +45,37 @@ class AreaController extends CustomController
                     'longitude' => $this->postField('longitude'),
                 ];
                 Area::create($data_request);
-                return redirect()->route('area');
+                return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
-                dd($e->getMessage());
-                return redirect()->back();
+                return redirect()->back()->with('failed', 'internal server error');
             }
         }
         $service_units = ServiceUnit::all();
         return view('admin.master.area.add')->with(['service_units' => $service_units]);
+    }
+
+    public function patch($id)
+    {
+        $data = Area::with(['service_unit'])->findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'service_unit_id' => $this->postField('service_unit'),
+                    'name' => $this->postField('name'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
+                ];
+                $data->update($data_request);
+                return redirect()->back()->with('success', 'success');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'internal server error');
+            }
+        }
+        $service_units = ServiceUnit::all();
+        return view('admin.master.area.edit')->with([
+            'data' => $data,
+            'service_units' => $service_units
+        ]);
     }
 
     public function getStorehouseByAreaID($id)

@@ -22,13 +22,14 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
 Route::group(['prefix' => 'satuan-pelayanan'], function () {
     Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
-    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\ServiceUnitController::class, 'patch'])->name('service-unit.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\ServiceUnitController::class, 'destroy'])->name('service-unit.destroy');
 });
 
 Route::group(['prefix' => 'daerah-operasi'], function () {
     Route::get('/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\AreaController::class, 'patch'])->name('area.patch');
     Route::get('/{id}/storehouse', [\App\Http\Controllers\AreaController::class, 'getStorehouseByAreaID'])->name('area.storehouse');
 });
 

@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta name="_token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- ICON --}}
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -76,30 +77,32 @@
                         <p class="menu-text">Dashboard</p>
                     </a>
                 </li>
+                @php
+                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa']
+                @endphp
                 <li class="nav-item ">
-                    <a class="nav-link menu {{ request()->is('master') ? 'active' : '' }}">
+                    <a class="nav-link menu">
                         <span class="material-symbols-outlined menu-icon">
                             folder_copy
                         </span>
-                        <p class="menu-text">Master Data</p>
+                        <p class="menu-text {{ in_array(request()->path(), $master) ? 'fw-bold' : '' }}">Master Data</p>
                     </a>
-                    <ul class="collapse">
+                    <ul class="{{ in_array(request()->path(), $master) ? '' : 'collapse' }}">
                         <li class="nav-item ">
-                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('satuan-pelayanan*') ? 'active' : '' }}"
                                 href="{{ route('service-unit') }}">
-
                                 <p class="menu-text">Satuan Pelayanan</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('daerah-operasi*') ? 'active' : '' }}"
                                 href="{{ route('area') }}">
 
                                 <p class="menu-text">Daerah Operasi</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa*') ? 'active' : '' }}"
                                 href="{{ route('storehouse') }}">
                                 <p class="menu-text">Depo dan Balai Yasa</p>
                             </a>
@@ -150,7 +153,7 @@
                         </span>
                         <p class="menu-text">Sertifikasi Sarana</p>
                     </a>
-                    <ul>
+                    <ul class="collapse">
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
                                 href="{{ route('facility-certification-locomotive') }}">
