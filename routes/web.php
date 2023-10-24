@@ -30,6 +30,7 @@ Route::group(['prefix' => 'daerah-operasi'], function () {
     Route::get('/', [\App\Http\Controllers\AreaController::class, 'index'])->name('area');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\AreaController::class, 'store'])->name('area.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\AreaController::class, 'patch'])->name('area.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\AreaController::class, 'destroy'])->name('area.destroy');
     Route::get('/{id}/storehouse', [\App\Http\Controllers\AreaController::class, 'getStorehouseByAreaID'])->name('area.storehouse');
 });
 
@@ -37,32 +38,41 @@ Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
     Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('storehouse');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
     Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\StoreHouseController::class, 'patch'])->name('storehouse.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\StoreHouseController::class, 'destroy'])->name('storehouse.destroy');
 });
 
 Route::group(['prefix' => 'jenis-lokomotif'], function () {
     Route::get('/', [\App\Http\Controllers\LocomotiveTypeController::class, 'index'])->name('locomotive-type');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\LocomotiveTypeController::class, 'store'])->name('locomotive-type.create');
     Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\LocomotiveTypeController::class, 'store'])->name('locomotive-type.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\LocomotiveTypeController::class, 'patch'])->name('locomotive-type.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\LocomotiveTypeController::class, 'destroy'])->name('locomotive-type.destroy');
 });
 
 Route::group(['prefix' => 'jenis-kereta'], function () {
     Route::get('/', [\App\Http\Controllers\TrainTypeController::class, 'index'])->name('train-type');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TrainTypeController::class, 'store'])->name('train-type.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\TrainTypeController::class, 'store'])->name('train-type.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TrainTypeController::class, 'patch'])->name('train-type.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\TrainTypeController::class, 'destroy'])->name('train-type.destroy');
 });
 
 Route::group(['prefix' => 'jenis-gerbong'], function () {
     Route::get('/', [\App\Http\Controllers\WagonTypeController::class, 'index'])->name('wagon-type');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WagonTypeController::class, 'store'])->name('wagon-type.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\WagonTypeController::class, 'store'])->name('wagon-type.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WagonTypeController::class, 'patch'])->name('wagon-type.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\WagonTypeController::class, 'destroy'])->name('wagon-type.destroy');
     Route::get('/{id}/sub-tipe', [\App\Http\Controllers\WagonTypeController::class, 'sub_type'])->name('wagon-type.sub-type');
     Route::match(['post', 'get'], '/{id}/sub-tipe/tambah', [\App\Http\Controllers\WagonTypeController::class, 'store_sub_type'])->name('wagon-type.sub-type.create');
+    Route::match(['post', 'get'], '/{id}/sub-tipe/{sub_id}/edit', [\App\Http\Controllers\WagonTypeController::class, 'patch_sub_type'])->name('wagon-type.sub-type.patch');
+    Route::post( '/{id}/sub-tipe/{sub_id}/delete', [\App\Http\Controllers\WagonTypeController::class, 'destroy_sub_type'])->name('wagon-type.sub-type.destroy');
 });
 
 Route::group(['prefix' => 'jenis-peralatan-khusus'], function () {
     Route::get('/', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'index'])->name('special-equipment-type');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'store'])->name('special-equipment-type.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'store'])->name('special-equipment-type.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'patch'])->name('special-equipment-type.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'destroy'])->name('special-equipment-type.destroy');
 });
 
 Route::group(['prefix' => 'perlintasan'], function () {

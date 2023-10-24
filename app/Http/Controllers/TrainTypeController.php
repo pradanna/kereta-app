@@ -32,11 +32,39 @@ class TrainTypeController extends CustomController
                     'name' => $this->postField('name'),
                 ];
                 TrainType::create($data_request);
-                return redirect()->route('train-type');
+                return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
-                return redirect()->back();
+                return redirect()->back()->with('failed', 'internal server error');
             }
         }
         return view('admin.master.train-type.add');
+    }
+
+    public function patch($id)
+    {
+        $data = TrainType::findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'code' => $this->postField('code'),
+                    'name' => $this->postField('name'),
+                ];
+                $data->update($data_request);
+                return redirect()->back()->with('success', 'success');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'internal server error');
+            }
+        }
+        return view('admin.master.train-type.edit')->with(['data' => $data]);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            TrainType::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }

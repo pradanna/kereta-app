@@ -78,6 +78,16 @@ class AreaController extends CustomController
         ]);
     }
 
+    public function destroy($id)
+    {
+        try {
+            Area::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
     public function getStorehouseByAreaID($id)
     {
         try {

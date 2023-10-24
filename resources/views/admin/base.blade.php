@@ -77,17 +77,26 @@
                         <p class="menu-text">Dashboard</p>
                     </a>
                 </li>
+
                 @php
-                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa']
+                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'jenis-peralatan-khusus'];
+                    $openMaster = false;
+                    foreach ($master as $m) {
+                        if (request()->is($m.'*')) {
+                            $openMaster = true;
+                            break;
+                        }
+                    }
                 @endphp
+
                 <li class="nav-item ">
                     <a class="nav-link menu">
                         <span class="material-symbols-outlined menu-icon">
                             folder_copy
                         </span>
-                        <p class="menu-text {{ in_array(request()->path(), $master) ? 'fw-bold' : '' }}">Master Data</p>
+                        <p class="menu-text {{ (in_array(request()->path(), $master) || $openMaster) ? 'fw-bold' : '' }}">Master Data</p>
                     </a>
-                    <ul class="{{ in_array(request()->path(), $master) ? '' : 'collapse' }}">
+                    <ul class="{{ (in_array(request()->path(), $master) || $openMaster) ? '' : 'collapse' }}">
                         <li class="nav-item ">
                             <a class="nav-link menu {{ request()->is('satuan-pelayanan*') ? 'active' : '' }}"
                                 href="{{ route('service-unit') }}">
@@ -108,25 +117,25 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('jenis-lokomotif*') ? 'active' : '' }}"
                                 href="{{ route('locomotive-type') }}">
                                 <p class="menu-text">Jenis Lokomotif</p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('jenis-kereta*') ? 'active' : '' }}"
                                 href="{{ route('train-type') }}">
                                 <p class="menu-text">Jenis Kereta</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('jenis-gerbong*') ? 'active' : '' }}"
                                 href="{{ route('wagon-type') }}">
                                 <p class="menu-text">Jenis Gerbong</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('jenis-peralatan-khusus*') ? 'active' : '' }}"
                                 href="{{ route('special-equipment-type') }}">
                                 <p class="menu-text">Jenis Peralatan Khusus</p>
                             </a>

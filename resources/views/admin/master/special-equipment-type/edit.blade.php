@@ -1,7 +1,28 @@
 @extends('admin.base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Merubah Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('special-equipment-type') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">MASTER JENIS PERALATAN KHUSUS</h1>
+            <p class="mb-0">Manajemen Edit Data Master Jenis Peralatan Khusus</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -22,14 +43,14 @@
                         <div class="w-100">
                             <label for="code" class="form-label">Kode</label>
                             <input type="text" class="form-control" id="code" name="code"
-                                placeholder="Kode Jenis Peralatan Khusus">
+                                placeholder="Kode Jenis Peralatan Khusus" value="{{ $data->code }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nama Jenis Peralatan Khusus">
+                                placeholder="Nama Jenis Peralatan Khusus" value="{{ $data->name }}">
                         </div>
                     </div>
                 </div>

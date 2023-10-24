@@ -77,7 +77,7 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
         async></script>
-
+    <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
         let path = '{{ route('area') }}';
@@ -105,6 +105,38 @@
             }).catch((e) => {
                 console.log(e)
             })
+        }
+
+        function deleteEvent() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus data?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = '{{ route('area') }}' + '/' + id + '/delete';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    table.ajax.reload();
+                    generateMapArea();
+                });
+            });
         }
 
         function generateTableArea() {
@@ -151,6 +183,9 @@
                     className: 'text-center'
                 }],
                 paging: true,
+                "fnDrawCallback": function (setting) {
+                    deleteEvent();
+                }
             })
         }
 

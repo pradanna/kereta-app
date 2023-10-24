@@ -14,7 +14,7 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('service-unit') }}';
+                window.location.href = '{{ route('area') }}';
             })
         </script>
     @endif
