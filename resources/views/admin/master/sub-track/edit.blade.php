@@ -1,11 +1,32 @@
 @extends('admin/base')
 
 @section('content')
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Merubah Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('sub-track') }}';
+            })
+        </script>
+    @endif
     <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="page-title-container">
+            <h1 class="h1">MASTER LINTAS ANTARA</h1>
+            <p class="mb-0">Manajemen Edit Data Master Lintas Antara</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('service-unit') }}">Satuan Pelayanan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('sub-track') }}">Lintas Antara</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
@@ -19,26 +40,29 @@
                 @csrf
                 <div class="row mb-1">
                     <div class="col-12">
-                        <div class="w-100">
-                            <label for="name" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nama Satuan Pelayanan">
+                        <div class="form-group w-100">
+                            <label for="track" class="form-label">Perlintasan</label>
+                            <select class="select2 form-control" name="track" id="track" style="width: 100%;">
+                                @foreach ($tracks as $track)
+                                    <option value="{{ $track->id }}" {{ ($data->track_id === $track->id) ? 'selected' :'' }}>{{ $track->name }} ({{ $track->code }})</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="row mb-1">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="latitude" class="form-label">Latitude</label>
-                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"
-                                placeholder="Contoh: 7.1129489">
+                            <label for="code" class="form-label">Kode</label>
+                            <input type="text" class="form-control" id="code" name="code"
+                                   placeholder="Kode Lintas Antara" value="{{ $data->code }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="longitude" class="form-label">Longitude</label>
-                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"
-                                placeholder="Contoh: 110.1129489">
+                            <label for="name" class="form-label">Nama Lintas Antara</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Nama Lintas Antara" value="{{ $data->name }}">
                         </div>
                     </div>
                 </div>
@@ -53,12 +77,17 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('.select2').select2({
+                width: 'resolve',
+            });
             $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({

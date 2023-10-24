@@ -42,4 +42,38 @@ class SubTrackController extends CustomController
         $tracks = Track::all();
         return view('admin.master.sub-track.add')->with(['tracks' => $tracks]);
     }
+
+    public function patch($id)
+    {
+        $data = SubTrack::findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'track_id' => $this->postField('track'),
+                    'code' => $this->postField('code'),
+                    'name' => $this->postField('name'),
+                ];
+                $data->update($data_request);
+                return redirect()->back()->with('success', 'success');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'internal server error');
+            }
+
+        }
+        $tracks = Track::all();
+        return view('admin.master.sub-track.edit')->with([
+            'data' => $data,
+            'tracks' => $tracks
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            SubTrack::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
 }

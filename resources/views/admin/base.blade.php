@@ -79,7 +79,7 @@
                 </li>
 
                 @php
-                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'jenis-peralatan-khusus'];
+                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'jenis-peralatan-khusus', 'perlintasan', 'lintas-antara'];
                     $openMaster = false;
                     foreach ($master as $m) {
                         if (request()->is($m.'*')) {
@@ -141,13 +141,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('perlintasan*') ? 'active' : '' }}"
                                 href="{{ route('track') }}">
                                 <p class="menu-text">Perlintasan</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('lintas-antara*') ? 'active' : '' }}"
                                 href="{{ route('sub-track') }}">
                                 <p class="menu-text">Lintas Antara</p>
                             </a>
@@ -155,16 +155,26 @@
                     </ul>
                 </li>
 
+                @php
+                    $certification = ['sertifikasi-sarana-lokomotif'];
+                    $openCertification = false;
+                    foreach ($certification as $c) {
+                        if (request()->is($c.'*')) {
+                            $openCertification = true;
+                            break;
+                        }
+                    }
+                @endphp
                 <li class="nav-item">
-                    <a class="nav-link menu {{ request()->is('master') ? 'active' : '' }}">
+                    <a class="nav-link menu">
                         <span class="material-symbols-outlined menu-icon">
                             card_membership
                         </span>
-                        <p class="menu-text">Sertifikasi Sarana</p>
+                        <p class="menu-text {{ (in_array(request()->path(), $certification) || $openCertification) ? 'fw-bold' : '' }}">Sertifikasi Sarana</p>
                     </a>
-                    <ul class="collapse">
+                    <ul class="{{ (in_array(request()->path(), $certification) || $openCertification) ? '' : 'collapse' }}">
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-lokomotif*') ? 'active' : '' }}"
                                 href="{{ route('facility-certification-locomotive') }}">
                                 <p class="menu-text">Lokomotif</p>
                             </a>

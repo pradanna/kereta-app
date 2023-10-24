@@ -78,13 +78,15 @@ Route::group(['prefix' => 'jenis-peralatan-khusus'], function () {
 Route::group(['prefix' => 'perlintasan'], function () {
     Route::get('/', [\App\Http\Controllers\TrackController::class, 'index'])->name('track');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TrackController::class, 'store'])->name('track.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\TrackController::class, 'store'])->name('special-equipment-type.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TrackController::class, 'patch'])->name('special-equipment-type.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\TrackController::class, 'destroy'])->name('special-equipment-type.destroy');
 });
 
 Route::group(['prefix' => 'lintas-antara'], function () {
     Route::get('/', [\App\Http\Controllers\SubTrackController::class, 'index'])->name('sub-track');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\SubTrackController::class, 'store'])->name('sub-track.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\TrackController::class, 'store'])->name('special-equipment-type.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\SubTrackController::class, 'patch'])->name('sub-track.patch');
+    Route::post('/{id}/delete', [\App\Http\Controllers\SubTrackController::class, 'destroy'])->name('sub-track.destroy');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {

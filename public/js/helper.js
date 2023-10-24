@@ -31,3 +31,11 @@ async function AjaxPost(url, param = {}, onSuccess = function () {
         ErrorAlert('Error', error_message.msg);
     }
 }
+
+// var myToastEl = document.getElementById('liveToast');
+// var myToast = new bootstrap.Toast(myToastEl, {
+//     autohide: true,
+//     animation: true,
+//     delay: 1000
+// });
+// myToast.show();
