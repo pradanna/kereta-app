@@ -95,7 +95,7 @@
                             {{--                                <th class="text-center">Tipe Depo</th>--}}
                             <th class="text-center middle-header" width="8%">Depo Induk</th>
                             {{--                                <th class="text-center">Mulai Dinas</th>--}}
-                            <th class="text-center middle-header" width="10%">No. BA Pengujian</th>
+                            <th class="text-center middle-header">No. BA Pengujian</th>
                             <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
                             <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
                             {{--                                <th class="text-center">Status</th>--}}
@@ -289,6 +289,7 @@
                         },
                         orderable: false,
                         width: '120px',
+                        className: 'text-center',
                     }
                 ],
                 columnDefs: [

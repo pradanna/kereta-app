@@ -99,7 +99,8 @@ Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
 Route::group(['prefix' => 'sertifikasi-sarana-kereta'], function () {
     Route::get('/', [\App\Http\Controllers\FacilityTrainController::class, 'index'])->name('facility-certification-train');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityTrainController::class, 'store'])->name('facility-certification-train.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\FacilityTrainController::class, 'store'])->name('facility-certification-train.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityTrainController::class, 'patch'])->name('facility-certification-train.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\FacilityTrainController::class, 'destroy'])->name('facility-certification-train.destroy');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-kereta-diesel'], function () {
