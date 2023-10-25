@@ -1,7 +1,11 @@
 @extends('admin.base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SERTIFIKASI SARANA KERETA</h1>
+            <p class="mb-0">Manajemen Data Sertifikasi Sarana Kereta</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -43,57 +47,57 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
                      aria-labelledby="pills-table-tab">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group w-100">
-                                <label for="train_type" class="form-label">Tipe Sarana</label>
-                                <select class="select2 form-control" name="train_type" id="train_type"
-                                        style="width: 100%;">
-                                    <option value="" selected>Semua</option>
-                                    @foreach ($train_types as $train_type)
-                                        <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group w-100">
-                                <label for="area" class="form-label">Wilayah</label>
-                                <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                    <option value="" selected>Semua</option>
-                                    @foreach ($areas as $area)
-                                        <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group w-100">
-                                <label for="storehouse" class="form-label">Depo Induk</label>
-                                <select class="select2 form-control" name="storehouse" id="storehouse"
-                                        style="width: 100%;">
-                                    <option value="" selected>Semua</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <table id="table-data" class="display table table-striped">
+{{--                    <div class="row">--}}
+{{--                        <div class="col-4">--}}
+{{--                            <div class="form-group w-100">--}}
+{{--                                <label for="train_type" class="form-label">Tipe Sarana</label>--}}
+{{--                                <select class="select2 form-control" name="train_type" id="train_type"--}}
+{{--                                        style="width: 100%;">--}}
+{{--                                    <option value="" selected>Semua</option>--}}
+{{--                                    @foreach ($train_types as $train_type)--}}
+{{--                                        <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-4">--}}
+{{--                            <div class="form-group w-100">--}}
+{{--                                <label for="area" class="form-label">Wilayah</label>--}}
+{{--                                <select class="select2 form-control" name="area" id="area" style="width: 100%;">--}}
+{{--                                    <option value="" selected>Semua</option>--}}
+{{--                                    @foreach ($areas as $area)--}}
+{{--                                        <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="col-4">--}}
+{{--                            <div class="form-group w-100">--}}
+{{--                                <label for="storehouse" class="form-label">Depo Induk</label>--}}
+{{--                                <select class="select2 form-control" name="storehouse" id="storehouse"--}}
+{{--                                        style="width: 100%;">--}}
+{{--                                    <option value="" selected>Semua</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <hr>--}}
+                    <table id="table-data" class="display table table-striped w-100">
                         <thead>
                         <tr>
-                            <th class="text-center">#</th>
-                            <th class="text-center">Tipe Sarana</th>
-                            <th class="text-center">Kepemilikan</th>
-                            <th class="text-center">No. Sarana</th>
-                            <th class="text-center">Wilayah</th>
-                            <th class="text-center">Tipe Depo</th>
-                            <th class="text-center">Depo Induk</th>
-                            <th class="text-center">Mulai Dinas</th>
-                            <th class="text-center">Masa Berlaku Sarana</th>
-                            <th class="text-center">No. BA Pengujian</th>
-                            <th class="text-center">Akan Habis (Hari)</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Aksi</th>
+                            <th class="text-center middle-header" width="5%">#</th>
+{{--                            <th class="text-center middle-header" width="5%">Tipe Sarana</th>--}}
+                            <th class="text-center middle-header" width="10%">Wilayah</th>
+                            <th class="text-center middle-header" width="10%">Kepemilikan</th>
+                            <th class="text-center middle-header" width="12%">No. Sarana</th>
+{{--                            <th class="text-center middle-header" width="5%">Tipe Depo</th>--}}
+                            <th class="text-center middle-header" width="8%">Depo Induk</th>
+{{--                            <th class="text-center middle-header" width="5%">Mulai Dinas</th>--}}
+                            <th class="text-center middle-header" width="10%">No. BA Pengujian</th>
+                            <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
+                            <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
+{{--                            <th class="text-center middle-header" width="5%">Status</th>--}}
+                            <th class="text-center middle-header" width="15%">Aksi</th>
                         </tr>
                         </thead>
                         <tbody>

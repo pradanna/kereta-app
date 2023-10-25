@@ -130,3 +130,7 @@ input.form-control {
     color: #888;
     font-size: 0.8rem;
 }
+
+.expired-color {
+    background-color: #fecba1 !important;
+}

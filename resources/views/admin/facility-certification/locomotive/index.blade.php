@@ -95,9 +95,9 @@
                             {{--                                <th class="text-center">Tipe Depo</th>--}}
                             <th class="text-center middle-header" width="8%">Depo Induk</th>
                             {{--                                <th class="text-center">Mulai Dinas</th>--}}
-                            <th class="text-center middle-header">No. BA Pengujian</th>
+                            <th class="text-center middle-header" width="10%">No. BA Pengujian</th>
                             <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
-                            <th class="text-center middle-header" width="10%">Akan Habis (Hari)</th>
+                            <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
                             {{--                                <th class="text-center">Status</th>--}}
                             <th class="text-center middle-header" width="15%">Aksi</th>
                         </tr>
@@ -124,11 +124,13 @@
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
         let path = '{{ route('facility-certification-locomotive') }}';
@@ -298,6 +300,12 @@
                 paging: true,
                 "fnDrawCallback": function (setting) {
                     eventOpenDetail();
+                    deleteEvent();
+                },
+                createdRow: function (row, data, index) {
+                    if (data['expired_in'] < 5) {
+                        $('td', row).css({'background-color': '#fecba1'});
+                    }
                 }
             });
         }
@@ -307,6 +315,37 @@
                 e.preventDefault();
                 let id = this.dataset.id;
                 modalDetail.show();
+            });
+        }
+
+        function deleteEvent() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus data?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = path + '/' + id + '/delete';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    table.ajax.reload();
+                });
             });
         }
 

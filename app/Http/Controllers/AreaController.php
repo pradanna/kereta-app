@@ -91,8 +91,10 @@ class AreaController extends CustomController
     public function getStorehouseByAreaID($id)
     {
         try {
+            $type = $this->request->query->get('type') ?? 1;
             $data = Storehouse::with(['storehouse_type', 'area'])
                 ->where('area_id', '=', $id)
+                ->where('storehouse_type_id', '=', $type)
                 ->get();
             return $this->jsonSuccessResponse('success', $data);
         } catch (\Exception $e) {

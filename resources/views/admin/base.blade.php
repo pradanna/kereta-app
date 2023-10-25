@@ -156,7 +156,7 @@
                 </li>
 
                 @php
-                    $certification = ['sertifikasi-sarana-lokomotif'];
+                    $certification = ['sertifikasi-sarana-lokomotif', 'sertifikasi-sarana-kereta'];
                     $openCertification = false;
                     foreach ($certification as $c) {
                         if (request()->is($c.'*')) {
@@ -180,7 +180,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta*') ? 'active' : '' }}"
                                 href="{{ route('facility-certification-train') }}">
                                 <p class="menu-text">Kereta</p>
                             </a>

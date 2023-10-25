@@ -92,7 +92,8 @@ Route::group(['prefix' => 'lintas-antara'], function () {
 Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
     Route::get('/', [\App\Http\Controllers\FacilityLocomotiveController::class, 'index'])->name('facility-certification-locomotive');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('facility-certification-locomotive.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('facility-certification-locomotive.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityLocomotiveController::class, 'patch'])->name('facility-certification-locomotive.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\FacilityLocomotiveController::class, 'destroy'])->name('facility-certification-locomotive.destroy');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-kereta'], function () {
