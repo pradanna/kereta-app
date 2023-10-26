@@ -156,7 +156,7 @@
                 </li>
 
                 @php
-                    $certification = ['sertifikasi-sarana-lokomotif', 'sertifikasi-sarana-kereta'];
+                    $certification = ['sertifikasi-sarana-lokomotif', 'sertifikasi-sarana-kereta', 'sertifikasi-sarana-kereta-diesel', 'sertifikasi-sarana-gerbong'];
                     $openCertification = false;
                     foreach ($certification as $c) {
                         if (request()->is($c.'*')) {
@@ -180,25 +180,25 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta*') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ (request()->is('sertifikasi-sarana-kereta') || request()->is('sertifikasi-sarana-kereta/*')) ? 'active' : '' }}"
                                 href="{{ route('facility-certification-train') }}">
                                 <p class="menu-text">Kereta</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta-diesel*') ? 'active' : '' }}"
                                 href="{{ route('facility-certification-train-diesel') }}">
                                 <p class="menu-text">KRD</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta-listrik*') ? 'active' : '' }}"
                                 href="{{ route('facility-certification-train-electric') }}">
                                 <p class="menu-text">KRL</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-gerbong*') ? 'active' : '' }}"
                                 href="{{ route('facility-certification-wagon') }}">
                                 <p class="menu-text">Gerbong</p>
                             </a>
