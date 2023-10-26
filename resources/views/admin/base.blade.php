@@ -156,7 +156,7 @@
                 </li>
 
                 @php
-                    $certification = ['sertifikasi-sarana-lokomotif', 'sertifikasi-sarana-kereta', 'sertifikasi-sarana-kereta-diesel', 'sertifikasi-sarana-gerbong'];
+                    $certification = ['sertifikasi-sarana-lokomotif', 'sertifikasi-sarana-kereta', 'sertifikasi-sarana-kereta-diesel', 'sertifikasi-sarana-gerbong', 'sertifikasi-sarana-peralatan-khusus'];
                     $openCertification = false;
                     foreach ($certification as $c) {
                         if (request()->is($c.'*')) {
@@ -204,7 +204,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-peralatan-khusus*') ? 'active' : '' }}"
                                 href="{{ route('facility-certification-special-equipment') }}">
                                 <p class="menu-text">Peralatan Khusus</p>
                             </a>
@@ -212,17 +212,27 @@
                     </ul>
                 </li>
 
+                @php
+                    $technicalSpec = ['spesifikasi-teknis-sarana-lokomotif'];
+                    $openTechnicalSpec = false;
+                    foreach ($technicalSpec as $t) {
+                        if (request()->is($t.'*')) {
+                            $openTechnicalSpec = true;
+                            break;
+                        }
+                    }
+                @endphp
                 <li class="nav-item">
-                    <a class="nav-link menu {{ explode('-', Request::path(), 2)[0] == 'spesifikasi' ? 'active' : '' }}"
+                    <a class="nav-link menu"
                         href="#">
                         <span class="material-symbols-outlined menu-icon">
                             train
                         </span>
-                        <p class="menu-text">Spesifikasi Teknis Sarana</p>
+                        <p class="menu-text {{ (in_array(request()->path(), $technicalSpec) || $openTechnicalSpec) ? 'fw-bold' : '' }}">Spesifikasi Teknis Sarana</p>
                     </a>
-                    <ul class="collapse {{ explode('-', Request::path(), 2)[0] == 'spesifikasi' ? 'show' : '' }}">
+                    <ul class="{{ (in_array(request()->path(), $technicalSpec) || $openTechnicalSpec) ? '' : 'collapse' }}">
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('satuan-pelayanan') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-lokomotif*') ? 'active' : '' }}"
                                 href="{{ route('technical-specification.locomotive') }}">
                                 <p class="menu-text">Lokomotif</p>
                             </a>

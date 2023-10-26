@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::match(['post', 'get'], '/', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::get( '/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
@@ -127,7 +128,8 @@ Route::group(['prefix' => 'sertifikasi-sarana-gerbong'], function () {
 Route::group(['prefix' => 'sertifikasi-sarana-peralatan-khusus'], function () {
     Route::get('/', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'index'])->name('facility-certification-special-equipment');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'store'])->name('facility-certification-special-equipment.create');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'store'])->name('facility-certification-special-equipment.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'patch'])->name('facility-certification-special-equipment.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'destroy'])->name('facility-certification-special-equipment.destroy');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
