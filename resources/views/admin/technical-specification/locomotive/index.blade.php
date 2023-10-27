@@ -47,6 +47,16 @@
             </table>
         </div>
     </div>
+    <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    ...
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('css')
@@ -60,9 +70,51 @@
 
 @section('js')
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
         let path = '{{ route('technical-specification.locomotive') }}';
+
+        var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+
+        function eventOpenDetail() {
+            $('.btn-detail').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                modalDetail.show();
+            });
+        }
+
+        function deleteEvent() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus data?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = path + '/' + id + '/delete';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    table.ajax.reload();
+                });
+            });
+        }
 
         function generateTable() {
             table = $('#table-data').DataTable({
@@ -190,8 +242,8 @@
                 ],
                 paging: true,
                 "fnDrawCallback": function (setting) {
-                    // eventOpenDetail();
-                    // deleteEvent();
+                    eventOpenDetail();
+                    deleteEvent();
                 },
             });
         }

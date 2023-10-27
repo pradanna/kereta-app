@@ -213,7 +213,7 @@
                 </li>
 
                 @php
-                    $technicalSpec = ['spesifikasi-teknis-sarana-lokomotif'];
+                    $technicalSpec = ['spesifikasi-teknis-sarana-lokomotif', 'spesifikasi-teknis-sarana-kereta'];
                     $openTechnicalSpec = false;
                     foreach ($technicalSpec as $t) {
                         if (request()->is($t.'*')) {
@@ -238,7 +238,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('daerah-operasi') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-kereta*') ? 'active' : '' }}"
                                 href="{{ route('technical-specification.train') }}">
                                 <p class="menu-text">Kereta</p>
                             </a>

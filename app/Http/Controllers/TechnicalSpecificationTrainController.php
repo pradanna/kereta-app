@@ -44,7 +44,7 @@ class TechnicalSpecificationTrainController extends CustomController
                     'spoor_width' => $this->postField('spoor_width'),
                 ];
                 TechnicalSpecTrain::create($data_request);
-                return redirect()->route('technical-specification.train');
+                return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error...');
             }
@@ -53,5 +53,46 @@ class TechnicalSpecificationTrainController extends CustomController
         return view('admin.technical-specification.train.add')->with([
             'facility_trains' => $facility_trains,
         ]);
+    }
+
+    public function patch($id)
+    {
+        $data = TechnicalSpecTrain::findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'facility_train_id' => $this->postField('facility_train'),
+                    'empty_weight' => $this->postField('empty_weight') ,
+                    'maximum_speed' => $this->postField('maximum_speed'),
+                    'passenger_capacity' => $this->postField('passenger_capacity'),
+                    'air_conditioner' => $this->postField('air_conditioner'),
+                    'long' => $this->postField('long'),
+                    'width' => $this->postField('width'),
+                    'height' => $this->postField('height'),
+                    'coupler_height' => $this->postField('coupler_height'),
+                    'axle_load' => $this->postField('axle_load'),
+                    'spoor_width' => $this->postField('spoor_width'),
+                ];
+                $data->update($data_request);
+                return redirect()->back()->with('success', 'success');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'internal server error');
+            }
+        }
+        $facility_trains = FacilityTrain::with(['train_type'])->get();
+        return view('admin.technical-specification.train.edit')->with([
+            'data' => $data,
+            'facility_trains' => $facility_trains,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            TechnicalSpecTrain::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }
