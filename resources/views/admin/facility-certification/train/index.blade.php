@@ -16,95 +16,38 @@
     <div class="panel w-100 shadow-sm">
         <div class="title">
             <p>Sertifikasi Sarana Kereta</p>
-            <a class="btn-utama sml rnd " href="{{ route('facility-certification-train.create') }}">Tambah
-                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-            </a>
+            <div class="d-flex align-item-center">
+                <a class="btn-utama sml rnd me-2" href="{{ route('facility-certification-train.create') }}">Tambah
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+                <a class="btn-utama sml rnd" href="{{ route('facility-certification-train.excel') }}" target="_blank">Excel
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+            </div>
+
         </div>
         <div class="isi">
-            <div class="d-flex align-items-center mb-3">
-                <div class="flex-grow-1">
-                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active d-flex align-items-center" id="pills-table-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab"
-                                    aria-controls="pills-table" aria-selected="true">
-                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
-                                Data
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link d-flex align-items-center" id="pills-table-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab"
-                                    aria-controls="pills-table" aria-selected="true">
-                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">demography</i>
-                                Rekapitulasi
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <hr>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
-                     aria-labelledby="pills-table-tab">
-                    {{--                    <div class="row">--}}
-                    {{--                        <div class="col-4">--}}
-                    {{--                            <div class="form-group w-100">--}}
-                    {{--                                <label for="train_type" class="form-label">Tipe Sarana</label>--}}
-                    {{--                                <select class="select2 form-control" name="train_type" id="train_type"--}}
-                    {{--                                        style="width: 100%;">--}}
-                    {{--                                    <option value="" selected>Semua</option>--}}
-                    {{--                                    @foreach ($train_types as $train_type)--}}
-                    {{--                                        <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})</option>--}}
-                    {{--                                    @endforeach--}}
-                    {{--                                </select>--}}
-                    {{--                            </div>--}}
-                    {{--                        </div>--}}
-                    {{--                        <div class="col-4">--}}
-                    {{--                            <div class="form-group w-100">--}}
-                    {{--                                <label for="area" class="form-label">Wilayah</label>--}}
-                    {{--                                <select class="select2 form-control" name="area" id="area" style="width: 100%;">--}}
-                    {{--                                    <option value="" selected>Semua</option>--}}
-                    {{--                                    @foreach ($areas as $area)--}}
-                    {{--                                        <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
-                    {{--                                    @endforeach--}}
-                    {{--                                </select>--}}
-                    {{--                            </div>--}}
-                    {{--                        </div>--}}
-                    {{--                        <div class="col-4">--}}
-                    {{--                            <div class="form-group w-100">--}}
-                    {{--                                <label for="storehouse" class="form-label">Depo Induk</label>--}}
-                    {{--                                <select class="select2 form-control" name="storehouse" id="storehouse"--}}
-                    {{--                                        style="width: 100%;">--}}
-                    {{--                                    <option value="" selected>Semua</option>--}}
-                    {{--                                </select>--}}
-                    {{--                            </div>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
-                    {{--                    <hr>--}}
-                    <table id="table-data" class="display table table-striped w-100">
-                        <thead>
-                        <tr>
-                            <th class="text-center middle-header" width="5%">#</th>
-                            {{--                            <th class="text-center middle-header" width="5%">Tipe Sarana</th>--}}
-                            <th class="text-center middle-header" width="10%">Wilayah</th>
-                            <th class="text-center middle-header" width="10%">Kepemilikan</th>
-                            <th class="text-center middle-header" width="12%">No. Sarana</th>
-                            {{--                            <th class="text-center middle-header" width="5%">Tipe Depo</th>--}}
-                            <th class="text-center middle-header" width="8%">Depo Induk</th>
-                            {{--                            <th class="text-center middle-header" width="5%">Mulai Dinas</th>--}}
-                            <th class="text-center middle-header">No. BA Pengujian</th>
-                            <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
-                            <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
-                            {{--                            <th class="text-center middle-header" width="5%">Status</th>--}}
-                            <th class="text-center middle-header" width="15%">Aksi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <table id="table-data" class="display table table-striped w-100">
+                <thead>
+                <tr>
+                    <th class="text-center middle-header" width="5%">#</th>
+                    {{--                            <th class="text-center middle-header" width="5%">Tipe Sarana</th>--}}
+                    <th class="text-center middle-header" width="10%">Wilayah</th>
+                    <th class="text-center middle-header" width="10%">Kepemilikan</th>
+                    <th class="text-center middle-header" width="12%">No. Sarana</th>
+                    {{--                            <th class="text-center middle-header" width="5%">Tipe Depo</th>--}}
+                    <th class="text-center middle-header" width="8%">Depo Induk</th>
+                    {{--                            <th class="text-center middle-header" width="5%">Mulai Dinas</th>--}}
+                    <th class="text-center middle-header">No. BA Pengujian</th>
+                    <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
+                    <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
+                    {{--                            <th class="text-center middle-header" width="5%">Status</th>--}}
+                    <th class="text-center middle-header" width="15%">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
@@ -133,6 +76,8 @@
         let path = '{{ route('facility-certification-train') }}';
 
         let areaPath = '{{ route('area') }}';
+
+        let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
 
@@ -249,7 +194,7 @@
                     deleteEvent();
                 },
                 createdRow: function (row, data, index) {
-                    if (data['expired_in'] < 5) {
+                    if (data['expired_in'] < expiration) {
                         $('td', row).css({'background-color': '#fecba1'});
                     }
                 }

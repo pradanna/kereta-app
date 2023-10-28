@@ -134,6 +134,8 @@
 
         let areaPath = '{{ route('area') }}';
 
+        let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
+
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
 
         function getStorehouseByAreaID() {
@@ -259,7 +261,7 @@
                     deleteEvent();
                 },
                 createdRow: function (row, data, index) {
-                    if (data['expired_in'] < 5) {
+                    if (data['expired_in'] < expiration) {
                         $('td', row).css({'background-color': '#fecba1'});
                     }
                 }

@@ -95,6 +95,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('facility-certification-locomotive.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityLocomotiveController::class, 'patch'])->name('facility-certification-locomotive.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\FacilityLocomotiveController::class, 'destroy'])->name('facility-certification-locomotive.destroy');
+    Route::get( '/excel', [\App\Http\Controllers\FacilityLocomotiveController::class, 'export_to_excel'])->name('facility-certification-locomotive.excel');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-kereta'], function () {
@@ -102,6 +103,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-kereta'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityTrainController::class, 'store'])->name('facility-certification-train.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityTrainController::class, 'patch'])->name('facility-certification-train.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\FacilityTrainController::class, 'destroy'])->name('facility-certification-train.destroy');
+    Route::get( '/excel', [\App\Http\Controllers\FacilityTrainController::class, 'export_to_excel'])->name('facility-certification-train.excel');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-kereta-diesel'], function () {

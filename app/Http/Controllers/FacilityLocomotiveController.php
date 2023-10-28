@@ -10,6 +10,7 @@ use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
 use App\Models\LocomotiveType;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FacilityLocomotiveController extends CustomController
 {
@@ -100,5 +101,15 @@ class FacilityLocomotiveController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel()
+    {
+        $fileName = 'sertifikasi_lokomotif_' . date('YmdHis') . '.xlsx';
+        $facility_locomotives = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type'])->get()->append(['expired_in']);
+        return Excel::download(
+            new \App\Exports\FacilityCertification\FacilityLocomotive($facility_locomotives),
+            $fileName
+        );
     }
 }

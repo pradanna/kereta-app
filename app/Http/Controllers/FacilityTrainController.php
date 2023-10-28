@@ -11,6 +11,7 @@ use App\Models\FacilityTrain;
 use App\Models\LocomotiveType;
 use App\Models\TrainType;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FacilityTrainController extends CustomController
 {
@@ -101,5 +102,15 @@ class FacilityTrainController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel()
+    {
+        $fileName = 'sertifikasi_kereta_' . date('YmdHis') . '.xlsx';
+        $facility_trains = FacilityTrain::with(['area', 'storehouse.storehouse_type', 'train_type'])->get()->append(['expired_in']);
+        return Excel::download(
+            new \App\Exports\FacilityCertification\FacilityTrain($facility_trains),
+            $fileName
+        );
     }
 }
