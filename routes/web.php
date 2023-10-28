@@ -95,6 +95,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('facility-certification-locomotive.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityLocomotiveController::class, 'patch'])->name('facility-certification-locomotive.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\FacilityLocomotiveController::class, 'destroy'])->name('facility-certification-locomotive.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\FacilityLocomotiveController::class, 'detail'])->name('facility-certification-locomotive.detail');
     Route::get( '/excel', [\App\Http\Controllers\FacilityLocomotiveController::class, 'export_to_excel'])->name('facility-certification-locomotive.excel');
 });
 
@@ -111,6 +112,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-kereta-diesel'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityDieselTrainController::class, 'store'])->name('facility-certification-train-diesel.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityDieselTrainController::class, 'patch'])->name('facility-certification-train-diesel.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\FacilityDieselTrainController::class, 'destroy'])->name('facility-certification-train-diesel.destroy');
+    Route::get( '/excel', [\App\Http\Controllers\FacilityDieselTrainController::class, 'export_to_excel'])->name('facility-certification-train-diesel.excel');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-kereta-listrik'], function () {
@@ -118,6 +120,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-kereta-listrik'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityElectricTrainController::class, 'store'])->name('facility-certification-train-electric.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityElectricTrainController::class, 'patch'])->name('facility-certification-train-electric.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\FacilityElectricTrainController::class, 'destroy'])->name('facility-certification-train-electric.destroy');
+    Route::get( '/excel', [\App\Http\Controllers\FacilityElectricTrainController::class, 'export_to_excel'])->name('facility-certification-train-electric.excel');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-gerbong'], function () {
@@ -125,6 +128,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-gerbong'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityWagonController::class, 'store'])->name('facility-certification-wagon.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityWagonController::class, 'patch'])->name('facility-certification-wagon.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\FacilityWagonController::class, 'destroy'])->name('facility-certification-wagon.destroy');
+    Route::get( '/excel', [\App\Http\Controllers\FacilityWagonController::class, 'export_to_excel'])->name('facility-certification-wagon.excel');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-peralatan-khusus'], function () {
@@ -132,6 +136,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-peralatan-khusus'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'store'])->name('facility-certification-special-equipment.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'patch'])->name('facility-certification-special-equipment.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'destroy'])->name('facility-certification-special-equipment.destroy');
+    Route::get( '/excel', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'export_to_excel'])->name('facility-certification-special-equipment.excel');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
@@ -162,4 +167,8 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], functio
 Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {
     Route::get('/', [\App\Http\Controllers\DirectPassageController::class, 'index'])->name('direct-passage');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageController::class, 'store'])->name('direct-passage.add');
+});
+
+Route::group(['prefix' => 'rekapitulasi-sarana'], function (){
+    Route::get('/', [\App\Http\Controllers\SummaryFacilityController::class, 'index'])->name('summary-facility');
 });

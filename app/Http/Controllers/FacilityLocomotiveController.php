@@ -103,6 +103,18 @@ class FacilityLocomotiveController extends CustomController
         }
     }
 
+    public function detail($id)
+    {
+        try {
+            $data = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type'])
+                ->where('id', '=', $id)
+                ->first()->append(['expired_in']);
+            return $this->jsonSuccessResponse('success', $data);
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
     public function export_to_excel()
     {
         $fileName = 'sertifikasi_lokomotif_' . date('YmdHis') . '.xlsx';

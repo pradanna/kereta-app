@@ -1,7 +1,7 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
             <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
             <p class="mb-0">Manajemen Data Master Satuan Pelayanan</p>

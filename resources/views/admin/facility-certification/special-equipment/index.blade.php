@@ -16,72 +16,35 @@
     <div class="panel w-100 shadow-sm">
         <div class="title">
             <p>Sertifikasi Sarana Peralatan Khusus</p>
-            <a class="btn-utama sml rnd " href="{{ route('facility-certification-special-equipment.create') }}">Tambah
-                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-            </a>
+            <div class="d-flex align-item-center">
+                <a class="btn-utama sml rnd me-2" href="{{ route('facility-certification-special-equipment.create') }}">Tambah
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+                <a class="btn-utama sml rnd " href="{{ route('facility-certification-special-equipment.excel') }}" target="_blank">Excel
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+            </div>
         </div>
         <div class="isi">
-            <div class="d-flex align-items-center mb-3">
-                <div class="flex-grow-1">
-                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active d-flex align-items-center" id="pills-table-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab"
-                                    aria-controls="pills-table" aria-selected="true">
-                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
-                                Data
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link d-flex align-items-center" id="pills-table-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab"
-                                    aria-controls="pills-table" aria-selected="true">
-                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">demography</i>
-                                Rekapitulasi
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <hr>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
-                     aria-labelledby="pills-table-tab">
-{{--                    <div class="row">--}}
-{{--                        <div class="col-12">--}}
-{{--                            <div class="form-group w-100">--}}
-{{--                                <label for="area" class="form-label">Wilayah</label>--}}
-{{--                                <select class="select2 form-control" name="area" id="area" style="width: 100%;">--}}
-{{--                                    <option value="" selected>Semua</option>--}}
-{{--                                    @foreach ($areas as $area)--}}
-{{--                                        <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <hr>--}}
-                    <table id="table-data" class="display table table-striped w-100">
-                        <thead>
-                        <tr>
-                            <th class="text-center middle-header" width="5%">#</th>
-                            <th class="text-center middle-header" width="10%">Wilayah</th>
-                            <th class="text-center middle-header" width="10%">Kepemilikan</th>
-{{--                            <th class="text-center">Jenis Sarana</th>--}}
-                            <th class="text-center middle-header" width="10%">No. Sarana Baru</th>
-                            <th class="text-center middle-header" width="10%">No. Sarana Lama</th>
-                            <th class="text-center middle-header">No. BA Pengujian</th>
-                            <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
-                            <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
-{{--                            <th class="text-center">Status</th>--}}
-                            <th class="text-center middle-header" width="15%">Aksi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <table id="table-data" class="display table table-striped w-100">
+                <thead>
+                <tr>
+                    <th class="text-center middle-header" width="5%">#</th>
+                    <th class="text-center middle-header" width="10%">Wilayah</th>
+                    <th class="text-center middle-header" width="10%">Kepemilikan</th>
+                    {{--                            <th class="text-center">Jenis Sarana</th>--}}
+                    <th class="text-center middle-header" width="10%">No. Sarana Baru</th>
+                    <th class="text-center middle-header" width="10%">No. Sarana Lama</th>
+                    <th class="text-center middle-header">No. BA Pengujian</th>
+                    <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
+                    <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
+                    {{--                            <th class="text-center">Status</th>--}}
+                    <th class="text-center middle-header" width="15%">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
@@ -137,11 +100,11 @@
                         orderable: false,
                         className: 'text-center'
                     },
-                    {data: 'area.name', name: 'area.name',  className: 'text-center'},
-                    {data: 'ownership', name: 'ownership',  className: 'text-center'},
+                    {data: 'area.name', name: 'area.name', className: 'text-center'},
+                    {data: 'ownership', name: 'ownership', className: 'text-center'},
                     // {data: 'special_equipment_type.name', name: 'special_equipment_type.name', width: '120px'},
-                    {data: 'new_facility_number', name: 'new_facility_number',  className: 'text-center'},
-                    {data: 'old_facility_number', name: 'old_facility_number',  className: 'text-center'},
+                    {data: 'new_facility_number', name: 'new_facility_number', className: 'text-center'},
+                    {data: 'old_facility_number', name: 'old_facility_number', className: 'text-center'},
                     {data: 'testing_number', name: 'testing_number', className: 'text-center'},
                     {
                         data: 'service_expired_date', name: 'service_expired_date', render: function (data) {

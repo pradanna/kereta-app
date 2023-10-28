@@ -10,6 +10,7 @@ use App\Models\FacilityDieselTrain;
 use App\Models\FacilityTrain;
 use App\Models\TrainType;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FacilityDieselTrainController extends CustomController
 {
@@ -100,5 +101,15 @@ class FacilityDieselTrainController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel()
+    {
+        $fileName = 'sertifikasi_krd_' . date('YmdHis') . '.xlsx';
+        $facility_trains = FacilityDieselTrain::with(['area', 'storehouse.storehouse_type', 'train_type'])->get()->append(['expired_in']);
+        return Excel::download(
+            new \App\Exports\FacilityCertification\FacilityDieselTrain($facility_trains),
+            $fileName
+        );
     }
 }

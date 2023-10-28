@@ -6,11 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Models\Area;
+use App\Models\FacilityDieselTrain;
 use App\Models\FacilityTrain;
 use App\Models\FacilityWagon;
 use App\Models\TrainType;
 use App\Models\WagonSubType;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FacilityWagonController extends CustomController
 {
@@ -101,5 +103,15 @@ class FacilityWagonController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel()
+    {
+        $fileName = 'sertifikasi_gerbong_' . date('YmdHis') . '.xlsx';
+        $facility_wagon = FacilityWagon::with(['area', 'storehouse.storehouse_type', 'wagon_sub_type.wagon_type'])->get()->append(['expired_in']);
+        return Excel::download(
+            new \App\Exports\FacilityCertification\FacilityWagon($facility_wagon),
+            $fileName
+        );
     }
 }

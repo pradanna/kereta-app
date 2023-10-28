@@ -8,9 +8,11 @@ use App\Helper\CustomController;
 use App\Models\Area;
 use App\Models\FacilityElectricTrain;
 use App\Models\FacilitySpecialEquipment;
+use App\Models\FacilityWagon;
 use App\Models\SpecialEquipmentType;
 use App\Models\TrainType;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FacilitySpecialEquipmentController extends CustomController
 {
@@ -99,5 +101,15 @@ class FacilitySpecialEquipmentController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel()
+    {
+        $fileName = 'sertifikasi_peralatan_khusus_' . date('YmdHis') . '.xlsx';
+        $facility_special_equipment = FacilitySpecialEquipment::with(['area', 'storehouse.storehouse_type', 'special_equipment_type'])->get()->append(['expired_in']);
+        return Excel::download(
+            new \App\Exports\FacilityCertification\FacilitySpecialEquipment($facility_special_equipment),
+            $fileName
+        );
     }
 }
