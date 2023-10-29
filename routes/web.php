@@ -176,6 +176,10 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], functio
 Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {
     Route::get('/', [\App\Http\Controllers\DirectPassageController::class, 'index'])->name('direct-passage');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageController::class, 'store'])->name('direct-passage.add');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageController::class, 'patch'])->name('direct-passage.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\DirectPassageController::class, 'destroy'])->name('direct-passage.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\DirectPassageController::class, 'detail'])->name('direct-passage.detail');
+    Route::get( '/excel', [\App\Http\Controllers\DirectPassageController::class, 'export_to_excel'])->name('direct-passage.excel');
 });
 
 Route::group(['prefix' => 'rekapitulasi-sarana'], function (){
