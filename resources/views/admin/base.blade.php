@@ -39,12 +39,13 @@
                 <span class="material-symbols-outlined">menu
                 </span>
             </a> --}}
-            <a class="btn-icon " onclick="openNav()">
+            <a class="btn-icon ">
                 <img class="t-30" src="{{ asset('images/local/logodishub.png') }}" />
                 <img class="t-30" src="{{ asset('images/local/logodjka.png') }}" />
                 <img class="t-30" src="{{ asset('images/local/logo_btp.png') }}" />
             </a>
         </div>
+
         <p class="text-title text-center">
             @yield('title')
         </p>
