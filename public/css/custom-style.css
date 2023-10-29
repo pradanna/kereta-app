@@ -1,136 +1,133 @@
 .select2-selection {
-    height: 2.4rem !important;
-    line-height: 40px !important;
-    border: 1px solid #ddd !important;
+  height: 2.4rem !important;
+  line-height: 40px !important;
+  border: 1px solid #ddd !important;
 }
 
 .select2-selection__rendered {
-    height: 2.4rem !important;
-    line-height: 2.2rem !important;
+  height: 2.4rem !important;
+  line-height: 2.2rem !important;
 }
 
 .select2-selection__arrow {
-    height: 2.2rem !important;
+  height: 2.2rem !important;
 }
 
 .btn-table-action {
-    text-decoration: none;
-    color: #666;
+  text-decoration: none;
+  color: #666;
 }
 
-
-
 .btn-table-action:hover {
-    color: #444;
+  color: #444;
 }
 
 .btn-table-action > .menu-icon {
-    color: #666;
-    font-size: 0.725rem !important;
+  color: #666;
+  font-size: 0.725rem !important;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 .menu-title {
-    color: #666;
+  color: #666;
 }
 
-
 .breadcrumb-item {
-    font-size: 0.8rem;
-    letter-spacing: 0.05rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.05rem;
 }
 
 .breadcrumb-item a {
-    text-decoration: none !important;
-    color: #4e28f7 !important;
+  text-decoration: none !important;
+  color: #4e28f7 !important;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
-    float: left;
-    content: '\203A';
-    font-weight: bold;
+  float: left;
+  content: "\203A";
+  font-weight: bold;
 }
 
 .form-control:focus {
-    outline: none !important;
-    box-shadow: none !important;
-    border: 1px solid #aaaaaa;
+  outline: none !important;
+  box-shadow: none !important;
+  border: 1px solid #aaaaaa;
 }
 
 .form-control::placeholder {
-    color: #aaaaaa;
+  color: #aaaaaa;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    background-color: #4e28f7 !important;
-    color: white !important;
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: #4e28f7 !important;
+  color: white !important;
 }
 
 .nav-link {
-    border-radius: 7px !important;
-    padding: 5px 12px !important;
-    color: #4e28f7 !important;
+  border-radius: 7px !important;
+  padding: 5px 12px !important;
+  color: #4e28f7 !important;
 }
 
 .nav-item {
-    font-size: 0.8rem !important;
-
+  font-size: 0.8rem !important;
 }
 
 .btn-excel {
-    all: unset;
-    transition: all 0.5s;
-    display: flex;
-    text-align: center;
-    border: none;
-    background-color: #097640;
-    color: white;
-    border-radius: 7px;
-    align-items: center;
-    font-weight: bold;
-    padding: 5px 12px;
-    font-size: 0.8rem;
-    cursor: pointer;
+  all: unset;
+  transition: all 0.5s;
+  display: flex;
+  text-align: center;
+  border: none;
+  background-color: #097640;
+  color: white;
+  border-radius: 7px;
+  align-items: center;
+  font-weight: bold;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .btn-pdf {
-    all: unset;
-    transition: all 0.5s;
-    display: flex;
-    text-align: center;
-    border: none;
-    background-color: #b61409;
-    color: white;
-    border-radius: 7px;
-    align-items: center;
-    font-weight: bold;
-    padding: 5px 12px;
-    font-size: 0.8rem;
-    cursor: pointer;
+  all: unset;
+  transition: all 0.5s;
+  display: flex;
+  text-align: center;
+  border: none;
+  background-color: #b61409;
+  color: white;
+  border-radius: 7px;
+  align-items: center;
+  font-weight: bold;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
 input.form-control {
-    padding: 0.56rem 0.75rem !important;
+  padding: 0.56rem 0.75rem !important;
 }
 
 .middle-header {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .page-title-container > h1 {
-    color: #888;
-    font-weight: bold;
-    font-size: 1.2rem;
+  color: #888;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .page-title-container > p {
-    color: #888;
-    font-size: 0.8rem;
+  color: #888;
+  font-size: 0.8rem;
 }
 
 .expired-color {
-    background-color: #fecba1 !important;
+  background-color: #fecba1 !important;
 }

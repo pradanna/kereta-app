@@ -3,6 +3,36 @@ body {
   background-color: #fafcff !important;
 }
 
+.t-50 {
+  height: 50px;
+}
+
+.t-30 {
+  height: 30px;
+}
+
+.btn-edit {
+  background-color: #16ca5b;
+  color: white !important;
+  padding: 3px 10px;
+  border-radius: 5px;
+  transition: all 300ms ease-in-out;
+}
+.btn-edit:hover {
+  font-weight: bold;
+}
+
+.btn-delete {
+  background-color: red;
+  color: white !important;
+  padding: 3px 10px;
+  border-radius: 5px;
+  transition: all 300ms ease-in-out;
+}
+.btn-delete:hover {
+  font-weight: bold;
+}
+
 .material-symbols-outlined {
   line-height: unset !important;
   font-size: 18px !important;
@@ -48,14 +78,19 @@ body {
   display: block;
 }
 
-.logo-login {
+.panel-logo {
   position: absolute;
   bottom: 20px;
-  left: calc(50% - 75px);
   z-index: -1;
 }
-.logo-login img {
-  width: 150px;
+.panel-logo .logo-login {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  width: 100vw;
+}
+.panel-logo .logo-login img {
+  height: 7em;
 }
 
 .header {
