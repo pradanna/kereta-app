@@ -56,7 +56,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Sarana</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Sarana Lokomotif</p>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-6">
@@ -354,7 +354,7 @@
                 let serviceStartDate = data['service_start_date'];
                 let serviceExpiredDate = data['service_expired_date'];
                 let expiredIn = data['expired_in'];
-                let status = 'Berlaku';
+                let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
                 $('#locomotive_type').val(locomotiveType);
                 $('#area').val(area);
                 $('#storehouse').val(storehouse);
@@ -406,10 +406,10 @@
             $('.select2').select2({
                 width: 'resolve',
             });
-            generateStorehouseOption();
-            $('#area').on('change', function (e) {
-                generateStorehouseOption();
-            });
+            // generateStorehouseOption();
+            // $('#area').on('change', function (e) {
+            //     generateStorehouseOption();
+            // });
             generateTableFacilityCertification();
         });
     </script>

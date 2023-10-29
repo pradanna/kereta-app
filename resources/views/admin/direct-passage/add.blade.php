@@ -1,7 +1,28 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Menambahkan Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('direct-passage') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">JALUR PERLINTASAN LANGSUNG</h1>
+            <p class="mb-0">Manajemen Tambah Data Jalur Perlintasan Langsung</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -21,19 +42,19 @@
                         <span class="bs-stepper-label">Data Umum</span>
                     </button>
                 </div>
-                <div class="line"></div>
-                <div class="step" data-target="#guard-part">
-                    <button type="button" class="step-trigger" role="tab" aria-controls="guard-part"
-                            id="guard-part-trigger">
-                        <span class="bs-stepper-circle">2</span>
-                        <span class="bs-stepper-label">Status Penjagaan</span>
-                    </button>
-                </div>
+{{--                <div class="line"></div>--}}
+{{--                <div class="step" data-target="#guard-part">--}}
+{{--                    <button type="button" class="step-trigger" role="tab" aria-controls="guard-part"--}}
+{{--                            id="guard-part-trigger">--}}
+{{--                        <span class="bs-stepper-circle">2</span>--}}
+{{--                        <span class="bs-stepper-label">Status Penjagaan</span>--}}
+{{--                    </button>--}}
+{{--                </div>--}}
                 <div class="line"></div>
                 <div class="step" data-target="#sign-part">
                     <button type="button" class="step-trigger" role="tab" aria-controls="sign-part"
                             id="sign-part-trigger">
-                        <span class="bs-stepper-circle">3</span>
+                        <span class="bs-stepper-circle">2</span>
                         <span class="bs-stepper-label">Perlengkapan Rambu</span>
                     </button>
                 </div>
@@ -126,6 +147,21 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="form-group w-100">
+                                        <label for="guarded_by" class="form-label">Status Penjagaan</label>
+                                        <select class="select2 form-control" name="guarded_by" id="guarded_by"
+                                                style="width: 100%;">
+                                            <option value="0">OP (PT. KAI)</option>
+                                            <option value="1">JJ (PT. KAI)</option>
+                                            <option value="2">Instansi Lain</option>
+                                            <option value="3">Resmi Tidak Dijaga</option>
+                                            <option value="4">Liar</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="road_name" class="form-label">Nama Jalan / Daerah</label>
@@ -143,114 +179,114 @@
                             </div>
                             <hr>
                             <div class="d-flex justify-content-end">
-                                <a class="btn-utama  rnd" id="btn-next-step-1" href="#">Selanjutnya
+                                <a class="btn-utama rnd btn-next" id="btn-next-step-1" href="#">Selanjutnya
                                     <i class="material-symbols-outlined menu-icon ms-1 text-white">chevron_right</i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="guard-part" class="content" role="tabpanel" aria-labelledby="guard-part-trigger">
-                    <div class="panel ">
-                        <div class="isi">
-                            <p class="mb-0 fw-bold">PT. KAI</p>
-                            <hr>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Resmi Di Jaga OP</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_verified_by_operator"
-                                               id="is_verified_by_operator_yes" value="1">
-                                        <label class="form-check-label" for="is_verified_by_operator_yes">YA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_verified_by_operator"
-                                               id="is_verified_by_operator_no" value="0" checked>
-                                        <label class="form-check-label" for="is_verified_by_operator_no">TIDAK</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Resmi Di Jaga JJ</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_verified_by_unit_track_and_bridge"
-                                               id="is_verified_by_unit_track_and_bridge_yes" value="1">
-                                        <label class="form-check-label" for="is_verified_by_unit_track_and_bridge_yes">YA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_verified_by_unit_track_and_bridge"
-                                               id="is_verified_by_unit_track_and_bridge_no" value="0" checked>
-                                        <label class="form-check-label" for="is_verified_by_unit_track_and_bridge_no">TIDAK</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <p class="mb-0 fw-bold">Pemda</p>
-                            <hr>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Resmi Di Jaga Instansi Lain</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_verified_by_institution"
-                                               id="is_verified_by_institution_yes" value="1">
-                                        <label class="form-check-label" for="is_verified_by_institution_yes">YA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_verified_by_institution"
-                                               id="is_verified_by_institution_no" value="0" checked>
-                                        <label class="form-check-label" for="is_verified_by_institution_no">TIDAK</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <p class="mb-0 fw-bold">Lainnya</p>
-                            <hr>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Resmi Tidak Di Jaga</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_verified_by_unguarded"
-                                               id="is_verified_by_unguarded_yes" value="1">
-                                        <label class="form-check-label" for="is_verified_by_unguarded_yes">YA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_verified_by_unguarded"
-                                               id="is_verified_by_unguarded_no" value="0" checked>
-                                        <label class="form-check-label" for="is_verified_by_unguarded_no">TIDAK</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Liar</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_illegal"
-                                               id="is_illegal_yes" value="1">
-                                        <label class="form-check-label" for="is_illegal_yes">YA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="is_illegal"
-                                               id="is_illegal_no" value="0" checked>
-                                        <label class="form-check-label" for="is_illegal_no">TIDAK</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-end">
-                                <div class="d-flex align-items-center">
-                                    <a class="btn-utama rnd me-3" id="btn-prev-step-2" href="#">
-                                        <i class="material-symbols-outlined menu-icon me-1 text-white">chevron_left</i>
-                                        Sebelumnya
-                                    </a>
-                                    <a class="btn-utama rnd" id="btn-next-step-2" href="#">Selanjutnya
-                                        <i class="material-symbols-outlined menu-icon ms-1 text-white">chevron_right</i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{--                <div id="guard-part" class="content" role="tabpanel" aria-labelledby="guard-part-trigger">--}}
+{{--                    <div class="panel ">--}}
+{{--                        <div class="isi">--}}
+{{--                            <p class="mb-0 fw-bold">PT. KAI</p>--}}
+{{--                            <hr>--}}
+{{--                            <div class="w-100 mb-3">--}}
+{{--                                <label class="form-label">Resmi Di Jaga OP</label>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_operator"--}}
+{{--                                               id="is_verified_by_operator_yes" value="1">--}}
+{{--                                        <label class="form-check-label" for="is_verified_by_operator_yes">YA</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_operator"--}}
+{{--                                               id="is_verified_by_operator_no" value="0" checked>--}}
+{{--                                        <label class="form-check-label" for="is_verified_by_operator_no">TIDAK</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="w-100 mb-3">--}}
+{{--                                <label class="form-label">Resmi Di Jaga JJ</label>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_unit_track_and_bridge"--}}
+{{--                                               id="is_verified_by_unit_track_and_bridge_yes" value="1">--}}
+{{--                                        <label class="form-check-label" for="is_verified_by_unit_track_and_bridge_yes">YA</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_unit_track_and_bridge"--}}
+{{--                                               id="is_verified_by_unit_track_and_bridge_no" value="0" checked>--}}
+{{--                                        <label class="form-check-label" for="is_verified_by_unit_track_and_bridge_no">TIDAK</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <hr>--}}
+{{--                            <p class="mb-0 fw-bold">Pemda</p>--}}
+{{--                            <hr>--}}
+{{--                            <div class="w-100 mb-3">--}}
+{{--                                <label class="form-label">Resmi Di Jaga Instansi Lain</label>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_institution"--}}
+{{--                                               id="is_verified_by_institution_yes" value="1">--}}
+{{--                                        <label class="form-check-label" for="is_verified_by_institution_yes">YA</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_institution"--}}
+{{--                                               id="is_verified_by_institution_no" value="0" checked>--}}
+{{--                                        <label class="form-check-label" for="is_verified_by_institution_no">TIDAK</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <hr>--}}
+{{--                            <p class="mb-0 fw-bold">Lainnya</p>--}}
+{{--                            <hr>--}}
+{{--                            <div class="w-100 mb-3">--}}
+{{--                                <label class="form-label">Resmi Tidak Di Jaga</label>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_unguarded"--}}
+{{--                                               id="is_verified_by_unguarded_yes" value="1">--}}
+{{--                                        <label class="form-check-label" for="is_verified_by_unguarded_yes">YA</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_unguarded"--}}
+{{--                                               id="is_verified_by_unguarded_no" value="0" checked>--}}
+{{--                                        <label class="form-check-label" for="is_verified_by_unguarded_no">TIDAK</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="w-100 mb-3">--}}
+{{--                                <label class="form-label">Liar</label>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_illegal"--}}
+{{--                                               id="is_illegal_yes" value="1">--}}
+{{--                                        <label class="form-check-label" for="is_illegal_yes">YA</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="is_illegal"--}}
+{{--                                               id="is_illegal_no" value="0" checked>--}}
+{{--                                        <label class="form-check-label" for="is_illegal_no">TIDAK</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <hr>--}}
+{{--                            <div class="d-flex justify-content-end">--}}
+{{--                                <div class="d-flex align-items-center">--}}
+{{--                                    <a class="btn-utama rnd me-3" id="btn-prev-step-2" href="#">--}}
+{{--                                        <i class="material-symbols-outlined menu-icon me-1 text-white">chevron_left</i>--}}
+{{--                                        Sebelumnya--}}
+{{--                                    </a>--}}
+{{--                                    <a class="btn-utama rnd" id="btn-next-step-2" href="#">Selanjutnya--}}
+{{--                                        <i class="material-symbols-outlined menu-icon ms-1 text-white">chevron_right</i>--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div id="sign-part" class="content" role="tabpanel" aria-labelledby="sign-part-trigger">
                     <div class="panel ">
                         <div class="isi">
@@ -422,7 +458,7 @@
                             <hr>
                             <div class="d-flex justify-content-end">
                                 <div class="d-flex align-items-center">
-                                    <a class="btn-utama rnd me-3" id="btn-prev-step-3" href="#">
+                                    <a class="btn-utama rnd me-3 btn-prev" id="btn-prev-step-3" href="#">
                                         <i class="material-symbols-outlined menu-icon me-1 text-white">chevron_left</i>
                                         Sebelumnya
                                     </a>
@@ -459,22 +495,34 @@
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-next-step-1').on('click', function (e) {
+
+            $('.btn-next').on('click', function (e) {
                 e.preventDefault();
-                stepper.to(2)
+                stepper.next();
             });
-            $('#btn-prev-step-2').on('click', function (e) {
+
+            $('.btn-prev').on('click', function (e) {
                 e.preventDefault();
-                stepper.to(1)
+                stepper.previous();
             });
-            $('#btn-next-step-2').on('click', function (e) {
-                e.preventDefault();
-                stepper.to(3)
-            });
-            $('#btn-prev-step-3').on('click', function (e) {
-                e.preventDefault();
-                stepper.to(2)
-            });
+
+            // $('#btn-next-step-1').on('click', function (e) {
+            //     e.preventDefault();
+            //     stepper.to(2)
+            // });
+            // $('#btn-prev-step-2').on('click', function (e) {
+            //     e.preventDefault();
+            //     stepper.to(1)
+            // });
+            // $('#btn-next-step-2').on('click', function (e) {
+            //     e.preventDefault();
+            //     stepper.to(3)
+            // });
+            // $('#btn-prev-step-3').on('click', function (e) {
+            //     e.preventDefault();
+            //     stepper.to(2)
+            // });
+
             $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({

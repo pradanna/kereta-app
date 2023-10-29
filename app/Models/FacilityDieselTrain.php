@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helper\Formula;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +36,7 @@ class FacilityDieselTrain extends Model
 
     public function train_type()
     {
-        return $this->belongsTo(LocomotiveType::class, 'train_type_id');
+        return $this->belongsTo(TrainType::class, 'train_type_id');
     }
 
     public function getExpiredInAttribute()

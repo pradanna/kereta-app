@@ -49,10 +49,103 @@
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
          aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    ...
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Spesifikasi Teknis
+                        Sarana Lokomotif</p>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="facility_locomotive" class="form-label">Identitas Sarana</label>
+                                <input type="text" class="form-control" id="facility_locomotive"
+                                       name="facility_locomotive"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
+                                <input type="number" step="any" class="form-control" id="empty_weight"
+                                       name="empty_weight"
+                                       placeholder="Berat Kosong disabled" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="house_power" class="form-label">Horse Power (HP)</label>
+                                <input type="number" step="any" class="form-control" id="house_power" name="house_power"
+                                       placeholder="Horse Power" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
+                                <input type="number" step="any" class="form-control" id="maximum_speed"
+                                       name="maximum_speed"
+                                       placeholder="Kecepatan Maksimum (VMax)" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="fuel_consumption" class="form-label">Konsumsi BBM (Lt/Jam)</label>
+                                <input type="number" step="any" class="form-control" id="fuel_consumption"
+                                       name="fuel_consumption"
+                                       placeholder="Konsumsi BBM" disabled>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="long" class="form-label">Panjang Lokomotif (mm)</label>
+                                <input type="number" step="any" class="form-control" id="long" name="long"
+                                       placeholder="Panjang Lokomotif" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="width" class="form-label">Lebar Lokomotif (mm)</label>
+                                <input type="number" step="any" class="form-control" id="width" name="width"
+                                       placeholder="Lebar Lokomotif" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="height" class="form-label">Tinggi Maksimum (mm)</label>
+                                <input type="number" step="any" class="form-control" id="height" name="height"
+                                       placeholder="Tinggi Maksimum" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="coupler_height" class="form-label">Tinggi Coupler (mm)</label>
+                                <input type="number" step="any" class="form-control" id="coupler_height"
+                                       name="coupler_height"
+                                       placeholder="Tinggi Coupler" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="wheel_diameter" class="form-label">Diameter Roda (mm)</label>
+                                <input type="number" step="any" class="form-control" id="wheel_diameter"
+                                       name="wheel_diameter"
+                                       placeholder="Diameter Roda" disabled>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,8 +174,39 @@
             $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
-                modalDetail.show();
+                detailHandler(id);
             });
+        }
+
+        async function detailHandler(id) {
+            try {
+                let url = path + '/' + id + '/detail';
+                let response = await $.get(url);
+                let data = response['data'];
+                let facilityLocomotive = data['facility_locomotive']['facility_number'];
+                let emptyWeight = data['empty_weight'];
+                let housePower = data['house_power'];
+                let maximumSpeed = data['maximum_speed'];
+                let fuelConsumption = data['fuel_consumption'];
+                let long = data['long'];
+                let width = data['width'];
+                let height = data['height'];
+                let couplerHeight = data['coupler_height'];
+                let wheelDiameter = data['wheel_diameter'];
+                $('#facility_locomotive').val(facilityLocomotive);
+                $('#empty_weight').val(emptyWeight);
+                $('#house_power').val(housePower);
+                $('#maximum_speed').val(maximumSpeed);
+                $('#fuel_consumption').val(fuelConsumption);
+                $('#long').val(long);
+                $('#width').val(width);
+                $('#height').val(height);
+                $('#coupler_height').val(couplerHeight);
+                $('#wheel_diameter').val(wheelDiameter);
+                modalDetail.show();
+            } catch (e) {
+                alert('internal server error...')
+            }
         }
 
         function deleteEvent() {
@@ -180,51 +304,11 @@
                             return data.toLocaleString('id-ID');
                         }
                     },
-                    // {
-                    //     data: 'long',
-                    //     name: 'long',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'width',
-                    //     name: 'width',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'height',
-                    //     name: 'height',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'coupler_height',
-                    //     name: 'coupler_height',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'wheel_diameter',
-                    //     name: 'wheel_diameter',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
                     {
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action">Detail</a>' +
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>' +
                                 '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +

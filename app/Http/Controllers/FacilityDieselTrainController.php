@@ -103,6 +103,18 @@ class FacilityDieselTrainController extends CustomController
         }
     }
 
+    public function detail($id)
+    {
+        try {
+            $data = FacilityDieselTrain::with(['area', 'storehouse.storehouse_type', 'train_type'])
+                ->where('id', '=', $id)
+                ->first()->append(['expired_in', 'status']);
+            return $this->jsonSuccessResponse('success', $data);
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
     public function export_to_excel()
     {
         $fileName = 'sertifikasi_krd_' . date('YmdHis') . '.xlsx';

@@ -104,6 +104,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-kereta'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityTrainController::class, 'store'])->name('facility-certification-train.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityTrainController::class, 'patch'])->name('facility-certification-train.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\FacilityTrainController::class, 'destroy'])->name('facility-certification-train.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\FacilityTrainController::class, 'detail'])->name('facility-certification-train.detail');
     Route::get( '/excel', [\App\Http\Controllers\FacilityTrainController::class, 'export_to_excel'])->name('facility-certification-train.excel');
 });
 
@@ -112,6 +113,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-kereta-diesel'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityDieselTrainController::class, 'store'])->name('facility-certification-train-diesel.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityDieselTrainController::class, 'patch'])->name('facility-certification-train-diesel.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\FacilityDieselTrainController::class, 'destroy'])->name('facility-certification-train-diesel.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\FacilityDieselTrainController::class, 'detail'])->name('facility-certification-train-diesel.detail');
     Route::get( '/excel', [\App\Http\Controllers\FacilityDieselTrainController::class, 'export_to_excel'])->name('facility-certification-train-diesel.excel');
 });
 
@@ -120,6 +122,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-kereta-listrik'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityElectricTrainController::class, 'store'])->name('facility-certification-train-electric.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityElectricTrainController::class, 'patch'])->name('facility-certification-train-electric.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\FacilityElectricTrainController::class, 'destroy'])->name('facility-certification-train-electric.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\FacilityElectricTrainController::class, 'detail'])->name('facility-certification-train-electric.detail');
     Route::get( '/excel', [\App\Http\Controllers\FacilityElectricTrainController::class, 'export_to_excel'])->name('facility-certification-train-electric.excel');
 });
 
@@ -128,6 +131,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-gerbong'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityWagonController::class, 'store'])->name('facility-certification-wagon.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityWagonController::class, 'patch'])->name('facility-certification-wagon.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\FacilityWagonController::class, 'destroy'])->name('facility-certification-wagon.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\FacilityWagonController::class, 'detail'])->name('facility-certification-wagon.detail');
     Route::get( '/excel', [\App\Http\Controllers\FacilityWagonController::class, 'export_to_excel'])->name('facility-certification-wagon.excel');
 });
 
@@ -136,6 +140,7 @@ Route::group(['prefix' => 'sertifikasi-sarana-peralatan-khusus'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'store'])->name('facility-certification-special-equipment.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'patch'])->name('facility-certification-special-equipment.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'destroy'])->name('facility-certification-special-equipment.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'detail'])->name('facility-certification-special-equipment.detail');
     Route::get( '/excel', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'export_to_excel'])->name('facility-certification-special-equipment.excel');
 });
 
@@ -144,6 +149,7 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'store'])->name('technical-specification.locomotive.add');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'patch'])->name('technical-specification.locomotive.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy'])->name('technical-specification.locomotive.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'detail'])->name('technical-specification.locomotive.detail');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {
@@ -151,12 +157,15 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'store'])->name('technical-specification.train.add');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'patch'])->name('technical-specification.train.patch');
     Route::post( '/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy'])->name('technical-specification.train.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'detail'])->name('technical-specification.train.detail');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-gerbong'], function () {
     Route::get('/', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'index'])->name('technical-specification.wagon');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'store'])->name('technical-specification.wagon.add');
-    Route::match(['post', 'get'], '/ubah', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'store'])->name('technical-specification.wagon.edit');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'patch'])->name('technical-specification.wagon.patch');
+    Route::post( '/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy'])->name('technical-specification.wagon.destroy');
+    Route::get( '/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'detail'])->name('technical-specification.wagon.detail');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], function () {

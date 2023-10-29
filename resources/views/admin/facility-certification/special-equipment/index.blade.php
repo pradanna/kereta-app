@@ -20,7 +20,8 @@
                 <a class="btn-utama sml rnd me-2" href="{{ route('facility-certification-special-equipment.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-utama sml rnd " href="{{ route('facility-certification-special-equipment.excel') }}" target="_blank">Excel
+                <a class="btn-utama sml rnd " href="{{ route('facility-certification-special-equipment.excel') }}"
+                   target="_blank">Excel
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
             </div>
@@ -52,7 +53,80 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
-                    ...
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Sarana Peralatan
+                        Khusus</p>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="special_equipment_type" class="form-label">Jenis Sarana</label>
+                                <input type="text" class="form-control" id="special_equipment_type"
+                                       name="special_equipment_type" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="area" class="form-label">Wilayah</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="new_facility_number" class="form-label">No. Sarana Baru</label>
+                                <input type="text" class="form-control" id="new_facility_number"
+                                       name="new_facility_number" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="old_facility_number" class="form-label">No. Sarana Lama</label>
+                                <input type="text" class="form-control" id="old_facility_number"
+                                       name="old_facility_number" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="testing_number" class="form-label">No. BA Pengujian</label>
+                                <input type="text" class="form-control" id="testing_number" name="testing_number"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="ownership" class="form-label">Kepemilikan</label>
+                                <input type="text" class="form-control" id="ownership" name="ownership" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="form-group w-100">
+                                <label for="service_expired_date" class="form-label">Masa Berlaku</label>
+                                <input type="text" class="form-control" id="service_expired_date"
+                                       name="service_expired_date" placeholder="dd-mm-yyyy" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="expired_in" class="form-label">Akan Habis (Hari)</label>
+                                <input type="text" class="form-control" id="expired_in"
+                                       name="expired_in" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="status"
+                                       name="status" disabled>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -134,7 +208,7 @@
                     {
                         data: null, render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action">Detail</a>' +
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>' +
                                 '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
@@ -165,8 +239,37 @@
             $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
-                modalDetail.show();
+                detailHandler(id)
             });
+        }
+
+        async function detailHandler(id) {
+            try {
+                let url = path + '/' + id + '/detail';
+                let response = await $.get(url);
+                let data = response['data'];
+                let specialEquipmentType = data['special_equipment_type']['name'];
+                let area = data['area']['name'];
+                let ownership = data['ownership'];
+                let newFacilityNumber = data['new_facility_number'];
+                let oldFacilityNumber = data['old_facility_number'];
+                let testingNumber = data['testing_number'];
+                let serviceExpiredDate = data['service_expired_date'];
+                let expiredIn = data['expired_in'];
+                let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+                $('#special_equipment_type').val(specialEquipmentType);
+                $('#area').val(area);
+                $('#ownership').val(ownership);
+                $('#new_facility_number').val(newFacilityNumber);
+                $('#old_facility_number').val(oldFacilityNumber);
+                $('#testing_number').val(testingNumber);
+                $('#service_expired_date').val(serviceExpiredDate);
+                $('#status').val(status);
+                $('#expired_in').val(expiredIn);
+                modalDetail.show();
+            } catch (e) {
+                alert('internal server error...')
+            }
         }
 
         function deleteEvent() {

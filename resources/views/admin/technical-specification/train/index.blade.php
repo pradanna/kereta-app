@@ -50,10 +50,110 @@
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
          aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    ...
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Spesifikasi Teknis
+                        Sarana Kereta</p>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="form-group w-100">
+                                <label for="facility_train" class="form-label">Identitas Sarana</label>
+                                <input type="text" class="form-control" id="facility_train"
+                                       name="facility_train"
+                                       disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
+                                <input type="number" step="any" class="form-control" id="empty_weight"
+                                       name="empty_weight"
+                                       placeholder="Berat Kosong" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="passenger_capacity" class="form-label">Kapasitas Penumpang</label>
+                                <input type="number" step="any" class="form-control" id="passenger_capacity"
+                                       name="passenger_capacity"
+                                       placeholder="Kapasitas Penumpang" disabled>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
+                                <input type="number" step="any" class="form-control" id="maximum_speed"
+                                       name="maximum_speed"
+                                       placeholder="Kecepatan Maksimum (VMax)" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="air_conditioner" class="form-label">Jenis AC</label>
+                                <input type="text" class="form-control" id="air_conditioner"
+                                       name="air_conditioner"
+                                       placeholder="Jenis AC" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="long" class="form-label">Panjang Kereta (mm)</label>
+                                <input type="number" step="any" class="form-control" id="long" name="long"
+                                       placeholder="Panjang Kereta" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="width" class="form-label">Lebar Kereta (mm)</label>
+                                <input type="number" step="any" class="form-control" id="width" name="width"
+                                       placeholder="Lebar Kereta" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="height" class="form-label">Tinggi Kereta (mm)</label>
+                                <input type="number" step="any" class="form-control" id="height" name="height"
+                                       placeholder="Tinggi Kereta" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="coupler_height" class="form-label">Tinggi Alat Perangkai (mm)</label>
+                                <input type="number" step="any" class="form-control" id="coupler_height"
+                                       name="coupler_height"
+                                       placeholder="Tinggi Alat Perangkai" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="axle_load" class="form-label">Beban Gandar (Ton)</label>
+                                <input type="number" step="any" class="form-control" id="axle_load" name="axle_load"
+                                       placeholder="Beban Gandar" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="spoor_width" class="form-label">Lebar Spoor (mm)</label>
+                                <input type="number" step="any" class="form-control" id="spoor_width" name="spoor_width"
+                                       placeholder="Lebar Spoor" disabled>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,8 +182,41 @@
             $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
-                modalDetail.show();
+                detailHandler(id);
             });
+        }
+
+        async function detailHandler(id) {
+            try {
+                let url = path + '/' + id + '/detail';
+                let response = await $.get(url);
+                let data = response['data'];
+                let facilityTrain = data['facility_train']['facility_number'];
+                let emptyWeight = data['empty_weight'];
+                let maximumSpeed = data['maximum_speed'];
+                let passengerCapacity = data['passenger_capacity'];
+                let airConditioner = data['air_conditioner'];
+                let long = data['long'];
+                let width = data['width'];
+                let height = data['height'];
+                let couplerHeight = data['coupler_height'];
+                let axleLoad = data['axle_load'];
+                let spoorWidth = data['spoor_width'];
+                $('#facility_train').val(facilityTrain);
+                $('#empty_weight').val(emptyWeight);
+                $('#maximum_speed').val(maximumSpeed);
+                $('#passenger_capacity').val(passengerCapacity);
+                $('#air_conditioner').val(airConditioner);
+                $('#long').val(long);
+                $('#width').val(width);
+                $('#height').val(height);
+                $('#coupler_height').val(couplerHeight);
+                $('#axle_load').val(axleLoad);
+                $('#spoor_width').val(spoorWidth);
+                modalDetail.show();
+            } catch (e) {
+                alert('internal server error...')
+            }
         }
 
         function deleteEvent() {
@@ -136,7 +269,7 @@
                     name: 'DT_RowIndex',
                     searchable: false,
                     orderable: false,
-                    width: '30px'
+                    className: 'text-center',
                 },
                     {
                         data: 'facility_train.train_type.name',
@@ -152,7 +285,8 @@
                     {
                         data: 'empty_weight',
                         name: 'empty_weight',
-                        width: '100px',
+                        // width: '100px',
+                        className: 'text-center',
                         render: function (data) {
                             return data.toLocaleString('id-ID');
                         }
@@ -160,7 +294,7 @@
                     {
                         data: 'maximum_speed',
                         name: 'maximum_speed',
-                        width: '100px',
+                        className: 'text-center',
                         render: function (data) {
                             return data.toLocaleString('id-ID');
                         }
@@ -168,7 +302,7 @@
                     {
                         data: 'passenger_capacity',
                         name: 'passenger_capacity',
-                        width: '100px',
+                        className: 'text-center',
                         render: function (data) {
                             return data.toLocaleString('id-ID');
                         }
@@ -176,61 +310,13 @@
                     {
                         data: 'air_conditioner',
                         name: 'air_conditioner',
-                        width: '100px'
+                        className: 'text-center'
                     },
-                    // {
-                    //     data: 'long',
-                    //     name: 'long',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'width',
-                    //     name: 'width',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'height',
-                    //     name: 'height',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'coupler_height',
-                    //     name: 'coupler_height',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'axle_load',
-                    //     name: 'axle_load',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'spoor_width',
-                    //     name: 'spoor_width',
-                    //     width: '100px',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
                     {
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action">Detail</a>' +
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>' +
                                 '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +

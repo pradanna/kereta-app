@@ -95,4 +95,16 @@ class TechnicalSpecificationLocomotiveController extends CustomController
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
     }
+
+    public function detail($id)
+    {
+        try {
+            $data = TechnicalSpecLocomotive::with(['facility_locomotive.locomotive_type'])
+                ->where('id', '=', $id)
+                ->first();
+            return $this->jsonSuccessResponse('success', $data);
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
 }

@@ -108,7 +108,7 @@ class FacilityLocomotiveController extends CustomController
         try {
             $data = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type'])
                 ->where('id', '=', $id)
-                ->first()->append(['expired_in']);
+                ->first()->append(['expired_in', 'status']);
             return $this->jsonSuccessResponse('success', $data);
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());

@@ -110,7 +110,7 @@ class FacilityWagon implements FromCollection, WithHeadings, WithStyles, WithStr
                 Carbon::parse($datum->service_expired_date)->format('d-m-Y'),
                 $datum->testing_number,
                 $datum->expired_in,
-                ($datum->expired_in <= Formula::ExpirationLimit ? 'HABIS MASA BERLAKU' : 'BERLAKU'),
+                ($datum->expired_in < 0 ? 'HABIS MASA BERLAKU' : 'BERLAKU'),
             ];
             array_push($results, $result);
         }

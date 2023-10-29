@@ -18,6 +18,7 @@ class DirectPassage extends Model
         'width',
         'road_construction',
         'road_name',
+        'guarded_by',
         'is_closed',
         'is_not_found',
         'is_underpass',

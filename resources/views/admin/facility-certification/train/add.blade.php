@@ -38,7 +38,7 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="train_type" class="form-label">Jenis Sarana</label>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="storehouse" class="form-label">Depo Induk</label>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="facility_number" class="form-label">No. Sarana</label>
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_start_date" class="form-label">Mulai Dinas</label>

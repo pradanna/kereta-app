@@ -1,10 +1,10 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
             <h1 class="h1">JALUR PERLINTASAN LANGSUNG</h1>
-            <p class="mb-0">Data Jalur Perlintasan Langsung</p>
+            <p class="mb-0">Manajemen Data Jalur Perlintasan Langsung</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -21,24 +21,18 @@
             </a>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped">
+            <table id="table-data" class="display table table-striped w-100">
                 <thead>
                 <tr>
-                    <th class="text-center middle-header">#</th>
-                    <th class="text-center middle-header">Wilayah</th>
-                    <th class="text-center middle-header">Perlintasan</th>
-                    <th class="text-center middle-header">Antara</th>
-                    <th class="text-center middle-header">JPL</th>
-                    <th class="text-center middle-header">KM/HM</th>
-                    <th class="text-center middle-header">Lebar Jalan</th>
-                    <th class="text-center middle-header">Konstruksi Jalan</th>
-                    <th class="text-center middle-header">Nama Jalan</th>
-                    <th class="text-center middle-header">Kodya / Kabupaten</th>
-                    <th class="text-center middle-header">Koordinat</th>
-                    <th class="text-center middle-header">Usulan Penataan</th>
-                    <th class="text-center middle-header">Riwayat Kecelakaan</th>
-                    <th class="text-center middle-header">Keterangan</th>
-                    <th class="text-center middle-header">Aksi</th>
+                    <th class="text-center middle-header" width="5%">#</th>
+                    <th class="text-center middle-header" width="10%">Wilayah</th>
+                    <th class="text-center middle-header" width="10%">Perlintasan</th>
+                    <th class="text-center middle-header" width="10%">Antara</th>
+                    <th class="text-center middle-header" width="7%">JPL</th>
+                    <th class="text-center middle-header" width="8%">KM/HM</th>
+                    <th class="text-center middle-header" width="10%">Lebar Jalan</th>
+                    <th class="middle-header">Nama Jalan</th>
+                    <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -71,84 +65,55 @@
                     name: 'DT_RowIndex',
                     searchable: false,
                     orderable: false,
-                    width: '30'
+                    className: 'text-center',
                 },
                     {
                         data: 'sub_track.track.area.name',
                         name: 'sub_track.track.area.name',
-                        width: '100px',
+                        className: 'text-center',
                     },
                     {
                         data: 'sub_track.track.code',
                         name: 'sub_track.track.code',
-                        width: '100px',
+                        className: 'text-center',
                     },
                     {
                         data: 'sub_track.code',
                         name: 'sub_track.code',
-                        width: '100px',
+                        className: 'text-center',
                     },
                     {
                         data: 'name',
                         name: 'name',
-                        width: '100px',
+                        className: 'text-center',
                     },
                     {
                         data: 'stakes',
                         name: 'stakes',
-                        width: '100px',
+                        className: 'text-center',
                     },
                     {
                         data: 'width',
                         name: 'width',
-                        width: '100px',
-                    },
-                    {
-                        data: 'road_construction',
-                        name: 'road_construction',
-                        width: '100px',
+                        className: 'text-center',
                     },
                     {
                         data: 'road_name',
                         name: 'road_name',
-                        width: '100px',
-                    },
-                    {
-                        data: 'city.name',
-                        name: 'city.name',
-                        width: '100px',
-                    },
-                    {
-                        data: null,
-                        width: '100px',
-                        render: function (data) {
-                            return '-';
-                        }
-                    },
-                    {
-                        data: 'arrangement_proposal',
-                        name: 'arrangement_proposal',
-                        width: '100px',
-                    },
-                    {
-                        data: 'accident_history',
-                        name: 'accident_history',
-                        width: '100px',
-                    },
-                    {
-                        data: 'description',
-                        name: 'description',
-                        width: '100px',
+
                     },
                     {
                         data: null,
                         render: function (data) {
-                            return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] +
+                            let urlEdit = path + '/' + data['id'] + '/edit';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>' +
+                                '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
-                                '<a href="#" class="btn-delete" data-id="' + data['id'] +
-                                '">Delete</a>'
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '">Delete</a>';
                         },
-                        orderable: false
+                        orderable: false,
+                        className: 'text-center',
                     }
                 ],
                 columnDefs: [],

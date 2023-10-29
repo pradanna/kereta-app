@@ -103,6 +103,18 @@ class FacilitySpecialEquipmentController extends CustomController
         }
     }
 
+    public function detail($id)
+    {
+        try {
+            $data = FacilitySpecialEquipment::with(['area', 'storehouse.storehouse_type', 'special_equipment_type'])
+                ->where('id', '=', $id)
+                ->first()->append(['expired_in', 'status']);
+            return $this->jsonSuccessResponse('success', $data);
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
     public function export_to_excel()
     {
         $fileName = 'sertifikasi_peralatan_khusus_' . date('YmdHis') . '.xlsx';
