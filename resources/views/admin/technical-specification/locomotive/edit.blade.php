@@ -6,13 +6,29 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Merubah Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('technical-specification.locomotive') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SPESIFIKASI TEKNIS SARANA LOKOMOTIF</h1>
+            <p class="mb-0">Manajemen Edit Data Spesifikasi Teknis Sarana Lokomotif</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('technical-specification.locomotive') }}">Spesifikasi
                         Teknis Sarana Lokomotif</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
     </div>
@@ -23,15 +39,15 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="facility_locomotive" class="form-label">Identitas Sarana</label>
-                            <select class="select2 form-control" name="facility_locomotive" id="facility_locomotive"
-                                style="width: 100%;">
+                            <select class="select2 form-control" name="facility_locomotive"
+                                    id="facility_locomotive" style="width: 100%;">
                                 @foreach ($facility_locomotives as $facility_locomotive)
-                                    <option value="{{ $facility_locomotive->id }}">
-                                        {{ $facility_locomotive->facility_number }}</option>
+                                    <option
+                                        value="{{ $facility_locomotive->id }}" {{ ($facility_locomotive->id === $data->facility_locomotive_id) ? 'selected' :'' }}>{{ $facility_locomotive->facility_number }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -40,71 +56,77 @@
                         <div class="form-group w-100">
                             <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
                             <input type="number" step="any" class="form-control" id="empty_weight" name="empty_weight"
-                                placeholder="Berat Kosong">
+                                   placeholder="Berat Kosong" value="{{ $data->empty_weight }}">
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="house_power" class="form-label">Horse Power (HP)</label>
                             <input type="number" step="any" class="form-control" id="house_power" name="house_power"
-                                placeholder="Horse Power">
+                                   placeholder="Horse Power" value="{{ $data->house_power }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
-                            <input type="number" step="any" class="form-control" id="maximum_speed"
-                                name="maximum_speed" placeholder="Kecepatan Maksimum (VMax)">
+                            <input type="number" step="any" class="form-control" id="maximum_speed" name="maximum_speed"
+                                   placeholder="Kecepatan Maksimum (VMax)" value="{{ $data->maximum_speed }}">
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="fuel_consumption" class="form-label">Konsumsi BBM (Lt/Jam)</label>
                             <input type="number" step="any" class="form-control" id="fuel_consumption"
-                                name="fuel_consumption" placeholder="Konsumsi BBM">
+                                   name="fuel_consumption"
+                                   placeholder="Konsumsi BBM" value="{{ $data->fuel_consumption }}">
                         </div>
                     </div>
+
+                </div>
+                <hr>
+                <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="long" class="form-label">Panjang Lokomotif (mm)</label>
                             <input type="number" step="any" class="form-control" id="long" name="long"
-                                placeholder="Panjang Lokomotif">
+                                   placeholder="Panjang Lokomotif" value="{{ $data->long }}">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="width" class="form-label">Lebar Lokomotif (mm)</label>
                             <input type="number" step="any" class="form-control" id="width" name="width"
-                                placeholder="Lebar Lokomotif">
+                                   placeholder="Lebar Lokomotif" value="{{ $data->width }}">
                         </div>
                     </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="height" class="form-label">Tinggi Maksimum (mm)</label>
                             <input type="number" step="any" class="form-control" id="height" name="height"
-                                placeholder="Tinggi Maksimum">
+                                   placeholder="Tinggi Maksimum" value="{{ $data->height }}">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="coupler_height" class="form-label">Tinggi Coupler (mm)</label>
-                            <input type="number" step="any" class="form-control" id="coupler_height"
-                                name="coupler_height" placeholder="Tinggi Coupler">
+                            <input type="number" step="any" class="form-control" id="coupler_height" name="coupler_height"
+                                   placeholder="Tinggi Coupler" value="{{ $data->coupler_height }}">
                         </div>
                     </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="wheel_diameter" class="form-label">Diameter Roda (mm)</label>
-                            <input type="number" step="any" class="form-control" id="wheel_diameter"
-                                name="wheel_diameter" placeholder="Diameter Roda">
+                            <input type="number" step="any" class="form-control" id="wheel_diameter" name="wheel_diameter"
+                                   placeholder="Diameter Roda" value="{{ $data->wheel_diameter }}">
                         </div>
                     </div>
                 </div>
@@ -121,14 +143,14 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
             });

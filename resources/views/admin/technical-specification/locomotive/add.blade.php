@@ -6,7 +6,23 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Menambahkan Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('technical-specification.locomotive') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SPESIFIKASI TEKNIS SARANA LOKOMOTIF</h1>
+            <p class="mb-0">Manajemen Tambah Data Spesifikasi Teknis Sarana Lokomotif</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -23,7 +39,7 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="facility_locomotive" class="form-label">Identitas Sarana</label>
@@ -44,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="house_power" class="form-label">Horse Power (HP)</label>
@@ -60,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="fuel_consumption" class="form-label">Konsumsi BBM (Lt/Jam)</label>
@@ -69,6 +85,11 @@
                                    placeholder="Konsumsi BBM">
                         </div>
                     </div>
+
+                </div>
+                <hr>
+                <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="long" class="form-label">Panjang Lokomotif (mm)</label>
@@ -76,8 +97,6 @@
                                    placeholder="Panjang Lokomotif">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="width" class="form-label">Lebar Lokomotif (mm)</label>
@@ -85,6 +104,8 @@
                                    placeholder="Lebar Lokomotif">
                         </div>
                     </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="height" class="form-label">Tinggi Maksimum (mm)</label>
@@ -92,8 +113,6 @@
                                    placeholder="Tinggi Maksimum">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-2">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="coupler_height" class="form-label">Tinggi Coupler (mm)</label>
@@ -101,6 +120,8 @@
                                    placeholder="Tinggi Coupler">
                         </div>
                     </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="wheel_diameter" class="form-label">Diameter Roda (mm)</label>

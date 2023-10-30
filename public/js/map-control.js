@@ -41,13 +41,31 @@ function createMultiMarkerArea(data = []) {
         let areaMarker = new google.maps.Marker({
             position: new google.maps.LatLng(v['latitude'], v['longitude']),
             map: map_container,
-            icon: '/images/marker/custom-marker.png',
+            icon: '/images/marker/electric-train.png',
             title: v['name'],
         });
         multi_marker.push(areaMarker);
+        let infoWindow = new google.maps.InfoWindow({
+            content: windowContentAreaMarker(v),
+        });
+        areaMarker.addListener('click', function () {
+            infoWindow.open({
+                anchor: areaMarker,
+                map_container,
+                shouldFocus: false,
+            });
+
+        });
         bounds.extend(areaMarker.position);
     });
     map_container.fitBounds(bounds);
+}
+
+function windowContentAreaMarker(data) {
+    return '<div class="p-1">' +
+        '<p class="mb-1" style="color: #777777; font-size: 12px; font-weight: bold;">' + data['name'] + '</p>' +
+        '<p class="mb-1" style="color: #777777; font-size: 12px;">'+data['service_unit']['name']+'</p>' +
+        '</div>';
 }
 
 function createMultiMarkerStorehouse(data = []) {

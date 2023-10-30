@@ -45,7 +45,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                     'wheel_diameter' => $this->postField('wheel_diameter'),
                 ];
                 TechnicalSpecLocomotive::create($data_request);
-                return redirect()->route('technical-specification.locomotive');
+                return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error...');
             }
@@ -54,5 +54,57 @@ class TechnicalSpecificationLocomotiveController extends CustomController
         return view('admin.technical-specification.locomotive.add')->with([
             'facility_locomotives' => $facility_locomotives,
         ]);
+    }
+
+    public function patch($id)
+    {
+        $data = TechnicalSpecLocomotive::findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'facility_locomotive_id' => $this->postField('facility_locomotive'),
+                    'empty_weight' => $this->postField('empty_weight'),
+                    'house_power' => $this->postField('house_power'),
+                    'maximum_speed' => $this->postField('maximum_speed'),
+                    'fuel_consumption' => $this->postField('fuel_consumption'),
+                    'long' => $this->postField('long'),
+                    'width' => $this->postField('width'),
+                    'height' => $this->postField('height'),
+                    'coupler_height' => $this->postField('coupler_height'),
+                    'wheel_diameter' => $this->postField('wheel_diameter'),
+                ];
+                $data->update($data_request);
+                return redirect()->back()->with('success', 'success');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'internal server error');
+            }
+        }
+        $facility_locomotives = FacilityLocomotive::all();
+        return view('admin.technical-specification.locomotive.edit')->with([
+            'data' => $data,
+            'facility_locomotives' => $facility_locomotives,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            TechnicalSpecLocomotive::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    public function detail($id)
+    {
+        try {
+            $data = TechnicalSpecLocomotive::with(['facility_locomotive.locomotive_type'])
+                ->where('id', '=', $id)
+                ->first();
+            return $this->jsonSuccessResponse('success', $data);
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }

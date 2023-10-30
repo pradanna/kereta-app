@@ -1,7 +1,28 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Merubah Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('facility-certification-special-equipment') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SERTIFIKASI SARANA PERALATAN KHUSUS</h1>
+            <p class="mb-0">Manajemen Edit Data Sertifikasi Sarana Peralatan Khusus</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -25,7 +46,7 @@
                             <select class="select2 form-control" name="special_equipment_type" id="special_equipment_type"
                                 style="width: 100%;">
                                 @foreach ($special_equipment_types as $special_equipment_type)
-                                    <option value="{{ $special_equipment_type->id }}">{{ $special_equipment_type->code }}
+                                    <option value="{{ $special_equipment_type->id }}" {{ ($special_equipment_type->id === $data->special_equipment_type_id) ? 'selected' :'' }}>{{ $special_equipment_type->code }}
                                         ({{ $special_equipment_type->name }})</option>
                                 @endforeach
                             </select>
@@ -36,7 +57,7 @@
                             <label for="area" class="form-label">Wilayah</label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -47,14 +68,14 @@
                         <div class="form-group w-100">
                             <label for="new_facility_number" class="form-label">No. Sarana Baru</label>
                             <input type="text" class="form-control" id="new_facility_number" name="new_facility_number"
-                                placeholder="Nomor Sarana Baru">
+                                placeholder="Nomor Sarana Baru" value="{{ $data->new_facility_number }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="old_facility_number" class="form-label">No. Sarana Lama</label>
                             <input type="text" class="form-control" id="old_facility_number" name="old_facility_number"
-                                placeholder="Nomor Sarana Lama">
+                                placeholder="Nomor Sarana Lama" value="{{ $data->old_facility_number }}">
                         </div>
                     </div>
                 </div>
@@ -63,14 +84,14 @@
                         <div class="form-group w-100">
                             <label for="testing_number" class="form-label">No. BA Pengujian</label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                placeholder="Nomor BA Pengujian">
+                                placeholder="Nomor BA Pengujian" value="{{ $data->testing_number }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
                             <input type="text" class="form-control" id="ownership" name="ownership"
-                                placeholder="Contoh: PT. KAI">
+                                placeholder="Contoh: PT. KAI" value="{{ $data->ownership }}">
                         </div>
                     </div>
                 </div>
@@ -111,6 +132,12 @@
     <script>
         let areaPath = '{{ route('area') }}';
 
+        function initializeDate() {
+            let expDateValue = '{{ $data->service_expired_date }}';
+            let expDate = new Date(expDateValue);
+            $('#service_expired_date').datepicker('setDate', expDate);
+        }
+
         $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
@@ -118,6 +145,8 @@
             $('.datepicker').datepicker({
                 format: 'dd-mm-yyyy',
             });
+
+            initializeDate();
 
             $('#btn-save').on('click', function(e) {
                 e.preventDefault();

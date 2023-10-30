@@ -1,7 +1,28 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Menambahkan Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('service-unit') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
+            <p class="mb-0">Manajemen Tambah Data Master Satuan Pelayanan</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -22,26 +43,26 @@
                         <div class="w-100">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Satuan Pelayanan">
+                                   placeholder="Nama Satuan Pelayanan" required>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
-                    <div class="col-6">
-                        <div class="w-100">
-                            <label for="latitude" class="form-label">Latitude</label>
-                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"
-                                   placeholder="Contoh: 7.1129489">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="w-100">
-                            <label for="longitude" class="form-label">Longitude</label>
-                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"
-                                   placeholder="Contoh: 110.1129489">
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="row mb-1">--}}
+{{--                    <div class="col-6">--}}
+{{--                        <div class="w-100">--}}
+{{--                            <label for="latitude" class="form-label">Latitude</label>--}}
+{{--                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"--}}
+{{--                                   placeholder="Contoh: 7.1129489">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-6">--}}
+{{--                        <div class="w-100">--}}
+{{--                            <label for="longitude" class="form-label">Longitude</label>--}}
+{{--                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"--}}
+{{--                                   placeholder="Contoh: 110.1129489">--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <hr>
                 <div class="d-flex justify-content-end">
                     <a class="btn-utama  rnd " id="btn-save" href="#">Simpan <i

@@ -6,10 +6,10 @@
 
 @section('css')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-        crossorigin="" />
+          integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+          crossorigin=""/>
     <script src="{{ asset('js/map-control.js?v=2') }}"></script>
-
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
     <style>
         .select2-selection__rendered {
             line-height: 36px !important;
@@ -51,13 +51,9 @@
 @section('content')
     <div class="panel">
         <div class="title">
-            <p>Portfolio</p>
+            <p>Dashboard</p>
         </div>
-
         <div class="isi">
-            <div class="row" id="cardType">
-            </div>
-
         </div>
     </div>
 
@@ -66,5 +62,12 @@
     <!-- Modal -->
 @endsection
 
-@section('morejs')
+@section('js')
+    <script>
+        let path = '{{ route('dashboard') }}';
+        $(document).ready(function () {
+
+
+        });
+    </script>
 @endsection

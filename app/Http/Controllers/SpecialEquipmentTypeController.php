@@ -32,11 +32,39 @@ class SpecialEquipmentTypeController extends CustomController
                     'name' => $this->postField('name'),
                 ];
                 SpecialEquipmentType::create($data_request);
-                return redirect()->route('special-equipment-type');
+                return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
-                return redirect()->back();
+                return redirect()->back()->with('failed', 'internal server error');
             }
         }
         return view('admin.master.special-equipment-type.add');
+    }
+
+    public function patch($id)
+    {
+        $data = SpecialEquipmentType::findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'code' => $this->postField('code'),
+                    'name' => $this->postField('name'),
+                ];
+                $data->update($data_request);
+                return redirect()->back()->with('success', 'success');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'internal server error');
+            }
+        }
+        return view('admin.master.special-equipment-type.edit')->with(['data' => $data]);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            SpecialEquipmentType::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }

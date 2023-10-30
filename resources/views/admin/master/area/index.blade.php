@@ -1,7 +1,11 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">MASTER DAERAH OPERASI</h1>
+            <p class="mb-0">Manajemen Data Master Daerah Operasi</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
@@ -50,9 +54,9 @@
                         <thead>
                         <tr>
                             <th width="5%" class="text-center">#</th>
-                            <th>Satuan Pelayanan</th>
+                            <th width="15%">Satuan Pelayanan</th>
                             <th>Nama Daerah Operasi</th>
-                            <th width="10%" class="text-center">Aksi</th>
+                            <th width="12%" class="text-center">Aksi</th>
                         </tr>
                         </thead>
                         <tbody></tbody>
@@ -73,7 +77,7 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
         async></script>
-
+    <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
         let path = '{{ route('area') }}';
@@ -101,6 +105,38 @@
             }).catch((e) => {
                 console.log(e)
             })
+        }
+
+        function deleteEvent() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus data?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = '{{ route('area') }}' + '/' + id + '/delete';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    table.ajax.reload();
+                    generateMapArea();
+                });
+            });
         }
 
         function generateTableArea() {
@@ -134,18 +170,22 @@
                     {
                         data: null,
                         render: function (data) {
-                            return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] +
+                            let urlEdit = path + '/' + data['id'] + '/edit';
+                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
-                                '<a href="#" class="btn-delete" data-id="' + data['id'] + '">Delete</a>'
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] + '">Delete</a>'
                         },
                         orderable: false
                     }
                 ],
                 columnDefs: [{
-                    targets: [0, 3],
+                    targets: [0, 1, 3],
                     className: 'text-center'
                 }],
                 paging: true,
+                "fnDrawCallback": function (setting) {
+                    deleteEvent();
+                }
             })
         }
 

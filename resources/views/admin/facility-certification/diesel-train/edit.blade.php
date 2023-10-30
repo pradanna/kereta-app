@@ -1,12 +1,34 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Merubah Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('facility-certification-train-diesel') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SERTIFIKASI SARANA KERETA REL DIESEL</h1>
+            <p class="mb-0">Manajemen Edit Data Sertifikasi Sarana Kereta Rel Diesel (KRD)</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train-diesel') }}">Sertifikasi Sarana Kereta Diesel</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah</li>
+                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train-diesel') }}">Sertifikasi Sarana
+                        Kereta Diesel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
     </div>
@@ -17,14 +39,14 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="train_type" class="form-label">Jenis Kereta</label>
-                            <select class="select2 form-control" name="train_type" id="train_type"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="train_type" id="train_type" style="width: 100%;">
                                 @foreach ($train_types as $train_type)
-                                    <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})</option>
+                                    <option value="{{ $train_type->id }}" {{ ($train_type->id === $data->train_type_id) ? 'selected' :'' }}>{{ $train_type->code }} ({{ $train_type->name }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -34,13 +56,13 @@
                             <label for="area" class="form-label">Wilayah</label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="storehouse" class="form-label">Depo Induk</label>
@@ -52,27 +74,27 @@
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
                             <input type="text" class="form-control" id="ownership" name="ownership"
-                                   placeholder="Contoh: PT. KAI">
+                                   placeholder="Contoh: PT. KAI" value="{{ $data->ownership }}">
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="facility_number" class="form-label">No. Sarana</label>
                             <input type="text" class="form-control" id="facility_number" name="facility_number"
-                                   placeholder="Nomor Sarana">
+                                   placeholder="Nomor Sarana" value="{{ $data->facility_number }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="testing_number" class="form-label">No. BA Pengujian</label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                   placeholder="Nomor BA Pengujian">
+                                   placeholder="Nomor BA Pengujian" value="{{ $data->testing_number }}">
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_start_date" class="form-label">Mulai Dinas</label>
@@ -102,22 +124,23 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
-        integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
+          integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
-        integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         let areaPath = '{{ route('area') }}';
 
         function getStorehouseByAreaID() {
             let areaID = $('#area').val();
-            let url = areaPath + '/' + areaID + '/storehouse';
+            let type = 2;
+            let url = areaPath + '/' + areaID + '/storehouse?type=' + type;
             return $.get(url);
         }
 
@@ -127,7 +150,8 @@
             getStorehouseByAreaID().then((response) => {
                 let data = response.data;
                 $.each(data, function(k, v) {
-                    elOption.append('<option value="' + v['id'] + '">' + v['name'] + ' ('+v['storehouse_type']['name']+')</option>')
+                    elOption.append('<option value="' + v['id'] + '">' + v['name'] + ' (' + v[
+                        'storehouse_type']['name'] + ')</option>')
                 });
                 $('#storehouse').select2({
                     width: 'resolve',
@@ -136,6 +160,15 @@
             }).catch((error) => {
                 console.log(error)
             })
+        }
+
+        function initializeDate() {
+            let expDateValue = '{{ $data->service_expired_date }}';
+            let startDateValue = '{{ $data->service_start_date }}';
+            let expDate = new Date(expDateValue);
+            let startDate = new Date(startDateValue);
+            $('#service_start_date').datepicker('setDate', startDate);
+            $('#service_expired_date').datepicker('setDate', expDate);
         }
 
         $(document).ready(function() {
@@ -149,6 +182,8 @@
             $('#area').on('change', function(e) {
                 generateStorehouseOption();
             });
+
+            initializeDate();
 
             $('#btn-save').on('click', function(e) {
                 e.preventDefault();

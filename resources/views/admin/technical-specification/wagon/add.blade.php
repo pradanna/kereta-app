@@ -6,11 +6,27 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Menambahkan Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('technical-specification.wagon') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SPESIFIKASI TEKNIS SARANA GERBONG</h1>
+            <p class="mb-0">Manajemen Data Spesifikasi Teknis Sarana Gerbong</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('technical-specification.locomotive') }}">Spesifikasi
+                <li class="breadcrumb-item"><a href="{{ route('technical-specification.wagon') }}">Spesifikasi
                         Teknis Sarana Gerbong</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
@@ -23,7 +39,7 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="facility_wagon" class="form-label">Identitas Sarana</label>
@@ -37,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="loading_weight" class="form-label">Berat Muat (Ton)</label>
@@ -54,7 +70,7 @@
                     </div>
 
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
@@ -72,7 +88,7 @@
                 </div>
                 <hr>
                 <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="long" class="form-label">Panjang Total Gerbong (mm)</label>
@@ -89,7 +105,7 @@
                     </div>
 
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="height_from_rail" class="form-label">Tinggi Lantai Dari Rel (mm)</label>
@@ -105,10 +121,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
-                            <label for="bogie_distance" class="form-label">Jarak Antar Pusat Bogie (Ton)</label>
+                            <label for="bogie_distance" class="form-label">Jarak Antar Pusat Bogie (mm)</label>
                             <input type="number" step="any" class="form-control" id="bogie_distance" name="bogie_distance"
                                    placeholder="Jarak Antar Pusat Bogie">
                         </div>

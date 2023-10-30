@@ -1,11 +1,32 @@
 @extends('admin/base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('failed'))
+        <script>
+            Swal.fire("Ooops", 'internal server error...', "error")
+        </script>
+    @endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Menambahkan Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('facility-certification-wagon') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SERTIFIKASI SARANA GERBONG</h1>
+            <p class="mb-0">Manajemen Tambah Data Sertifikasi Sarana GERBONG</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('facility-certification-train') }}">Sertifikasi Sarana Gerbong</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('facility-certification-wagon') }}">Sertifikasi Sarana Gerbong</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
@@ -17,7 +38,7 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
@@ -40,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="storehouse" class="form-label">Depo Induk</label>
@@ -56,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="facility_number" class="form-label">No. Sarana</label>
@@ -72,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_start_date" class="form-label">Mulai Dinas</label>
@@ -117,7 +138,8 @@
 
         function getStorehouseByAreaID() {
             let areaID = $('#area').val();
-            let url = areaPath + '/' + areaID + '/storehouse';
+            let type = 4;
+            let url = areaPath + '/' + areaID + '/storehouse?type=' + type;
             return $.get(url);
         }
 

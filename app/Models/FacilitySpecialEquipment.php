@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helper\Formula;
 use App\Traits\Uuids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,7 +42,7 @@ class FacilitySpecialEquipment extends Model
     {
         $expired_date = Carbon::parse($this->service_expired_date);
         $now = Carbon::now();
-        return $now->diffInDays($expired_date);
+        return $now->diffInDays($expired_date, false);
     }
 
     public function getStatusAttribute()

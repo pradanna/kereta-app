@@ -6,24 +6,40 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            Swal.fire({
+                title: 'Success',
+                text: 'Berhasil Menambahkan Data...',
+                icon: 'success',
+                timer: 1000
+            }).then(() => {
+                window.location.href = '{{ route('technical-specification.train') }}';
+            })
+        </script>
+    @endif
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SPESIFIKASI TEKNIS SARANA KERETA</h1>
+            <p class="mb-0">Manajemen Tambah Data Spesifikasi Teknis Sarana Kereta</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('technical-specification.locomotive') }}">Spesifikasi
-                        Teknis Sarana Lokomotif</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('technical-specification.train') }}">Spesifikasi
+                        Teknis Sarana Kereta</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Form Data Spesifikasi Teknis Sarana Lokomotif</p>
+            <p>Form Data Spesifikasi Teknis Sarana Kereta</p>
         </div>
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="facility_train" class="form-label">Identitas Sarana</label>
@@ -36,9 +52,8 @@
                             </select>
                         </div>
                     </div>
-
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
@@ -55,7 +70,7 @@
                     </div>
 
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
@@ -71,11 +86,10 @@
                                    placeholder="Jenis AC">
                         </div>
                     </div>
-
                 </div>
                 <hr>
                 <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="long" class="form-label">Panjang Kereta (mm)</label>
@@ -90,9 +104,8 @@
                                    placeholder="Lebar Kereta">
                         </div>
                     </div>
-
                 </div>
-                <div class="row mb-2">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="height" class="form-label">Tinggi Kereta (mm)</label>
@@ -108,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="axle_load" class="form-label">Beban Gandar (Ton)</label>

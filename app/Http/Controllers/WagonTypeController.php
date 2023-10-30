@@ -33,12 +33,40 @@ class WagonTypeController extends CustomController
                     'name' => $this->postField('name'),
                 ];
                 WagonType::create($data_request);
-                return redirect()->route('wagon-type');
+                return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
-                return redirect()->back();
+                return redirect()->back()->with('failed', 'internal server error');
             }
         }
         return view('admin.master.wagon-type.add');
+    }
+
+    public function patch($id)
+    {
+        $data = WagonType::findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'code' => $this->postField('code'),
+                    'name' => $this->postField('name'),
+                ];
+                $data->update($data_request);
+                return redirect()->back()->with('success', 'success');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'internal server error');
+            }
+        }
+        return view('admin.master.wagon-type.edit')->with(['data' => $data]);
+    }
+
+    public function destroy($id)
+    {
+        try {
+            WagonType::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 
     public function sub_type($id)
@@ -74,5 +102,38 @@ class WagonTypeController extends CustomController
         return view('admin.master.wagon-type.add-sub-type')->with([
             'wagon' => $wagon
         ]);
+    }
+
+    public function patch_sub_type($id, $sub_id)
+    {
+        $data = WagonSubType::findOrFail($sub_id);
+        $wagon = WagonType::findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            try {
+                $data_request = [
+                    'wagon_type_id' => $wagon->id,
+                    'code' => $this->postField('code'),
+                    'name' => $this->postField('name'),
+                ];
+                $data->update($data_request);
+                return redirect()->back()->with('success', 'success');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('failed', 'internal server error');
+            }
+        }
+        return view('admin.master.wagon-type.edit-sub-type')->with([
+            'data' => $data,
+            'wagon' => $wagon
+        ]);
+    }
+
+    public function destroy_sub_type($id, $sub_id)
+    {
+        try {
+            WagonSubType::destroy($sub_id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }
