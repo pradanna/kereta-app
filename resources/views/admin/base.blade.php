@@ -15,6 +15,7 @@
     <meta name="_token" content="{{ csrf_token() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- ICON --}}
+    <link rel="shortcut icon" href="{{ asset('images/local/favicon.ico') }}" title="Favicon" />
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="{{ asset('css/dropify/css/dropify.css') }}" rel="stylesheet">
