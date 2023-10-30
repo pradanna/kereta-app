@@ -17,31 +17,32 @@
         <div class="title">
             <p>Sertifikasi Sarana Peralatan Khusus</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('facility-certification-special-equipment.create') }}">Tambah
+                <a class="btn-utama sml rnd me-2"
+                    href="{{ route('facility-certification-special-equipment.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-utama sml rnd " href="{{ route('facility-certification-special-equipment.excel') }}"
-                   target="_blank">Excel
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                <a class="btn-success sml rnd " href="{{ route('facility-certification-special-equipment.excel') }}"
+                    target="_blank">Export Excel
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_copy</i>
                 </a>
             </div>
         </div>
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                <tr>
-                    <th class="text-center middle-header" width="5%">#</th>
-                    <th class="text-center middle-header" width="10%">Wilayah</th>
-                    <th class="text-center middle-header" width="10%">Kepemilikan</th>
-                    {{--                            <th class="text-center">Jenis Sarana</th>--}}
-                    <th class="text-center middle-header" width="10%">No. Sarana Baru</th>
-                    <th class="text-center middle-header" width="10%">No. Sarana Lama</th>
-                    <th class="text-center middle-header">No. BA Pengujian</th>
-                    <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
-                    <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
-                    {{--                            <th class="text-center">Status</th>--}}
-                    <th class="text-center middle-header" width="15%">Aksi</th>
-                </tr>
+                    <tr>
+                        <th class="text-center middle-header" width="5%">#</th>
+                        <th class="text-center middle-header" width="10%">Wilayah</th>
+                        <th class="text-center middle-header" width="10%">Kepemilikan</th>
+                        {{--                            <th class="text-center">Jenis Sarana</th> --}}
+                        <th class="text-center middle-header" width="10%">No. Sarana Baru</th>
+                        <th class="text-center middle-header" width="10%">No. Sarana Lama</th>
+                        <th class="text-center middle-header">No. BA Pengujian</th>
+                        <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
+                        <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
+                        {{--                            <th class="text-center">Status</th> --}}
+                        <th class="text-center middle-header" width="15%">Aksi</th>
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -49,7 +50,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
@@ -61,7 +62,7 @@
                             <div class="form-group w-100">
                                 <label for="special_equipment_type" class="form-label">Jenis Sarana</label>
                                 <input type="text" class="form-control" id="special_equipment_type"
-                                       name="special_equipment_type" disabled>
+                                    name="special_equipment_type" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -76,14 +77,14 @@
                             <div class="form-group w-100">
                                 <label for="new_facility_number" class="form-label">No. Sarana Baru</label>
                                 <input type="text" class="form-control" id="new_facility_number"
-                                       name="new_facility_number" disabled>
+                                    name="new_facility_number" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="old_facility_number" class="form-label">No. Sarana Lama</label>
                                 <input type="text" class="form-control" id="old_facility_number"
-                                       name="old_facility_number" disabled>
+                                    name="old_facility_number" disabled>
                             </div>
                         </div>
                     </div>
@@ -92,7 +93,7 @@
                             <div class="form-group w-100">
                                 <label for="testing_number" class="form-label">No. BA Pengujian</label>
                                 <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -107,7 +108,7 @@
                             <div class="form-group w-100">
                                 <label for="service_expired_date" class="form-label">Masa Berlaku</label>
                                 <input type="text" class="form-control" id="service_expired_date"
-                                       name="service_expired_date" placeholder="dd-mm-yyyy" disabled>
+                                    name="service_expired_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
                     </div>
@@ -115,15 +116,13 @@
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="expired_in" class="form-label">Akan Habis (Hari)</label>
-                                <input type="text" class="form-control" id="expired_in"
-                                       name="expired_in" disabled>
+                                <input type="text" class="form-control" id="expired_in" name="expired_in" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="status" class="form-label">Status</label>
-                                <input type="text" class="form-control" id="status"
-                                       name="status" disabled>
+                                <input type="text" class="form-control" id="status" name="status" disabled>
                             </div>
                         </div>
                     </div>
@@ -134,8 +133,8 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
@@ -162,26 +161,47 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.type = 'table';
                     }
                 },
-                columns: [
-                    {
+                columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         searchable: false,
                         orderable: false,
                         className: 'text-center'
                     },
-                    {data: 'area.name', name: 'area.name', className: 'text-center'},
-                    {data: 'ownership', name: 'ownership', className: 'text-center'},
-                    // {data: 'special_equipment_type.name', name: 'special_equipment_type.name', width: '120px'},
-                    {data: 'new_facility_number', name: 'new_facility_number', className: 'text-center'},
-                    {data: 'old_facility_number', name: 'old_facility_number', className: 'text-center'},
-                    {data: 'testing_number', name: 'testing_number', className: 'text-center'},
                     {
-                        data: 'service_expired_date', name: 'service_expired_date', render: function (data) {
+                        data: 'area.name',
+                        name: 'area.name',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'ownership',
+                        name: 'ownership',
+                        className: 'text-center'
+                    },
+                    // {data: 'special_equipment_type.name', name: 'special_equipment_type.name', width: '120px'},
+                    {
+                        data: 'new_facility_number',
+                        name: 'new_facility_number',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'old_facility_number',
+                        name: 'old_facility_number',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'testing_number',
+                        name: 'testing_number',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'service_expired_date',
+                        name: 'service_expired_date',
+                        render: function(data) {
                             const v = new Date(data);
                             return v.toLocaleDateString('id-ID', {
                                 month: '2-digit',
@@ -193,9 +213,12 @@
                         className: 'text-center'
                     },
                     {
-                        data: 'expired_in', name: 'expired_in', render: function (data) {
+                        data: 'expired_in',
+                        name: 'expired_in',
+                        render: function(data) {
                             return data + ' hari';
-                        }, className: 'text-center'
+                        },
+                        className: 'text-center'
                     },
                     // {
                     //     data: 'status', name: 'status', render: function (data) {
@@ -206,14 +229,19 @@
                     //     }, className: 'text-center'
                     // },
                     {
-                        data: null, render: function (data) {
+                        data: null,
+                        render: function(data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
+                                    'id'] + '">Detail</a>' +
+                                '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
                                 '">Delete</a>';
-                        }, orderable: false, className: 'text-center'
+                        },
+                        orderable: false,
+                        className: 'text-center'
                     }
                 ],
                 columnDefs: [
@@ -223,20 +251,22 @@
                     // }
                 ],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     eventOpenDetail();
                     deleteEvent();
                 },
-                createdRow: function (row, data, index) {
+                createdRow: function(row, data, index) {
                     if (data['expired_in'] < expiration) {
-                        $('td', row).css({'background-color': '#fecba1'});
+                        $('td', row).css({
+                            'background-color': '#fecba1'
+                        });
                     }
                 }
             });
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function (e) {
+            $('.btn-detail').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id)
@@ -273,7 +303,7 @@
         }
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function (e) {
+            $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -296,14 +326,14 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
