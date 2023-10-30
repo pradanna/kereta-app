@@ -70,7 +70,7 @@
                                         <select class="select2 form-control" name="sub_track" id="sub_track"
                                                 style="width: 100%;">
                                             @foreach ($sub_tracks as $sub_track)
-                                                <option value="{{ $sub_track->id }}">{{ $sub_track->code }}</option>
+                                                <option value="{{ $sub_track->id }}" {{ ($sub_track->id === $data->sub_track_id) ? 'selected' :'' }}>{{ $sub_track->code }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -81,14 +81,14 @@
                                     <div class="w-100">
                                         <label for="name" class="form-label">JPL</label>
                                         <input type="text" class="form-control" id="name" name="name"
-                                               placeholder="JPL">
+                                               placeholder="JPL" value="{{ $data->name }}">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="stakes" class="form-label">KM/HM</label>
                                         <input type="text" class="form-control" id="stakes" name="stakes"
-                                               placeholder="KM/HM">
+                                               placeholder="KM/HM" value="{{ $data->stakes }}">
                                     </div>
                                 </div>
                             </div>
@@ -98,14 +98,14 @@
                                         <label for="accident_history" class="form-label">Riwayat Kecelakaan</label>
                                         <input type="number" class="form-control" id="accident_history"
                                                name="accident_history"
-                                               placeholder="0" value="0">
+                                               placeholder="0" value="{{ $data->accident_history }}">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="width" class="form-label">Lebar Jalan (m)</label>
                                         <input type="number" step="any" class="form-control" id="width" name="width"
-                                               placeholder="0" value="0">
+                                               placeholder="0" value="{{ $data->width }}">
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                                         <label for="road_construction" class="form-label">Konstruksi Jalan</label>
                                         <input type="text" class="form-control" id="road_construction"
                                                name="road_construction"
-                                               placeholder="Konstruksi Jalan">
+                                               placeholder="Konstruksi Jalan" value="{{ $data->road_construction }}">
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -124,7 +124,7 @@
                                         <select class="select2 form-control" name="city" id="city"
                                                 style="width: 100%;">
                                             @foreach ($cities as $city)
-                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                <option value="{{ $city->id }}" {{ ($city->id === $data->city_id) ? 'selected' :'' }}>{{ $city->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -135,14 +135,14 @@
                                     <div class="w-100">
                                         <label for="latitude" class="form-label">Latitude</label>
                                         <input type="number" step="any" class="form-control" id="latitude" name="latitude"
-                                               placeholder="Contoh: 7.1129489">
+                                               placeholder="Contoh: 7.1129489" value="{{ $data->latitude }}">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="longitude" class="form-label">Longitude</label>
                                         <input type="number" step="any" class="form-control" id="longitude" name="longitude"
-                                               placeholder="Contoh: 110.1129489">
+                                               placeholder="Contoh: 110.1129489" value="{{ $data->longitude }}">
                                     </div>
                                 </div>
                             </div>
@@ -152,11 +152,11 @@
                                         <label for="guarded_by" class="form-label">Status Penjagaan</label>
                                         <select class="select2 form-control" name="guarded_by" id="guarded_by"
                                                 style="width: 100%;">
-                                            <option value="0">OP (PT. KAI)</option>
-                                            <option value="1">JJ (PT. KAI)</option>
-                                            <option value="2">Instansi Lain</option>
-                                            <option value="3">Resmi Tidak Dijaga</option>
-                                            <option value="4">Liar</option>
+                                            <option value="0" {{ (0 === $data->guarded_by) ? 'selected' :'' }}>OP (PT. KAI)</option>
+                                            <option value="1" {{ (1 === $data->guarded_by) ? 'selected' :'' }}>JJ (PT. KAI)</option>
+                                            <option value="2" {{ (2 === $data->guarded_by) ? 'selected' :'' }}>Instansi Lain</option>
+                                            <option value="3" {{ (3 === $data->guarded_by) ? 'selected' :'' }}>Resmi Tidak Dijaga</option>
+                                            <option value="4" {{ (4 === $data->guarded_by) ? 'selected' :'' }}>Liar</option>
                                         </select>
                                     </div>
                                 </div>
@@ -166,14 +166,14 @@
                                     <div class="w-100">
                                         <label for="road_name" class="form-label">Nama Jalan / Daerah</label>
                                         <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name" name="road_name"
-                                                  placeholder="Konstruksi Jalan"></textarea>
+                                                  placeholder="Konstruksi Jalan">{{ $data->road_name }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="description" class="form-label">Keterangan</label>
                                         <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
-                                                  placeholder="Keterangan"></textarea>
+                                                  placeholder="Keterangan">{{ $data->description }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -295,12 +295,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="locomotive_flute"
-                                               id="locomotive_flute_yes" value="1">
+                                               id="locomotive_flute_yes" value="1" {{ (1 === $data->sign_equipment->locomotive_flute) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="locomotive_flute_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="locomotive_flute"
-                                               id="locomotive_flute_no" value="0" checked>
+                                               id="locomotive_flute_no" value="0" {{ (0 === $data->sign_equipment->locomotive_flute) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="locomotive_flute_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -310,12 +310,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="crossing_gate"
-                                               id="crossing_gate_yes" value="1">
+                                               id="crossing_gate_yes" value="1" {{ (1 === $data->sign_equipment->crossing_gate) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="crossing_gate_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="crossing_gate"
-                                               id="crossing_gate_no" value="0" checked>
+                                               id="crossing_gate_no" value="0" {{ (0 === $data->sign_equipment->crossing_gate) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="crossing_gate_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -325,12 +325,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="non_crossing_gate"
-                                               id="non_crossing_gate_yes" value="1">
+                                               id="non_crossing_gate_yes" value="1" {{ (1 === $data->sign_equipment->non_crossing_gate) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="non_crossing_gate_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="non_crossing_gate"
-                                               id="non_crossing_gate_no" value="0" checked>
+                                               id="non_crossing_gate_no" value="0" {{ (0 === $data->sign_equipment->non_crossing_gate) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="non_crossing_gate_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -340,12 +340,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="warning"
-                                               id="warning_yes" value="1">
+                                               id="warning_yes" value="1" {{ (1 === $data->sign_equipment->warning) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="warning_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="warning"
-                                               id="warning_no" value="0" checked>
+                                               id="warning_no" value="0" {{ (0 === $data->sign_equipment->warning) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="warning_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -355,12 +355,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="critical_distance_450"
-                                               id="critical_distance_450_yes" value="1">
+                                               id="critical_distance_450_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_450) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="critical_distance_450_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="critical_distance_450"
-                                               id="critical_distance_450_no" value="0" checked>
+                                               id="critical_distance_450_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_450) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="critical_distance_450_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -370,12 +370,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="critical_distance_300"
-                                               id="critical_distance_300_yes" value="1">
+                                               id="critical_distance_300_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_300) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="critical_distance_300_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="critical_distance_300"
-                                               id="critical_distance_300_no" value="0" checked>
+                                               id="critical_distance_300_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_300) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="critical_distance_300_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -385,12 +385,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="critical_distance_100"
-                                               id="critical_distance_100_yes" value="1">
+                                               id="critical_distance_100_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_100) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="critical_distance_100_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="critical_distance_100"
-                                               id="critical_distance_100_no" value="0" checked>
+                                               id="critical_distance_100_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_100) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="critical_distance_100_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -400,12 +400,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="stop_sign"
-                                               id="stop_sign_yes" value="1">
+                                               id="stop_sign_yes" value="1" {{ (1 === $data->sign_equipment->stop_sign) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="stop_sign_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="stop_sign"
-                                               id="stop_sign_no" value="0" checked>
+                                               id="stop_sign_no" value="0" {{ (0 === $data->sign_equipment->stop_sign) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="stop_sign_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -415,12 +415,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="walking_ban"
-                                               id="walking_ban_yes" value="1">
+                                               id="walking_ban_yes" value="1" {{ (1 === $data->sign_equipment->walking_ban) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="walking_ban_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="walking_ban"
-                                               id="walking_ban_no" value="0" checked>
+                                               id="walking_ban_no" value="0" {{ (0 === $data->sign_equipment->walking_ban) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="walking_ban_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -430,12 +430,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="vehicle_entry_ban"
-                                               id="vehicle_entry_ban_yes" value="1">
+                                               id="vehicle_entry_ban_yes" value="1" {{ (1 === $data->sign_equipment->vehicle_entry_ban) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="vehicle_entry_ban_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="vehicle_entry_ban"
-                                               id="vehicle_entry_ban_no" value="0" checked>
+                                               id="vehicle_entry_ban_no" value="0" {{ (0 === $data->sign_equipment->vehicle_entry_ban) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="vehicle_entry_ban_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -445,12 +445,12 @@
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="shock_line"
-                                               id="shock_line_yes" value="1">
+                                               id="shock_line_yes" value="1" {{ (1 === $data->sign_equipment->shock_line) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="shock_line_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="shock_line"
-                                               id="shock_line_no" value="0" checked>
+                                               id="shock_line_no" value="0" {{ (0 === $data->sign_equipment->shock_line) ? 'checked' :'' }}>
                                         <label class="form-check-label" for="shock_line_no">TIDAK ADA</label>
                                     </div>
                                 </div>
