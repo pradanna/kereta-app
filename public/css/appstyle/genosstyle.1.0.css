@@ -12,25 +12,29 @@ body {
 }
 
 .btn-edit {
-  background-color: #16ca5b;
-  color: white !important;
+  border-color: #16ca5b;
+  border: 1px solid;
+  color: #16ca5b !important;
   padding: 3px 10px;
   border-radius: 5px;
   transition: all 300ms ease-in-out;
 }
 .btn-edit:hover {
-  font-weight: bold;
+  background-color: #16ca5b;
+  color: white !important;
 }
 
 .btn-delete {
-  background-color: red;
-  color: white !important;
+  border-color: red;
+  border: 1px solid;
+  color: red !important;
   padding: 3px 10px;
   border-radius: 5px;
   transition: all 300ms ease-in-out;
 }
 .btn-delete:hover {
-  font-weight: bold;
+  background-color: red;
+  color: white !important;
 }
 
 .material-symbols-outlined {
@@ -124,7 +128,7 @@ body {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 
 .header-panel-kiri {
@@ -202,7 +206,7 @@ input.form-control {
 }
 
 .sidebar {
-  width: 250px !important;
+  width: 250px;
   border-right: solid 1px #f1f1f1;
   height: calc(100vh - 60px);
   position: relative;
@@ -315,7 +319,7 @@ input.form-control {
   color: #4e28f7;
 }
 .sidebar.ciut {
-  width: 60px;
+  width: 60px !important;
   transition: ease-in-out 0.5s;
 }
 .sidebar.ciut .menu-text {
@@ -357,7 +361,7 @@ input.form-control {
 .panel-peformace img {
   width: 50px;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
 }
 .panel-peformace .content {
   margin-left: 20px;
@@ -728,7 +732,7 @@ input.form-control {
 }
 .panel-gambar img {
   -o-object-fit: fill;
-  object-fit: fill;
+     object-fit: fill;
   width: 100%;
   height: 100%;
 }
@@ -751,8 +755,7 @@ input.form-control {
   text-decoration: none;
   background-color: #fff;
   border: 1px solid #dee2e6;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .modal-title {
@@ -766,7 +769,7 @@ table {
 .icon-table {
   height: 25px;
   -o-object-fit: scale-down;
-  object-fit: scale-down;
+     object-fit: scale-down;
 }
 
 .table {
@@ -785,6 +788,5 @@ table {
   background-color: #e7ceff;
   color: #4e28f7;
   text-decoration: none;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
