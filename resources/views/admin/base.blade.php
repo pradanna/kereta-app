@@ -83,7 +83,7 @@
                 </li>
 
                 @php
-                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'jenis-peralatan-khusus', 'perlintasan', 'lintas-antara'];
+                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'jenis-peralatan-khusus', 'perlintasan', 'lintas-antara', 'kecamatan'];
                     $openMaster = false;
                     foreach ($master as $m) {
                         if (request()->is($m . '*')) {
@@ -120,6 +120,12 @@
                             <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa*') ? 'active' : '' }}"
                                 href="{{ route('storehouse') }}">
                                 <p class="menu-text">Depo dan Balai Yasa</p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link menu {{ request()->is('kecamatan*') ? 'active' : '' }}"
+                                href="{{ route('district') }}">
+                                <p class="menu-text">Kecamatan</p>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -277,6 +283,15 @@
                             timeline
                         </span>
                         <p class="menu-text">Jalur Perlintasan Langsung</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('bangunan-liar*') ? 'active' : '' }}"
+                        href="{{ route('illegal-building') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            domain
+                        </span>
+                        <p class="menu-text">Bangunan Liar</p>
                     </a>
                 </li>
                 @php
