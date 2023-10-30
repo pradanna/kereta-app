@@ -62,7 +62,7 @@
     </div>
 
     <div class="d-flex flex-nowrap " style="max-width: 100%; position: relative;">
-        <nav id="sidebar" class="sidebar card py-2" style="min-height: 100vh; min-width: 250px">
+        <nav id="sidebar" class="sidebar card py-2" style="min-height: 100vh; ">
             <ul class="nav flex-column " style=" !important" id="nav_accordion">
                 <li class="mt-4 mb-3 text-center">
                     <img class="w-50" src="{{ asset('images/local/logodishub.png') }}" />
