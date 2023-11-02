@@ -71,7 +71,7 @@
 
     <div class="d-flex flex-nowrap " style="max-width: 100%; position: relative;">
         <nav id="sidebar" class="sidebar card py-2" style="min-height: 100vh; ">
-            <ul class="nav flex-column " style=" !important" id="nav_accordion">
+            <ul class="nav flex-column " style=" " id="nav_accordion">
 
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('dashboard') ? 'active' : '' }}"

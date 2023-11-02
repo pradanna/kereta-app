@@ -259,7 +259,8 @@ input.form-control {
 }
 
 .sidebar {
-  width: 250px;
+  min-width: 250px !important;
+  padding-right: 10px;
   border-right: solid 1px $font-grey7;
   height: calc(100vh - $tinggi-navbar);
   position: relative;
@@ -511,7 +512,7 @@ input.form-control {
   }
 
   &.rnd {
-    border-radius: $rounded;
+    // border-radius: $rounded;
   }
 
   &:hover {
@@ -544,7 +545,7 @@ input.form-control {
   }
 
   &.rnd {
-    border-radius: $rounded;
+    // border-radius: $rounded;
   }
 
   &:hover {
@@ -585,7 +586,7 @@ input.form-control {
   }
 
   &.rnd {
-    border-radius: $rounded;
+    // border-radius: $rounded;
   }
 
   &:hover {
@@ -620,7 +621,7 @@ input.form-control {
   }
 
   &.rnd {
-    border-radius: $rounded;
+    // border-radius: $rounded;
   }
 
   &:hover {
@@ -655,7 +656,7 @@ input.form-control {
   }
 
   &.rnd {
-    border-radius: $rounded;
+    // border-radius: $rounded;
   }
 
   &:hover {
@@ -689,7 +690,7 @@ input.form-control {
   }
 
   &.rnd {
-    border-radius: $rounded;
+    // border-radius: $rounded;
   }
 
   &:hover {
@@ -724,7 +725,7 @@ input.form-control {
   }
 
   &.rnd {
-    border-radius: $rounded;
+    // border-radius: $rounded;
   }
 
   &:hover {
