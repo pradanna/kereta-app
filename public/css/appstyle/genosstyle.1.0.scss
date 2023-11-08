@@ -936,3 +936,67 @@ table {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out;
 }
+
+.dsh-item {
+  min-width: 200px;
+  background-color: white;
+  border-radius: 15px;
+  min-height: 150px;
+  border: 1px solid #eee;
+  padding: 16px;
+
+  .name {
+    font-size: 1rem;
+  }
+
+  .total {
+    font-size: 2rem;
+    margin-bottom: 0;
+  }
+
+  .keterangan {
+    font-size: 0.8rem;
+  }
+
+  &.color1 {
+    background-color: #7da0fa;
+    color: white;
+
+    .keterangan {
+      color: #eee;
+    }
+  }
+
+  &.color4 {
+    background-color: #4747a1;
+    color: white;
+
+    .keterangan {
+      color: #eee;
+    }
+  }
+
+  &.color3 {
+    background-color: #7978e9;
+    color: white;
+
+    .keterangan {
+      color: #eee;
+    }
+  }
+
+  &.color2 {
+    background-color: #f3797e;
+    color: white;
+
+    .keterangan {
+      color: #eee;
+    }
+  }
+}
+
+.table-container {
+  padding: 16px;
+  border-radius: 15px;
+  border: 1px solid #ddd;
+}
