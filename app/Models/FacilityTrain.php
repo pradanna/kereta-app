@@ -16,6 +16,7 @@ class FacilityTrain extends Model
         'area_id',
         'storehouse_id',
         'train_type_id',
+        'engine_type',
         'ownership',
         'facility_number',
         'facility_period',

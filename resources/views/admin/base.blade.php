@@ -107,14 +107,14 @@
                         <li class="nav-item ">
                             <a class="nav-link menu {{ request()->is('satuan-pelayanan*') ? 'active' : '' }}"
                                 href="{{ route('service-unit') }}">
-                                <p class="menu-text">Satuan Pelayanan</p>
+                                <p class="menu-text">Satuan Pelayanan (SATPEL)</p>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link menu {{ request()->is('daerah-operasi*') ? 'active' : '' }}"
                                 href="{{ route('area') }}">
 
-                                <p class="menu-text">Daerah Operasi</p>
+                                <p class="menu-text">Daerah Operasi (DAOP)</p>
                             </a>
                         </li>
                         <li class="nav-item ">
@@ -323,7 +323,15 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('pengguna*') ? 'active' : '' }}"
+                       href="{{ route('user') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            person
+                        </span>
+                        <p class="menu-text">Pengguna</p>
+                    </a>
+                </li>
                 <li class="nav-item text-center mt-3 mb-3">
 
                     <a class="title1-role " href="#"> Login Sebagai </a> <br>

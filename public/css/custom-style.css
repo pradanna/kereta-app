@@ -13,6 +13,10 @@
   height: 2.2rem !important;
 }
 
+.select2-results__option {
+    font-size: 0.8rem !important;
+}
+
 .btn-table-action {
   text-decoration: none;
   color: #666;

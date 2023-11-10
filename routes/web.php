@@ -20,6 +20,13 @@ Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->
 
 Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
+Route::group(['prefix' => 'pengguna'], function () {
+    Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('user');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\UserController::class, 'store'])->name('user.create');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\UserController::class, 'patch'])->name('user.patch');
+    Route::post('/{id}/delete', [\App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
+});
+
 Route::group(['prefix' => 'satuan-pelayanan'], function () {
     Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');

@@ -32,7 +32,11 @@ class StoreHouseController extends CustomController
             }
         }
         $storehouse_types = StorehouseType::all();
-        return view('admin.master.storehouse.index')->with(['storehouse_types' => $storehouse_types]);
+        $areas = Area::all();
+        return view('admin.master.storehouse.index')->with([
+            'storehouse_types' => $storehouse_types,
+            'areas' => $areas,
+        ]);
     }
 
     public function store()

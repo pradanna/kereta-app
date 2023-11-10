@@ -25,31 +25,28 @@
                 <div class="flex-grow-1">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active d-flex align-items-center" id="pills-map-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
-                                    aria-controls="pills-map" aria-selected="false">
-                                <i class="material-symbols-outlined me-1"
-                                   style="font-size: 14px; color: inherit">public</i>
-                                Tampilan Peta
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link d-flex align-items-center" id="pills-table-tab"
+                            <button class="nav-link active d-flex align-items-center" id="pills-table-tab"
                                     data-bs-toggle="pill"
                                     data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
                                     aria-selected="true">
                                 <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
-                                Tampilan Grid
+                                Data
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link d-flex align-items-center" id="pills-map-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
+                                    aria-controls="pills-map" aria-selected="false">
+                                <i class="material-symbols-outlined me-1"
+                                   style="font-size: 14px; color: inherit">public</i>
+                                Peta
                             </button>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
-                    <div id="main-map" style="width: 100%; height: calc(100vh - 70px); border-radius: 10px;"></div>
-                </div>
-                <div class="tab-pane fade" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
+                <div class="tab-pane fade show active" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
                     <table id="table-data" class="display table table-striped w-100">
                         <thead>
                         <tr>
@@ -61,6 +58,9 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+                </div>
+                <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
+                    <div id="main-map" style="width: 100%; height: calc(100vh - 70px); border-radius: 10px;"></div>
                 </div>
             </div>
 
@@ -86,6 +86,9 @@
             $("#pills-tab").on("shown.bs.tab", function (e) {
                 if (e.target.id === "pills-table-tab") {
                     table.columns.adjust();
+                }
+                if (e.target.id === "pills-map-tab") {
+                    generateMapArea();
                 }
             })
         }
@@ -191,7 +194,7 @@
 
         $(document).ready(function () {
             changeTabEvent();
-            generateMapArea();
+
             generateTableArea();
         })
     </script>
