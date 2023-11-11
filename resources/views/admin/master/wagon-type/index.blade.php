@@ -27,7 +27,7 @@
                     <th width="5%" class="text-center">#</th>
                     <th width="12%" class="text-center">Kode</th>
                     <th>Nama</th>
-                    <th width="15%" class="text-center">Aksi</th>
+                    <th width="20%" class="text-center">Aksi</th>
                 </tr>
                 </thead>
                 <tbody></tbody>

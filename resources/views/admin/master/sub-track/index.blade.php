@@ -3,19 +3,19 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER LINTAS ANTARA</h1>
-            <p class="mb-0">Manajemen Data Master Lintas Antara</p>
+            <h1 class="h1">MASTER PETAK</h1>
+            <p class="mb-0">Manajemen Data Master Petak</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Lintas Antara</li>
+                <li class="breadcrumb-item active" aria-current="page">Petak</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Data Perlintasan</p>
+            <p>Data Petak</p>
             <a class="btn-utama sml rnd " href="{{ route('sub-track.create') }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>

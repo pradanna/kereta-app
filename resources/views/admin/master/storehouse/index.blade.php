@@ -13,6 +13,41 @@
             </ol>
         </nav>
     </div>
+    <div class="panel w-100 shadow-sm mb-3">
+        <div class="isi">
+            <div class="d-flex align-items-center">
+                <div class="row flex-grow-1 gx-2">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="area" class="form-label d-none">Daerah Operasi</label>
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
+                                <option value="">Semua Daerah Operasi</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="storehouse_type" class="form-label d-none">Tipe Depo</label>
+                            <select class="select2 form-control" name="storehouse_type" id="storehouse_type"
+                                    style="width: 100%;">
+                                <option value="">Semua Tipe Depo</option>
+                                @foreach ($storehouse_types as $storehouse_type)
+                                    <option
+                                        value="{{ $storehouse_type->id }}">{{ $storehouse_type->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
             <p>Data Depo dan Balai Yasa</p>
@@ -49,23 +84,7 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
                      aria-labelledby="pills-table-tab">
-                    <div class="mb-3 d-flex align-items-center">
-                        <div class="row flex-grow-1">
-                            <div class="col-12">
-                                <div class="form-group w-100">
-                                    <label for="area" class="form-label d-none">Daerah Operasi</label>
-                                    <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                        @foreach ($areas as $area)
-                                            <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <a class="btn-utama sml rnd ms-2" href="#">Cari</a>
-                        </div>
-                    </div>
+
                     <table id="table-data" class="display table w-100">
                         <thead>
                         <tr>
@@ -130,7 +149,9 @@
         }
 
         function getDataStorehouseMap() {
-            let url = path + '?type=map';
+            let storehouseType = $('#storehouse_type').val();
+            let area = $('#area').val();
+            let url = path + '?type=map&storehouse_type=' + storehouseType + '&area=' + area;
             return $.get(url)
         }
 
@@ -142,6 +163,7 @@
                     createMultiMarkerStorehouse(data)
                 }
             }).catch((e) => {
+                alert('terjadi kesalahan dalam pembuatan peta...');
                 console.log(e)
             })
         }
@@ -172,7 +194,7 @@
             let url = '{{ route('storehouse') }}' + '/' + id + '/delete';
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
-                    generateMapStorehouse();
+                    // generateMapStorehouse();
                     table.ajax.reload();
                 });
             });
@@ -190,6 +212,8 @@
                     url: path,
                     'data': function (d) {
                         d.type = 'table';
+                        d.storehouse_type = $('#storehouse_type').val();
+                        d.area = $('#area').val();
                     }
                 },
                 columns: [{
@@ -246,6 +270,11 @@
             });
             changeTabEvent();
             generateTableStorehouse();
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+                generateMapStorehouse();
+            });
         })
     </script>
 @endsection

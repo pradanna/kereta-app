@@ -96,7 +96,7 @@ Route::group(['prefix' => 'perlintasan'], function () {
     Route::post('/{id}/delete', [\App\Http\Controllers\TrackController::class, 'destroy'])->name('track.destroy');
 });
 
-Route::group(['prefix' => 'lintas-antara'], function () {
+Route::group(['prefix' => 'petak'], function () {
     Route::get('/', [\App\Http\Controllers\SubTrackController::class, 'index'])->name('sub-track');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\SubTrackController::class, 'store'])->name('sub-track.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\SubTrackController::class, 'patch'])->name('sub-track.patch');

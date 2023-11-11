@@ -84,7 +84,7 @@
                 </li>
 
                 @php
-                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'jenis-peralatan-khusus', 'perlintasan', 'lintas-antara', 'kecamatan'];
+                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'jenis-peralatan-khusus', 'perlintasan', 'petak', 'kecamatan'];
                     $openMaster = false;
                     foreach ($master as $m) {
                         if (request()->is($m . '*')) {
@@ -160,7 +160,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('lintas-antara*') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('petak*') ? 'active' : '' }}"
                                 href="{{ route('sub-track') }}">
                                 <p class="menu-text">Lintas Antara</p>
                             </a>

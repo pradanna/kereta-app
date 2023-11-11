@@ -20,7 +20,7 @@ class AreaController extends CustomController
     {
         if ($this->request->ajax()) {
             $type = $this->request->query->get('type');
-            $data = Area::with(['service_unit:id,name'])->orderBy('created_at', 'ASC')->get();
+            $data = Area::with(['service_unit:id,name'])->orderBy('name', 'ASC')->get();
             switch ($type) {
                 case 'map':
                     return $this->jsonSuccessResponse('success', $data);

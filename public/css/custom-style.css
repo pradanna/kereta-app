@@ -41,7 +41,7 @@ ul {
 
 .breadcrumb-item {
   font-size: 0.8rem;
-  letter-spacing: 0.05rem;
+  /*letter-spacing: 0.05rem;*/
 }
 
 .breadcrumb-item a {

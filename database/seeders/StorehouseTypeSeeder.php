@@ -43,6 +43,10 @@ class StorehouseTypeSeeder extends Seeder
                 'name' => 'Pengawas Urusan Sarana',
                 'marker_icon' => '/images/marker/facility-supervisor.png'
             ],
+            [
+                'name' => 'Balai Yasa KRL',
+                'marker_icon' => '/images/marker/facility-supervisor.png'
+            ],
         ];
         foreach ($data as $datum) {
             StorehouseType::create($datum);

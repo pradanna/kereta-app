@@ -47,7 +47,7 @@
             </div>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
-                    <table id="table-data" class="display table table-striped w-100">
+                    <table id="table-data" class="display table w-100">
                         <thead>
                         <tr>
                             <th width="5%" class="text-center">#</th>
