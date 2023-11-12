@@ -29,7 +29,7 @@ class FacilityTrainController extends CustomController
             return $this->basicDataTables($data);
         }
         $train_types = TrainType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.train.index')->with([
             'train_types' => $train_types,
             'areas' => $areas,

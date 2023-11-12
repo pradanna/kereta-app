@@ -47,6 +47,7 @@ Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('storehouse.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\StoreHouseController::class, 'patch'])->name('storehouse.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\StoreHouseController::class, 'destroy'])->name('storehouse.destroy');
+    Route::get('/area', [\App\Http\Controllers\StoreHouseController::class, 'getDataByArea'])->name('storehouse.by.area');
 });
 
 Route::group(['prefix' => 'kecamatan'], function () {
