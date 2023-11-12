@@ -76,10 +76,13 @@ Route::group(['prefix' => 'jenis-gerbong'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WagonTypeController::class, 'store'])->name('wagon-type.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WagonTypeController::class, 'patch'])->name('wagon-type.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\WagonTypeController::class, 'destroy'])->name('wagon-type.destroy');
-    Route::get('/{id}/sub-tipe', [\App\Http\Controllers\WagonTypeController::class, 'sub_type'])->name('wagon-type.sub-type');
-    Route::match(['post', 'get'], '/{id}/sub-tipe/tambah', [\App\Http\Controllers\WagonTypeController::class, 'store_sub_type'])->name('wagon-type.sub-type.create');
-    Route::match(['post', 'get'], '/{id}/sub-tipe/{sub_id}/edit', [\App\Http\Controllers\WagonTypeController::class, 'patch_sub_type'])->name('wagon-type.sub-type.patch');
-    Route::post('/{id}/sub-tipe/{sub_id}/delete', [\App\Http\Controllers\WagonTypeController::class, 'destroy_sub_type'])->name('wagon-type.sub-type.destroy');
+});
+
+Route::group(['prefix' => 'sub-jenis-gerbong'], function () {
+    Route::get('/', [\App\Http\Controllers\WagonSubTypeController::class, 'index'])->name('wagon-sub-type');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WagonSubTypeController::class, 'store'])->name('wagon-sub-type.create');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WagonSubTypeController::class, 'patch'])->name('wagon-sub-type.patch');
+    Route::post('/{id}/delete', [\App\Http\Controllers\WagonSubTypeController::class, 'destroy'])->name('wagon-sub-type.destroy');
 });
 
 Route::group(['prefix' => 'jenis-peralatan-khusus'], function () {
@@ -94,6 +97,8 @@ Route::group(['prefix' => 'perlintasan'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TrackController::class, 'store'])->name('track.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TrackController::class, 'patch'])->name('track.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\TrackController::class, 'destroy'])->name('track.destroy');
+    Route::get('/excel', [\App\Http\Controllers\TrackController::class, 'export_to_excel'])->name('track.excel');
+    Route::get('/area', [\App\Http\Controllers\TrackController::class, 'getDataByArea'])->name('track.by.area');
 });
 
 Route::group(['prefix' => 'petak'], function () {
@@ -101,6 +106,7 @@ Route::group(['prefix' => 'petak'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\SubTrackController::class, 'store'])->name('sub-track.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\SubTrackController::class, 'patch'])->name('sub-track.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\SubTrackController::class, 'destroy'])->name('sub-track.destroy');
+    Route::get('/excel', [\App\Http\Controllers\SubTrackController::class, 'export_to_excel'])->name('sub-track.excel');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
@@ -190,18 +196,18 @@ Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {
     Route::get('/', [\App\Http\Controllers\DirectPassageController::class, 'index'])->name('direct-passage');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageController::class, 'store'])->name('direct-passage.add');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageController::class, 'patch'])->name('direct-passage.patch');
-    Route::post( '/{id}/delete', [\App\Http\Controllers\DirectPassageController::class, 'destroy'])->name('direct-passage.destroy');
-    Route::get( '/{id}/detail', [\App\Http\Controllers\DirectPassageController::class, 'detail'])->name('direct-passage.detail');
-    Route::get( '/excel', [\App\Http\Controllers\DirectPassageController::class, 'export_to_excel'])->name('direct-passage.excel');
+    Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageController::class, 'destroy'])->name('direct-passage.destroy');
+    Route::get('/{id}/detail', [\App\Http\Controllers\DirectPassageController::class, 'detail'])->name('direct-passage.detail');
+    Route::get('/excel', [\App\Http\Controllers\DirectPassageController::class, 'export_to_excel'])->name('direct-passage.excel');
 });
 
 Route::group(['prefix' => 'bangunan-liar'], function () {
     Route::get('/', [\App\Http\Controllers\IllegalBuildingController::class, 'index'])->name('illegal-building');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\IllegalBuildingController::class, 'store'])->name('illegal-building.add');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\IllegalBuildingController::class, 'patch'])->name('illegal-building.patch');
-    Route::post( '/{id}/delete', [\App\Http\Controllers\IllegalBuildingController::class, 'destroy'])->name('illegal-building.destroy');
-    Route::get( '/{id}/detail', [\App\Http\Controllers\IllegalBuildingController::class, 'detail'])->name('illegal-building.detail');
-    Route::get( '/excel', [\App\Http\Controllers\IllegalBuildingController::class, 'export_to_excel'])->name('illegal-building.excel');
+    Route::post('/{id}/delete', [\App\Http\Controllers\IllegalBuildingController::class, 'destroy'])->name('illegal-building.destroy');
+    Route::get('/{id}/detail', [\App\Http\Controllers\IllegalBuildingController::class, 'detail'])->name('illegal-building.detail');
+    Route::get('/excel', [\App\Http\Controllers\IllegalBuildingController::class, 'export_to_excel'])->name('illegal-building.excel');
 });
 
 Route::group(['prefix' => 'rekapitulasi-sarana'], function () {

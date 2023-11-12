@@ -1,69 +1,32 @@
-@extends('admin/base')
+@extends('admin.base')
 
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER PERLINTASAN</h1>
-            <p class="mb-0">Manajemen Data Master Perlintasan</p>
+            <h1 class="h1">MASTER SUB JENIS GERBONG</h1>
+            <p class="mb-0">Manajemen Data Master Sub Jenis Gerbong</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Perlintasan</li>
+                <li class="breadcrumb-item active" aria-current="page">Sub Jenis Gerbong</li>
             </ol>
         </nav>
     </div>
-    <div class="panel w-100 shadow-sm mb-3">
-        <div class="isi">
-            <div class="d-flex align-items-center">
-                <div class="flex-grow-1 row gx-2">
-                    <div class="col-3">
-                        <div class="form-group w-100">
-                            <label for="area" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                <option value="">Semua Daerah Operasi</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-9">
-                        <div class="form-group w-100">
-                            <label for="name" class="form-label d-none"></label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari Kode atau Nama Perlintasan">
-                        </div>
-                    </div>
-
-                </div>
-                <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="panel">
         <div class="title">
-            <p>Data Perlintasan</p>
-            <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('track.create') }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
-                <a class="btn-success sml rnd" href="#" id="btn-export">
-                    Export
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
-                </a>
-            </div>
+            <p>Data Jenis Sub Jenis Gerbong</p>
+            <a class="btn-utama sml rnd " href="{{ route('wagon-sub-type.create') }}">Tambah
+                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+            </a>
         </div>
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
                 <tr>
                     <th width="5%" class="text-center">#</th>
-                    <th width="15%">Wilayah</th>
-                    <th width="12%">Kode</th>
+                    <th width="15%" class="text-center">Jenis Gerbong</th>
+                    <th width="12%" class="text-center">Kode</th>
                     <th>Nama</th>
                     <th width="10%" class="text-center">Aksi</th>
                 </tr>
@@ -75,16 +38,14 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let path = '{{ route('track') }}';
+        let path = '{{ route('wagon-sub-type') }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -118,9 +79,6 @@
         }
 
         $(document).ready(function () {
-            $('.select2').select2({
-                width: 'resolve',
-            });
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -130,10 +88,6 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
-                        d.area = $('#area').val();
-                        d.name = $('#name').val();
-                    }
                 },
                 columns: [{
                     data: 'DT_RowIndex',
@@ -142,8 +96,8 @@
                     orderable: false
                 },
                     {
-                        data: 'area.name',
-                        name: 'area.name'
+                        data: 'wagon_type.code',
+                        name: 'wagon_type.code'
                     },
                     {
                         data: 'code',
@@ -160,7 +114,7 @@
                             return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                                '">Delete</a>'
                         },
                         orderable: false
                     }
@@ -172,22 +126,8 @@
                 paging: true,
                 "fnDrawCallback": function (setting) {
                     deleteEvent();
-                },
-                dom: 'ltrip'
+                }
             })
-
-            $('#btn-search').on('click', function (e) {
-                e.preventDefault();
-                table.ajax.reload();
-            });
-            $('#btn-export').on('click', function (e) {
-                e.preventDefault();
-                let area = $('#area').val();
-                let name = $('#name').val();
-                let queryParam = '?area=' + area + '&name=' + name;
-                let exportPath = '{{ route('track.excel') }}' + queryParam;
-                window.open(exportPath, '_blank');
-            });
         })
     </script>
 @endsection

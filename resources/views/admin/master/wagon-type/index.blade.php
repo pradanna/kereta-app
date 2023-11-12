@@ -105,10 +105,13 @@
                     {
                         data: null,
                         render: function (data) {
-                            let subTypeUrl = path + '/' + data['id'] + '/sub-tipe';
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + subTypeUrl + '" class="btn-sub-type me-2 btn-table-action">Sub Tipe</a>' +
-                                '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                            // return '<a href="' + subTypeUrl + '" class="btn-sub-type me-2 btn-table-action">Sub Tipe</a>' +
+                            //     '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                            //     '">Edit</a>' +
+                            //     '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                            //     '">Delete</a>';
+                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
                                 '">Delete</a>'

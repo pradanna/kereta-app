@@ -84,7 +84,7 @@
                 </li>
 
                 @php
-                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'jenis-peralatan-khusus', 'perlintasan', 'petak', 'kecamatan'];
+                    $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'kecamatan'];
                     $openMaster = false;
                     foreach ($master as $m) {
                         if (request()->is($m . '*')) {
@@ -94,41 +94,64 @@
                     }
                 @endphp
 
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link menu">
                         <span class="material-symbols-outlined menu-icon">
-                            folder_copy
+                            linked_services
                         </span>
-                        <p
-                            class="menu-text {{ in_array(request()->path(), $master) || $openMaster ? 'fw-bold' : '' }}">
-                            Master Data</p>
+                        <p class="menu-text {{ in_array(request()->path(), $master) || $openMaster ? 'fw-bold' : '' }}">
+                            Master Data Operasional
+                        </p>
                     </a>
                     <ul class="{{ in_array(request()->path(), $master) || $openMaster ? '' : 'collapse' }}">
                         <li class="nav-item ">
                             <a class="nav-link menu {{ request()->is('satuan-pelayanan*') ? 'active' : '' }}"
-                                href="{{ route('service-unit') }}">
+                               href="{{ route('service-unit') }}">
                                 <p class="menu-text">Satuan Pelayanan (SATPEL)</p>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link menu {{ request()->is('daerah-operasi*') ? 'active' : '' }}"
-                                href="{{ route('area') }}">
+                               href="{{ route('area') }}">
 
                                 <p class="menu-text">Daerah Operasi (DAOP)</p>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa*') ? 'active' : '' }}"
-                                href="{{ route('storehouse') }}">
+                               href="{{ route('storehouse') }}">
                                 <p class="menu-text">Depo dan Balai Yasa</p>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link menu {{ request()->is('kecamatan*') ? 'active' : '' }}"
-                                href="{{ route('district') }}">
+                               href="{{ route('district') }}">
                                 <p class="menu-text">Kecamatan</p>
                             </a>
                         </li>
+                    </ul>
+                </li>
+
+                @php
+                    $masterFacility = ['jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'sub-jenis-gerbong', 'jenis-peralatan-khusus'];
+                    $openMasterFacility = false;
+                    foreach ($masterFacility as $mf) {
+                        if (request()->is($mf . '*')) {
+                            $openMasterFacility = true;
+                            break;
+                        }
+                    }
+                @endphp
+                <li class="nav-item ">
+                    <a class="nav-link menu">
+                        <span class="material-symbols-outlined menu-icon">
+                            label_important
+                        </span>
+                        <p class="menu-text {{ in_array(request()->path(), $masterFacility) || $openMasterFacility ? 'fw-bold' : '' }}">
+                            Master Data Jenis Sarana
+                        </p>
+                    </a>
+                    <ul class="{{ in_array(request()->path(), $masterFacility) || $openMasterFacility ? '' : 'collapse' }}">
                         <li class="nav-item ">
                             <a class="nav-link menu {{ request()->is('jenis-lokomotif*') ? 'active' : '' }}"
                                 href="{{ route('locomotive-type') }}">
@@ -148,26 +171,55 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('sub-jenis-gerbong*') ? 'active' : '' }}"
+                                href="{{ route('wagon-sub-type') }}">
+                                <p class="menu-text">Sub Jenis Gerbong</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('jenis-peralatan-khusus*') ? 'active' : '' }}"
                                 href="{{ route('special-equipment-type') }}">
                                 <p class="menu-text">Jenis Peralatan Khusus</p>
                             </a>
                         </li>
+
+                    </ul>
+                </li>
+
+                @php
+                    $masterTrack = ['perlintasan', 'petak'];
+                    $openMasterTrack = false;
+                    foreach ($masterTrack as $mt) {
+                        if (request()->is($mt . '*')) {
+                            $openMasterTrack = true;
+                            break;
+                        }
+                    }
+                @endphp
+                <li class="nav-item">
+                    <a class="nav-link menu">
+                        <span class="material-symbols-outlined menu-icon">
+                            data_exploration
+                        </span>
+                        <p class="menu-text {{ in_array(request()->path(), $masterTrack) || $openMasterTrack ? 'fw-bold' : '' }}">
+                            Master Data Perlintasan
+                        </p>
+                    </a>
+                    <ul class="{{ in_array(request()->path(), $masterTrack) || $openMasterTrack ? '' : 'collapse' }}">
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('perlintasan*') ? 'active' : '' }}"
-                                href="{{ route('track') }}">
+                               href="{{ route('track') }}">
                                 <p class="menu-text">Perlintasan</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu {{ request()->is('petak*') ? 'active' : '' }}"
-                                href="{{ route('sub-track') }}">
-                                <p class="menu-text">Lintas Antara</p>
+                               href="{{ route('sub-track') }}">
+                                <p class="menu-text">Petak</p>
                             </a>
                         </li>
                     </ul>
                 </li>
-
                 @php
                     $certification = ['sertifikasi-sarana-lokomotif', 'sertifikasi-sarana-kereta', 'sertifikasi-sarana-kereta-diesel', 'sertifikasi-sarana-gerbong', 'sertifikasi-sarana-peralatan-khusus'];
                     $openCertification = false;

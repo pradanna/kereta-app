@@ -8,7 +8,7 @@ use App\Helper\CustomController;
 use App\Models\WagonSubType;
 use App\Models\WagonType;
 
-class WagonTypeController extends CustomController
+class WagonSubTypeController extends CustomController
 {
     public function __construct()
     {
@@ -18,10 +18,12 @@ class WagonTypeController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = WagonType::with([])->orderBy('created_at', 'ASC')->get();
+            $data = WagonSubType::with(['wagon_type'])
+                ->orderBy('wagon_type_id', 'ASC')
+                ->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.wagon-type.index');
+        return view('admin.master.wagon-sub-type.index');
     }
 
     public function store()
@@ -29,24 +31,29 @@ class WagonTypeController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
+                    'wagon_type_id' => $this->postField('wagon_type'),
                     'code' => $this->postField('code'),
                     'name' => $this->postField('name'),
                 ];
-                WagonType::create($data_request);
+                WagonSubType::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.wagon-type.add');
+        $wagon_types = WagonType::all();
+        return view('admin.master.wagon-sub-type.add')->with([
+            'wagon_types' => $wagon_types
+        ]);
     }
 
     public function patch($id)
     {
-        $data = WagonType::findOrFail($id);
+        $data = WagonSubType::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
+                    'wagon_type_id' => $this->postField('wagon_type'),
                     'code' => $this->postField('code'),
                     'name' => $this->postField('name'),
                 ];
@@ -56,13 +63,17 @@ class WagonTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.wagon-type.edit')->with(['data' => $data]);
+        $wagon_types = WagonType::all();
+        return view('admin.master.wagon-sub-type.edit')->with([
+            'data' => $data,
+            'wagon_types' => $wagon_types
+        ]);
     }
 
     public function destroy($id)
     {
         try {
-            WagonType::destroy($id);
+            WagonSubType::destroy($id);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());

@@ -1,4 +1,4 @@
-@extends('admin/base')
+@extends('admin.base')
 
 @section('content')
     @if (\Illuminate\Support\Facades\Session::has('failed'))
@@ -10,30 +10,30 @@
         <script>
             Swal.fire({
                 title: 'Success',
-                text: 'Berhasil Menambahkan Data...',
+                text: 'Berhasil Merubah Data...',
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('sub-track') }}';
+                window.location.href = '{{ route('wagon-sub-type') }}';
             })
         </script>
     @endif
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER PETAK</h1>
-            <p class="mb-0">Manajemen Tambah Data Master Petak</p>
+            <h1 class="h1">MASTER SUB JENIS GERBONG</h1>
+            <p class="mb-0">Manajemen Edit Data Master Sub Jenis Gerbong</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('sub-track') }}">Petak</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah</li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('wagon-type') }}">Sub Jenis Gerbong</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
     </div>
     <div class="panel ">
         <div class="title">
-            <p>Form Data Petak</p>
+            <p>Form Data Sub Jenis Gerbong</p>
         </div>
         <div class="isi">
             <form method="post" id="form-data">
@@ -41,10 +41,10 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
-                            <label for="track" class="form-label">Perlintasan</label>
-                            <select class="select2 form-control" name="track" id="track" style="width: 100%;">
-                                @foreach ($tracks as $track)
-                                    <option value="{{ $track->id }}">{{ $track->name }} ({{ $track->code }})</option>
+                            <label for="wagon_type" class="form-label">Jenis Gerbong</label>
+                            <select class="select2 form-control" name="wagon_type" id="wagon_type" style="width: 100%;">
+                                @foreach ($wagon_types as $wagon_type)
+                                    <option value="{{ $wagon_type->id }}" {{ ($data->wagon_type_id === $wagon_type->id ) ? 'selected' : '' }}>{{ $wagon_type->name }} ({{ $wagon_type->code }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,14 +55,14 @@
                         <div class="w-100">
                             <label for="code" class="form-label">Kode</label>
                             <input type="text" class="form-control" id="code" name="code"
-                                   placeholder="Kode Lintas Antara">
+                                   placeholder="Kode Sub Jenis Gerbong" value="{{ $data->code }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama Lintas Antara</label>
+                            <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Lintas Antara">
+                                   placeholder="Nama Sub Jenis Gerbong" value="{{ $data->name }}">
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
 @endsection
 
 @section('js')

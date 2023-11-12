@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Models\Area;
 use App\Models\SubTrack;
 use App\Models\Track;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SubTrackController extends CustomController
 {
@@ -18,10 +20,35 @@ class SubTrackController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = SubTrack::with(['track'])->orderBy('created_at', 'ASC')->get();
+            $area = $this->request->query->get('area');
+            $track = $this->request->query->get('track');
+            $name = $this->request->query->get('name');
+
+            $query = SubTrack::with(['track.area']);
+            if ($area !== '') {
+                $query->whereHas('track', function ($q) use ($area){
+                    return $q->where('area_id', '=', $area);
+                });
+            }
+
+            if ($track !== '') {
+                $query->where('track_id', '=', $track);
+            }
+
+            if ($name !== '') {
+                $query->where(function ($q) use ($name) {
+                    $q->where('code', 'LIKE', '%' . $name . '%')
+                        ->orWhere('name', 'LIKE', '%' . $name . '%');
+                });
+            }
+
+            $data = $query->orderBy('created_at', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.sub-track.index');
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.master.sub-track.index')->with([
+            'areas' => $areas,
+        ]);
     }
 
     public function store()
@@ -75,5 +102,37 @@ class SubTrackController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel()
+    {
+        $fileName = 'data_petak_' . date('YmdHis') . '.xlsx';
+        $area = $this->request->query->get('area');
+        $track = $this->request->query->get('track');
+        $name = $this->request->query->get('name');
+
+        $query = SubTrack::with(['track.area']);
+        if ($area !== '') {
+            $query->whereHas('track', function ($q) use ($area){
+                return $q->where('area_id', '=', $area);
+            });
+        }
+
+        if ($track !== '') {
+            $query->where('track_id', '=', $track);
+        }
+
+        if ($name !== '') {
+            $query->where(function ($q) use ($name) {
+                $q->where('code', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name', 'LIKE', '%' . $name . '%');
+            });
+        }
+
+        $data = $query->orderBy('created_at', 'ASC')->get();
+        return Excel::download(
+            new \App\Exports\Master\SubTrack($data),
+            $fileName
+        );
     }
 }
