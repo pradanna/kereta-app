@@ -6,5 +6,5 @@ namespace App\Helper;
 
 class Formula
 {
-    const ExpirationLimit = 5;
+    const ExpirationLimit = 30;
 }

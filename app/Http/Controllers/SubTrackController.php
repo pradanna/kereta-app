@@ -20,31 +20,10 @@ class SubTrackController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $area = $this->request->query->get('area');
-            $track = $this->request->query->get('track');
-            $name = $this->request->query->get('name');
-
-            $query = SubTrack::with(['track.area']);
-            if ($area !== '') {
-                $query->whereHas('track', function ($q) use ($area){
-                    return $q->where('area_id', '=', $area);
-                });
-            }
-
-            if ($track !== '') {
-                $query->where('track_id', '=', $track);
-            }
-
-            if ($name !== '') {
-                $query->where(function ($q) use ($name) {
-                    $q->where('code', 'LIKE', '%' . $name . '%')
-                        ->orWhere('name', 'LIKE', '%' . $name . '%');
-                });
-            }
-
-            $data = $query->orderBy('created_at', 'ASC')->get();
+            $data = $this->generateData();
             return $this->basicDataTables($data);
         }
+
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.master.sub-track.index')->with([
             'areas' => $areas,
@@ -106,7 +85,16 @@ class SubTrackController extends CustomController
 
     public function export_to_excel()
     {
+        $data = $this->generateData();
         $fileName = 'data_petak_' . date('YmdHis') . '.xlsx';
+        return Excel::download(
+            new \App\Exports\Master\SubTrack($data),
+            $fileName
+        );
+    }
+
+    private function generateData()
+    {
         $area = $this->request->query->get('area');
         $track = $this->request->query->get('track');
         $name = $this->request->query->get('name');
@@ -129,10 +117,6 @@ class SubTrackController extends CustomController
             });
         }
 
-        $data = $query->orderBy('created_at', 'ASC')->get();
-        return Excel::download(
-            new \App\Exports\Master\SubTrack($data),
-            $fileName
-        );
+        return $query->orderBy('created_at', 'ASC')->get();
     }
 }

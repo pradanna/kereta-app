@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\FacilityLocomotive;
 use App\Models\FacilityTrain;
@@ -20,16 +21,58 @@ class FacilityTrainController extends CustomController
         parent::__construct();
     }
 
+    private function generateData()
+    {
+        $area = $this->request->query->get('area');
+        $storehouse = $this->request->query->get('storehouse');
+        $name = $this->request->query->get('name');
+        $status = $this->request->query->get('status');
+        $engineType = $this->request->query->get('engine_type');
+
+        $query = FacilityTrain::with(['area', 'storehouse.storehouse_type', 'train_type']);
+
+        if ($area !== '') {
+            $query->where('area_id', '=', $area);
+        }
+
+        if ($storehouse !== '') {
+            $query->where('storehouse_id', '=', $storehouse);
+        }
+
+        if ($engineType !== '') {
+            $query->where('engine_type', '=', $engineType);
+        }
+
+        if ($name !== '') {
+            $query->where(function ($q) use ($name) {
+                $q->where('facility_number', 'LIKE', '%' . $name . '%')
+                    ->orWhere('testing_number', 'LIKE', '%' . $name . '%');
+            });
+        }
+
+        $data = $query->orderBy('created_at', 'ASC')
+            ->get()->append(['expired_in', 'status']);
+
+        if ($status !== '') {
+            if ($status === '1') {
+                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+            }
+
+            if ($status === '0') {
+                $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+            }
+        }
+        return $data;
+    }
+
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = FacilityTrain::with(['area', 'storehouse.storehouse_type', 'train_type'])
-                ->orderBy('created_at', 'ASC')
-                ->get()->append(['expired_in', 'status']);
+            $data = $this->generateData();
             return $this->basicDataTables($data);
         }
         $train_types = TrainType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.train.index')->with([
             'train_types' => $train_types,
             'areas' => $areas,
@@ -44,6 +87,7 @@ class FacilityTrainController extends CustomController
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
                     'train_type_id' => $this->postField('train_type'),
+                    'engine_type' => $this->postField('engine_type'),
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
@@ -57,7 +101,7 @@ class FacilityTrainController extends CustomController
             }
         }
         $train_types = TrainType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.train.add')->with([
             'train_types' => $train_types,
             'areas' => $areas
@@ -73,6 +117,7 @@ class FacilityTrainController extends CustomController
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
                     'train_type_id' => $this->postField('train_type'),
+                    'engine_type' => $this->postField('engine_type'),
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
@@ -86,7 +131,7 @@ class FacilityTrainController extends CustomController
             }
         }
         $train_types = TrainType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.train.edit')->with([
             'data' => $data,
             'train_types' => $train_types,
@@ -119,9 +164,9 @@ class FacilityTrainController extends CustomController
     public function export_to_excel()
     {
         $fileName = 'sertifikasi_kereta_' . date('YmdHis') . '.xlsx';
-        $facility_trains = FacilityTrain::with(['area', 'storehouse.storehouse_type', 'train_type'])->get()->append(['expired_in']);
+        $data = $this->generateData();
         return Excel::download(
-            new \App\Exports\FacilityCertification\FacilityTrain($facility_trains),
+            new \App\Exports\FacilityCertification\FacilityTrain($data),
             $fileName
         );
     }

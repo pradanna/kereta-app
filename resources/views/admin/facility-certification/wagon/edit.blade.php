@@ -27,7 +27,7 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('facility-certification-wagon') }}">Sertifikasi Sarana Gerbong</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
     </div>
@@ -41,21 +41,21 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
-                            <select class="select2 form-control" name="wagon_sub_type" id="wagon_sub_type"
-                                    style="width: 100%;">
-                                @foreach ($wagon_sub_types as $wagon_sub_type)
-                                    <option value="{{ $wagon_sub_type->id }}" {{ ($wagon_sub_type->id === $data->wagon_sub_type_id) ? 'selected' :'' }}>{{ $wagon_sub_type->code }} ({{ $wagon_sub_type->wagon_type->code }})</option>
+                            <label for="area" class="form-label">Wilayah</label>
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah</label>
-                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
+                            <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
+                            <select class="select2 form-control" name="wagon_sub_type" id="wagon_sub_type"
+                                    style="width: 100%;">
+                                @foreach ($wagon_sub_types as $wagon_sub_type)
+                                    <option value="{{ $wagon_sub_type->id }}" {{ ($wagon_sub_type->id === $data->wagon_sub_type_id) ? 'selected' :'' }}>{{ $wagon_sub_type->code }} ({{ $wagon_sub_type->wagon_type->code }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -72,8 +72,11 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
-                            <input type="text" class="form-control" id="ownership" name="ownership"
-                                   placeholder="Contoh: PT. KAI" value="{{ $data->ownership }}">
+                            <select class="select2 form-control" name="ownership" id="ownership"
+                                    style="width: 100%;">
+                                <option value="PT. KAI" {{ ($data->ownership === 'PT. KAI') ? 'selected' : '' }}>PT. KAI</option>
+                                <option value="DJKA" {{ ($data->ownership === 'DJKA') ? 'selected' : '' }}>DJKA</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -136,29 +139,29 @@
     <script>
         let areaPath = '{{ route('area') }}';
 
-        function getStorehouseByAreaID() {
+        function getDataStorehouse() {
             let areaID = $('#area').val();
-            let type = 4;
-            let url = areaPath + '/' + areaID + '/storehouse?type=' + type;
-            return $.get(url);
+            let storehousePath = '{{ route('storehouse') }}';
+            let url = storehousePath + '/area?area=' + areaID;
+            return $.get(url)
         }
 
         function generateStorehouseOption() {
             let storeHouseID = '{{ $data->storehouse_id }}';
-            let elOption = $('#storehouse');
-            elOption.empty();
-            getStorehouseByAreaID().then((response) => {
+            let el = $('#storehouse');
+            el.empty();
+            let elOption = '';
+            getDataStorehouse().then((response) => {
                 let data = response.data;
                 $.each(data, function (k, v) {
                     let selected = (v['id'] === storeHouseID) ? 'selected' : '';
-                    elOption.append('<option value="' + v['id'] + '" ' + selected + '>' + v['name'] + ' (' + v['storehouse_type']['name'] + ')</option>')
+                    elOption += '<option value="' + v['id'] + '" ' + selected + '>' + v['name'] + ' (' + v['storehouse_type']['name'] + ')</option>';
                 });
-                $('#storehouse').select2({
+            }).always(() => {
+                el.append(elOption);
+                $('.select2').select2({
                     width: 'resolve',
                 });
-                console.log(response);
-            }).catch((error) => {
-                console.log(error)
             })
         }
 

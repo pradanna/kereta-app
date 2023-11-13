@@ -128,7 +128,6 @@
             let areaID = $('#area').val();
             let trackPath = '{{ route('track') }}';
             let url = trackPath + '/area?area=' + areaID;
-            console.log(url);
             return $.get(url)
         }
 

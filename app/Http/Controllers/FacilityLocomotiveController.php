@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
@@ -19,16 +20,52 @@ class FacilityLocomotiveController extends CustomController
         parent::__construct();
     }
 
+    private function generateData()
+    {
+        $area = $this->request->query->get('area');
+        $storehouse = $this->request->query->get('storehouse');
+        $name = $this->request->query->get('name');
+        $status = $this->request->query->get('status');
+        $query = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type']);
+
+        if ($area !== '') {
+            $query->where('area_id', '=', $area);
+        }
+
+        if ($storehouse !== '') {
+            $query->where('storehouse_id', '=', $storehouse);
+        }
+
+        if ($name !== '') {
+            $query->where(function ($q) use ($name) {
+                $q->where('facility_number', 'LIKE', '%' . $name . '%')
+                    ->orWhere('testing_number', 'LIKE', '%' . $name . '%');
+            });
+        }
+
+        $data = $query->orderBy('created_at', 'ASC')
+            ->get()->append(['expired_in', 'status']);
+
+        if ($status !== '') {
+            if ($status === '1') {
+                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+            }
+
+            if ($status === '0') {
+                $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+            }
+        }
+        return $data;
+    }
+
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type'])
-                ->orderBy('created_at', 'ASC')
-                ->get()->append(['expired_in', 'status']);
+            $data = $this->generateData();
             return $this->basicDataTables($data);
         }
         $locomotive_types = LocomotiveType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.locomotive.index')->with([
             'locomotive_types' => $locomotive_types,
             'areas' => $areas,
@@ -56,7 +93,7 @@ class FacilityLocomotiveController extends CustomController
             }
         }
         $locomotive_types = LocomotiveType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.locomotive.add')->with([
             'locomotive_types' => $locomotive_types,
             'areas' => $areas
@@ -85,7 +122,7 @@ class FacilityLocomotiveController extends CustomController
             }
         }
         $locomotive_types = LocomotiveType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.locomotive.edit')->with([
             'data' => $data,
             'locomotive_types' => $locomotive_types,
@@ -118,9 +155,9 @@ class FacilityLocomotiveController extends CustomController
     public function export_to_excel()
     {
         $fileName = 'sertifikasi_lokomotif_' . date('YmdHis') . '.xlsx';
-        $facility_locomotives = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type'])->get()->append(['expired_in']);
+        $data = $this->generateData();
         return Excel::download(
-            new \App\Exports\FacilityCertification\FacilityLocomotive($facility_locomotives),
+            new \App\Exports\FacilityCertification\FacilityLocomotive($data),
             $fileName
         );
     }

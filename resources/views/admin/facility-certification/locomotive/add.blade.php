@@ -42,21 +42,21 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="locomotive_type" class="form-label">Jenis Sarana</label>
-                            <select class="select2 form-control" name="locomotive_type" id="locomotive_type"
-                                    style="width: 100%;">
-                                @foreach ($locomotive_types as $locomotive_type)
-                                    <option value="{{ $locomotive_type->id }}">{{ $locomotive_type->name }}</option>
+                            <label for="area" class="form-label">Wilayah</label>
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah</label>
-                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                            <label for="locomotive_type" class="form-label">Jenis Sarana</label>
+                            <select class="select2 form-control" name="locomotive_type" id="locomotive_type"
+                                    style="width: 100%;">
+                                @foreach ($locomotive_types as $locomotive_type)
+                                    <option value="{{ $locomotive_type->id }}">{{ $locomotive_type->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -73,8 +73,11 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
-                            <input type="text" class="form-control" id="ownership" name="ownership"
-                                   placeholder="Contoh: PT. KAI">
+                            <select class="select2 form-control" name="ownership" id="ownership"
+                                    style="width: 100%;">
+                                <option value="PT. KAI">PT. KAI</option>
+                                <option value="DJKA">DJKA</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -137,27 +140,27 @@
     <script>
         let areaPath = '{{ route('area') }}';
 
-        function getStorehouseByAreaID() {
+        function getDataStorehouse() {
             let areaID = $('#area').val();
-            let type = 1;
-            let url = areaPath + '/' + areaID + '/storehouse?type=' + type;
-            return $.get(url);
+            let storehousePath = '{{ route('storehouse') }}';
+            let url = storehousePath + '/area?area=' + areaID;
+            return $.get(url)
         }
 
         function generateStorehouseOption() {
-            let elOption = $('#storehouse');
-            elOption.empty();
-            getStorehouseByAreaID().then((response) => {
-                let data = response.data;
+            let el = $('#storehouse');
+            el.empty();
+            let elOption = '';
+            getDataStorehouse().then((response) => {
+                const data = response['data'];
                 $.each(data, function (k, v) {
-                    elOption.append('<option value="' + v['id'] + '">' + v['name'] + ' (' + v['storehouse_type']['name'] + ')</option>')
+                    elOption += '<option value="' + v['id'] + '">' + v['name'] + ' (' + v['storehouse_type']['name'] + ')</option>';
                 });
-                $('#storehouse').select2({
+            }).always(() => {
+                el.append(elOption);
+                $('.select2').select2({
                     width: 'resolve',
                 });
-                console.log(response);
-            }).catch((error) => {
-                console.log(error)
             })
         }
 

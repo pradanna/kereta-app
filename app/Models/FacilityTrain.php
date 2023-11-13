@@ -49,7 +49,7 @@ class FacilityTrain extends Model
 
     public function getStatusAttribute()
     {
-        if ($this->getExpiredInAttribute() < 0) {
+        if ($this->getExpiredInAttribute() <= Formula::ExpirationLimit) {
             return 'invalid';
         }
         return 'valid';

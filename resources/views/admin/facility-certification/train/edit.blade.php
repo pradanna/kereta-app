@@ -27,7 +27,7 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('facility-certification-train') }}">Sertifikasi Sarana Kereta</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
     </div>
@@ -38,7 +38,26 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-1">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="form-group w-100">
+                            <label for="area" class="form-label">Wilayah</label>
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="storehouse" class="form-label">Depo Induk</label>
+                            <select class="select2 form-control" name="storehouse" id="storehouse" style="width: 100%;">
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="train_type" class="form-label">Jenis Sarana</label>
@@ -50,34 +69,32 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah</label>
-                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
                 </div>
-                <div class="row mb-1">
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="storehouse" class="form-label">Depo Induk</label>
-                            <select class="select2 form-control" name="storehouse" id="storehouse" style="width: 100%;">
-                            </select>
-                        </div>
-                    </div>
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
-                            <input type="text" class="form-control" id="ownership" name="ownership"
-                                   placeholder="Contoh: PT. KAI" value="{{ $data->ownership }}">
+                            <select class="select2 form-control" name="ownership" id="ownership"
+                                    style="width: 100%;">
+                                <option value="PT. KAI" {{ ($data->ownership === 'PT. KAI') ? 'selected' : '' }}>PT. KAI</option>
+                                <option value="DJKA" {{ ($data->ownership === 'DJKA') ? 'selected' : '' }}>DJKA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="engine_type" class="form-label">Tipe Kereta</label>
+                            <select class="select2 form-control" name="engine_type" id="engine_type"
+                                    style="width: 100%;">
+                                <option value="train" {{ ($data->engine_type === 'train') ? 'selected' : '' }}>Kereta Api</option>
+                                <option value="electric-train" {{ ($data->engine_type === 'electric-train') ? 'selected' : '' }}>KRL</option>
+                                <option value="diesel-train" {{ ($data->engine_type === 'diesel-train') ? 'selected' : '' }}>KRD</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="facility_number" class="form-label">No. Sarana</label>
@@ -93,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_start_date" class="form-label">Mulai Dinas</label>
@@ -136,29 +153,30 @@
     <script>
         let areaPath = '{{ route('area') }}';
 
-        function getStorehouseByAreaID() {
+        function getDataStorehouse() {
             let areaID = $('#area').val();
-            let type = 2;
-            let url = areaPath + '/' + areaID + '/storehouse?type=' + type;
-            return $.get(url);
+            let storehousePath = '{{ route('storehouse') }}';
+            let url = storehousePath + '/area?area=' + areaID;
+            return $.get(url)
         }
 
         function generateStorehouseOption() {
             let storeHouseID = '{{ $data->storehouse_id }}';
-            let elOption = $('#storehouse');
-            elOption.empty();
-            getStorehouseByAreaID().then((response) => {
+            let el = $('#storehouse');
+            el.empty();
+            let elOption = '';
+            getDataStorehouse().then((response) => {
                 let data = response.data;
                 $.each(data, function (k, v) {
                     let selected = (v['id'] === storeHouseID) ? 'selected' : '';
-                    elOption.append('<option value="' + v['id'] + '" ' + selected + '>' + v['name'] + ' (' + v['storehouse_type']['name'] + ')</option>')
+                    elOption += '<option value="' + v['id'] + '" ' + selected + '>' + v['name'] + ' (' + v['storehouse_type']['name'] + ')</option>';
                 });
-                $('#storehouse').select2({
+
+            }).always(() => {
+                el.append(elOption);
+                $('.select2').select2({
                     width: 'resolve',
                 });
-                console.log(response);
-            }).catch((error) => {
-                console.log(error)
             })
         }
 

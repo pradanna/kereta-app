@@ -145,4 +145,19 @@ class StoreHouseController extends CustomController
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
     }
+
+    public function getDataByArea()
+    {
+        try {
+            $area = $this->request->query->get('area');
+            $query = Storehouse::with(['area', 'storehouse_type']);
+            if ($area !== '') {
+                $query->where('area_id', '=', $area);
+            }
+            $data = $query->orderBy('created_at', 'ASC')->get();
+            return $this->jsonSuccessResponse('success', $data);
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
 }
