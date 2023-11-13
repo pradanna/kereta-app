@@ -66,7 +66,7 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                <div class="d-flex gap-3 mt-5">
+                <div class="d-flex gap-3 mt-5 justify-content-between ">
                     {{-- ITEM --}}
                     <div class="dsh-item color1">
                         <p class="name">Lokomotif</p>

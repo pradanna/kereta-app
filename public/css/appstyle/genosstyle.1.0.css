@@ -772,7 +772,7 @@ table {
 }
 
 .dsh-item {
-  min-width: 200px;
+  min-width: calc(25% - 20px);
   background-color: white;
   border-radius: 15px;
   min-height: 150px;
