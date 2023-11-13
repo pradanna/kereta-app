@@ -41,21 +41,21 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="special_equipment_type" class="form-label">Jenis Sarana</label>
-                            <select class="select2 form-control" name="special_equipment_type" id="special_equipment_type"
-                                    style="width: 100%;">
-                                @foreach ($special_equipment_types as $special_equipment_type)
-                                    <option value="{{ $special_equipment_type->id }}">{{ $special_equipment_type->code }} ({{ $special_equipment_type->name }})</option>
+                            <label for="area" class="form-label">Wilayah</label>
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah</label>
-                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                            <label for="special_equipment_type" class="form-label">Jenis Sarana</label>
+                            <select class="select2 form-control" name="special_equipment_type" id="special_equipment_type"
+                                    style="width: 100%;">
+                                @foreach ($special_equipment_types as $special_equipment_type)
+                                    <option value="{{ $special_equipment_type->id }}">{{ $special_equipment_type->code }} ({{ $special_equipment_type->name }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -88,8 +88,11 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
-                            <input type="text" class="form-control" id="ownership" name="ownership"
-                                   placeholder="Contoh: PT. KAI">
+                            <select class="select2 form-control" name="ownership" id="ownership"
+                                    style="width: 100%;">
+                                <option value="PT. KAI">PT. KAI</option>
+                                <option value="DJKA">DJKA</option>
+                            </select>
                         </div>
                     </div>
                 </div>

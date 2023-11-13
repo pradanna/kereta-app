@@ -7,16 +7,23 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class FacilitySpecialEquipment implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
+class FacilitySpecialEquipment extends DefaultValueBinder implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents, WithColumnFormatting
 {
     private $data;
 
@@ -76,6 +83,7 @@ class FacilitySpecialEquipment implements FromCollection, WithHeadings, WithStyl
         $sheet->mergeCells('G1:G2');
         $sheet->mergeCells('H1:H2');
         $sheet->mergeCells('I1:I2');
+
     }
 
     /**
@@ -124,16 +132,27 @@ class FacilitySpecialEquipment implements FromCollection, WithHeadings, WithStyl
             $result = [
                 $no,
                 $datum->ownership,
-                $datum->new_facility_number,
-                $datum->old_facility_number,
+                strval($datum->new_facility_number),
+                strval($datum->old_facility_number),
                 $datum->area->name,
                 Carbon::parse($datum->service_expired_date)->format('d-m-Y'),
                 $datum->testing_number,
                 $datum->expired_in,
-                ($datum->expired_in < 0 ? 'HABIS MASA BERLAKU' : 'BERLAKU'),
+                ($datum->expired_in <= Formula::ExpirationLimit ? 'HABIS MASA BERLAKU' : 'BERLAKU'),
             ];
             array_push($results, $result);
         }
         return $results;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function columnFormats(): array
+    {
+        // TODO: Implement columnFormats() method.
+        return [
+            'C' => NumberFormat::FORMAT_NUMBER,
+        ];
     }
 }

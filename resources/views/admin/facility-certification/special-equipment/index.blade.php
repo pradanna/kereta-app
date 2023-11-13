@@ -13,6 +13,47 @@
             </ol>
         </nav>
     </div>
+    <div class="panel w-100 shadow-sm mb-3">
+        <div class="isi">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 row gx-2">
+                    <div class="col-3">
+                        <div class="form-group w-100">
+                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>
+                            <select class="select2 form-control" name="area-option" id="area-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Daerah Operasi</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group w-100">
+                            <label for="status-option" class="form-label d-none">Status</label>
+                            <select class="select2 form-control" name="status-option" id="status-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Status</option>
+                                <option value="1">Berlaku</option>
+                                <option value="0">Habis Masa Berlaku</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="name" class="form-label d-none"></label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Cari No. Sarana atau No. BA Pengujian">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
             <p>Sertifikasi Sarana Peralatan Khusus</p>
@@ -21,14 +62,14 @@
                     href="{{ route('facility-certification-special-equipment.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-success sml rnd " href="{{ route('facility-certification-special-equipment.excel') }}"
-                    target="_blank">Export Excel
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_copy</i>
+                <a class="btn-success sml rnd" href="#" id="btn-export"
+                    target="_blank">Export
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped w-100">
+            <table id="table-data" class="display table w-100">
                 <thead>
                     <tr>
                         <th class="text-center middle-header" width="5%">#</th>
@@ -38,7 +79,7 @@
                         <th class="text-center middle-header" width="10%">No. Sarana Baru</th>
                         <th class="text-center middle-header" width="10%">No. Sarana Lama</th>
                         <th class="text-center middle-header">No. BA Pengujian</th>
-                        <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
+                        <th class="text-center middle-header" width="10%">Masa Berlaku</th>
                         <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
                         {{--                            <th class="text-center">Status</th> --}}
                         <th class="text-center middle-header" width="15%">Aksi</th>
@@ -161,8 +202,10 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function(d) {
-                        d.type = 'table';
+                    'data': function (d) {
+                        d.area = $('#area-option').val();
+                        d.name = $('#name').val();
+                        d.status = $('#status-option').val();
                     }
                 },
                 columns: [{
@@ -216,7 +259,7 @@
                         data: 'expired_in',
                         name: 'expired_in',
                         render: function(data) {
-                            return data + ' hari';
+                            return data;
                         },
                         className: 'text-center'
                     },
@@ -245,10 +288,10 @@
                     }
                 ],
                 columnDefs: [
-                    // {
-                    //     targets: '_all',
-                    //     className: 'text-center'
-                    // }
+                    {
+                        targets: '_all',
+                        className: 'middle-header'
+                    }
                 ],
                 paging: true,
                 "fnDrawCallback": function(setting) {
@@ -261,7 +304,8 @@
                             'background-color': '#fecba1'
                         });
                     }
-                }
+                },
+                dom: 'ltrip'
             });
         }
 
@@ -338,6 +382,21 @@
                 width: 'resolve',
             });
             generateTableFacilityCertification();
+
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let status = $('#status-option').val();
+                let queryParam = '?area=' + area + '&name=' + name + '&status=' + status;
+                let exportPath = '{{ route('facility-certification-special-equipment.excel') }}' + queryParam;
+                window.open(exportPath, '_blank');
+            });
         });
     </script>
 @endsection

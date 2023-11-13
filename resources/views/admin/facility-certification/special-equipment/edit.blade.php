@@ -39,7 +39,17 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-1">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="area" class="form-label">Wilayah</label>
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="special_equipment_type" class="form-label">Jenis Sarana</label>
@@ -52,16 +62,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah</label>
-                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
                 </div>
                 <div class="row mb-1">
                     <div class="col-6">
@@ -90,8 +91,11 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
-                            <input type="text" class="form-control" id="ownership" name="ownership"
-                                placeholder="Contoh: PT. KAI" value="{{ $data->ownership }}">
+                            <select class="select2 form-control" name="ownership" id="ownership"
+                                    style="width: 100%;">
+                                <option value="PT. KAI" {{ ($data->ownership === 'PT. KAI') ? 'selected' : '' }}>PT. KAI</option>
+                                <option value="DJKA" {{ ($data->ownership === 'DJKA') ? 'selected' : '' }}>DJKA</option>
+                            </select>
                         </div>
                     </div>
                 </div>

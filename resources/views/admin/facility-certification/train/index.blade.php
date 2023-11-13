@@ -54,7 +54,7 @@
                         <select class="select2 form-control" name="type-option" id="type-option"
                                 style="width: 100%;">
                             <option value="">Semua Tipe</option>
-                            <option value="train">Kereta</option>
+                            <option value="train">Kereta Api</option>
                             <option value="electric-train">KRL</option>
                             <option value="diesel-train">KRD</option>
                         </select>
@@ -68,7 +68,8 @@
                        placeholder="Cari No. Sarana atau No. BA Pengujian">
             </div>
             <div class="w-100">
-                <a id="btn-search" class="btn-utama sml rnd" href="#" style="padding: 0.6rem 1.25rem;justify-content: center">Cari</a>
+                <a id="btn-search" class="btn-utama sml rnd" href="#"
+                   style="padding: 0.6rem 1.25rem;justify-content: center">Cari</a>
             </div>
         </div>
     </div>
@@ -79,9 +80,9 @@
                 <a class="btn-utama sml rnd me-2" href="{{ route('facility-certification-train.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-success sml rnd" href="{{ route('facility-certification-train.excel') }}"
-                   target="_blank">Export Excel
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_copy</i>
+                <a class="btn-success sml rnd" href="#" id="btn-export"
+                   target="_blank">Export
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
 
@@ -113,22 +114,30 @@
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
          aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Sarana Kereta</p>
                     <hr>
                     <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="form-group w-100">
+                                <label for="area" class="form-label">Wilayah</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="train_type" class="form-label">Jenis Sarana</label>
-                                <input type="text" class="form-control" id="train_type" name="train_type" disabled>
+                                <label for="engine_type" class="form-label">Tipe Kereta</label>
+                                <input type="text" class="form-control" id="engine_type" name="engine_type" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="area" class="form-label">Wilayah</label>
-                                <input type="text" class="form-control" id="area" name="area" disabled>
+                                <label for="train_type" class="form-label">Jenis Sarana</label>
+                                <input type="text" class="form-control" id="train_type" name="train_type" disabled>
                             </div>
                         </div>
                     </div>
@@ -258,6 +267,7 @@
                         d.name = $('#name').val();
                         d.storehouse = $('#storehouse-option').val();
                         d.status = $('#status-option').val();
+                        d.engine_type = $('#type-option').val();
                     }
                 },
                 columns: [{
@@ -286,7 +296,7 @@
                             let value = '-';
                             switch (data) {
                                 case 'train':
-                                    value = 'Kereta';
+                                    value = 'Kereta Api';
                                     break;
                                 case 'electric-train':
                                     value = 'KRL';
@@ -316,7 +326,7 @@
                         name: 'storehouse',
                         className: 'text-center',
                         render: function (data) {
-                            return data['name'] + ' ('+data['storehouse_type']['name']+')'
+                            return data['name'] + ' (' + data['storehouse_type']['name'] + ')'
                         }
                         // width: '120px',
                     },
@@ -421,8 +431,10 @@
                 let response = await $.get(url);
                 let data = response['data'];
                 let trainType = data['train_type']['name'];
+                let engineType = data['engine_type'];
                 let area = data['area']['name'];
                 let storehouse = data['storehouse']['name'];
+                let storehouseType = data['storehouse']['storehouse_type']['name'];
                 let ownership = data['ownership'];
                 let facilityNumber = data['facility_number'];
                 let testingNumber = data['testing_number'];
@@ -430,9 +442,25 @@
                 let serviceExpiredDate = data['service_expired_date'];
                 let expiredIn = data['expired_in'];
                 let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+
+                let engineTypeVal = '';
+                switch (engineType) {
+                    case 'train':
+                        engineTypeVal = 'Kereta Api';
+                        break;
+                    case 'electric-train':
+                        engineTypeVal = 'KRL';
+                        break;
+                    case 'diesel-train':
+                        engineTypeVal = 'KRD';
+                        break;
+                    default:
+                        break;
+                }
                 $('#train_type').val(trainType);
+                $('#engine_type').val(engineTypeVal);
                 $('#area').val(area);
-                $('#storehouse').val(storehouse);
+                $('#storehouse').val(storehouse + ' (' + storehouseType + ')');
                 $('#ownership').val(ownership);
                 $('#facility_number').val(facilityNumber);
                 $('#testing_number').val(testingNumber);
@@ -486,6 +514,23 @@
                 generateStorehouseOption();
             });
             generateTableFacilityCertification();
+
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let storehouse = $('#storehouse-option').val();
+                let status = $('#status-option').val();
+                let engineType = $('#type-option').val();
+                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status + '&engine_type=' + engineType;
+                let exportPath = '{{ route('facility-certification-train.excel') }}' + queryParam;
+                window.open(exportPath, '_blank');
+            });
         });
     </script>
 @endsection

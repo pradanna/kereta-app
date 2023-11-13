@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\FacilityElectricTrain;
 use App\Models\FacilitySpecialEquipment;
@@ -21,16 +22,48 @@ class FacilitySpecialEquipmentController extends CustomController
         parent::__construct();
     }
 
+    private function generateData()
+    {
+        $area = $this->request->query->get('area');
+        $name = $this->request->query->get('name');
+        $status = $this->request->query->get('status');
+        $query = FacilitySpecialEquipment::with(['area', 'storehouse.storehouse_type', 'special_equipment_type']);
+
+        if ($area !== '') {
+            $query->where('area_id', '=', $area);
+        }
+
+        if ($name !== '') {
+            $query->where(function ($q) use ($name) {
+                $q->where('new_facility_number', 'LIKE', '%' . $name . '%')
+                    ->orWhere('old_facility_number', 'LIKE', '%' . $name . '%')
+                    ->orWhere('testing_number', 'LIKE', '%' . $name . '%');
+            });
+        }
+
+        $data = $query->orderBy('created_at', 'ASC')
+            ->get()->append(['expired_in', 'status']);
+
+        if ($status !== '') {
+            if ($status === '1') {
+                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+            }
+
+            if ($status === '0') {
+                $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+            }
+        }
+        return $data;
+    }
+
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = FacilitySpecialEquipment::with(['area', 'storehouse.storehouse_type', 'special_equipment_type'])
-                ->orderBy('created_at', 'ASC')
-                ->get()->append(['expired_in', 'status']);
+            $data = $this->generateData();
             return $this->basicDataTables($data);
         }
         $special_equipment_types = SpecialEquipmentType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.special-equipment.index')->with([
             'special_equipment_types' => $special_equipment_types,
             'areas' => $areas,
@@ -57,7 +90,7 @@ class FacilitySpecialEquipmentController extends CustomController
             }
         }
         $special_equipment_types = SpecialEquipmentType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.special-equipment.add')->with([
             'special_equipment_types' => $special_equipment_types,
             'areas' => $areas,
@@ -85,7 +118,7 @@ class FacilitySpecialEquipmentController extends CustomController
             }
         }
         $special_equipment_types = SpecialEquipmentType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.special-equipment.edit')->with([
             'data' => $data,
             'special_equipment_types' => $special_equipment_types,
@@ -118,9 +151,9 @@ class FacilitySpecialEquipmentController extends CustomController
     public function export_to_excel()
     {
         $fileName = 'sertifikasi_peralatan_khusus_' . date('YmdHis') . '.xlsx';
-        $facility_special_equipment = FacilitySpecialEquipment::with(['area', 'storehouse.storehouse_type', 'special_equipment_type'])->get()->append(['expired_in']);
+        $data = $this->generateData();
         return Excel::download(
-            new \App\Exports\FacilityCertification\FacilitySpecialEquipment($facility_special_equipment),
+            new \App\Exports\FacilityCertification\FacilitySpecialEquipment($data),
             $fileName
         );
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\FacilityDieselTrain;
 use App\Models\FacilityTrain;
@@ -21,16 +22,52 @@ class FacilityWagonController extends CustomController
         parent::__construct();
     }
 
+    private function generateData()
+    {
+        $area = $this->request->query->get('area');
+        $storehouse = $this->request->query->get('storehouse');
+        $name = $this->request->query->get('name');
+        $status = $this->request->query->get('status');
+
+        $query = FacilityWagon::with(['area', 'storehouse.storehouse_type', 'wagon_sub_type.wagon_type']);
+
+        if ($area !== '') {
+            $query->where('area_id', '=', $area);
+        }
+
+        if ($storehouse !== '') {
+            $query->where('storehouse_id', '=', $storehouse);
+        }
+
+        if ($name !== '') {
+            $query->where(function ($q) use ($name) {
+                $q->where('facility_number', 'LIKE', '%' . $name . '%')
+                    ->orWhere('testing_number', 'LIKE', '%' . $name . '%');
+            });
+        }
+
+        $data = $query->orderBy('created_at', 'ASC')
+            ->get()->append(['expired_in', 'status']);
+
+        if ($status !== '') {
+            if ($status === '1') {
+                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+            }
+
+            if ($status === '0') {
+                $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+            }
+        }
+        return $data;
+    }
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = FacilityWagon::with(['area', 'storehouse.storehouse_type', 'wagon_sub_type.wagon_type'])
-                ->orderBy('created_at', 'ASC')
-                ->get()->append(['expired_in', 'status']);
+            $data = $this->generateData();
             return $this->basicDataTables($data);
         }
         $wagon_sub_types = WagonSubType::all();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.wagon.index')->with([
             'wagon_sub_types' => $wagon_sub_types,
             'areas' => $areas,
@@ -58,7 +95,7 @@ class FacilityWagonController extends CustomController
             }
         }
         $wagon_sub_types = WagonSubType::with(['wagon_type'])->get();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.wagon.add')->with([
             'wagon_sub_types' => $wagon_sub_types,
             'areas' => $areas
@@ -87,7 +124,7 @@ class FacilityWagonController extends CustomController
             }
         }
         $wagon_sub_types = WagonSubType::with(['wagon_type'])->get();
-        $areas = Area::all();
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.wagon.edit')->with([
             'data' => $data,
             'wagon_sub_types' => $wagon_sub_types,
@@ -120,9 +157,9 @@ class FacilityWagonController extends CustomController
     public function export_to_excel()
     {
         $fileName = 'sertifikasi_gerbong_' . date('YmdHis') . '.xlsx';
-        $facility_wagon = FacilityWagon::with(['area', 'storehouse.storehouse_type', 'wagon_sub_type.wagon_type'])->get()->append(['expired_in']);
+        $data = $this->generateData();
         return Excel::download(
-            new \App\Exports\FacilityCertification\FacilityWagon($facility_wagon),
+            new \App\Exports\FacilityCertification\FacilityWagon($data),
             $fileName
         );
     }

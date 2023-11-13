@@ -13,6 +13,56 @@
             </ol>
         </nav>
     </div>
+    <div class="panel w-100 shadow-sm mb-3">
+        <div class="isi">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 row gx-2">
+                    <div class="col-3">
+                        <div class="form-group w-100">
+                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>
+                            <select class="select2 form-control" name="area-option" id="area-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Daerah Operasi</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group w-100">
+                            <label for="storehouse-option" class="form-label d-none">Depo</label>
+                            <select class="select2 form-control" name="storehouse-option" id="storehouse-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Depo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group w-100">
+                            <label for="status-option" class="form-label d-none">Status</label>
+                            <select class="select2 form-control" name="status-option" id="status-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Status</option>
+                                <option value="1">Berlaku</option>
+                                <option value="0">Habis Masa Berlaku</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group w-100">
+                            <label for="name" class="form-label d-none"></label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Cari No. Sarana atau No. BA Pengujian">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
             <p>Sertifikasi Sarana Gerbong</p>
@@ -20,14 +70,14 @@
                 <a class="btn-utama sml rnd me-2" href="{{ route('facility-certification-wagon.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-success sml rnd " href="{{ route('facility-certification-wagon.excel') }}"
-                    target="_blank">Export Excel
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_copy</i>
+                <a class="btn-success sml rnd" href="#" id="btn-export"
+                    target="_blank">Export
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped w-100">
+            <table id="table-data" class="display table w-100">
                 <thead>
                     <tr>
                         <th class="text-center middle-header" width="5%">#</th>
@@ -39,7 +89,7 @@
                         <th class="text-center middle-header" width="8%">Depo Induk</th>
                         {{--                            <th class="text-center middle-header" width="5%">Mulai Dinas</th> --}}
                         <th class="text-center middle-header">No. BA Pengujian</th>
-                        <th class="text-center middle-header" width="10%">Masa Berlaku Sarana</th>
+                        <th class="text-center middle-header" width="10%">Masa Berlaku</th>
                         <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
                         {{--                            <th class="text-center middle-header" width="5%">Status</th> --}}
                         <th class="text-center middle-header" width="15%">Aksi</th>
@@ -52,7 +102,7 @@
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
         aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Sarana Gerbong</p>
@@ -60,15 +110,15 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
-                                <input type="text" class="form-control" id="wagon_sub_type" name="wagon_sub_type"
-                                    disabled>
+                                <label for="area" class="form-label">Wilayah</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="area" class="form-label">Wilayah</label>
-                                <input type="text" class="form-control" id="area" name="area" disabled>
+                                <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
+                                <input type="text" class="form-control" id="wagon_sub_type" name="wagon_sub_type"
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -157,28 +207,29 @@
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
 
-        function getStorehouseByAreaID() {
-            let areaID = $('#area').val();
-            let url = areaPath + '/' + areaID + '/storehouse';
-            return $.get(url);
+        function getDataStorehouse() {
+            let areaID = $('#area-option').val();
+            let storehousePath = '{{ route('storehouse') }}';
+            let url = storehousePath + '/area?area=' + areaID;
+            return $.get(url)
         }
 
         function generateStorehouseOption() {
-            let elOption = $('#storehouse');
-            elOption.empty();
-            getStorehouseByAreaID().then((response) => {
-                let data = response.data;
-                elOption.append('<option value="" selected>Semua</option>');
-                $.each(data, function(k, v) {
-                    elOption.append('<option value="' + v['id'] + '">' + v['name'] + ' (' + v[
-                        'storehouse_type']['name'] + ')</option>')
+            let el = $('#storehouse-option');
+            el.empty();
+            let elOption = '<option value="">Semua Depo</option>';
+            getDataStorehouse().then((response) => {
+                const data = response['data'];
+                $.each(data, function (k, v) {
+                    elOption += '<option value="' + v['id'] + '">' + v['name'] + ' (' + v['storehouse_type']['name'] + ')</option>';
                 });
-                $('#storehouse').select2({
+            }).catch((e) => {
+                alert('terjadi kesalahan server...')
+            }).always(() => {
+                el.append(elOption);
+                $('.select2').select2({
                     width: 'resolve',
                 });
-                console.log(response);
-            }).catch((error) => {
-                console.log(error)
             })
         }
 
@@ -192,8 +243,11 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function(d) {
-                        d.type = 'table';
+                    'data': function (d) {
+                        d.area = $('#area-option').val();
+                        d.name = $('#name').val();
+                        d.storehouse = $('#storehouse-option').val();
+                        d.status = $('#status-option').val();
                     }
                 },
                 columns: [{
@@ -221,9 +275,13 @@
                     },
                     // {data: 'storehouse.storehouse_type.name', name: 'storehouse.storehouse_type.name', width: '120px', visible: false,},
                     {
-                        data: 'storehouse.name',
-                        name: 'storehouse.name',
-                        className: 'text-center'
+                        data: 'storehouse',
+                        name: 'storehouse',
+                        className: 'text-center',
+                        render: function (data) {
+                            return data['name'] + ' ('+data['storehouse_type']['name']+')'
+                        }
+                        // width: '120px',
                     },
                     {
                         data: 'testing_number',
@@ -261,7 +319,7 @@
                         data: 'expired_in',
                         name: 'expired_in',
                         render: function(data) {
-                            return data + ' hari';
+                            return data;
                         },
                         // width: '80px',
                         className: 'text-center'
@@ -292,10 +350,10 @@
                     }
                 ],
                 columnDefs: [
-                    // {
-                    //     targets: '_all',
-                    //     className: 'text-center'
-                    // }
+                    {
+                        targets: '_all',
+                        className: 'middle-header'
+                    }
                 ],
                 paging: true,
                 "fnDrawCallback": function(setting) {
@@ -308,7 +366,8 @@
                             'background-color': '#fecba1'
                         });
                     }
-                }
+                },
+                dom: 'ltrip'
             });
         }
 
@@ -328,6 +387,7 @@
                 let wagonSubType = data['wagon_sub_type']['name'];
                 let area = data['area']['name'];
                 let storehouse = data['storehouse']['name'];
+                let storehouseType = data['storehouse']['storehouse_type']['name'];
                 let ownership = data['ownership'];
                 let facilityNumber = data['facility_number'];
                 let testingNumber = data['testing_number'];
@@ -337,7 +397,7 @@
                 let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
                 $('#wagon_sub_type').val(wagonSubType);
                 $('#area').val(area);
-                $('#storehouse').val(storehouse);
+                $('#storehouse').val(storehouse + ' (' + storehouseType + ')');
                 $('#ownership').val(ownership);
                 $('#facility_number').val(facilityNumber);
                 $('#testing_number').val(testingNumber);
@@ -386,11 +446,26 @@
             $('.select2').select2({
                 width: 'resolve',
             });
-            // generateStorehouseOption();
-            // $('#area').on('change', function (e) {
-            //     generateStorehouseOption();
-            // });
+            generateStorehouseOption();
+            $('#area-option').on('change', function (e) {
+                generateStorehouseOption();
+            });
             generateTableFacilityCertification();
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let storehouse = $('#storehouse-option').val();
+                let status = $('#status-option').val();
+                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status;
+                let exportPath = '{{ route('facility-certification-wagon.excel') }}' + queryParam;
+                window.open(exportPath, '_blank');
+            });
         });
     </script>
 @endsection
