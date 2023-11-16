@@ -20,7 +20,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = TechnicalSpecLocomotive::with(['facility_locomotive.locomotive_type'])
+            $data = TechnicalSpecLocomotive::with(['locomotive_type'])
                 ->orderBy('created_at', 'ASC')
                 ->get();
             return $this->basicDataTables($data);
@@ -33,7 +33,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'facility_locomotive_id' => $this->postField('facility_locomotive'),
+                    'locomotive_type_id' => $this->postField('locomotive_type'),
                     'empty_weight' => $this->postField('empty_weight'),
                     'house_power' => $this->postField('house_power'),
                     'maximum_speed' => $this->postField('maximum_speed'),
@@ -50,9 +50,9 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
-        $facility_locomotives = FacilityLocomotive::all();
+        $locomotive_types = LocomotiveType::with([])->orderBy('code', 'ASC')->get();
         return view('admin.technical-specification.locomotive.add')->with([
-            'facility_locomotives' => $facility_locomotives,
+            'locomotive_types' => $locomotive_types,
         ]);
     }
 
@@ -106,5 +106,13 @@ class TechnicalSpecificationLocomotiveController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function document_page($id)
+    {
+        $data = TechnicalSpecLocomotive::with(['locomotive_type'])->findOrFail($id);
+        return view('admin.technical-specification.locomotive.document')->with([
+            'data' => $data
+        ]);
     }
 }

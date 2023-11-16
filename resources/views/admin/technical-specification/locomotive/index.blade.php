@@ -25,22 +25,15 @@
                 <thead>
                 <tr>
                     <th class="text-center middle-header" width="5%">#</th>
-                    <th class="text-center middle-header" width="10%">Jenis Sarana</th>
-                    <th class="text-center middle-header">Identitas Sarana</th>
-                    <th class="text-center middle-header" width="12%">Berat Kosong (Ton)</th>
-                    <th class="text-center middle-header" width="12%">Horse Power (HP)</th>
-                    <th class="text-center middle-header" width="12%">Kecepatan Maksimum (Km/jam)</th>
-                    <th class="text-center middle-header" width="12%">Konsumsi BBM (Lt/Jam)</th>
-                    {{--                    <th class="text-center" colspan="5">Dimensi</th>--}}
+                    <th class="middle-header">Jenis Sarana</th>
+                    <th class="text-center middle-header" width="12%">Dokumen</th>
+                    <th class="text-center middle-header" width="12%">Gambar</th>
+                    {{--                    <th class="text-center middle-header" width="12%">Berat Kosong (Ton)</th>--}}
+                    {{--                    <th class="text-center middle-header" width="12%">Horse Power (HP)</th>--}}
+                    {{--                    <th class="text-center middle-header" width="12%">Kecepatan Maksimum (Km/jam)</th>--}}
+                    {{--                    <th class="text-center middle-header" width="12%">Konsumsi BBM (Lt/Jam)</th>--}}
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
-                {{--                <tr>--}}
-                {{--                    <th class="text-center middle-header">Panjang (mm)</th>--}}
-                {{--                    <th class="text-center middle-header">Lebar (mm)</th>--}}
-                {{--                    <th class="text-center middle-header">Tinggi (mm)</th>--}}
-                {{--                    <th class="text-center middle-header">Tinggi Coupler (mm)</th>--}}
-                {{--                    <th class="text-center middle-header">Diameter Roda (mm)</th>--}}
-                {{--                </tr>--}}
                 </thead>
                 <tbody>
                 </tbody>
@@ -263,47 +256,60 @@
                         className: 'text-center'
                     },
                     {
-                        data: 'facility_locomotive.locomotive_type.name',
-                        name: 'facility_locomotive.locomotive_type.name',
-                        className: 'text-center'
+                        data: 'locomotive_type.code',
+                        name: 'locomotive_type.code',
+                        className: 'text-left'
                     },
                     {
-                        data: 'facility_locomotive.facility_number',
-                        name: 'facility_locomotive.facility_number',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'empty_weight',
-                        name: 'empty_weight',
+                        data: null,
+                        orderable: false,
                         className: 'text-center',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            let url = path + '/' + data['id'] + '/dokumen';
+                            return '<a href="' + url + '" class="btn-document btn-table-action">Lihat</a>';
                         }
                     },
                     {
-                        data: 'house_power',
-                        name: 'house_power',
+                        data: null,
+                        orderable: false,
                         className: 'text-center',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            let url = path + '/' + data['id'] + '/gambar';
+                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
                         }
                     },
-                    {
-                        data: 'maximum_speed',
-                        name: 'maximum_speed',
-                        className: 'text-center',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'fuel_consumption',
-                        name: 'fuel_consumption',
-                        className: 'text-center',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
+                    // {
+                    //     data: 'empty_weight',
+                    //     name: 'empty_weight',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'house_power',
+                    //     name: 'house_power',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'maximum_speed',
+                    //     name: 'maximum_speed',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'fuel_consumption',
+                    //     name: 'fuel_consumption',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
                     {
                         data: null,
                         render: function (data) {

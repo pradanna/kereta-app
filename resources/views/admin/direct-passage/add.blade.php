@@ -42,14 +42,6 @@
                         <span class="bs-stepper-label">Data Umum</span>
                     </button>
                 </div>
-{{--                <div class="line"></div>--}}
-{{--                <div class="step" data-target="#guard-part">--}}
-{{--                    <button type="button" class="step-trigger" role="tab" aria-controls="guard-part"--}}
-{{--                            id="guard-part-trigger">--}}
-{{--                        <span class="bs-stepper-circle">2</span>--}}
-{{--                        <span class="bs-stepper-label">Status Penjagaan</span>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
                 <div class="line"></div>
                 <div class="step" data-target="#sign-part">
                     <button type="button" class="step-trigger" role="tab" aria-controls="sign-part"
