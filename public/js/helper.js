@@ -32,6 +32,13 @@ async function AjaxPost(url, param = {}, onSuccess = function () {
     }
 }
 
+function blockLoading(state) {
+    if (state) {
+        $('#overlay-loading').css('display', 'flex')
+    } else {
+        $('#overlay-loading').css('display', 'none')
+    }
+}
 // var myToastEl = document.getElementById('liveToast');
 // var myToast = new bootstrap.Toast(myToastEl, {
 //     autohide: true,

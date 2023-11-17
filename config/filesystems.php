@@ -70,6 +70,12 @@ return [
             'url' => env('APP_URL') . '/public',
             'visibility' => 'public',
         ],
+        'tech-image' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/tech-image',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
 
     ],
 

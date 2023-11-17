@@ -24,6 +24,15 @@ class DashboardController extends CustomController
 
     public function index()
     {
-        return view('admin.beranda');
+        $facility_locomotives = FacilityLocomotive::with([])->count();
+        $facility_trains = FacilityTrain::with([])->count();
+        $facility_wagons = FacilityWagon::with([])->count();
+        $facility_special_equipments = FacilitySpecialEquipment::with([])->count();
+        return view('admin.beranda')->with([
+            'facility_locomotives' => $facility_locomotives,
+            'facility_trains' => $facility_trains,
+            'facility_wagons' => $facility_wagons,
+            'facility_special_equipments' => $facility_special_equipments,
+        ]);
     }
 }

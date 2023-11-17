@@ -9,6 +9,9 @@ use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
 use App\Models\LocomotiveType;
 use App\Models\TechnicalSpecLocomotive;
+use App\Models\TechnicalSpecLocomotiveDocument;
+use App\Models\TechnicalSpecLocomotiveImage;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
 class TechnicalSpecificationLocomotiveController extends CustomController
@@ -111,20 +114,72 @@ class TechnicalSpecificationLocomotiveController extends CustomController
 
     public function document_page($id)
     {
-        $data = TechnicalSpecLocomotive::with(['locomotive_type'])->findOrFail($id);
+        $data = TechnicalSpecLocomotive::with(['locomotive_type', 'tech_documents'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
-            if ($this->request->hasFile('files')) {
-                foreach ($this->request->file('files') as $file) {
-                    $extension = $file->getClientOriginalExtension();
-                    $document = Uuid::uuid4()->toString() . '.' . $extension;
-                    $storage_path = public_path('tech-document');
-                    $documentName = $storage_path . '/' . $document;
-                    $file->move($storage_path, $documentName);
+            DB::beginTransaction();
+            try {
+                if ($this->request->hasFile('files')) {
+                    foreach ($this->request->file('files') as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $document = Uuid::uuid4()->toString() . '.' . $extension;
+                        $storage_path = public_path('tech-document');
+                        $documentName = $storage_path . '/' . $document;
+                        $dataDocument = [
+                            'ts_locomotive_id' => $data->id,
+                            'document' => '/tech-document/' . $document
+                        ];
+                        TechnicalSpecLocomotiveDocument::create($dataDocument);
+                        $file->move($storage_path, $documentName);
+                    }
+                    DB::commit();
+                    return $this->jsonSuccessResponse('success');
+                } else {
+                    DB::rollBack();
+                    return $this->jsonBadRequestResponse('no documents attached...');
                 }
-                return $this->jsonSuccessResponse('success');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->jsonErrorResponse('internal server error');
             }
+
         }
         return view('admin.technical-specification.locomotive.document')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function image_page($id)
+    {
+        $data = TechnicalSpecLocomotive::with(['locomotive_type', 'tech_images'])->findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            try {
+                if ($this->request->hasFile('files')) {
+                    foreach ($this->request->file('files') as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $document = Uuid::uuid4()->toString() . '.' . $extension;
+                        $storage_path = public_path('tech-image');
+                        $documentName = $storage_path . '/' . $document;
+                        $dataDocument = [
+                            'ts_locomotive_id' => $data->id,
+                            'image' => '/tech-image/' . $document
+                        ];
+                        TechnicalSpecLocomotiveImage::create($dataDocument);
+                        $file->move($storage_path, $documentName);
+                    }
+                    DB::commit();
+                    return $this->jsonSuccessResponse('success');
+                } else {
+                    DB::rollBack();
+                    return $this->jsonBadRequestResponse('no image attached...');
+                }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->jsonErrorResponse('internal server error');
+            }
+
+        }
+        return view('admin.technical-specification.locomotive.image')->with([
             'data' => $data
         ]);
     }

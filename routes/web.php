@@ -171,6 +171,7 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
     Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy'])->name('technical-specification.locomotive.destroy');
     Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'detail'])->name('technical-specification.locomotive.detail');
     Route::match(['post', 'get'],'/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'document_page'])->name('technical-specification.locomotive.document');
+    Route::match(['post', 'get'],'/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'image_page'])->name('technical-specification.locomotive.image');
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {

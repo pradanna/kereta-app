@@ -28,4 +28,13 @@ class TechnicalSpecLocomotive extends Model
         return $this->belongsTo(LocomotiveType::class, 'locomotive_type_id');
     }
 
+    public function tech_documents()
+    {
+        return $this->hasMany(TechnicalSpecLocomotiveDocument::class, 'ts_locomotive_id');
+    }
+
+    public function tech_images()
+    {
+        return $this->hasMany(TechnicalSpecLocomotiveImage::class, 'ts_locomotive_id');
+    }
 }
