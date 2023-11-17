@@ -9,6 +9,7 @@ use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
 use App\Models\LocomotiveType;
 use App\Models\TechnicalSpecLocomotive;
+use Ramsey\Uuid\Uuid;
 
 class TechnicalSpecificationLocomotiveController extends CustomController
 {
@@ -111,6 +112,18 @@ class TechnicalSpecificationLocomotiveController extends CustomController
     public function document_page($id)
     {
         $data = TechnicalSpecLocomotive::with(['locomotive_type'])->findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            if ($this->request->hasFile('files')) {
+                foreach ($this->request->file('files') as $file) {
+                    $extension = $file->getClientOriginalExtension();
+                    $document = Uuid::uuid4()->toString() . '.' . $extension;
+                    $storage_path = public_path('tech-document');
+                    $documentName = $storage_path . '/' . $document;
+                    $file->move($storage_path, $documentName);
+                }
+                return $this->jsonSuccessResponse('success');
+            }
+        }
         return view('admin.technical-specification.locomotive.document')->with([
             'data' => $data
         ]);
