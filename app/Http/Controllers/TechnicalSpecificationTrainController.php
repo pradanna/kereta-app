@@ -6,7 +6,15 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Models\FacilityTrain;
+use App\Models\TechnicalSpecLocomotive;
+use App\Models\TechnicalSpecLocomotiveDocument;
+use App\Models\TechnicalSpecLocomotiveImage;
 use App\Models\TechnicalSpecTrain;
+use App\Models\TechnicalSpecTrainDocument;
+use App\Models\TechnicalSpecTrainImage;
+use App\Models\TrainType;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 
 class TechnicalSpecificationTrainController extends CustomController
 {
@@ -18,7 +26,7 @@ class TechnicalSpecificationTrainController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = TechnicalSpecTrain::with(['facility_train.train_type'])
+            $data = TechnicalSpecTrain::with(['train_type'])
                 ->orderBy('created_at', 'ASC')
                 ->get();
             return $this->basicDataTables($data);
@@ -31,7 +39,7 @@ class TechnicalSpecificationTrainController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'facility_train_id' => $this->postField('facility_train'),
+                    'train_type_id' => $this->postField('train_type'),
                     'empty_weight' => $this->postField('empty_weight') ,
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
@@ -49,9 +57,9 @@ class TechnicalSpecificationTrainController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
-        $facility_trains = FacilityTrain::with(['train_type'])->get();
+        $train_types = TrainType::with([])->orderBy('name', 'ASC')->get();
         return view('admin.technical-specification.train.add')->with([
-            'facility_trains' => $facility_trains,
+            'train_types' => $train_types,
         ]);
     }
 
@@ -61,7 +69,7 @@ class TechnicalSpecificationTrainController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'facility_train_id' => $this->postField('facility_train'),
+                    'train_type_id' => $this->postField('train_type'),
                     'empty_weight' => $this->postField('empty_weight') ,
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
@@ -79,19 +87,28 @@ class TechnicalSpecificationTrainController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $facility_trains = FacilityTrain::with(['train_type'])->get();
+        $train_types = TrainType::with([])->orderBy('name', 'ASC')->get();
         return view('admin.technical-specification.train.edit')->with([
             'data' => $data,
-            'facility_trains' => $facility_trains,
+            'train_types' => $train_types,
         ]);
     }
 
     public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-            TechnicalSpecTrain::destroy($id);
+            $data = TechnicalSpecTrain::with([])->find($id);
+            if (!$data) {
+                return $this->jsonNotFoundResponse('data not found!');
+            }
+            TechnicalSpecTrainDocument::with([])->where('ts_train_id', '=', $id)->delete();
+            TechnicalSpecTrainImage::with([])->where('ts_train_id', '=', $id)->delete();
+            $data->delete();
+            DB::commit();
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
+            DB::rollBack();
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
     }
@@ -99,12 +116,84 @@ class TechnicalSpecificationTrainController extends CustomController
     public function detail($id)
     {
         try {
-            $data = TechnicalSpecTrain::with(['facility_train.train_type'])
+            $data = TechnicalSpecTrain::with(['train_type'])
                 ->where('id', '=', $id)
                 ->first();
             return $this->jsonSuccessResponse('success', $data);
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function document_page($id)
+    {
+        $data = TechnicalSpecTrain::with(['train_type', 'tech_documents'])->findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            try {
+                if ($this->request->hasFile('files')) {
+                    foreach ($this->request->file('files') as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $document = Uuid::uuid4()->toString() . '.' . $extension;
+                        $storage_path = public_path('tech-document');
+                        $documentName = $storage_path . '/' . $document;
+                        $dataDocument = [
+                            'ts_train_id' => $data->id,
+                            'document' => '/tech-document/' . $document
+                        ];
+                        TechnicalSpecTrainDocument::create($dataDocument);
+                        $file->move($storage_path, $documentName);
+                    }
+                    DB::commit();
+                    return $this->jsonSuccessResponse('success');
+                } else {
+                    DB::rollBack();
+                    return $this->jsonBadRequestResponse('no documents attached...');
+                }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->jsonErrorResponse('internal server error');
+            }
+
+        }
+        return view('admin.technical-specification.train.document')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function image_page($id)
+    {
+        $data = TechnicalSpecTrain::with(['train_type', 'tech_images'])->findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            try {
+                if ($this->request->hasFile('files')) {
+                    foreach ($this->request->file('files') as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $document = Uuid::uuid4()->toString() . '.' . $extension;
+                        $storage_path = public_path('tech-image');
+                        $documentName = $storage_path . '/' . $document;
+                        $dataDocument = [
+                            'ts_train_id' => $data->id,
+                            'image' => '/tech-image/' . $document
+                        ];
+                        TechnicalSpecTrainImage::create($dataDocument);
+                        $file->move($storage_path, $documentName);
+                    }
+                    DB::commit();
+                    return $this->jsonSuccessResponse('success');
+                } else {
+                    DB::rollBack();
+                    return $this->jsonBadRequestResponse('no image attached...');
+                }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->jsonErrorResponse('internal server error');
+            }
+
+        }
+        return view('admin.technical-specification.train.image')->with([
+            'data' => $data
+        ]);
     }
 }

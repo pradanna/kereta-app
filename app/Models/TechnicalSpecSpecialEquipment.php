@@ -11,9 +11,10 @@ class TechnicalSpecSpecialEquipment extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'facility_special_equipment_id',
+        'special_equipment_type_id',
         'empty_weight',
         'maximum_speed',
+        'passenger_capacity',
         'air_conditioner',
         'long',
         'width',
@@ -23,8 +24,18 @@ class TechnicalSpecSpecialEquipment extends Model
         'spoor_width',
     ];
 
-    public function facility_special_equipment()
+    public function special_equipment_type()
     {
-        return $this->belongsTo(FacilitySpecialEquipment::class, 'facility_special_equipment_id');
+        return $this->belongsTo(SpecialEquipmentType::class, 'special_equipment_type_id');
+    }
+
+    public function tech_documents()
+    {
+        return $this->hasMany(TechnicalSpecSpecialEquipmentDocument::class, 'ts_special_equipment_id');
+    }
+
+    public function tech_images()
+    {
+        return $this->hasMany(TechnicalSpecSpecialEquipmentImage::class, 'ts_special_equipment_id');
     }
 }

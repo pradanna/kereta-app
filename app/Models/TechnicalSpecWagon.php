@@ -11,7 +11,7 @@ class TechnicalSpecWagon extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'facility_wagon_id',
+        'wagon_sub_type_id',
         'loading_weight',
         'empty_weight',
         'maximum_speed',
@@ -27,4 +27,20 @@ class TechnicalSpecWagon extends Model
     {
         return $this->belongsTo(FacilityWagon::class, 'facility_wagon_id');
     }
+
+    public function wagon_sub_type()
+    {
+        return $this->belongsTo(WagonSubType::class, 'wagon_sub_type_id');
+    }
+
+    public function tech_documents()
+    {
+        return $this->hasMany(TechnicalSpecWagonDocument::class, 'ts_wagon_id');
+    }
+
+    public function tech_images()
+    {
+        return $this->hasMany(TechnicalSpecWagonImage::class, 'ts_wagon_id');
+    }
+
 }

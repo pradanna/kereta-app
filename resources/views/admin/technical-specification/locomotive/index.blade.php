@@ -25,7 +25,8 @@
                 <thead>
                 <tr>
                     <th class="text-center middle-header" width="5%">#</th>
-                    <th class="middle-header">Jenis Sarana</th>
+                    <th class="middle-header">Jenis Lokomotif</th>
+                    <th class="text-center middle-header" width="12%">Spesifikasi Umum</th>
                     <th class="text-center middle-header" width="12%">Dokumen</th>
                     <th class="text-center middle-header" width="12%">Gambar</th>
                     {{--                    <th class="text-center middle-header" width="12%">Berat Kosong (Ton)</th>--}}
@@ -42,7 +43,7 @@
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
          aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Spesifikasi Teknis
@@ -51,9 +52,9 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="facility_locomotive" class="form-label">Identitas Sarana</label>
-                                <input type="text" class="form-control" id="facility_locomotive"
-                                       name="facility_locomotive"
+                                <label for="locomotive_type" class="form-label">Jenis Lokomotif</label>
+                                <input type="text" class="form-control" id="locomotive_type"
+                                       name="locomotive_type"
                                        disabled>
                             </div>
                         </div>
@@ -176,7 +177,7 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let facilityLocomotive = data['facility_locomotive']['facility_number'];
+                let locomotiveType = data['locomotive_type']['code'];
                 let emptyWeight = data['empty_weight'];
                 let housePower = data['house_power'];
                 let maximumSpeed = data['maximum_speed'];
@@ -186,7 +187,7 @@
                 let height = data['height'];
                 let couplerHeight = data['coupler_height'];
                 let wheelDiameter = data['wheel_diameter'];
-                $('#facility_locomotive').val(facilityLocomotive);
+                $('#locomotive_type').val(locomotiveType);
                 $('#empty_weight').val(emptyWeight);
                 $('#house_power').val(housePower);
                 $('#maximum_speed').val(maximumSpeed);
@@ -265,6 +266,14 @@
                         orderable: false,
                         className: 'text-center',
                         render: function (data) {
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Lihat</a>';
+                        }
+                    },
+                    {
+                        data: null,
+                        orderable: false,
+                        className: 'text-center',
+                        render: function (data) {
                             let url = path + '/' + data['id'] + '/dokumen';
                             return '<a href="' + url + '" class="btn-document btn-table-action">Lihat</a>';
                         }
@@ -314,8 +323,7 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
                                 '">Delete</a>';

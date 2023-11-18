@@ -25,12 +25,16 @@
                 <thead>
                 <tr>
                     <th class="text-center middle-header" width="5%">#</th>
-                    <th class="text-center middle-header" width="10%">Jenis Sarana</th>
-                    <th class="middle-header">Identitas Sarana</th>
-                    <th class="text-center middle-header" width="12%">Berat Muat (Ton)</th>
-                    <th class="text-center middle-header" width="12%">Berat Kosong (Ton)</th>
-                    <th class="text-center middle-header" width="12%">Kecepatan Maksimum (Km/jam)</th>
-                    <th class="text-center middle-header" width="15%">Kegunaan</th>
+                    <th class="middle-header">Jenis Gerbong</th>
+                    <th class="text-center middle-header" width="12%">Spesifikasi Umum</th>
+                    <th class="text-center middle-header" width="12%">Dokumen</th>
+                    <th class="text-center middle-header" width="12%">Gambar</th>
+{{--                    <th class="text-center middle-header" width="10%">Jenis Sarana</th>--}}
+{{--                    <th class="middle-header">Identitas Sarana</th>--}}
+{{--                    <th class="text-center middle-header" width="12%">Berat Muat (Ton)</th>--}}
+{{--                    <th class="text-center middle-header" width="12%">Berat Kosong (Ton)</th>--}}
+{{--                    <th class="text-center middle-header" width="12%">Kecepatan Maksimum (Km/jam)</th>--}}
+{{--                    <th class="text-center middle-header" width="15%">Kegunaan</th>--}}
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -41,7 +45,7 @@
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
          aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Spesifikasi Teknis
@@ -50,9 +54,9 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <div class="form-group w-100">
-                                <label for="facility_wagon" class="form-label">Identitas Sarana</label>
-                                <input type="text" class="form-control" id="facility_wagon"
-                                       name="facility_wagon"
+                                <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
+                                <input type="text" class="form-control" id="wagon_sub_type"
+                                       name="wagon_sub_type"
                                        disabled>
                             </div>
                         </div>
@@ -172,7 +176,7 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let facilityWagon = data['facility_wagon']['facility_number'];
+                let wagonType = data['wagon_sub_type']['code'] + ' ('+data['wagon_sub_type']['wagon_type']['code']+')';
                 let emptyWeight = data['empty_weight'];
                 let loadingWeight = data['loading_weight'];
                 let maximumSpeed = data['maximum_speed'];
@@ -182,7 +186,7 @@
                 let axleLoad = data['axle_load'];
                 let bogieDistance = data['bogie_distance'];
                 let usability = data['usability'];
-                $('#facility_wagon').val(facilityWagon);
+                $('#wagon_sub_type').val(wagonType);
                 $('#empty_weight').val(emptyWeight);
                 $('#loading_weight').val(loadingWeight);
                 $('#maximum_speed').val(maximumSpeed);
@@ -251,55 +255,79 @@
                     className: 'text-center',
                 },
                     {
-                        data: 'facility_wagon.wagon_sub_type',
-                        name: 'facility_wagon.wagon_sub_type',
-                        className: 'text-center',
+                        data: 'wagon_sub_type',
+                        name: 'wagon_sub_type',
                         render: function (data) {
                             return data['name'] + ' (' + data['wagon_type']['code'] + ')';
                         }
                     },
+                    // {
+                    //     data: 'facility_wagon.facility_number',
+                    //     name: 'facility_wagon.facility_number',
+                    // },
+                    // {
+                    //     data: 'empty_weight',
+                    //     name: 'empty_weight',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'loading_weight',
+                    //     name: 'loading_weight',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'maximum_speed',
+                    //     name: 'maximum_speed',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'usability',
+                    //     name: 'usability',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
                     {
-                        data: 'facility_wagon.facility_number',
-                        name: 'facility_wagon.facility_number',
-                    },
-                    {
-                        data: 'empty_weight',
-                        name: 'empty_weight',
+                        data: null,
+                        orderable: false,
                         className: 'text-center',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Lihat</a>';
                         }
                     },
                     {
-                        data: 'loading_weight',
-                        name: 'loading_weight',
+                        data: null,
+                        orderable: false,
                         className: 'text-center',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            let url = path + '/' + data['id'] + '/dokumen';
+                            return '<a href="' + url + '" class="btn-document btn-table-action">Lihat</a>';
                         }
                     },
                     {
-                        data: 'maximum_speed',
-                        name: 'maximum_speed',
+                        data: null,
+                        orderable: false,
                         className: 'text-center',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'usability',
-                        name: 'usability',
-                        className: 'text-center',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            let url = path + '/' + data['id'] + '/gambar';
+                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
                         }
                     },
                     {
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
                                 '">Delete</a>';

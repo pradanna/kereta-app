@@ -66,7 +66,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'facility_locomotive_id' => $this->postField('facility_locomotive'),
+                    'locomotive_type_id' => $this->postField('locomotive_type'),
                     'empty_weight' => $this->postField('empty_weight'),
                     'house_power' => $this->postField('house_power'),
                     'maximum_speed' => $this->postField('maximum_speed'),
@@ -83,19 +83,28 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $facility_locomotives = FacilityLocomotive::all();
+        $locomotive_types = LocomotiveType::with([])->orderBy('code', 'ASC')->get();
         return view('admin.technical-specification.locomotive.edit')->with([
             'data' => $data,
-            'facility_locomotives' => $facility_locomotives,
+            'locomotive_types' => $locomotive_types,
         ]);
     }
 
     public function destroy($id)
     {
+        DB::beginTransaction();
         try {
-            TechnicalSpecLocomotive::destroy($id);
+            $data = TechnicalSpecLocomotive::with([])->find($id);
+            if (!$data) {
+                return $this->jsonNotFoundResponse('data not found!');
+            }
+            TechnicalSpecLocomotiveDocument::with([])->where('ts_locomotive_id', '=', $id)->delete();
+            TechnicalSpecLocomotiveImage::with([])->where('ts_locomotive_id', '=', $id)->delete();
+            $data->delete();
+            DB::commit();
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
+            DB::rollBack();
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
     }
@@ -103,7 +112,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
     public function detail($id)
     {
         try {
-            $data = TechnicalSpecLocomotive::with(['facility_locomotive.locomotive_type'])
+            $data = TechnicalSpecLocomotive::with(['locomotive_type'])
                 ->where('id', '=', $id)
                 ->first();
             return $this->jsonSuccessResponse('success', $data);

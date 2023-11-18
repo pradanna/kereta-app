@@ -1,7 +1,11 @@
 @extends('admin.base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">SPESIFIKASI TEKNIS SARANA PERALATAN KHUSUS</h1>
+            <p class="mb-0">Manajemen Data Spesifikasi Teknis Sarana Peralatan Khusus</p>
+        </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -12,30 +16,20 @@
     <div class="panel">
         <div class="title">
             <p>Data Spesifikasi Teknis Sarana Peralatan Khusus</p>
-            <a class="btn-utama sml rnd " href="{{ route('technical-specification.train.add') }}">Tambah
+            <a class="btn-utama sml rnd " href="{{ route('technical-specification.special-equipment.add') }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped">
+            <table id="table-data" class="display table w-100">
                 <thead>
                 <tr>
-                    <th class="text-center middle-header" rowspan="2">#</th>
-                    <th class="text-center middle-header" rowspan="2">Identitas Sarana</th>
-                    <th class="text-center middle-header" rowspan="2">Jenis Sarana</th>
-                    <th class="text-center middle-header" rowspan="2">Berat Kosong (Ton)</th>
-                    <th class="text-center middle-header" rowspan="2">Kecepatan Maksimum (Km/jam)</th>
-                    <th class="text-center middle-header" rowspan="2">Jenis AC</th>
-                    <th class="text-center" colspan="6">Dimensi</th>
-                    <th class="text-center middle-header" rowspan="2">Aksi</th>
-                </tr>
-                <tr>
-                    <th class="text-center middle-header">Panjang (mm)</th>
-                    <th class="text-center middle-header">Lebar (mm)</th>
-                    <th class="text-center middle-header">Tinggi (mm)</th>
-                    <th class="text-center middle-header">Tinggi Coupler (mm)</th>
-                    <th class="text-center middle-header">Beban Gandar (Ton)</th>
-                    <th class="text-center middle-header">Lebar Spoor (mm)</th>
+                    <th class="text-center middle-header" width="5%">#</th>
+                    <th class="middle-header">Jenis Peralatan Khusus</th>
+                    <th class="text-center middle-header" width="12%">Spesifikasi Umum</th>
+                    <th class="text-center middle-header" width="12%">Dokumen</th>
+                    <th class="text-center middle-header" width="12%">Gambar</th>
+                    <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -79,103 +73,57 @@
                     name: 'DT_RowIndex',
                     searchable: false,
                     orderable: false,
-                    width: '30px'
+                    className: 'text-center',
                 },
                     {
-                        data: 'facility_special_equipment.facility_number',
-                        name: 'facility_special_equipment.facility_number',
-                        width: '120px',
-                    },
-                    {
-                        data: 'facility_special_equipment.special_equipment_type.name',
-                        name: 'facility_special_equipment.special_equipment_type.name',
-                        width: '120px'
-                    },
-                    {
-                        data: 'empty_weight',
-                        name: 'empty_weight',
-                        width: '100px',
+                        data: 'special_equipment_type',
+                        name: 'special_equipment_type',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'maximum_speed',
-                        name: 'maximum_speed',
-                        width: '100px',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-
-                    {
-                        data: 'air_conditioner',
-                        name: 'air_conditioner',
-                        width: '100px'
-                    },
-                    {
-                        data: 'long',
-                        name: 'long',
-                        width: '100px',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'width',
-                        name: 'width',
-                        width: '100px',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'height',
-                        name: 'height',
-                        width: '100px',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'coupler_height',
-                        name: 'coupler_height',
-                        width: '100px',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'axle_load',
-                        name: 'axle_load',
-                        width: '100px',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
-                        }
-                    },
-                    {
-                        data: 'spoor_width',
-                        name: 'spoor_width',
-                        width: '100px',
-                        render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            return data['code'] + ' (' + data['name'] + ')';
                         }
                     },
                     {
                         data: null,
-                        render: function(data) {
-                            return '<a href="#" class="btn-edit me-1" data-id="' + data['id'] +
+                        orderable: false,
+                        className: 'text-center',
+                        render: function (data) {
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Lihat</a>';
+                        }
+                    },
+                    {
+                        data: null,
+                        orderable: false,
+                        className: 'text-center',
+                        render: function (data) {
+                            let url = path + '/' + data['id'] + '/dokumen';
+                            return '<a href="' + url + '" class="btn-document btn-table-action">Lihat</a>';
+                        }
+                    },
+                    {
+                        data: null,
+                        orderable: false,
+                        className: 'text-center',
+                        render: function (data) {
+                            let url = path + '/' + data['id'] + '/gambar';
+                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
+                        }
+                    },
+                    {
+                        data: null,
+                        render: function (data) {
+                            let urlEdit = path + '/' + data['id'] + '/edit';
+                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
-                                '<a href="#" class="btn-delete" data-id="' + data['id'] + '">Delete</a>'
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '">Delete</a>';
                         },
                         orderable: false,
-                        width: '120px',
+                        className: 'text-center'
                     }
                 ],
-                columnDefs: [{
-                    targets: '_all',
-                    className: 'text-center'
-                }]
+                columnDefs: [
+
+                ]
             });
         }
 
