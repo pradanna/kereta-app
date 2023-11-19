@@ -10,28 +10,28 @@
     </div>
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SPESIFIKASI TEKNIS SARANA KERETA</h1>
-            <p class="mb-0">Manajemen Data Dokumen Spesifikasi Teknis Sarana Kereta</p>
+            <h1 class="h1">SPESIFIKASI TEKNIS SARANA PERALATAN KHUSUS</h1>
+            <p class="mb-0">Manajemen Data Dokumen Spesifikasi Teknis Sarana Peralatan Khusus</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('technical-specification.train') }}">Spesifikasi
-                        Teknis Sarana Kereta</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $data->train_type->code }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('technical-specification.special-equipment') }}">Spesifikasi
+                        Teknis Sarana Peralatan Khusus</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $data->special_equipment_type->code }}</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Dokumen Spesifikasi Teknis Sarana Kereta {{ $data->train_type->code }}</p>
+            <p>Dokumen Spesifikasi Teknis Sarana Peralatan Khusus {{ $data->special_equipment_type->code }}</p>
         </div>
         <div class="isi">
 
             <div class="row gx-3">
                 @forelse($data->tech_documents as $document)
                     <div class="col-3">
-                        <a href="{{ asset($document->$document) }}" target="_blank">Lihat</a>
+                        <a href="{{ asset($document->document) }}" target="_blank">Lihat</a>
                     </div>
                 @empty
                     <div class="col-12 d-flex justify-content-center align-items-center" style="height: 200px;">

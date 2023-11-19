@@ -5,37 +5,39 @@
         <div class="d-flex flex-column justify-content-center align-items-center">
             <div class="spinner-border text-light" role="status">
             </div>
-            <p class="text-light">Sedang Mengunggah Data Dokumen....</p>
+            <p class="text-light">Sedang Mengunggah Data Gambar....</p>
         </div>
     </div>
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SPESIFIKASI TEKNIS SARANA KERETA</h1>
-            <p class="mb-0">Manajemen Data Dokumen Spesifikasi Teknis Sarana Kereta</p>
+            <h1 class="h1">SPESIFIKASI TEKNIS SARANA PERALATAN KHUSUS</h1>
+            <p class="mb-0">Manajemen Data Gambar Spesifikasi Teknis Sarana Peralatan Khusus</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('technical-specification.train') }}">Spesifikasi
-                        Teknis Sarana Kereta</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $data->train_type->code }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('technical-specification.special-equipment') }}">Spesifikasi
+                        Teknis Sarana Peralatan Khusus</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $data->special_equipment_type->code }}</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Dokumen Spesifikasi Teknis Sarana Kereta {{ $data->train_type->code }}</p>
+            <p>Gambar Spesifikasi Teknis Sarana Peralatan Khusus {{ $data->special_equipment_type->code }}</p>
         </div>
         <div class="isi">
 
             <div class="row gx-3">
-                @forelse($data->tech_documents as $document)
+                @forelse($data->tech_images as $image)
                     <div class="col-3">
-                        <a href="{{ asset($document->$document) }}" target="_blank">Lihat</a>
+                        <div class="d-flex flex-column justify-content-center align-items-center w-100">
+                            <img src="{{ asset($image->image) }}" height="100" width="100">
+                        </div>
                     </div>
                 @empty
                     <div class="col-12 d-flex justify-content-center align-items-center" style="height: 200px;">
-                        <p class="text-center fw-bold">Tidak Ada Dokumen Terlampir</p>
+                        <p class="text-center fw-bold">Tidak Ada Gambar Terlampir</p>
                     </div>
                 @endforelse
             </div>
@@ -118,14 +120,14 @@
                                     myDropzone.processQueue();
                                 } else {
                                     blockLoading(false);
-                                    ErrorAlert('Error', 'Harap Menambahkan Data Dokumen...')
+                                    ErrorAlert('Error', 'Harap Menambahkan Data Gambar...')
                                 }
                             }
                         });
                     });
                     this.on('successmultiple', function (file, response) {
                         blockLoading(false);
-                        SuccessAlert('Berhasil', 'Berhasil Menambahkan Data Dokumen...').then((r) => {
+                        SuccessAlert('Berhasil', 'Berhasil Menambahkan Data Gambar...').then((r) => {
                             window.location.reload();
                         })
                     });
@@ -136,17 +138,6 @@
                         console.log(response);
                     });
                 },
-
-                // removedfile: function (file) {
-                //     file.previewElement.remove()
-                //     var name = ''
-                //     if (typeof file.file_name !== 'undefined') {
-                //         name = file.file_name
-                //     } else {
-                //         name = uploadedDocumentMap[file.name]
-                //     }
-                //     $('form').find('input[name="document[]"][value="' + name + '"]').remove()
-                // },
             });
 
 

@@ -187,7 +187,7 @@
                 </li>
 
                 @php
-                    $masterTrack = ['perlintasan', 'petak'];
+                    $masterTrack = ['perlintasan', 'petak', 'jenis-rawan-bencana', 'resort'];
                     $openMasterTrack = false;
                     foreach ($masterTrack as $mt) {
                         if (request()->is($mt . '*')) {
@@ -216,6 +216,18 @@
                             <a class="nav-link menu {{ request()->is('petak*') ? 'active' : '' }}"
                                href="{{ route('sub-track') }}">
                                 <p class="menu-text">Petak</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('jenis-rawan-bencana*') ? 'active' : '' }}"
+                               href="{{ route('disaster-type') }}">
+                                <p class="menu-text">Jenis Rawan Bencana</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('resort*') ? 'active' : '' }}"
+                               href="{{ route('resort') }}">
+                                <p class="menu-text">Resort</p>
                             </a>
                         </li>
                     </ul>
@@ -336,6 +348,15 @@
                             timeline
                         </span>
                         <p class="menu-text">Jalur Perlintasan Langsung</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('daerah-rawan-bencana*') ? 'active' : '' }}"
+                        href="{{ route('disaster-area') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            flood
+                        </span>
+                        <p class="menu-text">Daerah Rawan Bencana</p>
                     </a>
                 </li>
                 <li class="nav-item">
