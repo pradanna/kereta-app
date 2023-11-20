@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Models\DisasterArea;
 use App\Models\DisasterType;
+use App\Models\ServiceUnit;
 
 class DisasterAreaController extends CustomController
 {
@@ -17,10 +19,13 @@ class DisasterAreaController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = DisasterType::with([])->orderBy('name', 'ASC')->get();
+            $data = DisasterArea::with(['resort.service_unit', 'sub_track', 'disaster_type'])->orderBy('created_at', 'DESC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.disaster-type.index');
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.disaster-area.index')->with([
+            'service_units' => $service_units
+        ]);
     }
 
     public function store()
@@ -28,40 +33,81 @@ class DisasterAreaController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'name' => $this->postField('name'),
+                    'resort_id'  => $this->postField('resort'),
+                    'sub_track_id'  => $this->postField('sub_track'),
+                    'disaster_type_id'  => $this->postField('disaster_type'),
+                    'location_type'  => $this->postField('location_type'),
+                    'block'  => $this->postField('block'),
+                    'latitude'  => $this->postField('latitude'),
+                    'longitude'  => $this->postField('longitude'),
+                    'lane'  => $this->postField('lane'),
+                    'handling'  => $this->postField('handling'),
+                    'description'  => $this->postField('description'),
                 ];
-                DisasterType::create($data_request);
+                DisasterArea::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.disaster-type.add');
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        $disaster_types = DisasterType::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.disaster-area.add')->with([
+            'service_units' => $service_units,
+            'disaster_types' => $disaster_types,
+        ]);
     }
 
     public function patch($id)
     {
-        $data = DisasterType::findOrFail($id);
+        $data = DisasterArea::with(['resort.service_unit', 'sub_track', 'disaster_type'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'name' => $this->postField('name'),
+                    'resort_id'  => $this->postField('resort'),
+                    'sub_track_id'  => $this->postField('sub_track'),
+                    'disaster_type_id'  => $this->postField('disaster_type'),
+                    'location_type'  => $this->postField('location_type'),
+                    'block'  => $this->postField('block'),
+                    'latitude'  => $this->postField('latitude'),
+                    'longitude'  => $this->postField('longitude'),
+                    'lane'  => $this->postField('lane'),
+                    'handling'  => $this->postField('handling'),
+                    'description'  => $this->postField('description'),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error');
             }
-
         }
-        return view('admin.master.disaster-type.edit')->with(['data' => $data]);
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        $disaster_types = DisasterType::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.disaster-area.edit')->with([
+            'service_units' => $service_units,
+            'disaster_types' => $disaster_types,
+            'data' => $data
+        ]);
     }
+
 
     public function destroy($id)
     {
         try {
-            DisasterType::destroy($id);
+            DisasterArea::destroy($id);
             return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    public function detail($id)
+    {
+        try {
+            $data = DisasterArea::with(['resort.service_unit', 'sub_track', 'disaster_type'])
+                ->where('id', '=', $id)
+                ->first();
+            return $this->jsonSuccessResponse('success', $data);
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }

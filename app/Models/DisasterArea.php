@@ -14,6 +14,7 @@ class DisasterArea extends Model
         'resort_id',
         'sub_track_id',
         'disaster_type_id',
+        'location_type',
         'block',
         'latitude',
         'longitude',

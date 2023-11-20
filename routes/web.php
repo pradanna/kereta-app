@@ -108,6 +108,7 @@ Route::group(['prefix' => 'petak'], function () {
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\SubTrackController::class, 'patch'])->name('sub-track.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\SubTrackController::class, 'destroy'])->name('sub-track.destroy');
     Route::get('/excel', [\App\Http\Controllers\SubTrackController::class, 'export_to_excel'])->name('sub-track.excel');
+    Route::get('/service-unit', [\App\Http\Controllers\SubTrackController::class, 'getSubTrackByServiceUnit'])->name('sub-track.by.service.unit');
 });
 
 Route::group(['prefix' => 'jenis-rawan-bencana'], function () {
@@ -122,6 +123,7 @@ Route::group(['prefix' => 'resort'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ResortController::class, 'store'])->name('resort.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\ResortController::class, 'patch'])->name('resort.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\ResortController::class, 'destroy'])->name('resort.destroy');
+    Route::get('/service-unit', [\App\Http\Controllers\ResortController::class, 'getResortsByServiceUnit'])->name('resort.by.service.unit');
 });
 
 Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
@@ -232,6 +234,7 @@ Route::group(['prefix' => 'daerah-rawan-bencana'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DisasterAreaController::class, 'store'])->name('disaster-area.add');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DisasterAreaController::class, 'patch'])->name('disaster-area.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\DisasterAreaController::class, 'destroy'])->name('disaster-area.destroy');
+    Route::get('/{id}/detail', [\App\Http\Controllers\DisasterAreaController::class, 'detail'])->name('disaster-area.detail');
 });
 
 Route::group(['prefix' => 'bangunan-liar'], function () {

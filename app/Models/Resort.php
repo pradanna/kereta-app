@@ -19,4 +19,9 @@ class Resort extends Model
     {
         return $this->belongsTo(ServiceUnit::class, 'service_unit_id');
     }
+
+    public function disaster_areas()
+    {
+        return $this->hasMany(DisasterArea::class, 'resort_id');
+    }
 }

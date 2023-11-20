@@ -13,11 +13,54 @@
             </ol>
         </nav>
     </div>
+    <div class="panel w-100 shadow-sm mb-3">
+        <div class="isi">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 row gx-2">
+                    <div class="col-4">
+                        <div class="form-group w-100">
+                            <label for="service-unit-option" class="form-label d-none">Satuan Pelayanan</label>
+                            <select class="select2 form-control" name="service-unit-option" id="service-unit-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Satuan Pelayanan</option>
+                                @foreach ($service_units as $service_unit)
+                                    <option value="{{ $service_unit->id }}">{{ $service_unit->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group w-100">
+                            <label for="resort-option" class="form-label d-none">Resort</label>
+                            <select class="select2 form-control" name="resort-option" id="resort-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Resort</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group w-100">
+                            <label for="location-type-option" class="form-label d-none">Lokasi</label>
+                            <select class="select2 form-control" name="location-type-option" id="location-type-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Lokasi</option>
+                                <option value="0">Jalan Rel</option>
+                                <option value="1">Jembatan</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel">
         <div class="title">
             <p>Data Daerah Rawan Bencana</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('illegal-building.add') }}">Tambah
+                <a class="btn-utama sml rnd me-2" href="{{ route('disaster-area.add') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
             </div>
@@ -25,105 +68,108 @@
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                    <tr>
-                        <th class="text-center middle-header" width="5%" rowspan="2">#</th>
-                        <th class="text-center middle-header" width="10%" rowspan="2">Perlintasan</th>
-                        <th class="text-center middle-header" width="10%" rowspan="2">Antara</th>
-                        <th class="text-center middle-header" rowspan="2">KM/HM</th>
-                        <th class="text-center middle-header" width="12%" rowspan="2">Kecamatan</th>
-                        <th class="text-center middle-header" colspan="2">Luas</th>
-                        <th class="text-center middle-header" width="10%" rowspan="2">Jumlah Bangli</th>
-                        <th class="text-center middle-header" width="15%" rowspan="2">Aksi</th>
-                    </tr>
-                    <tr>
-                        <th class="text-center middle-header" width="8%">Tanah (m2)</th>
-                        <th class="text-center middle-header" width="8%">Bangunan (m2)</th>
-                    </tr>
+                <tr>
+                    <th width="5%" class="text-center">#</th>
+                    <th width="15%" class="text-center">Satuan Pelayanan</th>
+                    <th width="10%" class="text-center">Lokasi</th>
+                    <th width="15%" class="text-center">Resort</th>
+                    <th width="10%" class="text-center">Petak</th>
+                    <th class="text-center">Jenis Rawan</th>
+                    <th width="15%" class="text-center">Aksi</th>
+                </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Bangunan Liar</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Daerah Rawan Bencana</p>
                     <hr>
                     <div class="row mb-3">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group w-100">
-                                <label for="track" class="form-label">Perlintasan</label>
-                                <input type="text" class="form-control" id="track" name="track" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="sub_track" class="form-label">Lintas Antara</label>
-                                <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
+                                <label for="service_unit" class="form-label">Satuan Pelayanan</label>
+                                <input type="text" class="form-control" name="service_unit" id="service_unit" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="city" class="form-label">Kota / Kabupaten</label>
-                                <input type="text" class="form-control" id="city" name="city" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="district" class="form-label">Kecamatan</label>
-                                <input type="text" class="form-control" id="district" name="district" disabled>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="stakes" class="form-label">KM/HM</label>
-                                <input type="text" class="form-control" id="stakes" name="stakes" disabled>
+                                <label for="resort" class="form-label">Resort</label>
+                                <input type="text" class="form-control" name="resort" id="resort" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="surface_area" class="form-label">Luas Tanah (m2)</label>
-                                <input type="number" step="any" class="form-control" id="surface_area"
-                                    name="surface_area" disabled>
+                                <label for="sub_track" class="form-label">Petak</label>
+                                <input type="text" class="form-control" name="sub_track" id="sub_track" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="building_area" class="form-label">Luas Bangunan (m2)</label>
-                                <input type="number" step="any" class="form-control" id="building_area"
-                                    name="building_area" disabled>
+                                <label for="location_type" class="form-label">Lokasi</label>
+                                <input type="text" class="form-control" name="location_type" id="location_type" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="distance_from_rail" class="form-label">Jarak Dari AS Rel</label>
-                                <input type="number" step="any" class="form-control" id="distance_from_rail"
-                                    name="distance_from_rail" disabled>
+                                <label for="disaster_type" class="form-label">Jenis Rawan</label>
+                                <input type="text" class="form-control" name="disaster_type" id="disaster_type" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="illegal_building" class="form-label">Jumlah Bangunan Liar</label>
-                                <input type="number" step="any" class="form-control" id="illegal_building"
-                                    name="illegal_building" disabled>
+                                <label for="block" class="form-label">KM</label>
+                                <input type="text" step="any" class="form-control" id="block"
+                                       name="block"
+                                       placeholder="KM" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="demolished" class="form-label">Sudah Dibongkar</label>
-                                <input type="number" step="any" class="form-control" id="demolished"
-                                    name="demolished" disabled>
+                                <label for="lane" class="form-label">Jalur</label>
+                                <input type="text" step="any" class="form-control" id="lane"
+                                       name="lane"
+                                       placeholder="Jalur" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="latitude" class="form-label">Latitude</label>
+                                <input type="number" step="any" class="form-control" id="latitude" name="latitude"
+                                       placeholder="Contoh: 7.1129489" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="longitude" class="form-label">Longitude</label>
+                                <input type="number" step="any" class="form-control" id="longitude" name="longitude"
+                                       placeholder="Contoh: 110.1129489" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="handling" class="form-label">Penanganan</label>
+                                <textarea rows="3" class="form-control" id="handling" name="handling" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="description" class="form-label">Keterangan</label>
+                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -134,19 +180,21 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let path = '{{ route('illegal-building') }}';
+        let path = '{{ route('disaster-area') }}';
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function(e) {
+            $('.btn-delete').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -169,7 +217,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function() {
+            AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
@@ -177,7 +225,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function(e) {
+            $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -189,33 +237,80 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
+                let serviceUnit = data['resort']['service_unit']['name'];
+                let resort = data['resort']['name'];
                 let subTrack = data['sub_track']['code'];
-                let track = data['sub_track']['track']['code'];
-                let district = data['district']['name'];
-                let city = data['district']['city']['name'];
-                let stakes = data['stakes'];
-                let surfaceArea = data['surface_area'];
-                let buildingArea = data['building_area'];
-                let distanceFromRail = data['distance_from_rail'];
-                let illegalBuilding = data['illegal_building'];
-                let demolished = data['demolished'];
+                let locationType = data['location_type'];
+                let disasterType = data['disaster_type']['name'];
+                let block = data['block'];
+                let lane = data['lane'];
+                let latitude = data['latitude'];
+                let longitude = data['longitude'];
+                let handling = data['handling'];
+                let description = data['description'];
+                let locationTypeValue = '-';
+                switch (locationType) {
+                    case 0:
+                        locationTypeValue = 'Jalan Rel';
+                        break;
+                    case 1:
+                        locationTypeValue = 'Jembatan';
+                        break;
+                    default:
+                        break;
+                }
+                $('#service_unit').val(serviceUnit);
+                $('#resort').val(resort);
                 $('#sub_track').val(subTrack);
-                $('#track').val(track);
-                $('#district').val(district);
-                $('#city').val(city);
-                $('#stakes').val(stakes);
-                $('#surface_area').val(surfaceArea);
-                $('#building_area').val(buildingArea);
-                $('#distance_from_rail').val(distanceFromRail);
-                $('#illegal_building').val(illegalBuilding);
-                $('#demolished').val(demolished);
+                $('#location_type').val(locationTypeValue);
+                $('#disaster_type').val(disasterType);
+                $('#lane').val(lane);
+                $('#block').val(block);
+                $('#latitude').val(latitude);
+                $('#longitude').val(longitude);
+                $('#handling').val(handling);
+                $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
             }
         }
 
-        $(document).ready(function() {
+        function getDataResort() {
+            let serviceUnitID = $('#service-unit-option').val();
+            let resortPath = '{{ route('resort') }}';
+            let url = resortPath + '/service-unit?service_unit=' + serviceUnitID;
+            return $.get(url)
+        }
+
+        function generateResortOption() {
+            let el = $('#resort-option');
+            el.empty();
+            let elOption = '<option value="">Semua Resort</option>';
+            getDataResort().then((response) => {
+                const data = response['data'];
+                $.each(data, function (k, v) {
+                    elOption += '<option value="' + v['id'] + '">' + v['name'] + '</option>';
+                });
+            }).catch((e) => {
+                alert('terjadi kesalahan server...')
+            }).always(() => {
+                el.append(elOption);
+                $('.select2').select2({
+                    width: 'resolve',
+                });
+            })
+        }
+
+        $(document).ready(function () {
+            $('.select2').select2({
+                width: 'resolve',
+            });
+
+            generateResortOption();
+            $('#service-unit-option').on('change', function () {
+                generateResortOption();
+            });
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -227,67 +322,70 @@
                     url: path,
                 },
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        searchable: false,
-                        orderable: false,
-                        className: 'text-center',
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false,
+                    className: 'text-center middle-header',
+                },
+                    {
+                        data: 'resort.service_unit.name',
+                        name: 'resort.service_unit.name',
+                        className: 'text-center middle-header',
                     },
                     {
-                        data: 'sub_track.track.code',
-                        name: 'sub_track.track.code',
-                        className: 'text-center',
+                        data: 'location_type',
+                        name: 'location_type',
+                        className: 'text-center middle-header',
+                        render: function (data) {
+                            let value = '-';
+                            switch (data) {
+                                case 0:
+                                    value = 'Jalan Rel';
+                                    break;
+                                case 1:
+                                    value = 'Jembatan';
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return value;
+                        }
+                    },
+                    {
+                        data: 'resort.name',
+                        name: 'resort.name',
+                        className: 'text-center middle-header',
                     },
                     {
                         data: 'sub_track.code',
                         name: 'sub_track.code',
-                        className: 'text-center',
+                        className: 'text-center middle-header',
                     },
                     {
-                        data: 'stakes',
-                        name: 'stakes',
-                        className: 'text-center',
-                    },
-                    {
-                        data: 'district.name',
-                        name: 'district.name',
-                        className: 'text-center',
-                    },
-                    {
-                        data: 'surface_area',
-                        name: 'surface_area',
-                        className: 'text-center',
-                    },
-                    {
-                        data: 'building_area',
-                        name: 'building_area',
-                        className: 'text-center',
-                    },
-                    {
-                        data: 'illegal_building',
-                        name: 'illegal_building',
-                        className: 'text-center',
+                        data: 'disaster_type.name',
+                        name: 'disaster_type.name',
+                        className: 'text-center middle-header',
                     },
                     {
                         data: null,
-                        render: function(data) {
+                        render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
-                                data['id'] + '">Detail</a>' +
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
+                                    'id'] + '">Detail</a>' +
                                 '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                    'id'] +
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
                                 '">Delete</a>';
                         },
                         orderable: false,
-                        className: 'text-center',
+                        className: 'text-center middle-header',
                     }
                 ],
                 columnDefs: [],
                 paging: true,
-                "fnDrawCallback": function(setting) {
+                "fnDrawCallback": function (setting) {
                     eventOpenDetail();
                     deleteEvent();
                 },

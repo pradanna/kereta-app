@@ -18,6 +18,7 @@ class CreateDisasterAreas extends Migration
             $table->foreignUuid('resort_id');
             $table->foreignUuid('sub_track_id');
             $table->foreignUuid('disaster_type_id');
+            $table->smallInteger('location_type')->default(0)->comment('0: Jalan Rel, 1: Jembatan');
             $table->string('block');
             $table->double('latitude')->default(0);
             $table->double('longitude')->default(0);

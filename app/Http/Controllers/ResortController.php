@@ -73,4 +73,19 @@ class ResortController extends CustomController
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
     }
+
+    public function getResortsByServiceUnit()
+    {
+        try {
+            $service_unit = $this->request->query->get('service_unit');
+            $query = Resort::with([]);
+            if ($service_unit !== '') {
+                $query->where('service_unit_id', '=', $service_unit);
+            }
+            $data = $query->orderBy('created_at', 'ASC')->get();
+            return $this->jsonSuccessResponse('success', $data);
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
 }
