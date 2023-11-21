@@ -320,6 +320,11 @@
                 ajax: {
                     type: 'GET',
                     url: path,
+                    'data': function (d) {
+                        d.service_unit = $('#service-unit-option').val();
+                        d.resort = $('#resort-option').val();
+                        d.location_type = $('#location-type-option').val();
+                    }
                 },
                 columns: [{
                     data: 'DT_RowIndex',
@@ -390,6 +395,11 @@
                     deleteEvent();
                 },
             })
+
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
         })
     </script>
 @endsection
