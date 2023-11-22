@@ -76,6 +76,12 @@ return [
             'url' => env('APP_URL') . '/public',
             'visibility' => 'public',
         ],
+        'service-unit' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/service-unit',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
 
     ],
 

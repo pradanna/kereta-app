@@ -32,6 +32,9 @@ Route::group(['prefix' => 'satuan-pelayanan'], function () {
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\ServiceUnitController::class, 'patch'])->name('service-unit.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\ServiceUnitController::class, 'destroy'])->name('service-unit.destroy');
+    Route::match(['post', 'get'],'/{id}/gambar', [\App\Http\Controllers\ServiceUnitController::class, 'image_page'])->name('service-unit.image');
+    Route::get('/{id}/sertifikasi-sarana', [\App\Http\Controllers\ServiceUnitController::class, 'facility_certification_page'])->name('service-unit.facility-certification');
+    Route::get('/{id}/sertifikasi-sarana/{slug}', [\App\Http\Controllers\ServiceUnitController::class, 'facility_certification_page_by_slug'])->name('service-unit.facility-certification.by.slug');
 });
 
 Route::group(['prefix' => 'daerah-operasi'], function () {

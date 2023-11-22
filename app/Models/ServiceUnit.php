@@ -40,4 +40,9 @@ class ServiceUnit extends Model
         }
         return $value;
     }
+
+    public function images()
+    {
+        return $this->hasMany(ServiceUnitImage::class, 'service_unit_id');
+    }
 }

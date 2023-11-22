@@ -9,6 +9,7 @@ use App\Models\Area;
 use App\Models\City;
 use App\Models\Storehouse;
 use App\Models\StorehouseType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 
 class StoreHouseController extends CustomController
@@ -150,7 +151,15 @@ class StoreHouseController extends CustomController
     {
         try {
             $area = $this->request->query->get('area');
+            $service_unit = $this->request->query->get('service_unit');
             $query = Storehouse::with(['area', 'storehouse_type']);
+
+            if ($service_unit !== '' && $service_unit !== null) {
+                $query->whereHas('area', function ($qa) use ($service_unit) {
+                    /** @var $qa Builder */
+                    return $qa->where('service_unit_id', '=', $service_unit);
+                });
+            }
             if ($area !== '') {
                 $query->where('area_id', '=', $area);
             }
