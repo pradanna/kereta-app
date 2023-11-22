@@ -37,7 +37,6 @@ function removeMultiMarker() {
 
 function createMultiMarkerServiceUnit(data = []) {
     var bounds = new google.maps.LatLngBounds();
-    var infoWindow;
     data.forEach(function (v, k) {
         let areaMarker = new google.maps.Marker({
             position: new google.maps.LatLng(v['latitude'], v['longitude']),
@@ -46,7 +45,7 @@ function createMultiMarkerServiceUnit(data = []) {
             title: v['name'],
         });
         multi_marker.push(areaMarker);
-        infoWindow = new google.maps.InfoWindow({
+        let infoWindow = new google.maps.InfoWindow({
             content: windowContentServiceUnitMarker(v),
         });
 
@@ -56,10 +55,6 @@ function createMultiMarkerServiceUnit(data = []) {
                 map_container,
                 shouldFocus: false,
             });
-            // google.maps.event.clearListeners(infoWindow, 'domready');
-            // google.maps.event.addListener(infoWindow, 'domready', function() {
-            //     goToPageServiceUnitEvent();
-            // });
         });
 
         bounds.extend(areaMarker.position);
@@ -99,15 +94,15 @@ function windowContentServiceUnitMarker(data) {
     return '<div class="p-1" style="width: 200px;">' +
         '<p class="mb-5 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['name'] + '</p>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" class="d-flex align-items-center btn-facility" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToFacilityPage(this)" class="d-flex align-items-center btn-facility" data-id="'+data['id']+'" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">card_membership</span>' +
         '<span style="color: #777777; font-size: 12px;">Sertifikasi Sarana</span>' +
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" onclick="goToServiceUnitFacilityPage(this)" class="d-flex align-items-center btn-direct-passage" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#"  class="d-flex align-items-center btn-direct-passage" data-id="'+data['id']+'" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">timeline</span>' +
-        '<span style="color: #777777; font-size: 12px;">Jalur Perlintasn Langsung</span>' +
+        '<span style="color: #777777; font-size: 12px;">Jalur Perlintasan Langsung</span>' +
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
@@ -120,8 +115,8 @@ function windowContentServiceUnitMarker(data) {
         '</div>';
 }
 
-async function goToServiceUnitFacilityPage(element) {
-    event.preventDefault()
+async function goToFacilityPage(element) {
+    event.preventDefault();
     let id = element.dataset.id;
     const url = path + '/' + id + '/sertifikasi-sarana';
     window.open(url, '_blank');
