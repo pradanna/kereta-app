@@ -9,6 +9,7 @@ use App\Models\DisasterArea;
 use App\Models\DisasterType;
 use App\Models\ServiceUnit;
 use Illuminate\Database\Eloquent\Builder;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DisasterAreaController extends CustomController
 {
@@ -138,5 +139,15 @@ class DisasterAreaController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel()
+    {
+        $fileName = 'daerah_rawan_bencana_' . date('YmdHis') . '.xlsx';
+        $data = $this->generateData();
+        return Excel::download(
+            new \App\Exports\DisasterArea($data),
+            $fileName
+        );
     }
 }

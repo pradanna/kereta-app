@@ -20,13 +20,13 @@
     @endif
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="page-title-container">
-            <h1 class="h1">MASTER LINTAS ANTARA</h1>
-            <p class="mb-0">Manajemen Edit Data Master Lintas Antara</p>
+            <h1 class="h1">MASTER PETAK</h1>
+            <p class="mb-0">Manajemen Tambah Data Master Petak</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('sub-track') }}">Lintas Antara</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('sub-track') }}">Petak</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
@@ -60,9 +60,9 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama Lintas Antara</label>
+                            <label for="name" class="form-label">Nama Petak</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Lintas Antara" value="{{ $data->name }}">
+                                   placeholder="Nama Petak" value="{{ $data->name }}">
                         </div>
                     </div>
                 </div>

@@ -11,6 +11,7 @@ use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
 use App\Models\LocomotiveType;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FacilityLocomotiveController extends CustomController
@@ -22,11 +23,19 @@ class FacilityLocomotiveController extends CustomController
 
     private function generateData()
     {
+        $service_unit = $this->request->query->get('service_unit');
         $area = $this->request->query->get('area');
         $storehouse = $this->request->query->get('storehouse');
         $name = $this->request->query->get('name');
         $status = $this->request->query->get('status');
         $query = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type']);
+
+        if ($service_unit !== '' && $service_unit !== null) {
+            $query->whereHas('area', function ($ql) use ($service_unit){
+                /** @var $ql Builder */
+                return $ql->where('service_unit_id', '=', $service_unit);
+            });
+        }
 
         if ($area !== '') {
             $query->where('area_id', '=', $area);

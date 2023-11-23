@@ -8,6 +8,7 @@ use App\Helper\CustomController;
 use App\Models\Area;
 use App\Models\FacilityTrain;
 use App\Models\Track;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TrackController extends CustomController
@@ -124,8 +125,16 @@ class TrackController extends CustomController
     public function getDataByArea()
     {
         try {
+            $service_unit = $this->request->query->get('service_unit');
             $area = $this->request->query->get('area');
             $query = Track::with(['area']);
+
+            if ($service_unit !== '' && $service_unit !== null) {
+                $query->whereHas('area', function ($qa) use ($service_unit) {
+                    /** @var $qa Builder */
+                    return $qa->where('service_unit_id', '=', $service_unit);
+                });
+            }
             if ($area !== '') {
                 $query->where('area_id', '=', $area);
             }

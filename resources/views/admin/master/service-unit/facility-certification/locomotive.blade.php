@@ -199,6 +199,7 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
+        let serviceUnitID = '{{ $data->id }}';
         let areaPath = '{{ route('area') }}';
         let facilityPath = '{{ route('facility-certification-locomotive') }}';
         let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
@@ -243,6 +244,7 @@
                     type: 'GET',
                     url: facilityPath,
                     'data': function (d) {
+                        d.service_unit = serviceUnitID;
                         d.area = $('#area-option').val();
                         d.name = $('#name').val();
                         d.storehouse = $('#storehouse-option').val();

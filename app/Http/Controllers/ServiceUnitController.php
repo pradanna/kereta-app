@@ -14,6 +14,7 @@ use App\Models\FacilitySpecialEquipment;
 use App\Models\FacilityTrain;
 use App\Models\FacilityType;
 use App\Models\FacilityWagon;
+use App\Models\Resort;
 use App\Models\ServiceUnit;
 use App\Models\ServiceUnitImage;
 use App\Models\TechnicalSpecLocomotive;
@@ -200,6 +201,26 @@ class ServiceUnitController extends CustomController
                 return redirect()->back();
         }
     }
+
+    public function direct_passage_page($id) {
+        $data = ServiceUnit::with(['images'])->findOrFail($id);
+        $areas = Area::with(['service_unit'])->where('service_unit_id', '=', $id)->get();
+        return view('admin.master.service-unit.direct-passage.index')->with([
+            'data' => $data,
+            'areas' => $areas,
+        ]);
+    }
+
+    public function disaster_area_page($id)
+    {
+        $data = ServiceUnit::with(['images'])->findOrFail($id);
+        $resorts = Resort::with(['service_unit'])->where('service_unit_id', '=', $id)->get();
+        return view('admin.master.service-unit.disaster-area.index')->with([
+            'data' => $data,
+            'resorts' => $resorts,
+        ]);
+    }
+
     private function generateTotalFacilityData($id)
     {
         $areas = Area::with(['service_unit'])->where('service_unit_id', '=', $id)->get();

@@ -60,9 +60,9 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama Lintas Antara</label>
+                            <label for="name" class="form-label">Nama Petak</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Lintas Antara">
+                                   placeholder="Nama Petak">
                         </div>
                     </div>
                 </div>

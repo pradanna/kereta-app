@@ -1,15 +1,16 @@
-@extends('admin/base')
+@extends('admin.base')
 
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">DAERAH RAWAN BENCANA</h1>
-            <p class="mb-0">Manajemen Data Daerah Rawan Bencana</p>
+            <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
+            <p class="mb-0">Manajemen Data Master Satuan Pelayanan</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Daerah Rawan Bencana</li>
+                <li class="breadcrumb-item"><a href="{{ route('service-unit') }}">Satuan Pelayanan</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Daerah Rawan Bencana {{ $data->name }}</li>
             </ol>
         </nav>
     </div>
@@ -17,28 +18,19 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-4">
-                        <div class="form-group w-100">
-                            <label for="service-unit-option" class="form-label d-none">Satuan Pelayanan</label>
-                            <select class="select2 form-control" name="service-unit-option" id="service-unit-option"
-                                    style="width: 100%;">
-                                <option value="">Semua Satuan Pelayanan</option>
-                                @foreach ($service_units as $service_unit)
-                                    <option value="{{ $service_unit->id }}">{{ $service_unit->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="form-group w-100">
                             <label for="resort-option" class="form-label d-none">Resort</label>
                             <select class="select2 form-control" name="resort-option" id="resort-option"
                                     style="width: 100%;">
                                 <option value="">Semua Resort</option>
+                                @foreach ($resorts as $resort)
+                                    <option value="{{ $resort->id }}">{{ $resort->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="form-group w-100">
                             <label for="location-type-option" class="form-label d-none">Lokasi</label>
                             <select class="select2 form-control" name="location-type-option" id="location-type-option"
@@ -60,9 +52,6 @@
         <div class="title">
             <p>Data Daerah Rawan Bencana</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('disaster-area.add') }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
                 <a class="btn-success sml rnd" href="#" id="btn-export"
                    target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
@@ -79,7 +68,7 @@
                     <th width="15%" class="text-center">Resort</th>
                     <th width="10%" class="text-center">Petak</th>
                     <th class="text-center">Jenis Rawan</th>
-                    <th width="15%" class="text-center">Aksi</th>
+                    <th width="5%" class="text-center">Aksi</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -190,43 +179,14 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let path = '{{ route('disaster-area') }}';
+        let serviceUnitID = '{{ $data->id }}';
+        let disasterAreaPath = '{{ route('disaster-area') }}';
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
-
-        function deleteEvent() {
-            $('.btn-delete').on('click', function (e) {
-                e.preventDefault();
-                let id = this.dataset.id;
-                Swal.fire({
-                    title: "Konfirmasi!",
-                    text: "Apakah anda yakin menghapus data?",
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya',
-                    cancelButtonText: 'Batal',
-                }).then((result) => {
-                    if (result.value) {
-                        destroy(id);
-                    }
-                });
-
-            })
-        }
-
-        function destroy(id) {
-            let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
-                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
-                    table.ajax.reload();
-                });
-            });
-        }
 
         function eventOpenDetail() {
             $('.btn-detail').on('click', function (e) {
@@ -238,7 +198,7 @@
 
         async function detailHandler(id) {
             try {
-                let url = path + '/' + id + '/detail';
+                let url = disasterAreaPath + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
                 let serviceUnit = data['resort']['service_unit']['name'];
@@ -280,41 +240,11 @@
             }
         }
 
-        function getDataResort() {
-            let serviceUnitID = $('#service-unit-option').val();
-            let resortPath = '{{ route('resort') }}';
-            let url = resortPath + '/service-unit?service_unit=' + serviceUnitID;
-            return $.get(url)
-        }
-
-        function generateResortOption() {
-            let el = $('#resort-option');
-            el.empty();
-            let elOption = '<option value="">Semua Resort</option>';
-            getDataResort().then((response) => {
-                const data = response['data'];
-                $.each(data, function (k, v) {
-                    elOption += '<option value="' + v['id'] + '">' + v['name'] + '</option>';
-                });
-            }).catch((e) => {
-                alert('terjadi kesalahan server...')
-            }).always(() => {
-                el.append(elOption);
-                $('.select2').select2({
-                    width: 'resolve',
-                });
-            })
-        }
-
         $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
             });
 
-            generateResortOption();
-            $('#service-unit-option').on('change', function () {
-                generateResortOption();
-            });
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -323,9 +253,9 @@
                 responsive: true,
                 ajax: {
                     type: 'GET',
-                    url: path,
+                    url: disasterAreaPath,
                     'data': function (d) {
-                        d.service_unit = $('#service-unit-option').val();
+                        d.service_unit = serviceUnitID;
                         d.resort = $('#resort-option').val();
                         d.location_type = $('#location-type-option').val();
                     }
@@ -379,14 +309,7 @@
                     {
                         data: null,
                         render: function (data) {
-                            let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
-                                    'id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
-                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>';
                         },
                         orderable: false,
                         className: 'text-center middle-header',
@@ -396,7 +319,6 @@
                 paging: true,
                 "fnDrawCallback": function (setting) {
                     eventOpenDetail();
-                    deleteEvent();
                 },
                 dom: 'ltrip'
             });
@@ -408,13 +330,12 @@
 
             $('#btn-export').on('click', function (e) {
                 e.preventDefault();
-                let serviceUnit = $('#service-unit-option').val();
                 let resort = $('#resort-option').val();
                 let locationType = $('#location-type-option').val();
-                let queryParam = '?service_unit=' + serviceUnit + '&resort=' + resort + '&location_type=' + locationType;
+                let queryParam = '?service_unit=' + serviceUnitID + '&resort=' + resort + '&location_type=' + locationType;
                 let exportPath = '{{ route('disaster-area.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });
-        })
+        });
     </script>
 @endsection

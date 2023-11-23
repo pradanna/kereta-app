@@ -92,7 +92,7 @@ function createMultiMarkerArea(data = []) {
 
 function windowContentServiceUnitMarker(data) {
     return '<div class="p-1" style="width: 200px;">' +
-        '<p class="mb-5 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['name'] + '</p>' +
+        '<p class="mb-3 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['name'] + '</p>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
         '<a href="#" onclick="goToFacilityPage(this)" class="d-flex align-items-center btn-facility" data-id="'+data['id']+'" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">card_membership</span>' +
@@ -100,13 +100,13 @@ function windowContentServiceUnitMarker(data) {
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#"  class="d-flex align-items-center btn-direct-passage" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToDirectPassagePage(this)" class="d-flex align-items-center btn-direct-passage" data-id="'+data['id']+'" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">timeline</span>' +
         '<span style="color: #777777; font-size: 12px;">Jalur Perlintasan Langsung</span>' +
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" class="d-flex align-items-center btn-disaster" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToDisasterAreaPage(this)" class="d-flex align-items-center btn-disaster" data-id="'+data['id']+'" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">flood</span>' +
         '<span style="color: #777777; font-size: 12px;">Daerah Rawan Bencana</span>' +
         '</a>' +
@@ -121,27 +121,19 @@ async function goToFacilityPage(element) {
     const url = path + '/' + id + '/sertifikasi-sarana';
     window.open(url, '_blank');
 }
-function goToPageServiceUnitEvent() {
-    $('.btn-facility').on('click', function (e) {
-        e.preventDefault();
-        let id = this.dataset.id;
-        const url = path + '/' + id + '/sertifikasi-sarana';
-        window.open(url, '_blank');
-    });
 
-    $('.btn-direct-passage').on('click', function (e) {
-        e.preventDefault();
-        let id = this.dataset.id;
-        const url = path + '/' + id + '/jalur-perlintasan-langsung';
-        window.open(url, '_blank');
-    });
+async function goToDirectPassagePage(element) {
+    event.preventDefault();
+    let id = element.dataset.id;
+    const url = path + '/' + id + '/jalur-perlintasan-langsung';
+    window.open(url, '_blank');
+}
 
-    $('.btn-disaster').on('click', function (e) {
-        e.preventDefault();
-        let id = this.dataset.id;
-        const url = path + '/' + id + '/daerah-rawan-bencana';
-        window.open(url, '_blank');
-    });
+async function goToDisasterAreaPage(element) {
+    event.preventDefault();
+    let id = element.dataset.id;
+    const url = path + '/' + id + '/daerah-rawan-bencana';
+    window.open(url, '_blank');
 }
 
 function windowContentAreaMarker(data) {
