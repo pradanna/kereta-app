@@ -131,6 +131,16 @@ class ServiceUnitController extends CustomController
         ]);
     }
 
+    public function destroy_image($id)
+    {
+        try {
+            ServiceUnitImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
     public function facility_certification_page($id)
     {
         $data = ServiceUnit::with(['images'])->findOrFail($id);

@@ -10,27 +10,29 @@
     </div>
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
-            <p class="mb-0">Manajemen Data Gambar Master Satuan Pelayanan</p>
+            <h1 class="h1">MASTER DEPO DAN BALAI YASA</h1>
+            <p class="mb-0">Manajemen Data Master Depo Dan Balai Yasa</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Satuan Pelayanan</li>
+                <li class="breadcrumb-item"><a href="{{ route('storehouse') }}">Depo Dan Balai Yasa</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $data->name }}
+                    ({{ $data->storehouse_type->name }})
+                </li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Data Satuan Pelayanan</p>
+            <p>Gambar Depo Dan Balai Yasa {{ $data->name }} ({{ $data->storehouse_type->name }})</p>
         </div>
         <div class="isi">
 
             <div class="d-flex flex-wrap justify-content-center gx-3">
                 @forelse($data->images as $image)
                     <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3">
-                        <img src="{{ asset($image->image) }}" height="200" width="200" style="object-fit: cover;"
-                             alt="img-service-unit">
+                        <img src="{{ asset($image->image) }}" alt="storehouse-image" height="200" width="200" style="object-fit: cover;">
                         <a href="#" class="btn-drop-image btn-table-action" data-id="{{ $image->id }}">Hapus</a>
                     </div>
                 @empty
@@ -109,13 +111,14 @@
         }
 
         function destroy(id) {
-            let url = '{{ route('service-unit') }}' + '/' + id + '/delete-image';
+            let url = '{{ route('storehouse') }}' + '/' + id + '/delete-image';
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     window.location.reload();
                 });
             });
         }
+
         $(document).ready(function () {
             $("#document-dropzone").dropzone({
                 url: path,

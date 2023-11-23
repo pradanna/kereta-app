@@ -38,4 +38,9 @@ class Storehouse extends Model
     {
         return $this->belongsTo(City::class, 'city_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(StorehouseImage::class, 'storehouse_id');
+    }
 }

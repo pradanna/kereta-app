@@ -95,7 +95,44 @@
                         <p class="keterangan">dari semua wilayah</p>
                     </div>
                 </div>
-
+                <p class="mb-1 mt-3 fw-bold" style="color: #777777;">Peta Satuan Pelayanan</p>
+                <div class="row gx-3">
+                    <div class="col-8">
+                        <div id="main-map" class="panel"
+                             style="margin-bottom: 0; width: 100%; height: 500px; border-radius: 10px;">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="panel" style="margin-bottom: 10px;">
+                            <div class="title">
+                                <p class="fw-bold">Masa Berlaku Sarana Akan Habis</p>
+                                <a class="btn-detail btn-table-action" href="{{ route('summary-facility') }}">Detail</a>
+                            </div>
+                            <div class="isi">
+                                @foreach($facility_expirations as $facility_expiration)
+                                    <div class="d-flex justify-content-between align-items-center mb-0">
+                                        <p class="fw-bold">{{ $facility_expiration['type'] }}</p>
+                                        <p class="fw-bold">{{ $facility_expiration['value'] }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <div class="title">
+                                <p class="fw-bold">Daerah Rawan Bencana</p>
+                                <a class="btn-detail btn-table-action" href="{{ route('disaster-area') }}">Detail</a>
+                            </div>
+                            <div class="isi">
+                                @foreach($service_units as $service_unit)
+                                    <div class="d-flex justify-content-between align-items-center mb-0">
+                                        <p class="fw-bold">{{ $service_unit->name }}</p>
+                                        <p class="fw-bold">0</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="table-container mt-5" style="min-height: 500px">
                     <table id="table-data" class="display table table-striped w-100">
                         <thead>
@@ -130,12 +167,34 @@
     <!-- Modal -->
 @endsection
 
+@section('css')
+    <script src="{{ asset('js/map-control.js') }}"></script>
+@endsection
 @section('js')
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        async></script>
     <script>
-        let path = '{{ route('dashboard') }}';
+        let currentPath = '{{ route('dashboard') }}';
+        let path = '{{ route('service-unit') }}';
+        function getDataServiceUnitMap() {
+            let url = path + '?type=map';
+            return $.get(url)
+        }
+
+        function generateMapServiceUnit() {
+            getDataServiceUnitMap().then((response) => {
+                removeMultiMarker();
+                let data = response.data;
+                if (data.length > 0) {
+                    createMultiMarkerServiceUnit(data)
+                }
+            }).catch((e) => {
+                console.log(e)
+            })
+        }
         $(document).ready(function () {
-
-
+            generateMapServiceUnit()
         });
     </script>
 @endsection

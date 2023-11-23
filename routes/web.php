@@ -37,6 +37,7 @@ Route::group(['prefix' => 'satuan-pelayanan'], function () {
     Route::get('/{id}/sertifikasi-sarana/{slug}', [\App\Http\Controllers\ServiceUnitController::class, 'facility_certification_page_by_slug'])->name('service-unit.facility-certification.by.slug');
     Route::get('/{id}/jalur-perlintasan-langsung', [\App\Http\Controllers\ServiceUnitController::class, 'direct_passage_page'])->name('service-unit.direct-passage');
     Route::get('/{id}/daerah-rawan-bencana', [\App\Http\Controllers\ServiceUnitController::class, 'disaster_area_page'])->name('service-unit.disaster-area');
+    Route::post('/{id}/delete-image', [\App\Http\Controllers\ServiceUnitController::class, 'destroy_image'])->name('service-unit.image.destroy');
 });
 
 Route::group(['prefix' => 'daerah-operasi'], function () {
@@ -53,6 +54,8 @@ Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\StoreHouseController::class, 'patch'])->name('storehouse.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\StoreHouseController::class, 'destroy'])->name('storehouse.destroy');
     Route::get('/area', [\App\Http\Controllers\StoreHouseController::class, 'getDataByArea'])->name('storehouse.by.area');
+    Route::match(['post', 'get'],'/{id}/gambar', [\App\Http\Controllers\StoreHouseController::class, 'image_page'])->name('storehouse.image');
+    Route::post('/{id}/delete-image', [\App\Http\Controllers\StoreHouseController::class, 'destroy_image'])->name('storehouse.image.destroy');
 });
 
 Route::group(['prefix' => 'kecamatan'], function () {
