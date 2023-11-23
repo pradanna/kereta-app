@@ -82,6 +82,12 @@ return [
             'url' => env('APP_URL') . '/public',
             'visibility' => 'public',
         ],
+        'storehouse' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/storehouse',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
 
     ],
 
