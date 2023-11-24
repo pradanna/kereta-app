@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Models\Area;
 use App\Models\City;
 use App\Models\DirectPassage;
 use App\Models\DirectPassageSignEquipment;
 use App\Models\District;
 use App\Models\IllegalBuilding;
 use App\Models\SubTrack;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -21,13 +23,56 @@ class IllegalBuildingController extends CustomController
         parent::__construct();
     }
 
+    private function generateData() {
+        $service_unit = $this->request->query->get('service_unit');
+        $area = $this->request->query->get('area');
+        $track = $this->request->query->get('track');
+
+        $query = IllegalBuilding::with(['sub_track.track.area', 'district.city']);
+
+        if ($service_unit !== '' && $service_unit !== null) {
+            $query->whereHas('sub_track', function ($qst) use ($service_unit){
+                /** @var $qst Builder */
+                return $qst->whereHas('track', function ($qt) use ($service_unit){
+                    /** @var $qt Builder */
+                    return $qt->whereHas('area', function ($qa) use ($service_unit){
+                        /** @var $qa Builder */
+                        return $qa->where('service_unit_id', '=', $service_unit);
+                    });
+                });
+            });
+        }
+
+        if ($area !== '') {
+            $query->whereHas('sub_track', function ($qsta) use ($area){
+                /** @var $qsta Builder */
+                return $qsta->whereHas('track', function ($qta) use ($area){
+                    /** @var $qta Builder */
+                    return $qta->where('area_id', '=', $area);
+                });
+            });
+        }
+
+        if ($track !== '') {
+            $query->whereHas('sub_track', function ($qstt) use ($track){
+                /** @var $qstt Builder */
+                return $qstt->where('track_id', '=', $track);
+            });
+
+        }
+
+        return $query->orderBy('created_at', 'ASC')->get();
+    }
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = IllegalBuilding::with(['sub_track.track.area', 'district.city'])->orderBy('created_at', 'ASC')->get();
+            $data = $this->generateData();
             return $this->basicDataTables($data);
         }
-        return view('admin.illegal-building.index');
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.illegal-building.index')->with([
+            'areas' => $areas,
+        ]);
     }
 
     public function store()
@@ -51,11 +96,12 @@ class IllegalBuildingController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
-        $sub_tracks = SubTrack::all();
-        $districts = District::all();
+        $sub_tracks = SubTrack::with(['track.area'])->orderBy('code', 'ASC')->get();
+        $districts = District::with([])->orderBy('name', 'ASC')->get();
+
         return view('admin.illegal-building.add')->with([
             'sub_tracks' => $sub_tracks,
-            'districts' => $districts
+            'districts' => $districts,
         ]);
     }
 
@@ -114,9 +160,9 @@ class IllegalBuildingController extends CustomController
     public function export_to_excel()
     {
         $fileName = 'bangunan_liar_' . date('YmdHis') . '.xlsx';
-        $illegal_buildings = IllegalBuilding::with(['sub_track.track.area', 'district.city'])->get();
+        $data = $this->generateData();
         return Excel::download(
-            new \App\Exports\IllegalBuilding($illegal_buildings),
+            new \App\Exports\IllegalBuilding($data),
             $fileName
         );
     }

@@ -41,11 +41,11 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
-                            <label for="sub_track" class="form-label">Lintas Antara</label>
+                            <label for="sub_track" class="form-label">Petak</label>
                             <select class="select2 form-control" name="sub_track" id="sub_track"
                                     style="width: 100%;">
                                 @foreach ($sub_tracks as $sub_track)
-                                    <option value="{{ $sub_track->id }}">{{ $sub_track->code }}</option>
+                                    <option value="{{ $sub_track->id }}">{{ $sub_track->code }} ({{ $sub_track->track->code }} {{ $sub_track->track->area->name }})</option>
                                 @endforeach
                             </select>
                         </div>

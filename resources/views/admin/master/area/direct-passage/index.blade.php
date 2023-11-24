@@ -3,13 +3,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
-            <p class="mb-0">Manajemen Data Master Satuan Pelayanan</p>
+            <h1 class="h1">JALUR PERLINTASAN LANGSUNG (JPL) <span class="capitalize">{{ $data->name }}</span></h1>
+            <p class="mb-0">Rekapitulasi Data Jalur Perlintasan Langsung {{ $data->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('service-unit') }}">Satuan Pelayanan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('area') }}">Daerah Operasi</a></li>
                 <li class="breadcrumb-item active" aria-current="page">JPL {{ $data->name }}</li>
             </ol>
         </nav>
@@ -50,24 +50,27 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
-                                <option value="">Semua Daerah Operasi</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-6">
+                    {{--                    <div class="col-6">--}}
+                    {{--                        <div class="form-group w-100">--}}
+                    {{--                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>--}}
+                    {{--                            <select class="select2 form-control" name="area-option" id="area-option"--}}
+                    {{--                                    style="width: 100%;">--}}
+                    {{--                                <option value="">Semua Daerah Operasi</option>--}}
+                    {{--                                @foreach ($areas as $area)--}}
+                    {{--                                    <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
+                    {{--                                @endforeach--}}
+                    {{--                            </select>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
+                    <div class="col-12">
                         <div class="form-group w-100">
                             <label for="track-option" class="form-label d-none">Perlintasan</label>
                             <select class="select2 form-control" name="track-option" id="track-option"
                                     style="width: 100%;">
                                 <option value="">Semua Perlintasan</option>
+                                @foreach ($tracks as $track)
+                                    <option value="{{ $track->id }}">{{ $track->code }} ({{ $track->name }})</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -78,12 +81,13 @@
             </div>
         </div>
     </div>
+
     <div class="panel">
         <div class="title">
             <p>Data Jalur Perlintasan Langsung (JPL)</p>
             <div class="d-flex align-item-center">
-                <a class="btn-success sml rnd" href="#" id="btn-export">Export Excel
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_copy</i>
+                <a class="btn-success sml rnd" href="#" id="btn-export">Export
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
         </div>
@@ -115,9 +119,17 @@
                         Langsung</p>
                     <hr>
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="sub_track" class="form-label">Lintas Antara</label>
+                                <label for="track" class="form-label">Perlintasan</label>
+                                <input type="text" class="form-control" id="track" name="track"
+                                       placeholder="JPL"
+                                       disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="sub_track" class="form-label">Petak</label>
                                 <input type="text" class="form-control" id="sub_track" name="sub_track"
                                        placeholder="JPL"
                                        disabled>
@@ -268,7 +280,7 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let serviceUnitID = '{{ $data->id }}';
+        let areaID = '{{ $data->id }}';
         let directPassagePath = '{{ route('direct-passage') }}';
         let summaryDirectPassagePath = '{{ route('summary-direct-passage') }}';
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
@@ -327,6 +339,7 @@
                 let url = directPassagePath + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
+                let track = data['sub_track']['track']['code'];
                 let subTrack = data['sub_track']['code'];
                 let name = data['name'];
                 let stakes = data['stakes'];
@@ -339,6 +352,7 @@
                 let longitude = data['longitude'];
                 let accident_history = data['accident_history'];
                 let description = data['description'];
+                $('#track').val(track);
                 $('#sub_track').val(subTrack);
                 $('#name').val(name);
                 $('#stakes').val(stakes);
@@ -371,7 +385,7 @@
                     type: 'GET',
                     url: summaryDirectPassagePath,
                     'data': function (d) {
-                        d.service_unit = serviceUnitID;
+                        d.area = areaID;
                     }
                 },
                 columns: [
@@ -411,14 +425,16 @@
                 }
             });
         }
+
         $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
             });
-            generateDataTrackOption();
-            $('#area-option').on('change', function () {
-                generateDataTrackOption();
-            });
+            // generateDataTrackOption();
+            // $('#area-option').on('change', function () {
+            //     generateDataTrackOption();
+            // });
+            generateSummary();
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -429,8 +445,7 @@
                     type: 'GET',
                     url: directPassagePath,
                     'data': function (d) {
-                        d.service_unit = serviceUnitID;
-                        d.area = $('#area-option').val();
+                        d.area = areaID;
                         d.track = $('#track-option').val();
                     }
                 },
@@ -494,7 +509,7 @@
                 dom: 'ltrip'
             });
 
-            generateSummary();
+
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
                 table.ajax.reload();
@@ -504,7 +519,7 @@
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let track = $('#track-option').val();
-                let queryParam = '?area=' + area + '&track=' + track + '&service_unit=' + serviceUnitID;
+                let queryParam = '?area=' + area + '&track=' + track;
                 let exportPath = '{{ route('direct-passage.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });

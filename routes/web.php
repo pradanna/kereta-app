@@ -46,6 +46,9 @@ Route::group(['prefix' => 'daerah-operasi'], function () {
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\AreaController::class, 'patch'])->name('area.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\AreaController::class, 'destroy'])->name('area.destroy');
     Route::get('/{id}/storehouse', [\App\Http\Controllers\AreaController::class, 'getStorehouseByAreaID'])->name('area.storehouse');
+    Route::get('/{id}/sertifikasi-sarana', [\App\Http\Controllers\AreaController::class, 'facility_certification_page'])->name('area.facility-certification');
+    Route::get('/{id}/sertifikasi-sarana/{slug}', [\App\Http\Controllers\AreaController::class, 'facility_certification_page_by_slug'])->name('area.facility-certification.by.slug');
+    Route::get('/{id}/jalur-perlintasan-langsung', [\App\Http\Controllers\AreaController::class, 'direct_passage_page'])->name('area.direct-passage');
 });
 
 Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
@@ -257,4 +260,8 @@ Route::group(['prefix' => 'bangunan-liar'], function () {
 
 Route::group(['prefix' => 'rekapitulasi-sarana'], function () {
     Route::get('/', [\App\Http\Controllers\SummaryFacilityController::class, 'index'])->name('summary-facility');
+});
+
+Route::group(['prefix' => 'rekapitulasi-jalur-perlintasan-langsung'], function () {
+    Route::get('/', [\App\Http\Controllers\SummaryDirectPassageController::class, 'index'])->name('summary-direct-passage');
 });

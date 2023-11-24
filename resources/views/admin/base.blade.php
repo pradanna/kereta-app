@@ -369,7 +369,7 @@
                     </a>
                 </li>
                 @php
-                    $summary = ['rekapitulasi-sarana'];
+                    $summary = ['rekapitulasi-sarana', 'rekapitulasi-jalur-perlintasan-langsung'];
                     $openSummary = false;
                     foreach ($summary as $s) {
                         if (request()->is($s . '*')) {
@@ -392,6 +392,12 @@
                             <a class="nav-link menu {{ request()->is('rekapitulasi-sarana*') ? 'active' : '' }}"
                                 href="{{ route('summary-facility') }}">
                                 <p class="menu-text">Sarana</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('rekapitulasi-jalur-perlintasan-langsung*') ? 'active' : '' }}"
+                                href="{{ route('summary-direct-passage') }}">
+                                <p class="menu-text">Jalur Perlintasan Langsung</p>
                             </a>
                         </li>
                     </ul>

@@ -90,6 +90,7 @@ function createMultiMarkerArea(data = []) {
     map_container.fitBounds(bounds);
 }
 
+//multi marker for service unit or SATPEL
 function windowContentServiceUnitMarker(data) {
     return '<div class="p-1" style="width: 200px;">' +
         '<p class="mb-3 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['name'] + '</p>' +
@@ -111,7 +112,38 @@ function windowContentServiceUnitMarker(data) {
         '<span style="color: #777777; font-size: 12px;">Daerah Rawan Bencana</span>' +
         '</a>' +
         '</div>' +
-        // '<p class="mb-1" style="color: #777777; font-size: 12px;">'+data['service_unit']['name']+'</p>' +
+        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        '<a href="#" onclick="goToIllegalBuildingPage(this)" class="d-flex align-items-center btn-disaster" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">domain</span>' +
+        '<span style="color: #777777; font-size: 12px;">Bangunan Liar</span>' +
+        '</a>' +
+        '</div>' +
+        '</div>';
+}
+
+//multimarker for area or DAOP
+function windowContentAreaMarker(data) {
+    return '<div class="p-1" style="width: 200px;">' +
+        '<p class="mb-1 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['name'] + '</p>' +
+        '<p class="mb-3 text-center" style="color: #777777; font-size: 12px;">'+data['service_unit']['name']+'</p>' +
+        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        '<a href="#" onclick="goToFacilityPage(this)" class="d-flex align-items-center btn-facility" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">card_membership</span>' +
+        '<span style="color: #777777; font-size: 12px;">Sertifikasi Sarana</span>' +
+        '</a>' +
+        '</div>' +
+        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        '<a href="#" onclick="goToDirectPassagePage(this)" class="d-flex align-items-center btn-direct-passage" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">timeline</span>' +
+        '<span style="color: #777777; font-size: 12px;">Jalur Perlintasan Langsung</span>' +
+        '</a>' +
+        '</div>' +
+        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        '<a href="#" onclick="goToIllegalBuildingPage(this)" class="d-flex align-items-center btn-disaster" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">domain</span>' +
+        '<span style="color: #777777; font-size: 12px;">Bangunan Liar</span>' +
+        '</a>' +
+        '</div>' +
         '</div>';
 }
 
@@ -136,12 +168,14 @@ async function goToDisasterAreaPage(element) {
     window.open(url, '_blank');
 }
 
-function windowContentAreaMarker(data) {
-    return '<div class="p-1">' +
-        '<p class="mb-1" style="color: #777777; font-size: 12px; font-weight: bold;">' + data['name'] + '</p>' +
-        '<p class="mb-1" style="color: #777777; font-size: 12px;">'+data['service_unit']['name']+'</p>' +
-        '</div>';
+async function goToIllegalBuildingPage(element) {
+    event.preventDefault();
+    let id = element.dataset.id;
+    const url = path + '/' + id + '/bangunan-liar';
+    window.open(url, '_blank');
 }
+
+
 
 function createMultiMarkerStorehouse(data = []) {
     var bounds = new google.maps.LatLngBounds();

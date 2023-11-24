@@ -9,7 +9,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('service-unit') }}">Satuan Pelayanan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('area') }}">Daerah Operasi</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $data->name }}</li>
             </ol>
         </nav>

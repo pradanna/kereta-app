@@ -9,10 +9,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('service-unit') }}">Satuan Pelayanan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('area') }}">Daerah Operasi</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('service-unit.facility-certification', ['id' => $data->id]) }}">Sertifikasi
-                        Sarana {{ $data->name }}</a>
+                        href="{{ route('area.facility-certification', ['id' => $data->id]) }}">{{ $data->name }}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Lokomotif</li>
             </ol>
@@ -22,28 +21,31 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-3">
-                        <div class="form-group w-100">
-                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
-                                <option value="">Semua Daerah Operasi</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-3">
+{{--                    <div class="col-3">--}}
+{{--                        <div class="form-group w-100">--}}
+{{--                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>--}}
+{{--                            <select class="select2 form-control" name="area-option" id="area-option"--}}
+{{--                                    style="width: 100%;">--}}
+{{--                                <option value="">Semua Daerah Operasi</option>--}}
+{{--                                @foreach ($areas as $area)--}}
+{{--                                    <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+                    <div class="col-4">
                         <div class="form-group w-100">
                             <label for="storehouse-option" class="form-label d-none">Depo</label>
                             <select class="select2 form-control" name="storehouse-option" id="storehouse-option"
                                     style="width: 100%;">
                                 <option value="">Semua Depo</option>
+                                @foreach ($storehouses as $storehouse)
+                                    <option value="{{ $storehouse->id }}">{{ $storehouse->name }} ({{ $storehouse->storehouse_type->name }})</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group w-100">
                             <label for="status-option" class="form-label d-none">Status</label>
                             <select class="select2 form-control" name="status-option" id="status-option"
@@ -54,7 +56,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
@@ -199,7 +201,7 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let serviceUnitID = '{{ $data->id }}';
+        let areaID = '{{ $data->id }}';
         let areaPath = '{{ route('area') }}';
         let facilityPath = '{{ route('facility-certification-locomotive') }}';
         let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
@@ -244,8 +246,7 @@
                     type: 'GET',
                     url: facilityPath,
                     'data': function (d) {
-                        d.service_unit = serviceUnitID;
-                        d.area = $('#area-option').val();
+                        d.area = areaID;
                         d.name = $('#name').val();
                         d.storehouse = $('#storehouse-option').val();
                         d.status = $('#status-option').val();
@@ -282,7 +283,7 @@
                         name: 'storehouse',
                         className: 'text-center',
                         render: function (data) {
-                            return data['name'] + ' (' + data['storehouse_type']['name'] + ')'
+                            return data['name'] + ' ('+data['storehouse_type']['name']+')'
                         }
                         // width: '120px',
                     },
@@ -383,15 +384,14 @@
                 alert('internal server error...')
             }
         }
-
         $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
             });
-            generateStorehouseOption();
-            $('#area-option').on('change', function () {
-                generateStorehouseOption();
-            });
+            // generateStorehouseOption();
+            // $('#area-option').on('change', function () {
+            //     generateStorehouseOption();
+            // });
             generateTableFacilityCertification();
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
@@ -399,11 +399,11 @@
             });
             $('#btn-export').on('click', function (e) {
                 e.preventDefault();
-                let area = $('#area-option').val();
+                let area = areaID;
                 let name = $('#name').val();
                 let storehouse = $('#storehouse-option').val();
                 let status = $('#status-option').val();
-                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status + '&service_unit=' + serviceUnitID;
+                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status;
                 let exportPath = '{{ route('facility-certification-locomotive.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });

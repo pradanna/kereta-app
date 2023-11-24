@@ -155,3 +155,7 @@ input.form-control {
     z-index: 9999;
     cursor: pointer;
 }
+
+.capitalize {
+    text-transform: capitalize !important;
+}

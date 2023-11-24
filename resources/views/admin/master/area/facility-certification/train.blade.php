@@ -3,18 +3,17 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SERTIFIKASI SARANA LOKOMOTIF <span class="capitalize">{{ $data->name }}</span></h1>
-            <p class="mb-0">Data Sertifikasi Sarana Lokomotif {{ $data->name }}</p>
+            <h1 class="h1">SERTIFIKASI SARANA KERETA <span class="capitalize">{{ $data->name }}</span></h1>
+            <p class="mb-0">Data Sertifikasi Sarana Kereta {{ $data->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('service-unit') }}">Satuan Pelayanan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('area') }}">Daerah Operasi</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('service-unit.facility-certification', ['id' => $data->id]) }}">Sertifikasi
-                        Sarana {{ $data->name }}</a>
+                        href="{{ route('area.facility-certification', ['id' => $data->id]) }}">{{ $data->name }}</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Lokomotif</li>
+                <li class="breadcrumb-item active" aria-current="page">Kereta</li>
             </ol>
         </nav>
     </div>
@@ -22,24 +21,27 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-3">
-                        <div class="form-group w-100">
-                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
-                                <option value="">Semua Daerah Operasi</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                    {{--                <div class="col-3">--}}
+                    {{--                    <div class="form-group w-100">--}}
+                    {{--                        <label for="area-option" class="form-label d-none">Daerah Operasi</label>--}}
+                    {{--                        <select class="select2 form-control" name="area-option" id="area-option"--}}
+                    {{--                                style="width: 100%;">--}}
+                    {{--                            <option value="">Semua Daerah Operasi</option>--}}
+                    {{--                            @foreach ($areas as $area)--}}
+                    {{--                                <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
+                    {{--                            @endforeach--}}
+                    {{--                        </select>--}}
+                    {{--                    </div>--}}
+                    {{--                </div>--}}
                     <div class="col-3">
                         <div class="form-group w-100">
                             <label for="storehouse-option" class="form-label d-none">Depo</label>
                             <select class="select2 form-control" name="storehouse-option" id="storehouse-option"
                                     style="width: 100%;">
                                 <option value="">Semua Depo</option>
+                                @foreach ($storehouses as $storehouse)
+                                    <option value="{{ $storehouse->id }}">{{ $storehouse->name }} ({{ $storehouse->storehouse_type->name }})</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -56,40 +58,54 @@
                     </div>
                     <div class="col-3">
                         <div class="form-group w-100">
+                            <label for="type-option" class="form-label d-none">Status</label>
+                            <select class="select2 form-control" name="type-option" id="type-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Tipe</option>
+                                <option value="train">Kereta Api</option>
+                                <option value="electric-train">KRL</option>
+                                <option value="diesel-train">KRD</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
                                    placeholder="Cari No. Sarana atau No. BA Pengujian">
                         </div>
                     </div>
                 </div>
-                <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
-                </div>
+                <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                   style="padding: 0.6rem 1.25rem;justify-content: center">Cari</a>
             </div>
+
         </div>
     </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
-            <p>Data Sertifikasi Sarana Lokomotif</p>
+            <p>Sertifikasi Sarana Kereta</p>
             <div class="d-flex align-item-center">
                 <a class="btn-success sml rnd" href="#" id="btn-export"
                    target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
+
         </div>
         <div class="isi">
             <table id="table-data" class="display table w-100">
                 <thead>
                 <tr>
                     <th class="text-center middle-header" width="5%">#</th>
-                    <th class="text-center middle-header" width="10%">Wilayah</th>
-                    <th class="text-center middle-header" width="10%">Kepemilikan</th>
-                    <th class="text-center middle-header" width="12%">No. Sarana</th>
-                    <th class="text-center middle-header" width="12%">Depo Induk</th>
+                    <th class="text-center middle-header" width="8%">Wilayah</th>
+                    <th class="text-center middle-header" width="8%">Kepemilikan</th>
+                    <th class="text-center middle-header" width="5%">Tipe</th>
+                    <th class="text-center middle-header" width="10%">No. Sarana</th>
+                    <th class="text-center middle-header" width="8%">Depo Induk</th>
                     <th class="text-center middle-header">No. BA Pengujian</th>
                     <th class="text-center middle-header" width="10%">Masa Berlaku</th>
-                    <th class="text-center middle-header" width="10%">Akan Habis (Hari)</th>
+                    <th class="text-center middle-header" width="8%">Akan Habis (Hari)</th>
                     <th class="text-center middle-header" width="5%">Aksi</th>
                 </tr>
                 </thead>
@@ -98,35 +114,40 @@
             </table>
         </div>
     </div>
-
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Sarana Lokomotif</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Sarana Kereta</p>
                     <hr>
                     <div class="row mb-3">
-
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="area" class="form-label">Wilayah</label>
                                 <input type="text" class="form-control" id="area" name="area" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="storehouse" class="form-label">Depo Induk</label>
-                                <input type="text" class="form-control" id="storehouse" name="storehouse" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="locomotive_type" class="form-label">Jenis Sarana</label>
-                                <input type="text" class="form-control" id="locomotive_type" name="locomotive_type"
-                                       disabled>
+                                <label for="engine_type" class="form-label">Tipe Kereta</label>
+                                <input type="text" class="form-control" id="engine_type" name="engine_type" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="train_type" class="form-label">Jenis Sarana</label>
+                                <input type="text" class="form-control" id="train_type" name="train_type" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="storehouse" class="form-label">Depo Induk</label>
+                                <input type="text" class="form-control" id="storehouse" name="storehouse" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -199,11 +220,9 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let serviceUnitID = '{{ $data->id }}';
-        let areaPath = '{{ route('area') }}';
-        let facilityPath = '{{ route('facility-certification-locomotive') }}';
+        let areaID = '{{ $data->id }}';
+        let facilityPath = '{{ route('facility-certification-train') }}';
         let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
 
         function getDataStorehouse() {
@@ -233,6 +252,63 @@
             })
         }
 
+        function eventOpenDetail() {
+            $('.btn-detail').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                detailHandler(id);
+            });
+        }
+
+        async function detailHandler(id) {
+            try {
+                let url = facilityPath + '/' + id + '/detail';
+                let response = await $.get(url);
+                let data = response['data'];
+                let trainType = data['train_type']['name'];
+                let engineType = data['engine_type'];
+                let area = data['area']['name'];
+                let storehouse = data['storehouse']['name'];
+                let storehouseType = data['storehouse']['storehouse_type']['name'];
+                let ownership = data['ownership'];
+                let facilityNumber = data['facility_number'];
+                let testingNumber = data['testing_number'];
+                let serviceStartDate = data['service_start_date'];
+                let serviceExpiredDate = data['service_expired_date'];
+                let expiredIn = data['expired_in'];
+                let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+
+                let engineTypeVal = '';
+                switch (engineType) {
+                    case 'train':
+                        engineTypeVal = 'Kereta Api';
+                        break;
+                    case 'electric-train':
+                        engineTypeVal = 'KRL';
+                        break;
+                    case 'diesel-train':
+                        engineTypeVal = 'KRD';
+                        break;
+                    default:
+                        break;
+                }
+                $('#train_type').val(trainType);
+                $('#engine_type').val(engineTypeVal);
+                $('#area').val(area);
+                $('#storehouse').val(storehouse + ' (' + storehouseType + ')');
+                $('#ownership').val(ownership);
+                $('#facility_number').val(facilityNumber);
+                $('#testing_number').val(testingNumber);
+                $('#service_start_date').val(serviceStartDate);
+                $('#service_expired_date').val(serviceExpiredDate);
+                $('#status').val(status);
+                $('#expired_in').val(expiredIn);
+                modalDetail.show();
+            } catch (e) {
+                alert('internal server error...')
+            }
+        }
+
         function generateTableFacilityCertification() {
             table = $('#table-data').DataTable({
                 "aaSorting": [],
@@ -244,11 +320,11 @@
                     type: 'GET',
                     url: facilityPath,
                     'data': function (d) {
-                        d.service_unit = serviceUnitID;
-                        d.area = $('#area-option').val();
+                        d.area = areaID;
                         d.name = $('#name').val();
                         d.storehouse = $('#storehouse-option').val();
                         d.status = $('#status-option').val();
+                        d.engine_type = $('#type-option').val();
                     }
                 },
                 columns: [{
@@ -257,25 +333,43 @@
                     searchable: false,
                     orderable: false,
                     className: 'text-center'
-                    // width: '30px'
                 },
                     {
                         data: 'area.name',
                         name: 'area.name',
                         className: 'text-center'
-                        // width: '150px',
                     },
                     {
                         data: 'ownership',
                         name: 'ownership',
                         className: 'text-center'
-                        // width: '120px'
+                    },
+                    {
+                        data: 'engine_type',
+                        name: 'engine_type',
+                        className: 'text-center',
+                        render: function (data) {
+                            let value = '-';
+                            switch (data) {
+                                case 'train':
+                                    value = 'Kereta Api';
+                                    break;
+                                case 'electric-train':
+                                    value = 'KRL';
+                                    break;
+                                case 'diesel-train':
+                                    value = 'KRD';
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return value;
+                        }
                     },
                     {
                         data: 'facility_number',
                         name: 'facility_number',
                         className: 'text-center'
-                        // width: '100px'
                     },
                     {
                         data: 'storehouse',
@@ -284,13 +378,11 @@
                         render: function (data) {
                             return data['name'] + ' (' + data['storehouse_type']['name'] + ')'
                         }
-                        // width: '120px',
                     },
                     {
                         data: 'testing_number',
                         name: 'testing_number',
                         className: 'text-center',
-                        // width: '150px',
                     },
                     {
                         data: 'service_expired_date',
@@ -305,6 +397,7 @@
                         },
                         className: 'text-center',
                     },
+
                     {
                         data: 'expired_in',
                         name: 'expired_in',
@@ -312,7 +405,6 @@
                             return data;
                         },
                         className: 'text-center',
-                        // width: '80px',
                     },
                     {
                         data: null,
@@ -344,67 +436,29 @@
             });
         }
 
-        function eventOpenDetail() {
-            $('.btn-detail').on('click', function (e) {
-                e.preventDefault();
-                let id = this.dataset.id;
-                detailHandler(id)
-            });
-        }
-
-        async function detailHandler(id) {
-            try {
-                let url = facilityPath + '/' + id + '/detail';
-                let response = await $.get(url);
-                let data = response['data'];
-                let locomotiveType = data['locomotive_type']['name'];
-                let area = data['area']['name'];
-                let storehouse = data['storehouse']['name'];
-                let storehouseType = data['storehouse']['storehouse_type']['name'];
-                let ownership = data['ownership'];
-                let facilityNumber = data['facility_number'];
-                let testingNumber = data['testing_number'];
-                let serviceStartDate = data['service_start_date'];
-                let serviceExpiredDate = data['service_expired_date'];
-                let expiredIn = data['expired_in'];
-                let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
-                $('#locomotive_type').val(locomotiveType);
-                $('#area').val(area);
-                $('#storehouse').val(storehouse + ' (' + storehouseType + ')');
-                $('#ownership').val(ownership);
-                $('#facility_number').val(facilityNumber);
-                $('#testing_number').val(testingNumber);
-                $('#service_start_date').val(serviceStartDate);
-                $('#service_expired_date').val(serviceExpiredDate);
-                $('#status').val(status);
-                $('#expired_in').val(expiredIn);
-                modalDetail.show();
-            } catch (e) {
-                alert('internal server error...')
-            }
-        }
-
         $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
             });
-            generateStorehouseOption();
-            $('#area-option').on('change', function () {
-                generateStorehouseOption();
-            });
+            // generateStorehouseOption();
+            // $('#area-option').on('change', function () {
+            //     generateStorehouseOption();
+            // });
             generateTableFacilityCertification();
+
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
             $('#btn-export').on('click', function (e) {
                 e.preventDefault();
-                let area = $('#area-option').val();
+                let area = areaID;
                 let name = $('#name').val();
                 let storehouse = $('#storehouse-option').val();
                 let status = $('#status-option').val();
-                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status + '&service_unit=' + serviceUnitID;
-                let exportPath = '{{ route('facility-certification-locomotive.excel') }}' + queryParam;
+                let engineType = $('#type-option').val();
+                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status + '&engine_type=' + engineType;
+                let exportPath = '{{ route('facility-certification-train.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });
         });

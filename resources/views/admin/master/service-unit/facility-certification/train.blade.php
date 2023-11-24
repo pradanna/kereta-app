@@ -3,15 +3,16 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
-            <p class="mb-0">Manajemen Data Master Satuan Pelayanan</p>
+            <h1 class="h1">SERTIFIKASI SARANA KERETA <span class="capitalize">{{ $data->name }}</span></h1>
+            <p class="mb-0">Data Sertifikasi Sarana Kereta {{ $data->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('service-unit') }}">Satuan Pelayanan</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('service-unit.facility-certification', ['id' => $data->id]) }}">Sertifikasi Sarana {{ $data->name }}</a>
+                        href="{{ route('service-unit.facility-certification', ['id' => $data->id]) }}">Sertifikasi
+                        Sarana {{ $data->name }}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Kereta</li>
             </ol>
@@ -453,7 +454,7 @@
                 let storehouse = $('#storehouse-option').val();
                 let status = $('#status-option').val();
                 let engineType = $('#type-option').val();
-                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status + '&engine_type=' + engineType;
+                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status + '&engine_type=' + engineType + '&service_unit=' + serviceUnitID;
                 let exportPath = '{{ route('facility-certification-train.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\DirectPassage;

@@ -3,15 +3,16 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
-            <p class="mb-0">Manajemen Data Master Satuan Pelayanan</p>
+            <h1 class="h1">SERTIFIKASI SARANA GERBONG <span class="capitalize">{{ $data->name }}</span></h1>
+            <p class="mb-0">Data Sertifikasi Sarana Gerbong {{ $data->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('service-unit') }}">Satuan Pelayanan</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('service-unit.facility-certification', ['id' => $data->id]) }}">Sertifikasi Sarana {{ $data->name }}</a>
+                        href="{{ route('service-unit.facility-certification', ['id' => $data->id]) }}">Sertifikasi
+                        Sarana {{ $data->name }}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Gerbong</li>
             </ol>
@@ -275,21 +276,21 @@
                         name: 'storehouse',
                         className: 'text-center',
                         render: function (data) {
-                            return data['name'] + ' ('+data['storehouse_type']['name']+')'
+                            return data['name'] + ' (' + data['storehouse_type']['name'] + ')'
                         }
                     },
                     {
                         data: 'testing_number',
                         name: 'testing_number',
                         className: 'text-center',
-                        render: function(data) {
+                        render: function (data) {
                             return data === null ? '-' : data;
                         }
                     },
                     {
                         data: 'service_expired_date',
                         name: 'service_expired_date',
-                        render: function(data) {
+                        render: function (data) {
                             const v = new Date(data);
                             return v.toLocaleDateString('id-ID', {
                                 month: '2-digit',
@@ -302,14 +303,14 @@
                     {
                         data: 'expired_in',
                         name: 'expired_in',
-                        render: function(data) {
+                        render: function (data) {
                             return data;
                         },
                         className: 'text-center'
                     },
                     {
                         data: null,
-                        render: function(data) {
+                        render: function (data) {
                             return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>';
                         },
                         orderable: false,
@@ -323,10 +324,10 @@
                     }
                 ],
                 paging: true,
-                "fnDrawCallback": function(setting) {
+                "fnDrawCallback": function (setting) {
                     eventOpenDetail();
                 },
-                createdRow: function(row, data, index) {
+                createdRow: function (row, data, index) {
                     if (data['expired_in'] < expiration) {
                         $('td', row).css({
                             'background-color': '#fecba1'
@@ -338,7 +339,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function(e) {
+            $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id)
@@ -377,7 +378,7 @@
             }
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -396,7 +397,7 @@
                 let name = $('#name').val();
                 let storehouse = $('#storehouse-option').val();
                 let status = $('#status-option').val();
-                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status;
+                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status + '&service_unit=' + serviceUnitID;
                 let exportPath = '{{ route('facility-certification-wagon.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });
