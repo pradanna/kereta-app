@@ -31,7 +31,7 @@ class DashboardController extends CustomController
         $facility_special_equipments = FacilitySpecialEquipment::with([])->get()->append(['expired_in']);
 
         $facility_types = FacilityType::with([])->orderBy('id', 'ASC')->get();
-        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get()->append(['disaster_areas']);
         return view('admin.beranda')->with([
             'facility_locomotives' => $facility_locomotives->count(),
             'facility_trains' => $facility_trains->count(),
@@ -41,6 +41,7 @@ class DashboardController extends CustomController
             'service_units' => $service_units,
         ]);
     }
+
 
     private function generateExpiredFacility($facility_locomotives, $facility_trains, $facility_wagons, $facility_special_equipments)
     {

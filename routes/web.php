@@ -37,6 +37,7 @@ Route::group(['prefix' => 'satuan-pelayanan'], function () {
     Route::get('/{id}/sertifikasi-sarana/{slug}', [\App\Http\Controllers\ServiceUnitController::class, 'facility_certification_page_by_slug'])->name('service-unit.facility-certification.by.slug');
     Route::get('/{id}/jalur-perlintasan-langsung', [\App\Http\Controllers\ServiceUnitController::class, 'direct_passage_page'])->name('service-unit.direct-passage');
     Route::get('/{id}/daerah-rawan-bencana', [\App\Http\Controllers\ServiceUnitController::class, 'disaster_area_page'])->name('service-unit.disaster-area');
+    Route::get('/{id}/bangunan-liar', [\App\Http\Controllers\ServiceUnitController::class, 'illegal_building_page'])->name('service-unit.illegal-building');
     Route::post('/{id}/delete-image', [\App\Http\Controllers\ServiceUnitController::class, 'destroy_image'])->name('service-unit.image.destroy');
 });
 
@@ -49,6 +50,7 @@ Route::group(['prefix' => 'daerah-operasi'], function () {
     Route::get('/{id}/sertifikasi-sarana', [\App\Http\Controllers\AreaController::class, 'facility_certification_page'])->name('area.facility-certification');
     Route::get('/{id}/sertifikasi-sarana/{slug}', [\App\Http\Controllers\AreaController::class, 'facility_certification_page_by_slug'])->name('area.facility-certification.by.slug');
     Route::get('/{id}/jalur-perlintasan-langsung', [\App\Http\Controllers\AreaController::class, 'direct_passage_page'])->name('area.direct-passage');
+    Route::get('/{id}/bangunan-liar', [\App\Http\Controllers\AreaController::class, 'illegal_building_page'])->name('area.illegal-building');
 });
 
 Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
@@ -264,4 +266,8 @@ Route::group(['prefix' => 'rekapitulasi-sarana'], function () {
 
 Route::group(['prefix' => 'rekapitulasi-jalur-perlintasan-langsung'], function () {
     Route::get('/', [\App\Http\Controllers\SummaryDirectPassageController::class, 'index'])->name('summary-direct-passage');
+});
+
+Route::group(['prefix' => 'rekapitulasi-daerah-rawan-bencana'], function () {
+    Route::get('/', [\App\Http\Controllers\SummaryDisasterAreaController::class, 'index'])->name('summary-disaster-area');
 });

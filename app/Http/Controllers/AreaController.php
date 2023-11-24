@@ -206,24 +206,20 @@ class AreaController extends CustomController
     {
         $data = Area::with([])->findOrFail($id);
         $tracks = Track::with([])->where('area_id', '=', $id)->get();
-        $areas = Area::with([])->where('id', '=', $id)->get();
-        $dataDirectPassages = DirectPassage::with(['sub_track.track'])
-            ->whereHas('sub_track', function ($qst) use ($id) {
-                /** @var $qst Builder */
-                return $qst->whereHas('track', function ($qt) use ($id) {
-                   /** @var $qt Builder */
-                    return $qt->where('area_id', '=', $id);
-                });
-            })
-            ->get();
-        $summary = $this->formula->summaryDirectPassages($areas, $dataDirectPassages);
         return view('admin.master.area.direct-passage.index')->with([
             'data' => $data,
             'tracks' => $tracks,
-            'summary' => $summary
         ]);
     }
 
+    public function illegal_building_page($id) {
+        $data = Area::with([])->findOrFail($id);
+        $tracks = Track::with(['area'])->where('area_id', '=', $id)->get();
+        return view('admin.master.area.illegal-building.index')->with([
+            'data' => $data,
+            'tracks' => $tracks,
+        ]);
+    }
     public function getStorehouseByAreaID($id)
     {
         try {

@@ -21,16 +21,25 @@ class TrackController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
+            $service_unit = $this->request->query->get('service_unit');
             $area = $this->request->query->get('area');
             $name = $this->request->query->get('name');
 
             $query = Track::with(['area']);
+
+            if ($service_unit !== '' && $service_unit !== null) {
+                $query->where('area', function ($qa) use ($service_unit){
+                    /** @var $qa Builder */
+                    return $qa->where('service_unit_id', '=', $service_unit);
+                });
+            }
             if ($area !== '') {
                 $query->where('area_id', '=', $area);
             }
 
             if ($name !== '') {
                 $query->where(function ($q) use ($name) {
+                    /** @var $q Builder */
                     $q->where('code', 'LIKE', '%' . $name . '%')
                         ->orWhere('name', 'LIKE', '%' . $name . '%');
                 });

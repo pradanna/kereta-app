@@ -176,4 +176,37 @@ class Formula
         }
         return $results;
     }
+
+    /**
+     * @param $disasterTypes Collection
+     * @param $locationType
+     * @param $serviceUnits Collection
+     * @param $disasterAreas Collection
+     * @return array
+     */
+    public function summaryDisasterByType($disasterTypes, $locationType, $serviceUnits, $disasterAreas)
+    {
+        $results = [];
+        $typeValue = 0;
+        if ($locationType === 'bridge') {
+            $typeValue = 1;
+        }
+        foreach ($disasterTypes as $disasterType) {
+            $result['disaster_type'] = $disasterType->name;
+            $total = 0;
+            foreach ($serviceUnits as $serviceUnit) {
+                $serviceUnitID = $serviceUnit['id'];
+                $qty = $disasterAreas
+                    ->where('resort.service_unit_id', '=', $serviceUnitID)
+                    ->where('location_type', '=', $typeValue)
+                    ->where('disaster_type_id', '=', $disasterType->id)
+                    ->count();
+                $result[$serviceUnitID] = $qty;
+                $total += $qty;
+            }
+            $result['total'] = $total;
+            array_push($results, $result);
+        }
+        return $results;
+    }
 }

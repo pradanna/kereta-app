@@ -38,7 +38,7 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-12">
                         <div class="w-100">
                             <label for="name" class="form-label">Nama</label>
@@ -47,22 +47,22 @@
                         </div>
                     </div>
                 </div>
-{{--                <div class="row mb-1">--}}
-{{--                    <div class="col-6">--}}
-{{--                        <div class="w-100">--}}
-{{--                            <label for="latitude" class="form-label">Latitude</label>--}}
-{{--                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"--}}
-{{--                                   placeholder="Contoh: 7.1129489">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-6">--}}
-{{--                        <div class="w-100">--}}
-{{--                            <label for="longitude" class="form-label">Longitude</label>--}}
-{{--                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"--}}
-{{--                                   placeholder="Contoh: 110.1129489">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="latitude" class="form-label">Latitude</label>
+                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"
+                                   placeholder="Contoh: 7.1129489">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="longitude" class="form-label">Longitude</label>
+                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"
+                                   placeholder="Contoh: 110.1129489">
+                        </div>
+                    </div>
+                </div>
                 <hr>
                 <div class="d-flex justify-content-end">
                     <a class="btn-utama  rnd " id="btn-save" href="#">Simpan <i

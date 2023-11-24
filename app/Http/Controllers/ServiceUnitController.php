@@ -233,6 +233,15 @@ class ServiceUnitController extends CustomController
         ]);
     }
 
+    public function illegal_building_page($id) {
+        $data = ServiceUnit::with(['images'])->findOrFail($id);
+        $areas = Area::with(['service_unit'])->where('service_unit_id', '=', $id)->get();
+        return view('admin.master.service-unit.illegal-building.index')->with([
+            'data' => $data,
+            'areas' => $areas,
+        ]);
+    }
+
     private function generateTotalFacilityData($id)
     {
         $areas = Area::with(['service_unit'])->where('service_unit_id', '=', $id)->get();

@@ -3,8 +3,8 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER SATUAN PELAYANAN</h1>
-            <p class="mb-0">Manajemen Data Master Satuan Pelayanan</p>
+            <h1 class="h1">DAERAH RAWAN BENCANA <span class="capitalize">{{ $data->name }}</span></h1>
+            <p class="mb-0">Data Daerah Rawan Bencana {{ $data->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
