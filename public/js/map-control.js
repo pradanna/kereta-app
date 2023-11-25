@@ -95,25 +95,25 @@ function windowContentServiceUnitMarker(data) {
     return '<div class="p-1" style="width: 200px;">' +
         '<p class="mb-3 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['name'] + '</p>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" onclick="goToFacilityPage(this)" class="d-flex align-items-center btn-facility" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToFacilityPage(this)" class="d-flex align-items-center btn-facility" data-id="' + data['id'] + '" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">card_membership</span>' +
         '<span style="color: #777777; font-size: 12px;">Sertifikasi Sarana</span>' +
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" onclick="goToDirectPassagePage(this)" class="d-flex align-items-center btn-direct-passage" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToDirectPassagePage(this)" class="d-flex align-items-center btn-direct-passage" data-id="' + data['id'] + '" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">timeline</span>' +
         '<span style="color: #777777; font-size: 12px;">Jalur Perlintasan Langsung</span>' +
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" onclick="goToDisasterAreaPage(this)" class="d-flex align-items-center btn-disaster" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToDisasterAreaPage(this)" class="d-flex align-items-center btn-disaster" data-id="' + data['id'] + '" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">flood</span>' +
         '<span style="color: #777777; font-size: 12px;">Daerah Rawan Bencana</span>' +
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" onclick="goToIllegalBuildingPage(this)" class="d-flex align-items-center btn-disaster" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToIllegalBuildingPage(this)" class="d-flex align-items-center btn-disaster" data-id="' + data['id'] + '" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">domain</span>' +
         '<span style="color: #777777; font-size: 12px;">Bangunan Liar</span>' +
         '</a>' +
@@ -125,21 +125,21 @@ function windowContentServiceUnitMarker(data) {
 function windowContentAreaMarker(data) {
     return '<div class="p-1" style="width: 200px;">' +
         '<p class="mb-1 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['name'] + '</p>' +
-        '<p class="mb-3 text-center" style="color: #777777; font-size: 12px;">'+data['service_unit']['name']+'</p>' +
+        '<p class="mb-3 text-center" style="color: #777777; font-size: 12px;">' + data['service_unit']['name'] + '</p>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" onclick="goToFacilityPage(this)" class="d-flex align-items-center btn-facility" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToFacilityPage(this)" class="d-flex align-items-center btn-facility" data-id="' + data['id'] + '" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">card_membership</span>' +
         '<span style="color: #777777; font-size: 12px;">Sertifikasi Sarana</span>' +
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" onclick="goToDirectPassagePage(this)" class="d-flex align-items-center btn-direct-passage" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToDirectPassagePage(this)" class="d-flex align-items-center btn-direct-passage" data-id="' + data['id'] + '" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">timeline</span>' +
         '<span style="color: #777777; font-size: 12px;">Jalur Perlintasan Langsung</span>' +
         '</a>' +
         '</div>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<a href="#" onclick="goToIllegalBuildingPage(this)" class="d-flex align-items-center btn-disaster" data-id="'+data['id']+'" style="text-decoration: none;">' +
+        '<a href="#" onclick="goToIllegalBuildingPage(this)" class="d-flex align-items-center btn-disaster" data-id="' + data['id'] + '" style="text-decoration: none;">' +
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">domain</span>' +
         '<span style="color: #777777; font-size: 12px;">Bangunan Liar</span>' +
         '</a>' +
@@ -175,8 +175,6 @@ async function goToIllegalBuildingPage(element) {
     window.open(url, '_blank');
 }
 
-
-
 function createMultiMarkerStorehouse(data = []) {
     var bounds = new google.maps.LatLngBounds();
     data.forEach(function (v, k) {
@@ -204,10 +202,46 @@ function createMultiMarkerStorehouse(data = []) {
 }
 
 function windowContentStorehouseMarker(data) {
-    return '<div class="p-1">' +
-        '<p class="mb-1" style="color: #777777; font-size: 12px;">' + data['storehouse_type']['name'] + ' (' + data['area']['name'] + ')</p>' +
-        '<p class="fw-bold" style="color: #222222; font-size: 12px;">' + data['name'] + '</p>' +
+    return '<div class="p-1" style="width: 200px;">' +
+        '<p class="mb-1 text-center" style="color: #777777; font-size: 12px;">' + data['storehouse_type']['name'] + ' (' + data['area']['name'] + ')</p>' +
+        '<p class="mb-3 text-center" style="color: #222222; font-size: 12px;">' + data['name'] + '</p>' +
+        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        '<a href="#" onclick="goToFacilityLocomotivePage(this)" class="d-flex align-items-center btn-facility" data-id="' + data['id'] + '" style="text-decoration: none;">' +
+        '<span style="color: #777777; font-size: 12px;">Lokomotif (' + data['count_locomotive'] + ')</span>' +
+        '</a>' +
+        '</div>' +
+        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        '<a href="#" onclick="goToFacilityTrainPage(this)" class="d-flex align-items-center btn-facility" data-id="' + data['id'] + '" style="text-decoration: none;">' +
+        '<span style="color: #777777; font-size: 12px;">Kereta (' + data['count_train'] + ')</span>' +
+        '</a>' +
+        '</div>' +
+        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        '<a href="#" onclick="goToFacilityWagonPage(this)" class="d-flex align-items-center btn-facility" data-id="' + data['id'] + '" style="text-decoration: none;">' +
+        '<span style="color: #777777; font-size: 12px;">Gerbong (' + data['count_wagon'] + ')</span>' +
+        '</a>' +
+        '</div>' +
         '</div>';
+}
+
+async function goToFacilityLocomotivePage(element) {
+    event.preventDefault();
+    let id = element.dataset.id;
+    const url = path + '/' + id + '/sertifikasi-sarana-lokomotif';
+    window.open(url, '_blank');
+}
+
+async function goToFacilityTrainPage(element) {
+    event.preventDefault();
+    let id = element.dataset.id;
+    const url = path + '/' + id + '/sertifikasi-sarana-kereta';
+    window.open(url, '_blank');
+}
+
+async function goToFacilityWagonPage(element) {
+    event.preventDefault();
+    let id = element.dataset.id;
+    const url = path + '/' + id + '/sertifikasi-sarana-gerbong';
+    window.open(url, '_blank');
 }
 
 function createGoogleMapMarker(payload = []) {

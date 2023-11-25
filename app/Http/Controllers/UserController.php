@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Models\Area;
+use App\Models\ServiceUnit;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,7 +20,7 @@ class UserController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = User::with(['area'])
+            $data = User::with(['area', 'service_unit'])
                 ->where('role', '!=', 'superadmin')
                 ->orderBy('created_at', 'DESC')->get();
             return $this->basicDataTables($data);
@@ -36,7 +37,7 @@ class UserController extends CustomController
                     'nickname' => $this->postField('nickname'),
                     'password' => Hash::make($this->postField('password')),
                     'role' => $this->postField('role'),
-                    'area_id' => $this->postField('area'),
+                    'service_unit_id' => $this->postField('service_unit'),
                 ];
                 User::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -44,8 +45,8 @@ class UserController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $areas = Area::all();
-        return view('admin.user.add')->with(['areas' => $areas]);
+        $service_units = ServiceUnit::with([])->orderBy('name','ASC')->get();
+        return view('admin.user.add')->with(['service_units' => $service_units]);
     }
 
     public function patch($id)
@@ -69,10 +70,10 @@ class UserController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $areas = Area::all();
+        $service_units = ServiceUnit::with([])->orderBy('name','ASC')->get();
         return view('admin.user.edit')->with([
             'data' => $data,
-            'areas' => $areas
+            'service_units' => $service_units
         ]);
     }
 

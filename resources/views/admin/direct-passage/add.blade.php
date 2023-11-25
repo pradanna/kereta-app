@@ -139,7 +139,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="form-group w-100">
                                         <label for="guarded_by" class="form-label">Status Penjagaan</label>
                                         <select class="select2 form-control" name="guarded_by" id="guarded_by"
@@ -150,6 +150,14 @@
                                             <option value="3">Resmi Tidak Dijaga</option>
                                             <option value="4">Liar</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="technical_documentation" class="form-label">No. Surat Rekomendasi Teknis</label>
+                                        <input type="text" class="form-control" id="technical_documentation"
+                                               name="technical_documentation"
+                                               placeholder="No. Surat Rekomendasi Teknis">
                                     </div>
                                 </div>
                             </div>

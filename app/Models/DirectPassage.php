@@ -27,6 +27,7 @@ class DirectPassage extends Model
         'latitude',
         'longitude',
         'description',
+        'technical_documentation',
     ];
 
     protected $casts = [
@@ -52,5 +53,10 @@ class DirectPassage extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(DirectPassageImage::class, 'direct_passage_id');
     }
 }

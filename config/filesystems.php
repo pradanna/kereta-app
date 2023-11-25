@@ -88,6 +88,12 @@ return [
             'url' => env('APP_URL') . '/public',
             'visibility' => 'public',
         ],
+        'direct-passage' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/direct-passage',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
 
     ],
 

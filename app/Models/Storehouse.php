@@ -43,4 +43,34 @@ class Storehouse extends Model
     {
         return $this->hasMany(StorehouseImage::class, 'storehouse_id');
     }
+
+    public function locomotives()
+    {
+        return $this->hasMany(FacilityLocomotive::class, 'storehouse_id');
+    }
+
+    public function trains()
+    {
+        return $this->hasMany(FacilityTrain::class, 'storehouse_id');
+    }
+
+    public function wagons()
+    {
+        return $this->hasMany(FacilityWagon::class, 'storehouse_id');
+    }
+
+    public function getCountLocomotiveAttribute()
+    {
+        return count($this->locomotives()->get());
+    }
+
+    public function getCountTrainAttribute()
+    {
+        return count($this->trains()->get());
+    }
+
+    public function getCountWagonAttribute()
+    {
+        return count($this->wagons()->get());
+    }
 }

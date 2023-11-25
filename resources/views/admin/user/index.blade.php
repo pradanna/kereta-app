@@ -27,7 +27,7 @@
                     <th width="5%" class="text-center">#</th>
                     <th width="15%">Username</th>
                     <th width="15%">Nickname</th>
-                    <th width="20%">Daerah Operasi</th>
+                    <th width="20%">Wilayah</th>
                     <th>Hak Akses</th>
                     <th width="12%" class="text-center">Aksi</th>
                 </tr>
@@ -111,8 +111,19 @@
                         name: 'nickname'
                     },
                     {
-                        data: 'area.name',
-                        name: 'area.name'
+                        data: null,
+                        name: null,
+                        render: function (data) {
+                            let value = '-';
+                            if (data['area'] !== null) {
+                                value = data['area']['name'];
+                            }
+
+                            if (data['service_unit'] !== null) {
+                                value = data['service_unit']['name'];
+                            }
+                            return value;
+                        }
                     },
                     {
                         data: 'role',
@@ -125,6 +136,12 @@
                                     break;
                                 case 'chief-area':
                                     value = 'Kepala Daerah Operasi (DAOP)';
+                                    break;
+                                case 'admin-service-unit':
+                                    value = 'Admin Satuan Pelayanan (SATPEL)';
+                                    break;
+                                case 'chief-service-unit':
+                                    value = 'Kepala Satuan Pelayanan (SATPEL)';
                                     break;
                                 default:
                                     break;

@@ -40,7 +40,7 @@ class StoreHouseController extends CustomController
             }
             switch ($type) {
                 case 'map':
-                    $data = $query->get();
+                    $data = $query->get()->append(['count_locomotive', 'count_train', 'count_wagon']);
                     return $this->jsonSuccessResponse('success', $data);
                 case 'table':
                     $data = $query
@@ -218,5 +218,29 @@ class StoreHouseController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function facility_locomotive_page($id)
+    {
+        $data = Storehouse::with([])->findOrFail($id);
+        return view('admin.master.storehouse.facility-certification.locomotive')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function facility_train_page($id)
+    {
+        $data = Storehouse::with([])->findOrFail($id);
+        return view('admin.master.storehouse.facility-certification.train')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function facility_wagon_page($id)
+    {
+        $data = Storehouse::with([])->findOrFail($id);
+        return view('admin.master.storehouse.facility-certification.wagon')->with([
+            'data' => $data
+        ]);
     }
 }

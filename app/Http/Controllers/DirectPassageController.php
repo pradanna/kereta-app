@@ -9,12 +9,16 @@ use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\DirectPassage;
+use App\Models\DirectPassageImage;
 use App\Models\DirectPassageSignEquipment;
 use App\Models\FacilityLocomotive;
+use App\Models\Storehouse;
+use App\Models\StorehouseImage;
 use App\Models\SubTrack;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Ramsey\Uuid\Uuid;
 
 class DirectPassageController extends CustomController
 {
@@ -98,6 +102,7 @@ class DirectPassageController extends CustomController
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
                     'description' => $this->postField('description'),
+                    'technical_documentation' => $this->postField('technical_documentation'),
                 ];
                 $direct_passage = DirectPassage::create($data_request_direct_passage);
 
@@ -150,6 +155,7 @@ class DirectPassageController extends CustomController
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
                     'description' => $this->postField('description'),
+                    'technical_documentation' => $this->postField('technical_documentation'),
                 ];
                 $data->update($data_request_direct_passage);
                 $data_request_direct_passage_equipment = [
@@ -216,5 +222,51 @@ class DirectPassageController extends CustomController
             new \App\Exports\DirectPassage($data),
             $fileName
         );
+    }
+
+    public function image_page($id)
+    {
+        $data = DirectPassage::with(['images'])->findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            try {
+                if ($this->request->hasFile('files')) {
+                    foreach ($this->request->file('files') as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $document = Uuid::uuid4()->toString() . '.' . $extension;
+                        $storage_path = public_path('direct-passage');
+                        $documentName = $storage_path . '/' . $document;
+                        $dataDocument = [
+                            'direct_passage_id' => $data->id,
+                            'image' => '/direct-passage/' . $document
+                        ];
+                        DirectPassageImage::create($dataDocument);
+                        $file->move($storage_path, $documentName);
+                    }
+                    DB::commit();
+                    return $this->jsonSuccessResponse('success');
+                } else {
+                    DB::rollBack();
+                    return $this->jsonBadRequestResponse('no image attached...');
+                }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->jsonErrorResponse('internal server error');
+            }
+
+        }
+        return view('admin.direct-passage.image')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            DirectPassageImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }
