@@ -232,6 +232,35 @@
                         </li>
                     </ul>
                 </li>
+
+                @php
+                    $masterHumanResource = ['penjaga-jalan-lintasan'];
+                    $openMasterHumanResource = false;
+                    foreach ($masterHumanResource as $mhr) {
+                        if (request()->is($mhr . '*')) {
+                            $openMasterHumanResource = true;
+                            break;
+                        }
+                    }
+                @endphp
+                <li class="nav-item">
+                    <a class="nav-link menu">
+                        <span class="material-symbols-outlined menu-icon">
+                            engineering
+                        </span>
+                        <p class="menu-text {{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? 'fw-bold' : '' }}">
+                            Master Data SDM
+                        </p>
+                    </a>
+                    <ul class="{{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? '' : 'collapse' }}">
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('penjaga-jalan-lintasan*') ? 'active' : '' }}"
+                               href="{{ route('direct-passage-human-resource') }}">
+                                <p class="menu-text">Penjaga Jalan Lintasan</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @php
                     $certification = ['sertifikasi-sarana-lokomotif', 'sertifikasi-sarana-kereta', 'sertifikasi-sarana-kereta-diesel', 'sertifikasi-sarana-gerbong', 'sertifikasi-sarana-peralatan-khusus'];
                     $openCertification = false;

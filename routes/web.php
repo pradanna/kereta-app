@@ -142,6 +142,13 @@ Route::group(['prefix' => 'resort'], function () {
     Route::get('/service-unit', [\App\Http\Controllers\ResortController::class, 'getResortsByServiceUnit'])->name('resort.by.service.unit');
 });
 
+Route::group(['prefix' => 'penjaga-jalan-lintasan'], function () {
+    Route::get('/', [\App\Http\Controllers\DirectPassageHumanResourceController::class, 'index'])->name('direct-passage-human-resource');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageHumanResourceController::class, 'store'])->name('direct-passage-human-resource.create');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageHumanResourceController::class, 'patch'])->name('direct-passage-human-resource.patch');
+    Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageHumanResourceController::class, 'destroy'])->name('direct-passage-human-resource.destroy');
+});
+
 Route::group(['prefix' => 'sertifikasi-sarana-lokomotif'], function () {
     Route::get('/', [\App\Http\Controllers\FacilityLocomotiveController::class, 'index'])->name('facility-certification-locomotive');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('facility-certification-locomotive.create');

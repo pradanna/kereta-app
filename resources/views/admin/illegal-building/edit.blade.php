@@ -39,9 +39,9 @@
             </div>
             <div class="isi">
                 <div class="row mb-3">
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="sub_track" class="form-label">Lintas Antara</label>
+                            <label for="sub_track" class="form-label">Petak</label>
                             <select class="select2 form-control" name="sub_track" id="sub_track"
                                     style="width: 100%;">
                                 @foreach ($sub_tracks as $sub_track)
@@ -50,8 +50,6 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="district" class="form-label">Kecamatan</label>
@@ -63,6 +61,9 @@
                             </select>
                         </div>
                     </div>
+                </div>
+                <div class="row mb-3">
+
                     <div class="col-6">
                         <div class="w-100">
                             <label for="stakes" class="form-label">KM/HM</label>
@@ -70,8 +71,6 @@
                                    placeholder="KM/HM" value="{{ $data->stakes }}">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
                             <label for="surface_area" class="form-label">Luas Tanah (m2)</label>
@@ -80,6 +79,9 @@
                                    placeholder="0" value="{{ $data->surface_area }}">
                         </div>
                     </div>
+                </div>
+                <div class="row mb-3">
+
                     <div class="col-6">
                         <div class="w-100">
                             <label for="building_area" class="form-label">Luas Bangunan (m2)</label>
@@ -88,8 +90,6 @@
                                    placeholder="0" value="{{ $data->building_area }}">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
                             <label for="distance_from_rail" class="form-label">Jarak Dari AS Rel</label>
@@ -98,22 +98,34 @@
                                    placeholder="0" value="{{ $data->distance_from_rail }}">
                         </div>
                     </div>
+                </div>
+                <div class="row mb-3">
+
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="illegal_building" class="form-label">Jumlah Bangunan Liar</label>
+                            <label for="illegal_building" class="form-label">Jumlah Bangunan Liar (+/-)</label>
                             <input type="number" step="any" class="form-control" id="illegal_building"
                                    name="illegal_building"
                                    placeholder="0" value="{{ $data->illegal_building }}">
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
                             <label for="demolished" class="form-label">Sudah Dibongkar</label>
                             <input type="number" step="any" class="form-control" id="demolished"
                                    name="demolished"
                                    placeholder="0" value="{{ $data->demolished }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+
+                    <div class="col-12">
+                        <div class="w-100">
+                            <label for="description" class="form-label">Keterangan</label>
+                            <textarea rows="3" class="form-control" id="description" name="description">
+                                {{ $data->description }}
+                            </textarea>
                         </div>
                     </div>
                 </div>

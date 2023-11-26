@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="sub_track" class="form-label">Lintas Antara</label>
+                                <label for="sub_track" class="form-label">Petak</label>
                                 <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
                             </div>
                         </div>
@@ -161,6 +161,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <label for="description" class="form-label">Keterangan</label>
+                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -206,6 +214,7 @@
                 let distanceFromRail = data['distance_from_rail'];
                 let illegalBuilding = data['illegal_building'];
                 let demolished = data['demolished'];
+                let description = data['description'];
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
                 $('#district').val(district);
@@ -216,6 +225,7 @@
                 $('#distance_from_rail').val(distanceFromRail);
                 $('#illegal_building').val(illegalBuilding);
                 $('#demolished').val(demolished);
+                $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')

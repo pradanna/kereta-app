@@ -19,6 +19,7 @@ class IllegalBuilding extends Model
         'distance_from_rail',
         'illegal_building',
         'demolished',
+        'description',
     ];
 
     public function sub_track()
