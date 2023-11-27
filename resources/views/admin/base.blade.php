@@ -234,7 +234,7 @@
                 </li>
 
                 @php
-                    $masterHumanResource = ['penjaga-jalan-lintasan'];
+                    $masterHumanResource = ['sumber-daya-penjaga-jalur-lintasan'];
                     $openMasterHumanResource = false;
                     foreach ($masterHumanResource as $mhr) {
                         if (request()->is($mhr . '*')) {
@@ -246,7 +246,7 @@
                 <li class="nav-item">
                     <a class="nav-link menu">
                         <span class="material-symbols-outlined menu-icon">
-                            engineering
+                            person_apron
                         </span>
                         <p class="menu-text {{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? 'fw-bold' : '' }}">
                             Master Data SDM
@@ -254,9 +254,9 @@
                     </a>
                     <ul class="{{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? '' : 'collapse' }}">
                         <li class="nav-item">
-                            <a class="nav-link menu {{ request()->is('penjaga-jalan-lintasan*') ? 'active' : '' }}"
+                            <a class="nav-link menu {{ request()->is('sumber-daya-penjaga-jalur-lintasan*') ? 'active' : '' }}"
                                href="{{ route('direct-passage-human-resource') }}">
-                                <p class="menu-text">Penjaga Jalan Lintasan</p>
+                                <p class="menu-text">Penjaga Jalur Lintasan</p>
                             </a>
                         </li>
                     </ul>
@@ -395,6 +395,15 @@
                             domain
                         </span>
                         <p class="menu-text">Bangunan Liar</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('penjaga-jalur-lintasan*') ? 'active' : '' }}"
+                        href="{{ route('direct-passage-guard') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            engineering
+                        </span>
+                        <p class="menu-text">Penjaga Jalur Lintasan (PJL)</p>
                     </a>
                 </li>
                 @php

@@ -142,7 +142,7 @@ Route::group(['prefix' => 'resort'], function () {
     Route::get('/service-unit', [\App\Http\Controllers\ResortController::class, 'getResortsByServiceUnit'])->name('resort.by.service.unit');
 });
 
-Route::group(['prefix' => 'penjaga-jalan-lintasan'], function () {
+Route::group(['prefix' => 'sumber-daya-penjaga-jalur-lintasan'], function () {
     Route::get('/', [\App\Http\Controllers\DirectPassageHumanResourceController::class, 'index'])->name('direct-passage-human-resource');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageHumanResourceController::class, 'store'])->name('direct-passage-human-resource.create');
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageHumanResourceController::class, 'patch'])->name('direct-passage-human-resource.patch');
@@ -270,6 +270,13 @@ Route::group(['prefix' => 'bangunan-liar'], function () {
     Route::post('/{id}/delete', [\App\Http\Controllers\IllegalBuildingController::class, 'destroy'])->name('illegal-building.destroy');
     Route::get('/{id}/detail', [\App\Http\Controllers\IllegalBuildingController::class, 'detail'])->name('illegal-building.detail');
     Route::get('/excel', [\App\Http\Controllers\IllegalBuildingController::class, 'export_to_excel'])->name('illegal-building.excel');
+});
+
+Route::group(['prefix' => 'penjaga-jalur-lintasan'], function () {
+    Route::get('/', [\App\Http\Controllers\DirectPassageGuardController::class, 'index'])->name('direct-passage-guard');
+    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageGuardController::class, 'store'])->name('direct-passage-guard.create');
+    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageGuardController::class, 'patch'])->name('direct-passage-guard.patch');
+    Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageGuardController::class, 'destroy'])->name('direct-passage-guard.destroy');
 });
 
 Route::group(['prefix' => 'rekapitulasi-sarana'], function () {

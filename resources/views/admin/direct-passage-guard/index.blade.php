@@ -1,0 +1,140 @@
+@extends('admin/base')
+
+@section('content')
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-title-container">
+            <h1 class="h1">PENJAGA JALUR LINTASAN (PJL)</h1>
+            <p class="mb-0">Manajemen Data Penjaga Jalur Lintasan (PJL)</p>
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Penjaga Jalur Lintasan (PJL)</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="panel">
+        <div class="title">
+            <p>Data Daerah Operasi</p>
+            <a class="btn-utama sml rnd " href="{{ route('direct-passage-guard.create') }}">Tambah
+                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+            </a>
+        </div>
+        <div class="isi">
+            <table id="table-data" class="display table w-100">
+                <thead>
+                <tr>
+                    <th width="5%" class="text-center">#</th>
+                    <th width="10%">No. PJL</th>
+                    <th width="15%">Petak</th>
+                    <th>Nama</th>
+                    <th width="12%" class="text-center">Aksi</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <script src="{{ asset('js/map-control.js') }}"></script>
+@endsection
+
+@section('js')
+    <script src="{{ asset('js/helper.js') }}"></script>
+    <script>
+        let table;
+        let path = '{{ route('direct-passage-guard') }}';
+
+        function deleteEvent() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus data?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = path + '/' + id + '/delete';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    table.ajax.reload();
+                });
+            });
+        }
+
+        function generateTableArea() {
+            table = $('#table-data').DataTable({
+                "aaSorting": [],
+                "order": [],
+                scrollX: true,
+                processing: true,
+                responsive: true,
+                ajax: {
+                    type: 'GET',
+                    url: path,
+                    'data': function (d) {
+                        d.type = 'table';
+                    }
+                },
+                columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false
+                },
+                    {
+                        data: 'direct_passage.jpl',
+                        name: 'direct_passage.jpl'
+                    },
+                    {
+                        data: 'direct_passage.sub_track.code',
+                        name: 'direct_passage.sub_track.code'
+                    },
+                    {
+                        data: 'human_resource.name',
+                        name: 'human_resource.name'
+                    },
+                    {
+                        data: null,
+                        render: function (data) {
+                            let urlEdit = path + '/' + data['id'] + '/edit';
+                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '">Edit</a>' +
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] + '">Delete</a>'
+                        },
+                        orderable: false
+                    }
+                ],
+                columnDefs: [{
+                    targets: [0, 1, 3],
+                    className: 'text-center'
+                }],
+                paging: true,
+                "fnDrawCallback": function (setting) {
+                    deleteEvent();
+                }
+            })
+        }
+
+        $(document).ready(function () {
+            generateTableArea();
+        })
+    </script>
+@endsection
