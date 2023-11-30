@@ -275,7 +275,6 @@ Route::group(['prefix' => 'bangunan-liar'], function () {
 Route::group(['prefix' => 'penjaga-jalur-lintasan'], function () {
     Route::get('/', [\App\Http\Controllers\DirectPassageGuardController::class, 'index'])->name('direct-passage-guard');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageGuardController::class, 'store'])->name('direct-passage-guard.create');
-    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageGuardController::class, 'patch'])->name('direct-passage-guard.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageGuardController::class, 'destroy'])->name('direct-passage-guard.destroy');
 });
 

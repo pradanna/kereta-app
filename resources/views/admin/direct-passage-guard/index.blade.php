@@ -25,8 +25,10 @@
                 <thead>
                 <tr>
                     <th width="5%" class="text-center">#</th>
+                    <th width="15%">Kota</th>
+                    <th width="12%">Perlintasan</th>
+                    <th width="12%">Petak</th>
                     <th width="10%">No. PJL</th>
-                    <th width="15%">Petak</th>
                     <th>Nama</th>
                     <th width="12%" class="text-center">Aksi</th>
                 </tr>
@@ -100,12 +102,20 @@
                     orderable: false
                 },
                     {
-                        data: 'direct_passage.jpl',
-                        name: 'direct_passage.jpl'
+                        data: 'direct_passage.city.name',
+                        name: 'direct_passage.city.name'
+                    },
+                    {
+                        data: 'direct_passage.sub_track.track.code',
+                        name: 'direct_passage.sub_track.track.code'
                     },
                     {
                         data: 'direct_passage.sub_track.code',
                         name: 'direct_passage.sub_track.code'
+                    },
+                    {
+                        data: 'direct_passage.name',
+                        name: 'direct_passage.name'
                     },
                     {
                         data: 'human_resource.name',
@@ -123,7 +133,7 @@
                     }
                 ],
                 columnDefs: [{
-                    targets: [0, 1, 3],
+                    targets: [0, 1, 2, 3, 4, 6],
                     className: 'text-center'
                 }],
                 paging: true,

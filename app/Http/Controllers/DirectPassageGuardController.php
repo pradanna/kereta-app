@@ -21,7 +21,9 @@ class DirectPassageGuardController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = DirectPassageGuard::with(['direct_passage.sub_track', 'human_resource'])->orderBy('created_at', 'ASC')->get();
+            $data = DirectPassageGuard::with(['direct_passage.sub_track.track', 'direct_passage.city' ,'human_resource'])
+                ->orderBy('created_at', 'ASC')
+                ->get();
             return $this->basicDataTables($data);
         }
         return view('admin.direct-passage-guard.index');
@@ -49,34 +51,11 @@ class DirectPassageGuardController extends CustomController
         ]);
     }
 
-    public function patch($id)
-    {
-        $data = Area::with(['service_unit'])->findOrFail($id);
-        if ($this->request->method() === 'POST') {
-            try {
-                $data_request = [
-                    'service_unit_id' => $this->postField('service_unit'),
-                    'name' => $this->postField('name'),
-                    'latitude' => $this->postField('latitude'),
-                    'longitude' => $this->postField('longitude'),
-                ];
-                $data->update($data_request);
-                return redirect()->back()->with('success', 'success');
-            } catch (\Exception $e) {
-                return redirect()->back()->with('failed', 'internal server error');
-            }
-        }
-        $service_units = ServiceUnit::all();
-        return view('admin.master.area.edit')->with([
-            'data' => $data,
-            'service_units' => $service_units
-        ]);
-    }
 
     public function destroy($id)
     {
         try {
-            Area::destroy($id);
+            DirectPassageGuard::destroy($id);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
