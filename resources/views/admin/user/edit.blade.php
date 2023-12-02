@@ -75,17 +75,19 @@
                         <div class="form-group w-100">
                             <label for="role" class="form-label">Hak Akses</label>
                             <select class="select2 form-control" name="role" id="role" style="width: 100%;">
-                                <option value="admin-area" {{ ($data->role === 'admin-area') ? 'selected' : '' }}>Admin Daerah Operasi (DAOP)</option>
-                                <option value="chief-area" {{ ($data->role === 'chief-area') ? 'selected' : '' }}>Kepala Daerah Operasi (DAOP)</option>
+{{--                                <option value="admin-area" {{ ($data->role === 'admin-area') ? 'selected' : '' }}>Admin Daerah Operasi (DAOP)</option>--}}
+{{--                                <option value="chief-area" {{ ($data->role === 'chief-area') ? 'selected' : '' }}>Kepala Daerah Operasi (DAOP)</option>--}}
+                                <option value="admin-service-unit" {{ ($data->role === 'admin-service-unit') ? 'selected' : '' }}>Admin Satuan Pelayanan (SATPEL)</option>
+                                <option value="chief-service-unit" {{ ($data->role === 'chief-service-unit') ? 'selected' : '' }}>Kepala Satuan Pelayanan (SATPEL)</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Satuan Pelayanan</label>
-                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($data->area_id === $area->id) ? 'selected' : '' }}>{{ $area->name }}</option>
+                            <label for="service_unit" class="form-label">Satuan Pelayanan</label>
+                            <select class="select2 form-control" name="service_unit" id="service_unit" style="width: 100%;">
+                                @foreach ($service_units as $service_unit)
+                                    <option value="{{ $service_unit->id }}" {{ ($data->service_unit_id === $service_unit->id) ? 'selected' : '' }}>{{ $service_unit->name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -12,15 +12,16 @@ class DirectPassageGuard extends Model
 
     protected $fillable = [
         'direct_passage_id',
-        'is_verified_by_operator',
-        'is_verified_by_unit_track_and_bridge',
-        'is_verified_by_institution',
-        'is_verified_by_unguarded',
-        'is_illegal',
+        'human_resource_id',
     ];
 
     public function direct_passage()
     {
         return $this->belongsTo(DirectPassage::class, 'direct_passage_id');
+    }
+
+    public function human_resource()
+    {
+        return $this->belongsTo(DirectPassageHumanResource::class, 'human_resource_id');
     }
 }

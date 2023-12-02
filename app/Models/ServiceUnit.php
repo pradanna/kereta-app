@@ -25,4 +25,24 @@ class ServiceUnit extends Model
     {
         return $this->hasMany(Area::class, 'service_unit_id');
     }
+
+    public function resorts()
+    {
+        return $this->hasMany(Resort::class, 'service_unit_id');
+    }
+
+    public function getDisasterAreasAttribute()
+    {
+        $resorts = $this->resorts()->with(['disaster_areas'])->get();
+        $value = 0;
+        foreach ($resorts as $resort) {
+            $value += count($resort->disaster_areas);
+        }
+        return $value;
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ServiceUnitImage::class, 'service_unit_id');
+    }
 }

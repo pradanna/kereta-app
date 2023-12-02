@@ -187,7 +187,7 @@
                 </li>
 
                 @php
-                    $masterTrack = ['perlintasan', 'petak'];
+                    $masterTrack = ['perlintasan', 'petak', 'jenis-rawan-bencana', 'resort'];
                     $openMasterTrack = false;
                     foreach ($masterTrack as $mt) {
                         if (request()->is($mt . '*')) {
@@ -216,6 +216,47 @@
                             <a class="nav-link menu {{ request()->is('petak*') ? 'active' : '' }}"
                                href="{{ route('sub-track') }}">
                                 <p class="menu-text">Petak</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('jenis-rawan-bencana*') ? 'active' : '' }}"
+                               href="{{ route('disaster-type') }}">
+                                <p class="menu-text">Jenis Rawan Bencana</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('resort*') ? 'active' : '' }}"
+                               href="{{ route('resort') }}">
+                                <p class="menu-text">Resort</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                @php
+                    $masterHumanResource = ['sumber-daya-penjaga-jalur-lintasan'];
+                    $openMasterHumanResource = false;
+                    foreach ($masterHumanResource as $mhr) {
+                        if (request()->is($mhr . '*')) {
+                            $openMasterHumanResource = true;
+                            break;
+                        }
+                    }
+                @endphp
+                <li class="nav-item">
+                    <a class="nav-link menu">
+                        <span class="material-symbols-outlined menu-icon">
+                            person_apron
+                        </span>
+                        <p class="menu-text {{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? 'fw-bold' : '' }}">
+                            Master Data SDM
+                        </p>
+                    </a>
+                    <ul class="{{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? '' : 'collapse' }}">
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('sumber-daya-penjaga-jalur-lintasan*') ? 'active' : '' }}"
+                               href="{{ route('direct-passage-human-resource') }}">
+                                <p class="menu-text">Penjaga Jalur Lintasan</p>
                             </a>
                         </li>
                     </ul>
@@ -339,6 +380,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('daerah-rawan-bencana*') ? 'active' : '' }}"
+                        href="{{ route('disaster-area') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            flood
+                        </span>
+                        <p class="menu-text">Daerah Rawan Bencana</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('bangunan-liar*') ? 'active' : '' }}"
                         href="{{ route('illegal-building') }}">
                         <span class="material-symbols-outlined menu-icon">
@@ -347,8 +397,17 @@
                         <p class="menu-text">Bangunan Liar</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('penjaga-jalur-lintasan*') ? 'active' : '' }}"
+                        href="{{ route('direct-passage-guard') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            engineering
+                        </span>
+                        <p class="menu-text">Penjaga Jalur Lintasan (PJL)</p>
+                    </a>
+                </li>
                 @php
-                    $summary = ['rekapitulasi-sarana'];
+                    $summary = ['rekapitulasi-sarana', 'rekapitulasi-jalur-perlintasan-langsung', 'rekapitulasi-daerah-rawan-bencana'];
                     $openSummary = false;
                     foreach ($summary as $s) {
                         if (request()->is($s . '*')) {
@@ -371,6 +430,18 @@
                             <a class="nav-link menu {{ request()->is('rekapitulasi-sarana*') ? 'active' : '' }}"
                                 href="{{ route('summary-facility') }}">
                                 <p class="menu-text">Sarana</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('rekapitulasi-jalur-perlintasan-langsung*') ? 'active' : '' }}"
+                                href="{{ route('summary-direct-passage') }}">
+                                <p class="menu-text">Jalur Perlintasan Langsung</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu {{ request()->is('rekapitulasi-daerah-rawan-bencana*') ? 'active' : '' }}"
+                                href="{{ route('summary-disaster-area') }}">
+                                <p class="menu-text">Daerah Rawan Bencana</p>
                             </a>
                         </li>
                     </ul>

@@ -11,7 +11,7 @@ class TechnicalSpecLocomotive extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'facility_locomotive_id',
+        'locomotive_type_id',
         'empty_weight',
         'house_power',
         'maximum_speed',
@@ -23,9 +23,18 @@ class TechnicalSpecLocomotive extends Model
         'wheel_diameter',
     ];
 
-    public function facility_locomotive()
+    public function locomotive_type()
     {
-        return $this->belongsTo(FacilityLocomotive::class, 'facility_locomotive_id');
+        return $this->belongsTo(LocomotiveType::class, 'locomotive_type_id');
     }
 
+    public function tech_documents()
+    {
+        return $this->hasMany(TechnicalSpecLocomotiveDocument::class, 'ts_locomotive_id');
+    }
+
+    public function tech_images()
+    {
+        return $this->hasMany(TechnicalSpecLocomotiveImage::class, 'ts_locomotive_id');
+    }
 }

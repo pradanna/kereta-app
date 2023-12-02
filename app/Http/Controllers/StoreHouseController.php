@@ -8,8 +8,14 @@ use App\Helper\CustomController;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\Storehouse;
+use App\Models\StorehouseImage;
 use App\Models\StorehouseType;
+use App\Models\TechnicalSpecLocomotive;
+use App\Models\TechnicalSpecLocomotiveImage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Uuid;
 
 class StoreHouseController extends CustomController
 {
@@ -34,7 +40,7 @@ class StoreHouseController extends CustomController
             }
             switch ($type) {
                 case 'map':
-                    $data = $query->get();
+                    $data = $query->get()->append(['count_locomotive', 'count_train', 'count_wagon']);
                     return $this->jsonSuccessResponse('success', $data);
                 case 'table':
                     $data = $query
@@ -146,11 +152,64 @@ class StoreHouseController extends CustomController
         }
     }
 
+    public function image_page($id)
+    {
+        $data = Storehouse::with(['area', 'storehouse_type', 'images'])->findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            try {
+                if ($this->request->hasFile('files')) {
+                    foreach ($this->request->file('files') as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $document = Uuid::uuid4()->toString() . '.' . $extension;
+                        $storage_path = public_path('storehouse');
+                        $documentName = $storage_path . '/' . $document;
+                        $dataDocument = [
+                            'storehouse_id' => $data->id,
+                            'image' => '/storehouse/' . $document
+                        ];
+                        StorehouseImage::create($dataDocument);
+                        $file->move($storage_path, $documentName);
+                    }
+                    DB::commit();
+                    return $this->jsonSuccessResponse('success');
+                } else {
+                    DB::rollBack();
+                    return $this->jsonBadRequestResponse('no image attached...');
+                }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->jsonErrorResponse('internal server error');
+            }
+
+        }
+        return view('admin.master.storehouse.image')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            StorehouseImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
     public function getDataByArea()
     {
         try {
             $area = $this->request->query->get('area');
+            $service_unit = $this->request->query->get('service_unit');
             $query = Storehouse::with(['area', 'storehouse_type']);
+
+            if ($service_unit !== '' && $service_unit !== null) {
+                $query->whereHas('area', function ($qa) use ($service_unit) {
+                    /** @var $qa Builder */
+                    return $qa->where('service_unit_id', '=', $service_unit);
+                });
+            }
             if ($area !== '') {
                 $query->where('area_id', '=', $area);
             }
@@ -159,5 +218,29 @@ class StoreHouseController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function facility_locomotive_page($id)
+    {
+        $data = Storehouse::with([])->findOrFail($id);
+        return view('admin.master.storehouse.facility-certification.locomotive')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function facility_train_page($id)
+    {
+        $data = Storehouse::with([])->findOrFail($id);
+        return view('admin.master.storehouse.facility-certification.train')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function facility_wagon_page($id)
+    {
+        $data = Storehouse::with([])->findOrFail($id);
+        return view('admin.master.storehouse.facility-certification.wagon')->with([
+            'data' => $data
+        ]);
     }
 }

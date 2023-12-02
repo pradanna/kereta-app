@@ -5,13 +5,20 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
+use App\Models\Area;
 use App\Models\City;
 use App\Models\DirectPassage;
+use App\Models\DirectPassageImage;
 use App\Models\DirectPassageSignEquipment;
 use App\Models\FacilityLocomotive;
+use App\Models\Storehouse;
+use App\Models\StorehouseImage;
 use App\Models\SubTrack;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Ramsey\Uuid\Uuid;
 
 class DirectPassageController extends CustomController
 {
@@ -20,13 +27,56 @@ class DirectPassageController extends CustomController
         parent::__construct();
     }
 
+    private function generateData() {
+        $service_unit = $this->request->query->get('service_unit');
+        $area = $this->request->query->get('area');
+        $track = $this->request->query->get('track');
+        $query = DirectPassage::with(['sub_track.track.area', 'city', 'sign_equipment']);
+
+        if ($service_unit !== '' && $service_unit !== null) {
+            $query->whereHas('sub_track', function ($qst) use ($service_unit){
+                /** @var $qst Builder */
+                return $qst->whereHas('track', function ($qt) use ($service_unit){
+                    /** @var $qt Builder */
+                    return $qt->whereHas('area', function ($qa) use ($service_unit){
+                        /** @var $qa Builder */
+                        return $qa->where('service_unit_id', '=', $service_unit);
+                    });
+                });
+            });
+        }
+
+        if ($area !== '') {
+            $query->whereHas('sub_track', function ($qsta) use ($area){
+                /** @var $qsta Builder */
+                return $qsta->whereHas('track', function ($qta) use ($area){
+                    /** @var $qta Builder */
+                    return $qta->where('area_id', '=', $area);
+                });
+            });
+        }
+
+        if ($track !== '') {
+            $query->whereHas('sub_track', function ($qstt) use ($track){
+                /** @var $qstt Builder */
+                return $qstt->where('track_id', '=', $track);
+            });
+
+        }
+
+        return $query->orderBy('created_at', 'ASC')
+            ->get();
+    }
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = DirectPassage::with(['sub_track.track.area', 'city'])->orderBy('created_at', 'ASC')->get();
+            $data = $this->generateData();
             return $this->basicDataTables($data);
         }
-        return view('admin.direct-passage.index');
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.direct-passage.index')->with([
+            'areas' => $areas,
+        ]);
     }
 
     public function store()
@@ -52,6 +102,7 @@ class DirectPassageController extends CustomController
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
                     'description' => $this->postField('description'),
+                    'technical_documentation' => $this->postField('technical_documentation'),
                 ];
                 $direct_passage = DirectPassage::create($data_request_direct_passage);
 
@@ -76,7 +127,7 @@ class DirectPassageController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
-        $sub_tracks = SubTrack::all();
+        $sub_tracks = SubTrack::with(['track.area'])->orderBy('name')->get();
         $cities = City::all();
         return view('admin.direct-passage.add')->with(['sub_tracks' => $sub_tracks, 'cities' => $cities]);
     }
@@ -104,6 +155,7 @@ class DirectPassageController extends CustomController
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
                     'description' => $this->postField('description'),
+                    'technical_documentation' => $this->postField('technical_documentation'),
                 ];
                 $data->update($data_request_direct_passage);
                 $data_request_direct_passage_equipment = [
@@ -127,7 +179,7 @@ class DirectPassageController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $sub_tracks = SubTrack::all();
+        $sub_tracks = SubTrack::with(['track.area'])->orderBy('name')->get();
         $cities = City::all();
         return view('admin.direct-passage.edit')->with([
             'data' => $data,
@@ -165,10 +217,56 @@ class DirectPassageController extends CustomController
     public function export_to_excel()
     {
         $fileName = 'jalur_perlintasan_langsung_' . date('YmdHis') . '.xlsx';
-        $direct_passages = DirectPassage::with(['sign_equipment', 'sub_track.track.area', 'city'])->get();
+        $data = $this->generateData();
         return Excel::download(
-            new \App\Exports\DirectPassage($direct_passages),
+            new \App\Exports\DirectPassage($data),
             $fileName
         );
+    }
+
+    public function image_page($id)
+    {
+        $data = DirectPassage::with(['images'])->findOrFail($id);
+        if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            try {
+                if ($this->request->hasFile('files')) {
+                    foreach ($this->request->file('files') as $file) {
+                        $extension = $file->getClientOriginalExtension();
+                        $document = Uuid::uuid4()->toString() . '.' . $extension;
+                        $storage_path = public_path('direct-passage');
+                        $documentName = $storage_path . '/' . $document;
+                        $dataDocument = [
+                            'direct_passage_id' => $data->id,
+                            'image' => '/direct-passage/' . $document
+                        ];
+                        DirectPassageImage::create($dataDocument);
+                        $file->move($storage_path, $documentName);
+                    }
+                    DB::commit();
+                    return $this->jsonSuccessResponse('success');
+                } else {
+                    DB::rollBack();
+                    return $this->jsonBadRequestResponse('no image attached...');
+                }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->jsonErrorResponse('internal server error');
+            }
+
+        }
+        return view('admin.direct-passage.image')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            DirectPassageImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }

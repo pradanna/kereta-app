@@ -13,6 +13,38 @@
             </ol>
         </nav>
     </div>
+    <div class="panel w-100 shadow-sm mb-3">
+        <div class="isi">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 row gx-2">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>
+                            <select class="select2 form-control" name="area-option" id="area-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Daerah Operasi</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="track-option" class="form-label d-none">Perlintasan</label>
+                            <select class="select2 form-control" name="track-option" id="track-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Perlintasan</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel">
         <div class="title">
             <p>Data Jalur Perlintasan Langsung (JPL)</p>
@@ -20,8 +52,8 @@
                 <a class="btn-utama sml rnd me-2" href="{{ route('direct-passage.add') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-success sml rnd" href="{{ route('direct-passage.excel') }}" target="_blank">Export Excel
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_copy</i>
+                <a class="btn-success sml rnd" href="#" id="btn-export">Export
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
         </div>
@@ -32,11 +64,12 @@
                         <th class="text-center middle-header" width="5%">#</th>
                         <th class="text-center middle-header" width="10%">Wilayah</th>
                         <th class="text-center middle-header" width="10%">Perlintasan</th>
-                        <th class="text-center middle-header" width="10%">Antara</th>
+                        <th class="text-center middle-header" width="10%">Petak</th>
                         <th class="text-center middle-header" width="7%">JPL</th>
                         <th class="text-center middle-header" width="8%">KM/HM</th>
                         <th class="text-center middle-header" width="10%">Lebar Jalan</th>
                         <th class="middle-header">Nama Jalan</th>
+                        <th class="text-center middle-header" width="8%">Gambar</th>
                         <th class="text-center middle-header" width="15%">Aksi</th>
                     </tr>
                 </thead>
@@ -125,10 +158,17 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="guarded_by" class="form-label">Status Penjagaan</label>
                                 <input type="text" class="form-control" id="guarded_by" name="guarded_by" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="technical_documentation" class="form-label">No. Surat Rekomendasi Teknis</label>
+                                <input type="text" class="form-control" id="technical_documentation"
+                                       name="technical_documentation" disabled>
                             </div>
                         </div>
                     </div>
@@ -193,16 +233,45 @@
 @endsection
 
 @section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
         let path = '{{ route('direct-passage') }}';
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+
+        function getDataTrack() {
+            let areaID = $('#area-option').val();
+            let trackPath = '{{ route('track') }}';
+            let url = trackPath + '/area?area=' + areaID;
+            return $.get(url)
+        }
+
+        function generateDataTrackOption() {
+            let el = $('#track-option');
+            el.empty();
+            let elOption = '<option value="">Semua Perlintasan</option>';
+            getDataTrack().then((response) => {
+                const data = response['data'];
+                $.each(data, function (k, v) {
+                    elOption += '<option value="' + v['id'] + '">' + v['code'] + '</option>';
+                });
+            }).catch((e) => {
+                alert('terjadi kesalahan server...')
+            }).always(() => {
+                el.append(elOption);
+                $('.select2').select2({
+                    width: 'resolve',
+                });
+            })
+        }
 
         function deleteEvent() {
             $('.btn-delete').on('click', function(e) {
@@ -270,6 +339,7 @@
                 let road_construction = data['road_construction'];
                 let road_name = data['road_name'];
                 let guarded_by = data['guarded_by'];
+                let technical_documentation = data['technical_documentation'];
                 let city = data['city']['name'];
                 let latitude = data['latitude'];
                 let longitude = data['longitude'];
@@ -282,6 +352,7 @@
                 $('#road_construction').val(road_construction);
                 $('#road_name').val(road_name);
                 $('#guarded_by').val(availableGuards[guarded_by]);
+                $('#technical_documentation').val(technical_documentation);
                 $('#city').val(city);
                 $('#latitude').val(latitude);
                 $('#longitude').val(longitude);
@@ -299,6 +370,13 @@
         }
 
         $(document).ready(function() {
+            $('.select2').select2({
+                width: 'resolve',
+            });
+            generateDataTrackOption();
+            $('#area-option').on('change', function () {
+                generateDataTrackOption();
+            });
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -308,6 +386,10 @@
                 ajax: {
                     type: 'GET',
                     url: path,
+                    'data': function (d) {
+                        d.area = $('#area-option').val();
+                        d.track = $('#track-option').val();
+                    }
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -353,6 +435,15 @@
                     },
                     {
                         data: null,
+                        orderable: false,
+                        className: 'text-center',
+                        render: function (data) {
+                            let url = path + '/' + data['id'] + '/gambar';
+                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
+                        }
+                    },
+                    {
+                        data: null,
                         render: function(data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
                             return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
@@ -374,7 +465,22 @@
                     eventOpenDetail();
                     deleteEvent();
                 },
-            })
+                dom: 'ltrip'
+            });
+
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let track = $('#track-option').val();
+                let queryParam = '?area=' + area + '&track=' + track;
+                let exportPath = '{{ route('direct-passage.excel') }}' + queryParam;
+                window.open(exportPath, '_blank');
+            });
         })
     </script>
 @endsection

@@ -21,16 +21,20 @@
             </a>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped w-100">
+            <table id="table-data" class="display table w-100">
                 <thead>
                 <tr>
                     <th class="text-center middle-header" width="5%">#</th>
-                    <th class="text-center middle-header" width="15%">Jenis Sarana</th>
-                    <th class="text-center middle-header">Identitas Sarana</th>
-                    <th class="text-center middle-header" width="10%">Berat Kosong (Ton)</th>
-                    <th class="text-center middle-header" width="10%">Kecepatan Maksimum (Km/jam)</th>
-                    <th class="text-center middle-header" width="12%">Jumlah Tempat Duduk</th>
-                    <th class="text-center middle-header" width="12%">Jenis AC</th>
+                    <th class="middle-header">Jenis Kereta</th>
+                    <th class="text-center middle-header" width="12%">Spesifikasi Umum</th>
+                    <th class="text-center middle-header" width="12%">Dokumen</th>
+                    <th class="text-center middle-header" width="12%">Gambar</th>
+                    {{--                    <th class="text-center middle-header" width="15%">Jenis Sarana</th>--}}
+                    {{--                    <th class="text-center middle-header">Identitas Sarana</th>--}}
+                    {{--                    <th class="text-center middle-header" width="10%">Berat Kosong (Ton)</th>--}}
+                    {{--                    <th class="text-center middle-header" width="10%">Kecepatan Maksimum (Km/jam)</th>--}}
+                    {{--                    <th class="text-center middle-header" width="12%">Jumlah Tempat Duduk</th>--}}
+                    {{--                    <th class="text-center middle-header" width="12%">Jenis AC</th>--}}
                     {{--                    <th class="text-center" colspan="6">Dimensi</th>--}}
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
@@ -50,7 +54,7 @@
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
          aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Spesifikasi Teknis
@@ -59,9 +63,9 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <div class="form-group w-100">
-                                <label for="facility_train" class="form-label">Identitas Sarana</label>
-                                <input type="text" class="form-control" id="facility_train"
-                                       name="facility_train"
+                                <label for="train_type" class="form-label">Jenis Kereta</label>
+                                <input type="text" class="form-control" id="train_type"
+                                       name="train_type"
                                        disabled>
                             </div>
                         </div>
@@ -191,7 +195,7 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let facilityTrain = data['facility_train']['facility_number'];
+                let trainType = data['train_type']['code'] + ' (' + data['train_type']['name'] + ')';
                 let emptyWeight = data['empty_weight'];
                 let maximumSpeed = data['maximum_speed'];
                 let passengerCapacity = data['passenger_capacity'];
@@ -202,7 +206,7 @@
                 let couplerHeight = data['coupler_height'];
                 let axleLoad = data['axle_load'];
                 let spoorWidth = data['spoor_width'];
-                $('#facility_train').val(facilityTrain);
+                $('#train_type').val(trainType);
                 $('#empty_weight').val(emptyWeight);
                 $('#maximum_speed').val(maximumSpeed);
                 $('#passenger_capacity').val(passengerCapacity);
@@ -272,52 +276,79 @@
                     className: 'text-center',
                 },
                     {
-                        data: 'facility_train.train_type.name',
-                        name: 'facility_train.train_type.name',
-                        className: 'text-center'
+                        data: 'train_type',
+                        name: 'train_type',
+                        render: function (data) {
+                            return data['code'] + ' (' + data['name'] + ')';
+                        }
                     },
+                    // {
+                    //     data: 'facility_train.facility_number',
+                    //     name: 'facility_train.facility_number',
+                    //     className: 'text-center'
+                    // },
+                    //
+                    // {
+                    //     data: 'empty_weight',
+                    //     name: 'empty_weight',
+                    //     // width: '100px',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'maximum_speed',
+                    //     name: 'maximum_speed',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'passenger_capacity',
+                    //     name: 'passenger_capacity',
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         return data.toLocaleString('id-ID');
+                    //     }
+                    // },
+                    // {
+                    //     data: 'air_conditioner',
+                    //     name: 'air_conditioner',
+                    //     className: 'text-center'
+                    // },
                     {
-                        data: 'facility_train.facility_number',
-                        name: 'facility_train.facility_number',
-                        className: 'text-center'
-                    },
-
-                    {
-                        data: 'empty_weight',
-                        name: 'empty_weight',
-                        // width: '100px',
+                        data: null,
+                        orderable: false,
                         className: 'text-center',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Lihat</a>';
                         }
                     },
                     {
-                        data: 'maximum_speed',
-                        name: 'maximum_speed',
+                        data: null,
+                        orderable: false,
                         className: 'text-center',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            let url = path + '/' + data['id'] + '/dokumen';
+                            return '<a href="' + url + '" class="btn-document btn-table-action">Lihat</a>';
                         }
                     },
                     {
-                        data: 'passenger_capacity',
-                        name: 'passenger_capacity',
+                        data: null,
+                        orderable: false,
                         className: 'text-center',
                         render: function (data) {
-                            return data.toLocaleString('id-ID');
+                            let url = path + '/' + data['id'] + '/gambar';
+                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
                         }
-                    },
-                    {
-                        data: 'air_conditioner',
-                        name: 'air_conditioner',
-                        className: 'text-center'
                     },
                     {
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
                                 '">Delete</a>';

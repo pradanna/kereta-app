@@ -13,6 +13,7 @@ use App\Models\FacilityWagon;
 use App\Models\SpecialEquipmentType;
 use App\Models\TrainType;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FacilitySpecialEquipmentController extends CustomController
@@ -24,10 +25,18 @@ class FacilitySpecialEquipmentController extends CustomController
 
     private function generateData()
     {
+        $service_unit = $this->request->query->get('service_unit');
         $area = $this->request->query->get('area');
         $name = $this->request->query->get('name');
         $status = $this->request->query->get('status');
         $query = FacilitySpecialEquipment::with(['area', 'storehouse.storehouse_type', 'special_equipment_type']);
+
+        if ($service_unit !== '' && $service_unit !== null) {
+            $query->whereHas('area', function ($qse) use ($service_unit){
+                /** @var $qse Builder */
+                return $qse->where('service_unit_id', '=', $service_unit);
+            });
+        }
 
         if ($area !== '') {
             $query->where('area_id', '=', $area);

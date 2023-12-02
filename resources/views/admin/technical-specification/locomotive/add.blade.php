@@ -42,12 +42,12 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="facility_locomotive" class="form-label">Identitas Sarana</label>
-                            <select class="select2 form-control" name="facility_locomotive"
-                                    id="facility_locomotive" style="width: 100%;">
-                                @foreach ($facility_locomotives as $facility_locomotive)
+                            <label for="locomotive_type" class="form-label">Jenis Lokomotif</label>
+                            <select class="select2 form-control" name="locomotive_type"
+                                    id="locomotive_type" style="width: 100%;">
+                                @foreach ($locomotive_types as $locomotive_type)
                                     <option
-                                        value="{{ $facility_locomotive->id }}">{{ $facility_locomotive->facility_number }}</option>
+                                        value="{{ $locomotive_type->id }}">{{ $locomotive_type->code }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -144,13 +144,16 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
     <script>
         $(document).ready(function () {
+
             $('.select2').select2({
                 width: 'resolve',
             });

@@ -64,6 +64,36 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+        'tech-document' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/tech-document',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
+        'tech-image' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/tech-image',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
+        'service-unit' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/service-unit',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
+        'storehouse' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/storehouse',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
+        'direct-passage' => [
+            'driver' => 'local',
+            'root' => public_path() . '/assets/direct-passage',
+            'url' => env('APP_URL') . '/public',
+            'visibility' => 'public',
+        ],
 
     ],
 

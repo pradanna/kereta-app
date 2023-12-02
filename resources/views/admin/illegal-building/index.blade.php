@@ -13,6 +13,38 @@
             </ol>
         </nav>
     </div>
+    <div class="panel w-100 shadow-sm mb-3">
+        <div class="isi">
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1 row gx-2">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="area-option" class="form-label d-none">Daerah Operasi</label>
+                            <select class="select2 form-control" name="area-option" id="area-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Daerah Operasi</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="track-option" class="form-label d-none">Perlintasan</label>
+                            <select class="select2 form-control" name="track-option" id="track-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Perlintasan</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel">
         <div class="title">
             <p>Data Bangunan Liar</p>
@@ -20,8 +52,8 @@
                 <a class="btn-utama sml rnd me-2" href="{{ route('illegal-building.add') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-success sml rnd" href="{{ route('illegal-building.excel') }}" target="_blank">Export Excel
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_copy</i>
+                <a class="btn-success sml rnd" href="{{ route('illegal-building.excel') }}" target="_blank">Export
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
         </div>
@@ -30,12 +62,13 @@
                 <thead>
                     <tr>
                         <th class="text-center middle-header" width="5%" rowspan="2">#</th>
+                        <th class="text-center middle-header" width="10%" rowspan="2">Wilayah</th>
                         <th class="text-center middle-header" width="10%" rowspan="2">Perlintasan</th>
-                        <th class="text-center middle-header" width="10%" rowspan="2">Antara</th>
+                        <th class="text-center middle-header" width="10%" rowspan="2">Petak</th>
                         <th class="text-center middle-header" rowspan="2">KM/HM</th>
                         <th class="text-center middle-header" width="12%" rowspan="2">Kecamatan</th>
                         <th class="text-center middle-header" colspan="2">Luas</th>
-                        <th class="text-center middle-header" width="10%" rowspan="2">Jumlah Bangli</th>
+                        <th class="text-center middle-header" width="10%" rowspan="2">Jumlah Bangli (+/-)</th>
                         <th class="text-center middle-header" width="15%" rowspan="2">Aksi</th>
                     </tr>
                     <tr>
@@ -44,6 +77,15 @@
                     </tr>
                 </thead>
                 <tbody></tbody>
+                <tfoot>
+                <tr>
+                    <th class="middle-header" colspan="6">Jumlah</th>
+                    <th class="text-center middle-header" width="8%">0</th>
+                    <th class="text-center middle-header" width="8%">0</th>
+                    <th class="text-center middle-header" width="8%">0</th>
+                    <th class="text-center middle-header">Aksi</th>
+                </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -63,7 +105,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="sub_track" class="form-label">Lintas Antara</label>
+                                <label for="sub_track" class="form-label">Petak</label>
                                 <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
                             </div>
                         </div>
@@ -117,7 +159,7 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="illegal_building" class="form-label">Jumlah Bangunan Liar</label>
+                                <label for="illegal_building" class="form-label">Jumlah Bangunan Liar (+/-)</label>
                                 <input type="number" step="any" class="form-control" id="illegal_building"
                                     name="illegal_building" disabled>
                             </div>
@@ -130,6 +172,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <label for="description" class="form-label">Keterangan</label>
+                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -137,16 +187,45 @@
 @endsection
 
 @section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
         let path = '{{ route('illegal-building') }}';
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+
+        function getDataTrack() {
+            let areaID = $('#area-option').val();
+            let trackPath = '{{ route('track') }}';
+            let url = trackPath + '/area?area=' + areaID;
+            return $.get(url)
+        }
+
+        function generateDataTrackOption() {
+            let el = $('#track-option');
+            el.empty();
+            let elOption = '<option value="">Semua Perlintasan</option>';
+            getDataTrack().then((response) => {
+                const data = response['data'];
+                $.each(data, function (k, v) {
+                    elOption += '<option value="' + v['id'] + '">' + v['code'] + '</option>';
+                });
+            }).catch((e) => {
+                alert('terjadi kesalahan server...')
+            }).always(() => {
+                el.append(elOption);
+                $('.select2').select2({
+                    width: 'resolve',
+                });
+            })
+        }
 
         function deleteEvent() {
             $('.btn-delete').on('click', function(e) {
@@ -202,6 +281,7 @@
                 let distanceFromRail = data['distance_from_rail'];
                 let illegalBuilding = data['illegal_building'];
                 let demolished = data['demolished'];
+                let description = data['description'];
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
                 $('#district').val(district);
@@ -212,6 +292,7 @@
                 $('#distance_from_rail').val(distanceFromRail);
                 $('#illegal_building').val(illegalBuilding);
                 $('#demolished').val(demolished);
+                $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
@@ -219,6 +300,10 @@
         }
 
         $(document).ready(function() {
+            generateDataTrackOption();
+            $('#area-option').on('change', function () {
+                generateDataTrackOption();
+            });
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -228,12 +313,21 @@
                 ajax: {
                     type: 'GET',
                     url: path,
+                    'data': function (d) {
+                        d.area = $('#area-option').val();
+                        d.track = $('#track-option').val();
+                    }
                 },
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         searchable: false,
                         orderable: false,
+                        className: 'text-center',
+                    },
+                    {
+                        data: 'sub_track.track.area.name',
+                        name: 'sub_track.track.area.name',
                         className: 'text-center',
                     },
                     {
@@ -294,7 +388,46 @@
                     eventOpenDetail();
                     deleteEvent();
                 },
-            })
+                dom: 'ltrip',
+                footerCallback: function (row, data, start, end, display) {
+                    let api = this.api();
+
+                    let intVal = function (i) {
+                        return typeof i === 'string'
+                            ? i.replace(/[\$,]/g, '') * 1
+                            : typeof i === 'number'
+                                ? i
+                                : 0;
+                    };
+                    for (let i = 6; i < 9; i++) {
+                        total = api
+                            .column(i)
+                            .data()
+                            .reduce((a, b) => intVal(a) + intVal(b), 0);
+                        if (i === 8) {
+                            api.column(i).footer().innerHTML = total.toFixed(0);
+                        }else {
+                            api.column(i).footer().innerHTML = total.toFixed(2);
+                        }
+
+                    }
+
+                }
+            });
+
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let track = $('#track-option').val();
+                let queryParam = '?area=' + area + '&track=' + track;
+                let exportPath = '{{ route('direct-passage.excel') }}' + queryParam;
+                window.open(exportPath, '_blank');
+            });
         })
     </script>
 @endsection

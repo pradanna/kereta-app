@@ -42,12 +42,12 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
-                            <label for="facility_wagon" class="form-label">Identitas Sarana</label>
-                            <select class="select2 form-control" name="facility_wagon"
-                                    id="facility_wagon" style="width: 100%;">
-                                @foreach ($facility_wagons as $facility_wagon)
+                            <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
+                            <select class="select2 form-control" name="wagon_sub_type"
+                                    id="wagon_sub_type" style="width: 100%;">
+                                @foreach ($wagon_sub_types as $wagon_sub_type)
                                     <option
-                                        value="{{ $facility_wagon->id }}" {{ ($facility_wagon->id === $data->facility_wagon_id) ? 'selected' :'' }}>{{ $facility_wagon->facility_number }} ({{ $facility_wagon->wagon_sub_type->name }})</option>
+                                        value="{{ $wagon_sub_type->id }}" {{ ($wagon_sub_type->id === $data->wagon_sub_type_id) ? 'selected' :'' }}>{{ $wagon_sub_type->code }} ({{ $wagon_sub_type->wagon_type->code }})</option>
                                 @endforeach
                             </select>
                         </div>

@@ -93,6 +93,7 @@
                             <th width="15%" class="text-center">Kota</th>
                             <th>Tipe</th>
                             <th width="15%" class="text-center">Nama</th>
+                            <th class="text-center middle-header" width="12%">Gambar</th>
                             <th width="12%" class="text-center">Aksi</th>
                         </tr>
                         </thead>
@@ -240,6 +241,15 @@
                     },
                     {
                         data: null,
+                        orderable: false,
+                        className: 'text-center',
+                        render: function (data) {
+                            let url = path + '/' + data['id'] + '/gambar';
+                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
+                        }
+                    },
+                    {
+                        data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
                             return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
@@ -250,7 +260,7 @@
                     }
                 ],
                 columnDefs: [{
-                    targets: [0, 1, 2, 4, 5],
+                    targets: [0, 1, 2, 4, 5, 6],
                     className: 'text-center'
                 }, {
                     targets: '_all',
