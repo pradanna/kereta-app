@@ -45,7 +45,7 @@
                             <label for="area" class="form-label">Daerah Operasi<span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}">{{ $area->name }} ({{ $area->service_unit->name }})</option>
                                 @endforeach
                             </select>
                             @if($errors->has('area'))

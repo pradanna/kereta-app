@@ -14,7 +14,8 @@ class TechnicalSpecSpecialEquipmentDocument extends Model
 
     protected $fillable = [
         'ts_special_equipment_id',
-        'document'
+        'document',
+        'name'
     ];
 
     public function technical_spec()

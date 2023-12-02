@@ -38,13 +38,13 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
                             <select class="select2 form-control" name="service_unit" id="service_unit" style="width: 100%;">
                                 @foreach ($service_units as $k => $service_unit)
-                                    <option value="{{ $service_unit->id }}" selected="{{ ($service_unit->id == $data->service_unit_id) ? 'selected' : '' }}">{{ $service_unit->name }}</option>
+                                    <option value="{{ $service_unit->id }}" {{ ($service_unit->id == $data->service_unit_id) ? 'selected' : '' }}>{{ $service_unit->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
                             <label for="latitude" class="form-label">Latitude</label>

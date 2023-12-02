@@ -203,8 +203,8 @@ function createMultiMarkerStorehouse(data = []) {
 
 function windowContentStorehouseMarker(data) {
     return '<div class="p-1" style="width: 200px;">' +
-        '<p class="mb-1 text-center" style="color: #777777; font-size: 12px;">' + data['storehouse_type']['name'] + ' (' + data['area']['name'] + ')</p>' +
-        '<p class="mb-3 text-center" style="color: #222222; font-size: 12px;">' + data['name'] + '</p>' +
+        '<p class="mb-1 text-center" style="color: #777777; font-size: 12px; font-weight: bold;">' + data['name'] + '</p>' +
+        '<p class="mb-3 text-center" style="color: #777777; font-size: 12px;">' + data['storehouse_type']['name'] + ' (' + data['area']['name'] + ')</p>' +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
         '<a href="#" onclick="goToFacilityLocomotivePage(this)" class="d-flex align-items-center btn-facility" data-id="' + data['id'] + '" style="text-decoration: none;">' +
         '<span style="color: #777777; font-size: 12px;">Lokomotif (' + data['count_locomotive'] + ')</span>' +

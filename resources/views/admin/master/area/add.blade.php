@@ -38,7 +38,7 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
                             <label for="latitude" class="form-label">Latitude</label>

@@ -91,8 +91,8 @@
                             <th width="5%" class="text-center">#</th>
                             <th width="15%" class="text-center">Daerah Operasi</th>
                             <th width="15%" class="text-center">Kota</th>
-                            <th>Tipe</th>
-                            <th width="15%" class="text-center">Nama</th>
+                            <th width="15%">Tipe</th>
+                            <th>Nama</th>
                             <th class="text-center middle-header" width="12%">Gambar</th>
                             <th width="12%" class="text-center">Aksi</th>
                         </tr>
@@ -260,7 +260,7 @@
                     }
                 ],
                 columnDefs: [{
-                    targets: [0, 1, 2, 4, 5, 6],
+                    targets: [0, 1, 2, 3, 5, 6],
                     className: 'text-center'
                 }, {
                     targets: '_all',

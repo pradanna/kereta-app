@@ -10,6 +10,7 @@ class TechnicalSpecWagon extends Model
 {
     use HasFactory, Uuids;
 
+    protected $table = 'ts_wagons';
     protected $fillable = [
         'wagon_sub_type_id',
         'loading_weight',

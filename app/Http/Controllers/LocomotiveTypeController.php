@@ -17,7 +17,7 @@ class LocomotiveTypeController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = LocomotiveType::with([])->orderBy('created_at', 'ASC')->get();
+            $data = LocomotiveType::with([])->orderBy('code', 'ASC')->get();
             return $this->basicDataTables($data);
         }
         return view('admin.master.locomotive-type.index');

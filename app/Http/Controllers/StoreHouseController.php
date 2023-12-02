@@ -51,8 +51,8 @@ class StoreHouseController extends CustomController
                     return $this->jsonSuccessResponse('success', []);
             }
         }
-        $storehouse_types = StorehouseType::all();
-        $areas = Area::with([])->orderBy('name', 'ASC')->get();
+        $storehouse_types = StorehouseType::with([])->orderBy('name', 'ASC')->get();
+        $areas = Area::with(['service_unit'])->orderBy('name', 'ASC')->get();
         return view('admin.master.storehouse.index')->with([
             'storehouse_types' => $storehouse_types,
             'areas' => $areas,
@@ -98,9 +98,9 @@ class StoreHouseController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $storehouse_types = StorehouseType::all();
-        $cities = City::all();
-        $areas = Area::with([])->orderBy('name', 'ASC')->get();
+        $storehouse_types = StorehouseType::with([])->orderBy('name', 'ASC')->get();
+        $cities = City::with([])->orderBy('name', 'ASC')->get();
+        $areas = Area::with(['service_unit'])->orderBy('name', 'ASC')->get();
         return view('admin.master.storehouse.add')->with([
             'storehouse_types' => $storehouse_types,
             'cities' => $cities,
