@@ -110,7 +110,7 @@ class FacilityTrainController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $train_types = TrainType::all();
+        $train_types = TrainType::with([])->orderBy('code', 'ASC')->get();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.train.add')->with([
             'train_types' => $train_types,
@@ -140,7 +140,7 @@ class FacilityTrainController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $train_types = TrainType::all();
+        $train_types = TrainType::with([])->orderBy('code', 'ASC')->get();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-certification.train.edit')->with([
             'data' => $data,

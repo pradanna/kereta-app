@@ -46,7 +46,7 @@ class SubTrackController extends CustomController
                 return redirect()->back();
             }
         }
-        $tracks = Track::all();
+        $tracks = Track::with(['area'])->orderBy('code','ASC')->get();
         return view('admin.master.sub-track.add')->with(['tracks' => $tracks]);
     }
 
@@ -67,7 +67,7 @@ class SubTrackController extends CustomController
             }
 
         }
-        $tracks = Track::all();
+        $tracks = Track::with(['area'])->orderBy('code','ASC')->get();
         return view('admin.master.sub-track.edit')->with([
             'data' => $data,
             'tracks' => $tracks

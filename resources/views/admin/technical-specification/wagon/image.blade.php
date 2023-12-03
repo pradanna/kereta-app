@@ -27,16 +27,14 @@
             <p>Gambar Spesifikasi Teknis Sarana Gerbong {{ $data->wagon_sub_type->code }}</p>
         </div>
         <div class="isi">
-
-            <div class="row gx-3">
+            <div class="d-flex flex-wrap justify-content-center gx-3">
                 @forelse($data->tech_images as $image)
-                    <div class="col-3">
-                        <div class="d-flex flex-column justify-content-center align-items-center w-100">
-                            <img src="{{ asset($image->image) }}" height="100" width="100">
-                        </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3">
+                        <img src="{{ asset($image->image) }}" alt="storehouse-image" height="200" width="200" style="object-fit: cover;">
+                        <a href="#" class="btn-drop-image btn-table-action" data-id="{{ $image->id }}">Hapus</a>
                     </div>
                 @empty
-                    <div class="col-12 d-flex justify-content-center align-items-center" style="height: 200px;">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
                         <p class="text-center fw-bold">Tidak Ada Gambar Terlampir</p>
                     </div>
                 @endforelse

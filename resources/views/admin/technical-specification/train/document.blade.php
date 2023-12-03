@@ -27,14 +27,15 @@
             <p>Dokumen Spesifikasi Teknis Sarana Kereta {{ $data->train_type->code }}</p>
         </div>
         <div class="isi">
-
-            <div class="row gx-3">
+            <div class="d-flex flex-wrap justify-content-center gx-3">
                 @forelse($data->tech_documents as $document)
-                    <div class="col-3">
-                        <a href="{{ asset($document->$document) }}" target="_blank">Lihat</a>
+                    <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3" style="width: 250px;">
+                        <img src="{{ asset('/images/local/logo-google.png') }}" alt="document-image" height="200" width="200" style="object-fit: cover;">
+                        <p class="fw-bold text-truncate" style="max-width: 200px;">{{ $document->name }}</p>
+                        <a href="#" class="btn-drop-image btn-table-action" data-id="{{ $document->id }}">Hapus</a>
                     </div>
                 @empty
-                    <div class="col-12 d-flex justify-content-center align-items-center" style="height: 200px;">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
                         <p class="text-center fw-bold">Tidak Ada Dokumen Terlampir</p>
                     </div>
                 @endforelse

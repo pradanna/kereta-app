@@ -130,12 +130,14 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 if ($this->request->hasFile('files')) {
                     foreach ($this->request->file('files') as $file) {
                         $extension = $file->getClientOriginalExtension();
+                        $originalName = $file->getClientOriginalName();
                         $document = Uuid::uuid4()->toString() . '.' . $extension;
                         $storage_path = public_path('tech-document');
                         $documentName = $storage_path . '/' . $document;
                         $dataDocument = [
                             'ts_locomotive_id' => $data->id,
-                            'document' => '/tech-document/' . $document
+                            'document' => '/tech-document/' . $document,
+                            'name' => $originalName
                         ];
                         TechnicalSpecLocomotiveDocument::create($dataDocument);
                         $file->move($storage_path, $documentName);

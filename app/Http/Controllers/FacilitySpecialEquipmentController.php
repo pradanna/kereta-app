@@ -90,11 +90,12 @@ class FacilitySpecialEquipmentController extends CustomController
                     'new_facility_number' => $this->postField('new_facility_number'),
                     'old_facility_number' => $this->postField('old_facility_number'),
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
-                    'testing_number' => $this->postField('testing_number') !== '' ? $this->postField('testing_number') : null,
+                    'testing_number' => $this->postField('testing_number') !== '' ? $this->postField('testing_number') : '',
                 ];
                 FacilitySpecialEquipment::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
@@ -118,7 +119,7 @@ class FacilitySpecialEquipmentController extends CustomController
                     'new_facility_number' => $this->postField('new_facility_number'),
                     'old_facility_number' => $this->postField('old_facility_number'),
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
-                    'testing_number' => $this->postField('testing_number') !== '' ? $this->postField('testing_number') : null,
+                    'testing_number' => $this->postField('testing_number') !== '' ? $this->postField('testing_number') : '',
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');

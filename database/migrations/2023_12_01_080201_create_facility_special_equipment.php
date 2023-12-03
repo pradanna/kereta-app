@@ -17,7 +17,7 @@ class CreateFacilitySpecialEquipment extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('area_id');
             $table->foreignUuid('special_equipment_type_id');
-            $table->foreignUuid('storehouse_id');
+            $table->foreignUuid('storehouse_id')->nullable();
             $table->string('ownership');
             $table->string('old_facility_number');
             $table->string('new_facility_number');
