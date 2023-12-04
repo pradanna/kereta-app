@@ -86,6 +86,37 @@
             },
         };
 
+        function deleteEvent() {
+            $('.btn-drop-image').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus Gambar?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = '{{ route('technical-specification.locomotive') }}' + '/' + id + '/delete-image';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    window.location.reload();
+                });
+            });
+        }
+
         $(document).ready(function () {
             $("#document-dropzone").dropzone({
                 url: path,
@@ -138,6 +169,7 @@
                 },
             });
 
+            deleteEvent();
 
         });
     </script>

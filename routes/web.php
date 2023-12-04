@@ -211,6 +211,9 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
     Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'detail'])->name('technical-specification.locomotive.detail');
     Route::match(['post', 'get'],'/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'document_page'])->name('technical-specification.locomotive.document');
     Route::match(['post', 'get'],'/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'image_page'])->name('technical-specification.locomotive.image');
+    Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy_document'])->name('technical-specification.locomotive.document.delete');
+    Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy_image'])->name('technical-specification.locomotive.image.delete');
+
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {
@@ -221,6 +224,9 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {
     Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'detail'])->name('technical-specification.train.detail');
     Route::match(['post', 'get'],'/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'document_page'])->name('technical-specification.train.document');
     Route::match(['post', 'get'],'/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'image_page'])->name('technical-specification.train.image');
+    Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy_document'])->name('technical-specification.train.document.delete');
+    Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy_image'])->name('technical-specification.train.image.delete');
+
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-gerbong'], function () {
@@ -231,6 +237,9 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-gerbong'], function () {
     Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'detail'])->name('technical-specification.wagon.detail');
     Route::match(['post', 'get'],'/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'document_page'])->name('technical-specification.wagon.document');
     Route::match(['post', 'get'],'/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'image_page'])->name('technical-specification.wagon.image');
+    Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy_document'])->name('technical-specification.wagon.document.delete');
+    Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy_image'])->name('technical-specification.wagon.image.delete');
+
 });
 
 Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], function () {
@@ -241,6 +250,9 @@ Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], functio
     Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'detail'])->name('technical-specification.special-equipment.detail');
     Route::match(['post', 'get'],'/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'document_page'])->name('technical-specification.special-equipment.document');
     Route::match(['post', 'get'],'/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'image_page'])->name('technical-specification.special-equipment.image');
+    Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'destroy_document'])->name('technical-specification.special-equipment.document.delete');
+    Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'destroy_image'])->name('technical-specification.special-equipment.image.delete');
+
 });
 
 Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {

@@ -194,4 +194,24 @@ class TechnicalSpecificationLocomotiveController extends CustomController
             'data' => $data
         ]);
     }
+
+    public function destroy_document($id)
+    {
+        try {
+            TechnicalSpecLocomotiveDocument::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            TechnicalSpecLocomotiveImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
 }

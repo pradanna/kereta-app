@@ -32,7 +32,7 @@
                     <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3" style="width: 250px;">
                         <img src="{{ asset('/images/local/logo-google.png') }}" alt="document-image" height="200" width="200" style="object-fit: cover;">
                         <p class="fw-bold text-truncate" style="max-width: 200px;">{{ $document->name }}</p>
-                        <a href="#" class="btn-drop-image btn-table-action" data-id="{{ $document->id }}">Hapus</a>
+                        <a href="#" class="btn-drop-document btn-table-action" data-id="{{ $document->id }}">Hapus</a>
                     </div>
                 @empty
                     <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
@@ -86,6 +86,37 @@
                 uploadedDocumentMap[file.name] = response.name
             },
         };
+
+        function deleteEvent() {
+            $('.btn-drop-document').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus Gambar?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = '{{ route('technical-specification.special-equipment') }}' + '/' + id + '/delete-document';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    window.location.reload();
+                });
+            });
+        }
 
         $(document).ready(function () {
             $("#document-dropzone").dropzone({
@@ -150,6 +181,7 @@
                 // },
             });
 
+            deleteEvent();
 
         });
     </script>

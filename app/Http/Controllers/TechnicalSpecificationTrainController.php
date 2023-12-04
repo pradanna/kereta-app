@@ -198,4 +198,24 @@ class TechnicalSpecificationTrainController extends CustomController
             'data' => $data
         ]);
     }
+
+    public function destroy_document($id)
+    {
+        try {
+            TechnicalSpecTrainDocument::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            TechnicalSpecTrainImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
 }
