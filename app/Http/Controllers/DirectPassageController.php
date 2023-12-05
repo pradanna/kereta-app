@@ -27,18 +27,19 @@ class DirectPassageController extends CustomController
         parent::__construct();
     }
 
-    private function generateData() {
+    private function generateData()
+    {
         $service_unit = $this->request->query->get('service_unit');
         $area = $this->request->query->get('area');
         $track = $this->request->query->get('track');
         $query = DirectPassage::with(['sub_track.track.area', 'city', 'sign_equipment']);
 
         if ($service_unit !== '' && $service_unit !== null) {
-            $query->whereHas('sub_track', function ($qst) use ($service_unit){
+            $query->whereHas('sub_track', function ($qst) use ($service_unit) {
                 /** @var $qst Builder */
-                return $qst->whereHas('track', function ($qt) use ($service_unit){
+                return $qst->whereHas('track', function ($qt) use ($service_unit) {
                     /** @var $qt Builder */
-                    return $qt->whereHas('area', function ($qa) use ($service_unit){
+                    return $qt->whereHas('area', function ($qa) use ($service_unit) {
                         /** @var $qa Builder */
                         return $qa->where('service_unit_id', '=', $service_unit);
                     });
@@ -47,9 +48,9 @@ class DirectPassageController extends CustomController
         }
 
         if ($area !== '') {
-            $query->whereHas('sub_track', function ($qsta) use ($area){
+            $query->whereHas('sub_track', function ($qsta) use ($area) {
                 /** @var $qsta Builder */
-                return $qsta->whereHas('track', function ($qta) use ($area){
+                return $qsta->whereHas('track', function ($qta) use ($area) {
                     /** @var $qta Builder */
                     return $qta->where('area_id', '=', $area);
                 });
@@ -57,7 +58,7 @@ class DirectPassageController extends CustomController
         }
 
         if ($track !== '') {
-            $query->whereHas('sub_track', function ($qstt) use ($track){
+            $query->whereHas('sub_track', function ($qstt) use ($track) {
                 /** @var $qstt Builder */
                 return $qstt->where('track_id', '=', $track);
             });
@@ -65,13 +66,22 @@ class DirectPassageController extends CustomController
         }
 
         return $query->orderBy('created_at', 'ASC')
-            ->get();
+            ->get()->append(['count_guard']);
     }
+
     public function index()
     {
         if ($this->request->ajax()) {
+            $type = $this->request->query->get('type');
             $data = $this->generateData();
-            return $this->basicDataTables($data);
+            switch ($type) {
+                case 'map':
+                    return $this->jsonSuccessResponse('success', $data);
+                case 'table':
+                    return $this->basicDataTables($data);
+                default:
+                    return $this->jsonSuccessResponse('success', []);
+            }
         }
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.direct-passage.index')->with([
@@ -96,7 +106,7 @@ class DirectPassageController extends CustomController
                     'guarded_by' => $this->postField('guarded_by'),
                     'is_closed' => false,
                     'is_not_found' => false,
-                    'is_underpass' => false,
+//                    'is_underpass' => false,
                     'arrangement_proposal' => false,
                     'accident_history' => $this->postField('accident_history'),
                     'latitude' => $this->postField('latitude'),
@@ -123,12 +133,13 @@ class DirectPassageController extends CustomController
                 DB::commit();
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 DB::rollBack();
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
         $sub_tracks = SubTrack::with(['track.area'])->orderBy('name')->get();
-        $cities = City::all();
+        $cities = City::with([])->orderBy('name', 'ASC')->get();
         return view('admin.direct-passage.add')->with(['sub_tracks' => $sub_tracks, 'cities' => $cities]);
     }
 
@@ -149,7 +160,7 @@ class DirectPassageController extends CustomController
                     'guarded_by' => $this->postField('guarded_by'),
                     'is_closed' => false,
                     'is_not_found' => false,
-                    'is_underpass' => false,
+//                    'is_underpass' => false,
                     'arrangement_proposal' => false,
                     'accident_history' => $this->postField('accident_history'),
                     'latitude' => $this->postField('latitude'),
@@ -268,5 +279,15 @@ class DirectPassageController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function direct_passage_guard_page($id)
+    {
+        $data = DirectPassage::with(['direct_passage_guard.human_resource'])
+            ->findOrFail($id)->append(['count_guard']);
+        if ($this->request->ajax()) {
+            return $this->basicDataTables($data->direct_passage_guard->toArray());
+        }
+        return view('admin.direct-passage.guard')->with(['data' => $data]);
     }
 }

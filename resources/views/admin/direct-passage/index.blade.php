@@ -58,27 +58,59 @@
             </div>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped w-100">
-                <thead>
-                    <tr>
-                        <th class="text-center middle-header" width="5%">#</th>
-                        <th class="text-center middle-header" width="10%">Wilayah</th>
-                        <th class="text-center middle-header" width="10%">Perlintasan</th>
-                        <th class="text-center middle-header" width="10%">Petak</th>
-                        <th class="text-center middle-header" width="7%">JPL</th>
-                        <th class="text-center middle-header" width="8%">KM/HM</th>
-                        <th class="text-center middle-header" width="10%">Lebar Jalan</th>
-                        <th class="middle-header">Nama Jalan</th>
-                        <th class="text-center middle-header" width="8%">Gambar</th>
-                        <th class="text-center middle-header" width="15%">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="d-flex align-items-center mb-3">
+                <div class="flex-grow-1">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active d-flex align-items-center" id="pills-table-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
+                                    aria-selected="true">
+                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
+                                Data
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link d-flex align-items-center" id="pills-map-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
+                                    aria-controls="pills-map" aria-selected="false">
+                                <i class="material-symbols-outlined me-1"
+                                   style="font-size: 14px; color: inherit">public</i>
+                                Peta
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
+                     aria-labelledby="pills-table-tab">
+                    <table id="table-data" class="display table table-striped w-100">
+                        <thead>
+                        <tr>
+                            <th class="text-center middle-header" width="5%">#</th>
+                            <th class="text-center middle-header" width="10%">Wilayah</th>
+                            <th class="text-center middle-header" width="10%">Perlintasan</th>
+                            <th class="text-center middle-header">Petak</th>
+                            <th class="text-center middle-header" width="7%">JPL</th>
+                            <th class="text-center middle-header" width="8%">KM/HM</th>
+                            <th class="text-center middle-header" width="10%">Lebar Jalan</th>
+                            <th class="text-center middle-header" width="8%">PJL</th>
+                            <th class="text-center middle-header" width="8%">Gambar</th>
+                            <th class="text-center middle-header" width="15%">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
+                    <div id="main-map" style="width: 100%; height: calc(100vh - 70px); border-radius: 10px;"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
@@ -89,8 +121,9 @@
                         <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="sub_track" class="form-label">Lintas Antara</label>
-                                <input type="text" class="form-control" id="sub_track" name="sub_track" placeholder="JPL"
-                                    disabled>
+                                <input type="text" class="form-control" id="sub_track" name="sub_track"
+                                       placeholder="JPL"
+                                       disabled>
                             </div>
                         </div>
                     </div>
@@ -99,14 +132,14 @@
                             <div class="w-100">
                                 <label for="name" class="form-label">JPL</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="JPL"
-                                    disabled>
+                                       disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
                                 <input type="text" class="form-control" id="stakes" name="stakes" placeholder="KM/HM"
-                                    disabled>
+                                       disabled>
                             </div>
                         </div>
                     </div>
@@ -115,14 +148,14 @@
                             <div class="w-100">
                                 <label for="accident_history" class="form-label">Riwayat Kecelakaan</label>
                                 <input type="number" class="form-control" id="accident_history" name="accident_history"
-                                    placeholder="0" disabled>
+                                       placeholder="0" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="width" class="form-label">Lebar Jalan (m)</label>
                                 <input type="number" step="any" class="form-control" id="width" name="width"
-                                    placeholder="0" disabled>
+                                       placeholder="0" disabled>
                             </div>
                         </div>
                     </div>
@@ -131,7 +164,7 @@
                             <div class="w-100">
                                 <label for="road_construction" class="form-label">Konstruksi Jalan</label>
                                 <input type="text" class="form-control" id="road_construction"
-                                    name="road_construction" placeholder="Konstruksi Jalan" disabled>
+                                       name="road_construction" placeholder="Konstruksi Jalan" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -146,14 +179,14 @@
                             <div class="w-100">
                                 <label for="latitude" class="form-label">Latitude</label>
                                 <input type="number" step="any" class="form-control" id="latitude"
-                                    name="latitude" placeholder="Contoh: 7.1129489" disabled>
+                                       name="latitude" placeholder="Contoh: 7.1129489" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="longitude" class="form-label">Longitude</label>
                                 <input type="number" step="any" class="form-control" id="longitude"
-                                    name="longitude" placeholder="Contoh: 110.1129489" disabled>
+                                       name="longitude" placeholder="Contoh: 110.1129489" disabled>
                             </div>
                         </div>
                     </div>
@@ -166,7 +199,8 @@
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="technical_documentation" class="form-label">No. Surat Rekomendasi Teknis</label>
+                                <label for="technical_documentation" class="form-label">No. Surat Rekomendasi
+                                    Teknis</label>
                                 <input type="text" class="form-control" id="technical_documentation"
                                        name="technical_documentation" disabled>
                             </div>
@@ -176,15 +210,17 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="road_name" class="form-label">Nama Jalan / Daerah</label>
-                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name" name="road_name"
-                                    placeholder="Konstruksi Jalan" disabled></textarea>
+                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name"
+                                          name="road_name"
+                                          placeholder="Konstruksi Jalan" disabled></textarea>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description" name="description"
-                                    placeholder="Keterangan" disabled></textarea>
+                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
+                                          name="description"
+                                          placeholder="Keterangan" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -193,37 +229,37 @@
                     <hr>
                     <table id="table-guard" class="display table table-striped w-100">
                         <thead>
-                            <tr>
-                                <th class="text-center middle-header">Peringatan Membunyikan Suling Lokomotif</th>
-                                <th class="text-center middle-header" width="8%">Peringatan Pintu Perlintasan Sebidang
-                                </th>
-                                <th class="text-center middle-header" width="8%">Peringatan Tanpa Pintu Perlintasan
-                                    Sebidang
-                                </th>
-                                <th class="text-center middle-header" width="8%">Peringatan</th>
-                                <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 400m</th>
-                                <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 350m</th>
-                                <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 100m</th>
-                                <th class="text-center middle-header" width="8%">Rambu STOP</th>
-                                <th class="text-center middle-header" width="8%">Larangan Berjalan</th>
-                                <th class="text-center middle-header" width="8%">Larangan Masuk Kendaraan</th>
-                                <th class="text-center middle-header" width="8%">Garis Kejut</th>
-                            </tr>
+                        <tr>
+                            <th class="text-center middle-header">Peringatan Membunyikan Suling Lokomotif</th>
+                            <th class="text-center middle-header" width="8%">Peringatan Pintu Perlintasan Sebidang
+                            </th>
+                            <th class="text-center middle-header" width="8%">Peringatan Tanpa Pintu Perlintasan
+                                Sebidang
+                            </th>
+                            <th class="text-center middle-header" width="8%">Peringatan</th>
+                            <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 400m</th>
+                            <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 350m</th>
+                            <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 100m</th>
+                            <th class="text-center middle-header" width="8%">Rambu STOP</th>
+                            <th class="text-center middle-header" width="8%">Larangan Berjalan</th>
+                            <th class="text-center middle-header" width="8%">Larangan Masuk Kendaraan</th>
+                            <th class="text-center middle-header" width="8%">Garis Kejut</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td id="locomotive_flute" class="text-center">-</td>
-                                <td id="crossing_gate" class="text-center">-</td>
-                                <td id="non_crossing_gate" class="text-center">-</td>
-                                <td id="warning" class="text-center">-</td>
-                                <td id="critical_distance_450" class="text-center">-</td>
-                                <td id="critical_distance_300" class="text-center">-</td>
-                                <td id="critical_distance_100" class="text-center">-</td>
-                                <td id="stop_sign" class="text-center">-</td>
-                                <td id="walking_ban" class="text-center">-</td>
-                                <td id="vehicle_entry_ban" class="text-center">-</td>
-                                <td id="shock_line" class="text-center">-</td>
-                            </tr>
+                        <tr>
+                            <td id="locomotive_flute" class="text-center">-</td>
+                            <td id="crossing_gate" class="text-center">-</td>
+                            <td id="non_crossing_gate" class="text-center">-</td>
+                            <td id="warning" class="text-center">-</td>
+                            <td id="critical_distance_450" class="text-center">-</td>
+                            <td id="critical_distance_300" class="text-center">-</td>
+                            <td id="critical_distance_100" class="text-center">-</td>
+                            <td id="stop_sign" class="text-center">-</td>
+                            <td id="walking_ban" class="text-center">-</td>
+                            <td id="vehicle_entry_ban" class="text-center">-</td>
+                            <td id="shock_line" class="text-center">-</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -234,10 +270,15 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
+    <script src="{{ asset('js/map-control.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+
 @endsection
 
 @section('js')
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        async></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
@@ -246,6 +287,37 @@
         let path = '{{ route('direct-passage') }}';
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+
+        function changeTabEvent() {
+            $("#pills-tab").on("shown.bs.tab", function (e) {
+                if (e.target.id === "pills-table-tab") {
+                    table.columns.adjust();
+                }
+                if (e.target.id === "pills-map-tab") {
+                    generateMapDirectPassage();
+                }
+            })
+        }
+
+        function getDataDirectPassageMap() {
+            let area = $('#area-option').val();
+            let track = $('#track-option').val();
+            let url = path + '?type=map&area=' + area + '&track=' + track;
+            return $.get(url)
+        }
+
+        function generateMapDirectPassage() {
+            getDataDirectPassageMap().then((response) => {
+                console.log(response);
+                removeMultiMarker();
+                let data = response.data;
+                if (data.length > 0) {
+                    createMultiMarkerDirectPassage(data)
+                }
+            }).catch((e) => {
+                console.log(e)
+            })
+        }
 
         function getDataTrack() {
             let areaID = $('#area-option').val();
@@ -274,7 +346,7 @@
         }
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function(e) {
+            $('.btn-delete').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -297,7 +369,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function() {
+            AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
@@ -305,7 +377,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function(e) {
+            $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -358,7 +430,7 @@
                 $('#longitude').val(longitude);
                 $('#accident_history').val(accident_history);
                 $('#description').val(description);
-                $.each(availableSignEquipment, function(k, v) {
+                $.each(availableSignEquipment, function (k, v) {
                     let value = data['sign_equipment'][v] === 1 ? 'V' : '-';
                     let el = '#' + v;
                     $(el).html(value);
@@ -369,7 +441,8 @@
             }
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
+            changeTabEvent();
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -389,15 +462,16 @@
                     'data': function (d) {
                         d.area = $('#area-option').val();
                         d.track = $('#track-option').val();
+                        d.type = 'table';
                     }
                 },
                 columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        searchable: false,
-                        orderable: false,
-                        className: 'text-center',
-                    },
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    searchable: false,
+                    orderable: false,
+                    className: 'text-center',
+                },
                     {
                         data: 'sub_track.track.area.name',
                         name: 'sub_track.track.area.name',
@@ -429,9 +503,14 @@
                         className: 'text-center',
                     },
                     {
-                        data: 'road_name',
-                        name: 'road_name',
-
+                        data: null,
+                        name: null,
+                        className: 'text-center',
+                        render: function (data) {
+                            let url = path + '/' + data['id'] + '/penjaga-jalur-lintasan';
+                            return '<a href="' + url + '" class="btn-guard me-2 btn-table-action" data-id="' +
+                                data['id'] + '">' + data['count_guard'] + '</a>';
+                        }
                     },
                     {
                         data: null,
@@ -444,7 +523,7 @@
                     },
                     {
                         data: null,
-                        render: function(data) {
+                        render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
                             return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
                                 data['id'] + '">Detail</a>' +
@@ -461,7 +540,7 @@
                 ],
                 columnDefs: [],
                 paging: true,
-                "fnDrawCallback": function(setting) {
+                "fnDrawCallback": function (setting) {
                     eventOpenDetail();
                     deleteEvent();
                 },
@@ -471,6 +550,7 @@
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
                 table.ajax.reload();
+                generateMapDirectPassage();
             });
 
             $('#btn-export').on('click', function (e) {

@@ -261,6 +261,7 @@ Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {
     Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageController::class, 'patch'])->name('direct-passage.patch');
     Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageController::class, 'destroy'])->name('direct-passage.destroy');
     Route::get('/{id}/detail', [\App\Http\Controllers\DirectPassageController::class, 'detail'])->name('direct-passage.detail');
+    Route::get('/{id}/penjaga-jalur-lintasan', [\App\Http\Controllers\DirectPassageController::class, 'direct_passage_guard_page'])->name('direct-passage.guard');
     Route::get('/excel', [\App\Http\Controllers\DirectPassageController::class, 'export_to_excel'])->name('direct-passage.excel');
     Route::match(['post', 'get'],'/{id}/gambar', [\App\Http\Controllers\DirectPassageController::class, 'image_page'])->name('direct-passage.image');
     Route::post('/{id}/delete-image', [\App\Http\Controllers\DirectPassageController::class, 'destroy_image'])->name('direct-passage.image.destroy');

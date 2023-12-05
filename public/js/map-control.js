@@ -90,6 +90,33 @@ function createMultiMarkerArea(data = []) {
     map_container.fitBounds(bounds);
 }
 
+function createMultiMarkerDirectPassage(data = []) {
+    var bounds = new google.maps.LatLngBounds();
+    data.forEach(function (v, k) {
+        let areaMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(v['latitude'], v['longitude']),
+            map: map_container,
+            icon: '/images/marker/custom-marker.png',
+            title: v['name'],
+        });
+        multi_marker.push(areaMarker);
+        let infoWindow = new google.maps.InfoWindow({
+            content: windowContentDirectPassageMarker(v),
+        });
+        areaMarker.addListener('click', function () {
+            infoWindow.open({
+                anchor: areaMarker,
+                map_container,
+                shouldFocus: false,
+            });
+
+        });
+        bounds.extend(areaMarker.position);
+    });
+
+    map_container.fitBounds(bounds);
+}
+
 //multi marker for service unit or SATPEL
 function windowContentServiceUnitMarker(data) {
     return '<div class="p-1" style="width: 200px;">' +
@@ -147,6 +174,18 @@ function windowContentAreaMarker(data) {
         '</div>';
 }
 
+function windowContentDirectPassageMarker(data) {
+    return '<div class="p-1" style="width: 200px;">' +
+        '<p class="mb-1 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['name'] + ' (' + data['sub_track']['code'] + ')</p>' +
+        '<p class="mb-3 text-center" style="color: #777777; font-size: 12px;">' + data['sub_track']['track']['code'] + ' (' + data['sub_track']['track']['area']['name'] + ')</p>' +
+        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        '<a href="#" onclick="goToDirectPassageGuardPage(this)" class="d-flex align-items-center btn-facility" data-id="' + data['id'] + '" style="text-decoration: none;">' +
+        '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">engineering</span>' +
+        '<span style="color: #777777; font-size: 12px;">Penjaga Jalur Lintasan ('+data['count_guard']+')</span>' +
+        '</a>' +
+        '</div>';
+}
+
 async function goToFacilityPage(element) {
     event.preventDefault();
     let id = element.dataset.id;
@@ -158,6 +197,13 @@ async function goToDirectPassagePage(element) {
     event.preventDefault();
     let id = element.dataset.id;
     const url = path + '/' + id + '/jalur-perlintasan-langsung';
+    window.open(url, '_blank');
+}
+
+async function goToDirectPassageGuardPage(element) {
+    event.preventDefault();
+    let id = element.dataset.id;
+    const url = path + '/' + id + '/penjaga-jalur-lintasan';
     window.open(url, '_blank');
 }
 

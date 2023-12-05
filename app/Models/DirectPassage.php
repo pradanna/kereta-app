@@ -37,7 +37,12 @@ class DirectPassage extends Model
 
     public function direct_passage_guard()
     {
-        return $this->hasOne(DirectPassageGuard::class, 'direct_passage_id');
+        return $this->hasMany(DirectPassageGuard::class, 'direct_passage_id');
+    }
+
+    public function getCountGuardAttribute()
+    {
+        return count($this->direct_passage_guard()->get());
     }
 
     public function sign_equipment()
