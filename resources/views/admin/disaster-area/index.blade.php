@@ -70,20 +70,52 @@
             </div>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped w-100">
-                <thead>
-                <tr>
-                    <th width="5%" class="text-center">#</th>
-                    <th width="15%" class="text-center">Satuan Pelayanan</th>
-                    <th width="10%" class="text-center">Lokasi</th>
-                    <th width="15%" class="text-center">Resort</th>
-                    <th width="10%" class="text-center">Petak</th>
-                    <th class="text-center">Jenis Rawan</th>
-                    <th width="15%" class="text-center">Aksi</th>
-                </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="d-flex align-items-center mb-3">
+                <div class="flex-grow-1">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active d-flex align-items-center" id="pills-table-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
+                                    aria-selected="true">
+                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
+                                Data
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link d-flex align-items-center" id="pills-map-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
+                                    aria-controls="pills-map" aria-selected="false">
+                                <i class="material-symbols-outlined me-1"
+                                   style="font-size: 14px; color: inherit">public</i>
+                                Peta
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
+                     aria-labelledby="pills-table-tab">
+                    <table id="table-data" class="display table table-striped w-100">
+                        <thead>
+                        <tr>
+                            <th width="5%" class="text-center">#</th>
+                            <th width="15%" class="text-center">Satuan Pelayanan</th>
+                            <th width="10%" class="text-center">Lokasi</th>
+                            <th width="15%" class="text-center">Resort</th>
+                            <th width="10%" class="text-center">Petak</th>
+                            <th class="text-center">Jenis Rawan</th>
+                            <th width="15%" class="text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
+                    <div id="main-map" style="width: 100%; height: calc(100vh - 70px); border-radius: 10px;"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
@@ -185,10 +217,14 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="{{ asset('js/map-control.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
 @endsection
 
 @section('js')
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        async></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>

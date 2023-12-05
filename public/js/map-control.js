@@ -90,6 +90,7 @@ function createMultiMarkerArea(data = []) {
     map_container.fitBounds(bounds);
 }
 
+//multi marker for Direct Passage
 function createMultiMarkerDirectPassage(data = []) {
     var bounds = new google.maps.LatLngBounds();
     data.forEach(function (v, k) {
