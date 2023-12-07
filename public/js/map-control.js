@@ -118,6 +118,33 @@ function createMultiMarkerDirectPassage(data = []) {
     map_container.fitBounds(bounds);
 }
 
+function createMultiMarkerDisasterArea(data = []) {
+    var bounds = new google.maps.LatLngBounds();
+    data.forEach(function (v, k) {
+        let areaMarker = new google.maps.Marker({
+            position: new google.maps.LatLng(v['latitude'], v['longitude']),
+            map: map_container,
+            icon: '/images/marker/custom-marker.png',
+            title: v['name'],
+        });
+        multi_marker.push(areaMarker);
+        let infoWindow = new google.maps.InfoWindow({
+            content: windowContentDisasterAreaMarker(v),
+        });
+        areaMarker.addListener('click', function () {
+            infoWindow.open({
+                anchor: areaMarker,
+                map_container,
+                shouldFocus: false,
+            });
+
+        });
+        bounds.extend(areaMarker.position);
+    });
+
+    map_container.fitBounds(bounds);
+}
+
 //multi marker for service unit or SATPEL
 function windowContentServiceUnitMarker(data) {
     return '<div class="p-1" style="width: 200px;">' +
@@ -184,6 +211,14 @@ function windowContentDirectPassageMarker(data) {
         '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">engineering</span>' +
         '<span style="color: #777777; font-size: 12px;">Penjaga Jalur Lintasan ('+data['count_guard']+')</span>' +
         '</a>' +
+        '</div>' +
+        '</div>';
+}
+
+function windowContentDisasterAreaMarker(data) {
+    return '<div class="p-1" style="width: 200px;">' +
+        '<p class="mb-1 text-center" style="color: #777777; font-size: 14px; font-weight: bold;">' + data['resort']['name'] + ' (' + data['sub_track']['code'] + ')</p>' +
+        '<p class="mb-3 text-center" style="color: #777777; font-size: 12px;">' + data['block'] + '</p>' +
         '</div>';
 }
 

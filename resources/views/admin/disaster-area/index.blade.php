@@ -123,7 +123,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Daerah Rawan Bencana</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Daerah Rawan
+                        Bencana</p>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-12">
@@ -151,13 +152,15 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="location_type" class="form-label">Lokasi</label>
-                                <input type="text" class="form-control" name="location_type" id="location_type" disabled>
+                                <input type="text" class="form-control" name="location_type" id="location_type"
+                                       disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="disaster_type" class="form-label">Jenis Rawan</label>
-                                <input type="text" class="form-control" name="disaster_type" id="disaster_type" disabled>
+                                <input type="text" class="form-control" name="disaster_type" id="disaster_type"
+                                       disabled>
                             </div>
                         </div>
                     </div>
@@ -199,13 +202,15 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="handling" class="form-label">Penanganan</label>
-                                <textarea rows="3" class="form-control" id="handling" name="handling" disabled></textarea>
+                                <textarea rows="3" class="form-control" id="handling" name="handling"
+                                          disabled></textarea>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
+                                <textarea rows="3" class="form-control" id="description" name="description"
+                                          disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -232,6 +237,38 @@
         let path = '{{ route('disaster-area') }}';
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+
+        function changeTabEvent() {
+            $("#pills-tab").on("shown.bs.tab", function (e) {
+                if (e.target.id === "pills-table-tab") {
+                    table.columns.adjust();
+                }
+                if (e.target.id === "pills-map-tab") {
+                    generateMapDisasterArea();
+                }
+            })
+        }
+
+        function getDataDisasterAreaMap() {
+            let service_unit = $('#service-unit-option').val();
+            let resort = $('#resort-option').val();
+            let location_type = $('#location-type-option').val();
+            let url = path + '?type=map&service_unit=' + service_unit + '&resort=' + resort + '&location_type=' + location_type;
+            return $.get(url)
+        }
+
+        function generateMapDisasterArea() {
+            getDataDisasterAreaMap().then((response) => {
+                console.log(response);
+                removeMultiMarker();
+                let data = response.data;
+                if (data.length > 0) {
+                    createMultiMarkerDisasterArea(data)
+                }
+            }).catch((e) => {
+                console.log(e)
+            })
+        }
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -260,6 +297,7 @@
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
+                    generateMapDisasterArea();
                 });
             });
         }
@@ -343,6 +381,7 @@
         }
 
         $(document).ready(function () {
+            changeTabEvent();
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -364,6 +403,7 @@
                         d.service_unit = $('#service-unit-option').val();
                         d.resort = $('#resort-option').val();
                         d.location_type = $('#location-type-option').val();
+                        d.type = 'table';
                     }
                 },
                 columns: [{

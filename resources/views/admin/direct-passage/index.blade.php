@@ -372,6 +372,7 @@
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
+                    generateMapDirectPassage()
                 });
             });
         }

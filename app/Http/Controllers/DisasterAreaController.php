@@ -47,8 +47,16 @@ class DisasterAreaController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
+            $type = $this->request->query->get('type');
             $data = $this->generateData();
-            return $this->basicDataTables($data);
+            switch ($type) {
+                case 'map':
+                    return $this->jsonSuccessResponse('success', $data);
+                case 'table':
+                    return $this->basicDataTables($data);
+                default:
+                    return $this->jsonSuccessResponse('success', []);
+            }
         }
         $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
         return view('admin.disaster-area.index')->with([
