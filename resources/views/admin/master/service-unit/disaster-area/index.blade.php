@@ -258,6 +258,7 @@
                         d.service_unit = serviceUnitID;
                         d.resort = $('#resort-option').val();
                         d.location_type = $('#location-type-option').val();
+                        d.type = 'table';
                     }
                 },
                 columns: [{

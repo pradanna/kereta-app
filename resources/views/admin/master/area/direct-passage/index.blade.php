@@ -456,6 +456,7 @@
                     'data': function (d) {
                         d.area = areaID;
                         d.track = $('#track-option').val();
+                        d.type = 'table';
                     }
                 },
                 columns: [{

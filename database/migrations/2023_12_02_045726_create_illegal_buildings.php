@@ -26,7 +26,7 @@ class CreateIllegalBuildings extends Migration
             $table->text('description');
             $table->timestamps();
             $table->foreign('sub_track_id')->references('id')->on('sub_tracks');
-            $table->foreign('district_id')->references('id')->on('cities');
+            $table->foreign('district_id')->references('id')->on('districts');
         });
     }
 

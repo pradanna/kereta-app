@@ -441,6 +441,7 @@
                         d.service_unit = serviceUnitID;
                         d.area = $('#area-option').val();
                         d.track = $('#track-option').val();
+                        d.type = 'table';
                     }
                 },
                 columns: [{
