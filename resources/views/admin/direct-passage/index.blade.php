@@ -94,7 +94,7 @@
                             <th class="text-center middle-header">Petak</th>
                             <th class="text-center middle-header" width="7%">JPL</th>
                             <th class="text-center middle-header" width="8%">KM/HM</th>
-                            <th class="text-center middle-header" width="10%">Lebar Jalan</th>
+                            <th class="text-center middle-header" width="8%">PLH</th>
                             <th class="text-center middle-header" width="8%">PJL</th>
                             <th class="text-center middle-header" width="8%">Gambar</th>
                             <th class="text-center middle-header" width="15%">Aksi</th>
@@ -499,9 +499,14 @@
                         className: 'text-center',
                     },
                     {
-                        data: 'width',
-                        name: 'width',
+                        data: null,
+                        name: null,
                         className: 'text-center',
+                        render: function (data) {
+                            let url = path + '/' + data['id'] + '/peristiwa-luar-biasa-hebat';
+                            return '<a href="' + url + '" class="btn-guard me-2 btn-table-action" data-id="' +
+                                data['id'] + '">' + data['count_accident'] + '</a>';
+                        }
                     },
                     {
                         data: null,

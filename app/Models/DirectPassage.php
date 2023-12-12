@@ -64,4 +64,14 @@ class DirectPassage extends Model
     {
         return $this->hasMany(DirectPassageImage::class, 'direct_passage_id');
     }
+
+    public function accidents()
+    {
+        return $this->hasMany(DirectPassageAccident::class, 'direct_passage_id');
+    }
+
+    public function getCountAccidentAttribute()
+    {
+        return $this->accidents()->count();
+    }
 }

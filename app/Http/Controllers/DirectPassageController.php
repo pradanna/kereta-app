@@ -66,7 +66,7 @@ class DirectPassageController extends CustomController
         }
 
         return $query->orderBy('created_at', 'ASC')
-            ->get()->append(['count_guard']);
+            ->get()->append(['count_guard', 'count_accident']);
     }
 
     public function index()
@@ -289,5 +289,14 @@ class DirectPassageController extends CustomController
             return $this->basicDataTables($data->direct_passage_guard->toArray());
         }
         return view('admin.direct-passage.guard')->with(['data' => $data]);
+    }
+
+    public function direct_passage_accident_page($id)
+    {
+        $data = DirectPassage::with([])
+            ->findOrFail($id);
+        return view('admin.direct-passage.accidents')->with([
+            'data' => $data
+        ]);
     }
 }
