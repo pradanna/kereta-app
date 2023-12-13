@@ -17,6 +17,7 @@ use App\Models\ServiceUnit;
 use App\Models\Storehouse;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class AreaController extends CustomController
 {
@@ -49,16 +50,20 @@ class AreaController extends CustomController
     public function store()
     {
         if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
             try {
                 $data_request = [
-                    'service_unit_id' => $this->postField('service_unit'),
                     'name' => $this->postField('name'),
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
                 ];
-                Area::create($data_request);
+                $area = Area::create($data_request);
+                $service_units = $this->postField('service_unit');
+                $area->service_units()->attach($service_units);
+                DB::commit();
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
+                DB::rollBack();
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }

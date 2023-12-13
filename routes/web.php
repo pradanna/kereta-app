@@ -22,6 +22,8 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
 
 Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
     Route::get('/', [\App\Http\Controllers\InfrastructureController::class, 'index'])->name('infrastructure');
+    Route::get('/{service_unit_id}', [\App\Http\Controllers\InfrastructureController::class, 'menu_page'])->name('infrastructure.menu');
+    Route::get('/{service_unit_id}/{slug}', [\App\Http\Controllers\InfrastructureController::class, 'menu_by_slug_page'])->name('infrastructure.menu.slug');
 });
 Route::group(['prefix' => 'pengguna'], function () {
     Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('user');

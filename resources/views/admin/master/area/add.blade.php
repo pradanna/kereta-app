@@ -42,7 +42,7 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
-                            <select class="select2 form-control" name="service_unit" id="service_unit" style="width: 100%;">
+                            <select class="select2 form-control" multiple name="service_unit[]" id="service_unit" style="width: 100%;">
                                 @foreach ($service_units as $service_unit)
                                     <option value="{{ $service_unit->id }}">{{ $service_unit->name }}</option>
                                 @endforeach

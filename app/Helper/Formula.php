@@ -10,6 +10,8 @@ class Formula
 {
     const ExpirationLimit = 30;
 
+    const ServiceUnitExceptionName = 'Satpel Surakarta';
+    const AreaExceptionName = 'DAOP 6';
     /**
      * @param $type
      * @param $areas Collection

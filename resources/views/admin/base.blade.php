@@ -83,8 +83,8 @@
 {{--                    </a>--}}
 {{--                </li>--}}
                 <li class="nav-item">
-                    <a class="nav-link menu"
-                        href="{{ route('infrastructure') }}">
+                    <a class="nav-link menu {{ request()->is('sarana-dan-keselamatan*') ? 'active' : '' }}"
+                        href="{{ route('infrastructure') }}" >
                         <span class="material-symbols-outlined menu-icon">
                             train
                         </span>
