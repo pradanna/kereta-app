@@ -27,30 +27,80 @@ class InfrastructureController extends CustomController
 
     public function index()
     {
-        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-menu.index')->with([
-            'service_units' => $service_units
-        ]);
+        return view('admin.facility-menu.index');
     }
 
-    public function menu_page($service_unit_id)
+    public function facility_certification_page()
+    {
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.facility-certification.service-unit')
+            ->with([
+                'service_units' => $service_units
+            ]);
+    }
+
+    public function storehouse_page()
+    {
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.storehouse.index')
+            ->with([
+                'service_units' => $service_units
+            ]);
+    }
+
+    public function facility_certification_page_by_service_unit($service_unit_id)
     {
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        return view('admin.facility-menu.menu')->with([
-            'service_unit' => $service_unit
-        ]);
+        $facility_types = FacilityType::with([])->orderBy('id', 'ASC')->get();
+        if ($this->request->ajax()) {
+            $total_facilities = $this->generateTotalFacilityData($service_unit->id);
+            return $this->jsonSuccessResponse('success', $total_facilities);
+        }
+        return view('admin.facility-menu.facility-certification.index')
+            ->with([
+                'service_unit' => $service_unit,
+                'facility_types' => $facility_types,
+            ]);
     }
 
-    public function menu_by_slug_page($service_unit_id, $slug)
+    public function locomotive_page($service_unit_id)
+    {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.facility-certification.locomotive')
+            ->with([
+                'service_unit' => $service_unit,
+                'areas' => $areas,
+            ]);
+    }
+
+    public function menu_page_by_service_unit($slug, $service_unit_id)
     {
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         switch ($slug) {
             case 'sertifikasi-sarana':
                 return $this->goToFacilityCertificationPage($service_unit);
+//            case 'depo-dan-balai-yasa':
+//                return redirect()->back();
             default:
-                return view('admin.facility-menu.menu')->with([
-                    'service_unit' => $service_unit
+                return redirect()->back();
+        }
+    }
+
+    public function menu_by_slug_page($slug)
+    {
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        switch ($slug) {
+            case 'sertifikasi-sarana':
+                return view('admin.facility-menu.facility-certification.service-unit')->with([
+                    'service_units' => $service_units
                 ]);
+            case 'depo-dan-balai-yasa':
+                return view('admin.facility-menu.storehouse.index')->with([
+                    'service_units' => $service_units
+                ]);
+            default:
+                return view('admin.facility-menu.index')->with();
         }
 
     }
@@ -71,22 +121,13 @@ class InfrastructureController extends CustomController
 
     private function generateTotalFacilityData($id)
     {
-        $service_unit = ServiceUnit::with([])->where('id', '=', $id)->first();
         $areas = Area::with(['service_units'])
-            ->whereHas('service_units', function ($qs) use ($id) {
-                /** @var $qs Builder */
-                return $qs->where('service_unit_id', '=', $id);
-            })->get();
-        if ($service_unit) {
-            $serviceUnitName = $service_unit->name;
-            if ($serviceUnitName === Formula::ServiceUnitExceptionName) {
-                $areas = Area::with(['service_units'])
-                    ->whereHas('service_units', function ($qs) use ($id) {
-                        /** @var $qs Builder */
-                        return $qs->where('service_unit_id', '=', $id);
-                    })->get();
-            }
-        }
+//            ->whereHas('service_units', function ($qs) use ($id) {
+//                /** @var $qs Builder */
+//                return $qs->where('service_unit_id', '=', $id);
+//            })
+            ->orderBy('name', 'ASC')
+            ->get();
 
         $areaID = $areas->pluck('id');
         $areaIDSValue = $areaID->values()->toArray();

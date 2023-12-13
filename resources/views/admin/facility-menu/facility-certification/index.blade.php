@@ -221,10 +221,10 @@
         }
 
         $(document).ready(function () {
-            // $('.card-menu').on('click', function () {
-            //     let slug = this.dataset.slug;
-            //     window.location.href = path + '/' + dataID + '/' + slug;
-            // });
+            $('.card-service-unit').on('click', function () {
+                let slug = this.dataset.slug;
+                window.location.href = currentPath + '/' + slug;
+            });
             generateFacilityCount();
             generateFacilityExpiration();
         });

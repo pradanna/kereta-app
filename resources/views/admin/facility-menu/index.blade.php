@@ -13,16 +13,80 @@
             </ol>
         </nav>
     </div>
+{{--    <section class="pt-5">--}}
+{{--        <div class="row gx-3">--}}
+{{--            @foreach($service_units as $service_unit)--}}
+{{--                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 mb-3">--}}
+{{--                    <div class="card-service-unit" data-id="{{ $service_unit->id }}">--}}
+{{--                        <span>{{ $service_unit->name }}</span>--}}
+{{--                        <span class="material-symbols-outlined">chevron_right</span>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
+{{--    </section>--}}
     <section class="pt-5">
         <div class="row gx-3">
-            @foreach($service_units as $service_unit)
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 mb-3">
-                    <div class="card-service-unit" data-id="{{ $service_unit->id }}">
-                        <span>{{ $service_unit->name }}</span>
-                        <span class="material-symbols-outlined">chevron_right</span>
-                    </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="sertifikasi-sarana">
+                    <span class="material-symbols-outlined">train</span>
+                    <span class="text-center">Sertifikasi Sarana</span>
                 </div>
-            @endforeach
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="depo-dan-balai-yasa">
+                    <span class="material-symbols-outlined">store</span>
+                    <span class="text-center">Depo Dan Balai Yasa</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="spesifikasi-teknis">
+                    <span class="material-symbols-outlined">manufacturing</span>
+                    <span class="text-center">Spesifikasi Teknis</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="perlintasan-kereta-api">
+                    <span class="material-symbols-outlined">timeline</span>
+                    <span class="text-center">Perlintasan Kereta Api (JPL)</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="daerah-rawan">
+                    <span class="material-symbols-outlined">flood</span>
+                    <span class="text-center">IDRK (Daerah Rawan)</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="peristiwa-luar-biasa-hebat">
+                    <span class="material-symbols-outlined">car_crash</span>
+                    <span class="text-center">Peristiwa Luar Biasa Hebat</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="amus">
+                    <span class="material-symbols-outlined">carpenter</span>
+                    <span class="text-center">AMUS</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="bangunan-liar">
+                    <span class="material-symbols-outlined">home_work</span>
+                    <span class="text-center">Bangunan Liar</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="keselamatan-dan-kesehatan-kerja">
+                    <span class="material-symbols-outlined">health_and_safety</span>
+                    <span class="text-center">Keselamatan Dan Kesehatan Kerja</span>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+                <div class="card-menu" data-slug="sumber-daya-manusia">
+                    <span class="material-symbols-outlined">engineering</span>
+                    <span class="text-center">SDM</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -37,9 +101,9 @@
     <script>
         var path = '{{ route('infrastructure') }}';
         $(document).ready(function () {
-            $('.card-service-unit').on('click', function () {
-                let id = this.dataset.id;
-                window.location.href = path + '/' + id;
+            $('.card-menu').on('click', function () {
+                let slug = this.dataset.slug;
+                window.location.href = path + '/' + slug;
             });
         });
     </script>

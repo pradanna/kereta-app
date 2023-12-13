@@ -22,8 +22,24 @@ Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'ind
 
 Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
     Route::get('/', [\App\Http\Controllers\InfrastructureController::class, 'index'])->name('infrastructure');
-    Route::get('/{service_unit_id}', [\App\Http\Controllers\InfrastructureController::class, 'menu_page'])->name('infrastructure.menu');
-    Route::get('/{service_unit_id}/{slug}', [\App\Http\Controllers\InfrastructureController::class, 'menu_by_slug_page'])->name('infrastructure.menu.slug');
+
+    //sertifikasi sarana
+    Route::group(['prefix' => 'sertifikasi-sarana'], function () {
+        Route::get('/', [\App\Http\Controllers\InfrastructureController::class, 'facility_certification_page'])->name('infrastructure.facility-certification');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\InfrastructureController::class, 'facility_certification_page_by_service_unit'])->name('infrastructure.facility-certification.service-unit');
+            Route::group(['prefix' => 'lokomotif'], function () {
+                Route::get('/', [\App\Http\Controllers\FacilityLocomotiveController::class, 'index'])->name('infrastructure.facility-certification.locomotive');
+                Route::get('/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('infrastructure.facility-certification.locomotive.create');
+            });
+        });
+    });
+
+    //depo dan balai yasa
+    Route::group(['prefix' => 'depo-dan-balai-yasa'], function (){
+        Route::get('/', [\App\Http\Controllers\InfrastructureController::class, 'storehouse_page'])->name('infrastructure.storehouse');
+    });
+
 });
 Route::group(['prefix' => 'pengguna'], function () {
     Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('user');
