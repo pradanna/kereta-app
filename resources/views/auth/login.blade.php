@@ -22,11 +22,7 @@
     </style>
 </head>
 
-<body class="w-100 h-100"
-    style="background-image: url({{ asset('images/local/kereta.jpg') }});
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;">
+<body class="w-100 h-100 bg-login">
     <div style="height: 100vh">
         @if (\Illuminate\Support\Facades\Session::has('failed'))
             <script>
@@ -35,30 +31,44 @@
         @endif
         <div class="login">
             <div class="panel-login pinggiran-bunder-10  ">
-                <p class="text-center mt-3 h2 fw-bold">Login</p>
 
-                <form class="p-3" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control login" id="username" name="username">
+                <div class="gambar">
+                    <img src={{ asset('images/local/kereta.jpg') }} />
+                </div>
+
+                <div class="login-container">
+                    <div>
+                        <p class="text-center mt-3 h2 fw-bold">LOGIN</p>
+                        <p class="text-center mt-3 h5 fw-bold">Masukan Username dan Password</p>
+
+                        <form class="p-3" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control login" id="username" name="username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control login" id="password" name="password">
+                            </div>
+                            <button class="btn-login   mt-4 d-block mb-3 w-100 " type="submit">LOGIN
+                            </button>
+
+
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control login" id="password" name="password">
+                    <div>
+                        <div class="logo-login">
+                            <img src="{{ asset('images/local/logo_btp.png') }}">
+                            <img src="{{ asset('images/local/logodishub.png') }}">
+                            <img src="{{ asset('images/local/logodjkaw.png') }}">
+                        </div>
                     </div>
-                    <button class="btn-utama ms-auto  mt-4 d-block mb-3" type="submit" style="width: 100%">LOGIN
-                    </button>
-                </form>
+                </div>
+
             </div>
         </div>
-        <div class="panel-logo">
-            <div class="logo-login">
-                <img src="{{ asset('images/local/logo_btp.png') }}">
-                <img src="{{ asset('images/local/logodishub.png') }}">
-                <img src="{{ asset('images/local/logodjkaw.png') }}">
-            </div>
-        </div>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
