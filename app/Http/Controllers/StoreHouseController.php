@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Helper\CustomController;
 use App\Models\Area;
 use App\Models\City;
+use App\Models\ServiceUnit;
 use App\Models\Storehouse;
 use App\Models\StorehouseImage;
 use App\Models\StorehouseType;
@@ -24,8 +25,26 @@ class StoreHouseController extends CustomController
         parent::__construct();
     }
 
-    public function index()
+    public function service_unit_page()
     {
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.storehouse.service-unit')
+            ->with([
+                'service_units' => $service_units
+            ]);
+    }
+
+    public function index($service_unit_id)
+    {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $storehouse_types = StorehouseType::with([])->orderBy('name', 'ASC')->get();
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+
         if ($this->request->ajax()) {
             $type = $this->request->query->get('type');
             $query = Storehouse::with(['storehouse_type', 'area', 'city.province']);
@@ -35,8 +54,12 @@ class StoreHouseController extends CustomController
                 $query->where('storehouse_type_id', '=', $storehouse_type);
             }
 
+
             if ($area !== '') {
                 $query->where('area_id', '=', $area);
+            } else {
+                $areaIDS = $areas->pluck('id')->toArray();
+                $query->whereIn('area_id', $areaIDS);
             }
             switch ($type) {
                 case 'map':
@@ -51,11 +74,12 @@ class StoreHouseController extends CustomController
                     return $this->jsonSuccessResponse('success', []);
             }
         }
-        $storehouse_types = StorehouseType::with([])->orderBy('name', 'ASC')->get();
-        $areas = Area::with(['service_unit'])->orderBy('name', 'ASC')->get();
-        return view('admin.master.storehouse.index')->with([
+
+
+        return view('admin.facility-menu.storehouse.index')->with([
             'storehouse_types' => $storehouse_types,
             'areas' => $areas,
+            'service_unit' => $service_unit
         ]);
     }
 
@@ -76,8 +100,10 @@ class StoreHouseController extends CustomController
         'latitude.required' => 'kolom latitude wajib di isi',
         'longitude.required' => 'kolom longitude wajib di isi',
     ];
-    public function store()
+
+    public function store($service_unit_id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         if ($this->request->method() === 'POST') {
             try {
                 $validator = Validator::make($this->request->all(), $this->rule, $this->message);
@@ -100,16 +126,23 @@ class StoreHouseController extends CustomController
         }
         $storehouse_types = StorehouseType::with([])->orderBy('name', 'ASC')->get();
         $cities = City::with([])->orderBy('name', 'ASC')->get();
-        $areas = Area::with(['service_unit'])->orderBy('name', 'ASC')->get();
-        return view('admin.master.storehouse.add')->with([
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.storehouse.add')->with([
             'storehouse_types' => $storehouse_types,
             'cities' => $cities,
             'areas' => $areas,
+            'service_unit' => $service_unit
         ]);
     }
 
-    public function patch($id)
+    public function patch($service_unit_id, $id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $data = Storehouse::with(['storehouse_type', 'area', 'city.province'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
@@ -131,13 +164,19 @@ class StoreHouseController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $storehouse_types = StorehouseType::all();
-        $cities = City::all();
-        $areas = Area::all();
-        return view('admin.master.storehouse.edit')->with([
+        $storehouse_types = StorehouseType::with([])->orderBy('name', 'ASC')->get();
+        $cities = City::with([])->orderBy('name', 'ASC')->get();
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.storehouse.edit')->with([
             'storehouse_types' => $storehouse_types,
             'cities' => $cities,
             'areas' => $areas,
+            'service_unit' => $service_unit,
             'data' => $data
         ]);
     }
@@ -197,6 +236,7 @@ class StoreHouseController extends CustomController
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
     }
+
     public function getDataByArea()
     {
         try {

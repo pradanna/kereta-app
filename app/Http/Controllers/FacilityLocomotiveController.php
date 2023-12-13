@@ -31,20 +31,13 @@ class FacilityLocomotiveController extends CustomController
         $status = $this->request->query->get('status');
         $query = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type']);
 
-        if ($service_unit !== '' && $service_unit !== null) {
-            $query->whereHas('area', function ($ql) use ($service_unit) {
-                /** @var $ql Builder */
-                return $ql->where('service_unit_id', '=', $service_unit);
-            });
-        }
-
         if ($area !== '') {
             $query->where('area_id', '=', $area);
         }
 
-        if ($storehouse !== '') {
-            $query->where('storehouse_id', '=', $storehouse);
-        }
+//        if ($storehouse !== '') {
+//            $query->where('storehouse_id', '=', $storehouse);
+//        }
 
         if ($name !== '') {
             $query->where(function ($q) use ($name) {
@@ -68,17 +61,15 @@ class FacilityLocomotiveController extends CustomController
         return $data;
     }
 
-    public function index($service_unit_id)
+    public function index()
     {
         if ($this->request->ajax()) {
             $data = $this->generateData();
             return $this->basicDataTables($data);
         }
-        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-menu.facility-certification.locomotive.index')
             ->with([
-                'service_unit' => $service_unit,
                 'areas' => $areas,
             ]);
     }
@@ -105,7 +96,7 @@ class FacilityLocomotiveController extends CustomController
         }
         $locomotive_types = LocomotiveType::all();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.locomotive.add')->with([
+        return view('admin.facility-menu.facility-certification.locomotive.add')->with([
             'locomotive_types' => $locomotive_types,
             'areas' => $areas
         ]);

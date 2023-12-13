@@ -84,7 +84,7 @@
 {{--                </li>--}}
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('sarana-dan-keselamatan*') ? 'active' : '' }}"
-                        href="{{ route('infrastructure') }}" >
+                        href="{{ route('means') }}" >
                         <span class="material-symbols-outlined menu-icon">
                             train
                         </span>
@@ -92,7 +92,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu"
+                    <a class="nav-link menu {{ request()->is('prasarana*') ? 'active' : '' }}"
                         href="{{ route('infrastructure') }}">
                         <span class="material-symbols-outlined menu-icon">
                             category

@@ -3,8 +3,8 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SERTIFIKASI SARANA {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Sertifikasi Sarana {{ $service_unit->name }}</p>
+            <h1 class="h1">SERTIFIKASI SARANA</h1>
+            <p class="mb-0">Manajemen Data Sertifikasi Sarana</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -42,7 +42,7 @@
         </div>
         <div class="panel">
             <div class="title">
-                <p>Data Rekapitulasi Sarana {{ $service_unit->name }}</p>
+                <p>Data Rekapitulasi Sarana</p>
             </div>
             <div class="isi">
                 <p style="font-size: 14px; color: #777777; font-weight: bold;">Rekapitulasi Jumlah Sarana</p>
@@ -110,7 +110,6 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let currentPath = '/{{ request()->path() }}';
-        var dataID = '{{ $service_unit->id }}';
 
         function generateFacilityCount() {
             $('#table-data-facility-count').DataTable({

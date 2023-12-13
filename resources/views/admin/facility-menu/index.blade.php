@@ -25,7 +25,7 @@
 {{--            @endforeach--}}
 {{--        </div>--}}
 {{--    </section>--}}
-    <section class="pt-5">
+    <section class="pt-3">
         <div class="row gx-3">
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="sertifikasi-sarana">
