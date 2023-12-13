@@ -10,6 +10,8 @@ class TechnicalSpecLocomotive extends Model
 {
     use HasFactory, Uuids;
 
+    protected $table = 'ts_locomotives';
+
     protected $fillable = [
         'locomotive_type_id',
         'empty_weight',

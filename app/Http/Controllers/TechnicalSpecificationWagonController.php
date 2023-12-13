@@ -132,12 +132,14 @@ class TechnicalSpecificationWagonController extends CustomController
                 if ($this->request->hasFile('files')) {
                     foreach ($this->request->file('files') as $file) {
                         $extension = $file->getClientOriginalExtension();
+                        $originalName = $file->getClientOriginalName();
                         $document = Uuid::uuid4()->toString() . '.' . $extension;
                         $storage_path = public_path('tech-document');
                         $documentName = $storage_path . '/' . $document;
                         $dataDocument = [
                             'ts_wagon_id' => $data->id,
-                            'document' => '/tech-document/' . $document
+                            'document' => '/tech-document/' . $document,
+                            'name' => $originalName
                         ];
                         TechnicalSpecWagonDocument::create($dataDocument);
                         $file->move($storage_path, $documentName);
@@ -152,7 +154,6 @@ class TechnicalSpecificationWagonController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.technical-specification.wagon.document')->with([
             'data' => $data
@@ -188,10 +189,29 @@ class TechnicalSpecificationWagonController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.technical-specification.wagon.image')->with([
             'data' => $data
         ]);
+    }
+
+    public function destroy_document($id)
+    {
+        try {
+            TechnicalSpecWagonDocument::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            TechnicalSpecWagonImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }

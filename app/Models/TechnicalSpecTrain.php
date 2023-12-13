@@ -10,6 +10,8 @@ class TechnicalSpecTrain extends Model
 {
     use HasFactory, Uuids;
 
+    protected $table = 'ts_trains';
+
     protected $fillable = [
         'train_type_id',
         'empty_weight',

@@ -41,7 +41,7 @@ class WagonSubTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $wagon_types = WagonType::all();
+        $wagon_types = WagonType::with([])->orderBy('code', 'ASC')->get();
         return view('admin.master.wagon-sub-type.add')->with([
             'wagon_types' => $wagon_types
         ]);
@@ -63,7 +63,7 @@ class WagonSubTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $wagon_types = WagonType::all();
+        $wagon_types = WagonType::with([])->orderBy('code', 'ASC')->get();
         return view('admin.master.wagon-sub-type.edit')->with([
             'data' => $data,
             'wagon_types' => $wagon_types

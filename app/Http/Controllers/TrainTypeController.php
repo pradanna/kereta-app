@@ -17,7 +17,7 @@ class TrainTypeController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = TrainType::with([])->orderBy('created_at', 'ASC')->get();
+            $data = TrainType::with([])->orderBy('code', 'ASC')->get();
             return $this->basicDataTables($data);
         }
         return view('admin.master.train-type.index');

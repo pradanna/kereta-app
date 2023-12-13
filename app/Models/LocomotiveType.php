@@ -13,7 +13,6 @@ class LocomotiveType extends Model
     protected $fillable = [
         'code',
         'name',
-        'type',
     ];
 
 

@@ -130,12 +130,14 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 if ($this->request->hasFile('files')) {
                     foreach ($this->request->file('files') as $file) {
                         $extension = $file->getClientOriginalExtension();
+                        $originalName = $file->getClientOriginalName();
                         $document = Uuid::uuid4()->toString() . '.' . $extension;
                         $storage_path = public_path('tech-document');
                         $documentName = $storage_path . '/' . $document;
                         $dataDocument = [
                             'ts_locomotive_id' => $data->id,
-                            'document' => '/tech-document/' . $document
+                            'document' => '/tech-document/' . $document,
+                            'name' => $originalName
                         ];
                         TechnicalSpecLocomotiveDocument::create($dataDocument);
                         $file->move($storage_path, $documentName);
@@ -150,7 +152,6 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.technical-specification.locomotive.document')->with([
             'data' => $data
@@ -186,10 +187,29 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.technical-specification.locomotive.image')->with([
             'data' => $data
         ]);
+    }
+
+    public function destroy_document($id)
+    {
+        try {
+            TechnicalSpecLocomotiveDocument::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            TechnicalSpecLocomotiveImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }

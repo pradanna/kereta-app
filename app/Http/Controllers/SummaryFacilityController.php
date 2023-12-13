@@ -31,9 +31,9 @@ class SummaryFacilityController extends CustomController
         if ($this->request->ajax()) {
             $type = $this->request->query->get('type');
             $facility_locomotives = FacilityLocomotive::with([])->get()->append(['expired_in']);
-            $facility_trains = FacilityTrain::with([])->get()->append(['expired_in']);
-            $facility_diesel_trains = FacilityDieselTrain::with([])->get()->append(['expired_in']);
-            $facility_electric_trains = FacilityElectricTrain::with([])->get()->append(['expired_in']);
+            $facility_trains = FacilityTrain::with([])->where('engine_type', '=', 'train')->get()->append(['expired_in']);
+            $facility_diesel_trains = FacilityTrain::with([])->where('engine_type', '=', 'diesel-train')->get()->append(['expired_in']);
+            $facility_electric_trains = FacilityTrain::with([])->where('engine_type', '=', 'electric-train')->get()->append(['expired_in']);
             $facility_wagons = FacilityWagon::with([])->get()->append(['expired_in']);
             $facility_special_equipment = FacilitySpecialEquipment::with([])->get()->append(['expired_in']);
 

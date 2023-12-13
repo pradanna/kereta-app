@@ -10,6 +10,7 @@ use App\Models\Area;
 use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
 use App\Models\LocomotiveType;
+use App\Models\ServiceUnit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
@@ -31,7 +32,7 @@ class FacilityLocomotiveController extends CustomController
         $query = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type']);
 
         if ($service_unit !== '' && $service_unit !== null) {
-            $query->whereHas('area', function ($ql) use ($service_unit){
+            $query->whereHas('area', function ($ql) use ($service_unit) {
                 /** @var $ql Builder */
                 return $ql->where('service_unit_id', '=', $service_unit);
             });
@@ -67,18 +68,19 @@ class FacilityLocomotiveController extends CustomController
         return $data;
     }
 
-    public function index()
+    public function index($service_unit_id)
     {
         if ($this->request->ajax()) {
             $data = $this->generateData();
             return $this->basicDataTables($data);
         }
-        $locomotive_types = LocomotiveType::all();
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.locomotive.index')->with([
-            'locomotive_types' => $locomotive_types,
-            'areas' => $areas,
-        ]);
+        return view('admin.facility-menu.facility-certification.locomotive.index')
+            ->with([
+                'service_unit' => $service_unit,
+                'areas' => $areas,
+            ]);
     }
 
     public function store()

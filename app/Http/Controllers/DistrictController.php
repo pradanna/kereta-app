@@ -38,7 +38,7 @@ class DistrictController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $cities = City::all();
+        $cities = City::with([])->orderBy('name', 'ASC')->get();
         return view('admin.master.district.add')->with(['cities' => $cities]);
     }
 
@@ -57,7 +57,7 @@ class DistrictController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $cities = City::all();
+        $cities = City::with([])->orderBy('name', 'ASC')->get();
         return view('admin.master.district.edit')->with([
             'data' => $data,
             'cities' => $cities

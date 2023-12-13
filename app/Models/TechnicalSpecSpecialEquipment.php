@@ -10,6 +10,8 @@ class TechnicalSpecSpecialEquipment extends Model
 {
     use HasFactory, Uuids;
 
+    protected $table = 'ts_special_equipment';
+
     protected $fillable = [
         'special_equipment_type_id',
         'empty_weight',

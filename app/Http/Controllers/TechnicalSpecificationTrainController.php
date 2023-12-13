@@ -40,7 +40,7 @@ class TechnicalSpecificationTrainController extends CustomController
             try {
                 $data_request = [
                     'train_type_id' => $this->postField('train_type'),
-                    'empty_weight' => $this->postField('empty_weight') ,
+                    'empty_weight' => $this->postField('empty_weight'),
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
                     'air_conditioner' => $this->postField('air_conditioner'),
@@ -70,7 +70,7 @@ class TechnicalSpecificationTrainController extends CustomController
             try {
                 $data_request = [
                     'train_type_id' => $this->postField('train_type'),
-                    'empty_weight' => $this->postField('empty_weight') ,
+                    'empty_weight' => $this->postField('empty_weight'),
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
                     'air_conditioner' => $this->postField('air_conditioner'),
@@ -134,12 +134,14 @@ class TechnicalSpecificationTrainController extends CustomController
                 if ($this->request->hasFile('files')) {
                     foreach ($this->request->file('files') as $file) {
                         $extension = $file->getClientOriginalExtension();
+                        $originalName = $file->getClientOriginalName();
                         $document = Uuid::uuid4()->toString() . '.' . $extension;
                         $storage_path = public_path('tech-document');
                         $documentName = $storage_path . '/' . $document;
                         $dataDocument = [
                             'ts_train_id' => $data->id,
-                            'document' => '/tech-document/' . $document
+                            'document' => '/tech-document/' . $document,
+                            'name' => $originalName
                         ];
                         TechnicalSpecTrainDocument::create($dataDocument);
                         $file->move($storage_path, $documentName);
@@ -154,7 +156,6 @@ class TechnicalSpecificationTrainController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.technical-specification.train.document')->with([
             'data' => $data
@@ -190,10 +191,29 @@ class TechnicalSpecificationTrainController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.technical-specification.train.image')->with([
             'data' => $data
         ]);
+    }
+
+    public function destroy_document($id)
+    {
+        try {
+            TechnicalSpecTrainDocument::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            TechnicalSpecTrainImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }

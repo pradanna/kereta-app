@@ -68,7 +68,7 @@ class TrackController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $areas = Area::with([])->orderBy('name', 'ASC')
+        $areas = Area::with(['service_unit'])->orderBy('name', 'ASC')
             ->get();
         return view('admin.master.track.add')->with(['areas' => $areas]);
     }

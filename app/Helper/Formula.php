@@ -10,6 +10,8 @@ class Formula
 {
     const ExpirationLimit = 30;
 
+    const ServiceUnitExceptionName = 'Satpel Surakarta';
+    const AreaExceptionName = 'DAOP 6';
     /**
      * @param $type
      * @param $areas Collection
@@ -30,8 +32,7 @@ class Formula
         $facility_diesel_trains,
         $facility_wagons,
         $facility_special_equipment
-    )
-    {
+    ) {
         $total_facilities = [];
         if ($type === 'total') {
             foreach ($areas as $area) {

@@ -20,8 +20,7 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -32,15 +31,15 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="track-option" class="form-label d-none">Perlintasan</label>
-                            <select class="select2 form-control" name="track-option" id="track-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="track-option" id="track-option" style="width: 100%;">
                                 <option value="">Semua Perlintasan</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -58,23 +57,53 @@
             </div>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped w-100">
-                <thead>
-                    <tr>
-                        <th class="text-center middle-header" width="5%">#</th>
-                        <th class="text-center middle-header" width="10%">Wilayah</th>
-                        <th class="text-center middle-header" width="10%">Perlintasan</th>
-                        <th class="text-center middle-header" width="10%">Petak</th>
-                        <th class="text-center middle-header" width="7%">JPL</th>
-                        <th class="text-center middle-header" width="8%">KM/HM</th>
-                        <th class="text-center middle-header" width="10%">Lebar Jalan</th>
-                        <th class="middle-header">Nama Jalan</th>
-                        <th class="text-center middle-header" width="8%">Gambar</th>
-                        <th class="text-center middle-header" width="15%">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="d-flex align-items-center mb-3">
+                <div class="flex-grow-1">
+                    <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active d-flex align-items-center" id="pills-table-tab"
+                                data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab"
+                                aria-controls="pills-table" aria-selected="true">
+                                <i class="material-symbols-outlined me-1"
+                                    style="font-size: 14px; color: inherit">view_list</i>
+                                Data
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link d-flex align-items-center" id="pills-map-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-map" type="button" role="tab" aria-controls="pills-map"
+                                aria-selected="false">
+                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">public</i>
+                                Peta
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
+                    <table id="table-data" class="display table table-striped w-100">
+                        <thead>
+                            <tr>
+                                <th class="text-center middle-header" width="5%">#</th>
+                                <th class="text-center middle-header" width="10%">Wilayah</th>
+                                <th class="text-center middle-header" width="10%">Perlintasan</th>
+                                <th class="text-center middle-header">Petak</th>
+                                <th class="text-center middle-header" width="7%">JPL</th>
+                                <th class="text-center middle-header" width="8%">KM/HM</th>
+                                <th class="text-center middle-header" width="8%">PLH</th>
+                                <th class="text-center middle-header" width="8%">PJL</th>
+                                <th class="text-center middle-header" width="8%">Gambar</th>
+                                <th class="text-center middle-header" width="15%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="pills-map" role="tabpanel" aria-labelledby="pills-map-tab">
+                    <div id="main-map" style="width: 100%; height: calc(100vh - 70px); border-radius: 10px;"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
@@ -89,8 +118,8 @@
                         <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="sub_track" class="form-label">Lintas Antara</label>
-                                <input type="text" class="form-control" id="sub_track" name="sub_track" placeholder="JPL"
-                                    disabled>
+                                <input type="text" class="form-control" id="sub_track" name="sub_track"
+                                    placeholder="JPL" disabled>
                             </div>
                         </div>
                     </div>
@@ -98,15 +127,15 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="name" class="form-label">JPL</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="JPL"
-                                    disabled>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="JPL" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
-                                <input type="text" class="form-control" id="stakes" name="stakes" placeholder="KM/HM"
-                                    disabled>
+                                <input type="text" class="form-control" id="stakes" name="stakes"
+                                    placeholder="KM/HM" disabled>
                             </div>
                         </div>
                     </div>
@@ -166,9 +195,10 @@
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="technical_documentation" class="form-label">No. Surat Rekomendasi Teknis</label>
+                                <label for="technical_documentation" class="form-label">No. Surat Rekomendasi
+                                    Teknis</label>
                                 <input type="text" class="form-control" id="technical_documentation"
-                                       name="technical_documentation" disabled>
+                                    name="technical_documentation" disabled>
                             </div>
                         </div>
                     </div>
@@ -233,11 +263,15 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="{{ asset('js/map-control.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
+        async></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
@@ -246,6 +280,37 @@
         let path = '{{ route('direct-passage') }}';
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+
+        function changeTabEvent() {
+            $("#pills-tab").on("shown.bs.tab", function(e) {
+                if (e.target.id === "pills-table-tab") {
+                    table.columns.adjust();
+                }
+                if (e.target.id === "pills-map-tab") {
+                    generateMapDirectPassage();
+                }
+            })
+        }
+
+        function getDataDirectPassageMap() {
+            let area = $('#area-option').val();
+            let track = $('#track-option').val();
+            let url = path + '?type=map&area=' + area + '&track=' + track;
+            return $.get(url)
+        }
+
+        function generateMapDirectPassage() {
+            getDataDirectPassageMap().then((response) => {
+                console.log(response);
+                removeMultiMarker();
+                let data = response.data;
+                if (data.length > 0) {
+                    createMultiMarkerDirectPassage(data)
+                }
+            }).catch((e) => {
+                console.log(e)
+            })
+        }
 
         function getDataTrack() {
             let areaID = $('#area-option').val();
@@ -260,7 +325,7 @@
             let elOption = '<option value="">Semua Perlintasan</option>';
             getDataTrack().then((response) => {
                 const data = response['data'];
-                $.each(data, function (k, v) {
+                $.each(data, function(k, v) {
                     elOption += '<option value="' + v['id'] + '">' + v['code'] + '</option>';
                 });
             }).catch((e) => {
@@ -300,6 +365,7 @@
             AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
+                    generateMapDirectPassage()
                 });
             });
         }
@@ -370,11 +436,12 @@
         }
 
         $(document).ready(function() {
+            changeTabEvent();
             $('.select2').select2({
                 width: 'resolve',
             });
             generateDataTrackOption();
-            $('#area-option').on('change', function () {
+            $('#area-option').on('change', function() {
                 generateDataTrackOption();
             });
             table = $('#table-data').DataTable({
@@ -386,9 +453,10 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = $('#area-option').val();
                         d.track = $('#track-option').val();
+                        d.type = 'table';
                     }
                 },
                 columns: [{
@@ -424,22 +492,35 @@
                         className: 'text-center',
                     },
                     {
-                        data: 'width',
-                        name: 'width',
+                        data: null,
+                        name: null,
                         className: 'text-center',
+                        render: function(data) {
+                            let url = path + '/' + data['id'] + '/peristiwa-luar-biasa-hebat';
+                            return '<a href="' + url +
+                                '" class="btn-guard me-2 btn-table-action" data-id="' +
+                                data['id'] + '">' + data['count_accident'] + '</a>';
+                        }
                     },
                     {
-                        data: 'road_name',
-                        name: 'road_name',
-
+                        data: null,
+                        name: null,
+                        className: 'text-center',
+                        render: function(data) {
+                            let url = path + '/' + data['id'] + '/penjaga-jalur-lintasan';
+                            return '<a href="' + url +
+                                '" class="btn-guard me-2 btn-table-action" data-id="' +
+                                data['id'] + '">' + data['count_guard'] + '</a>';
+                        }
                     },
                     {
                         data: null,
                         orderable: false,
                         className: 'text-center',
-                        render: function (data) {
+                        render: function(data) {
                             let url = path + '/' + data['id'] + '/gambar';
-                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
+                            return '<a href="' + url +
+                                '" class="btn-image btn-table-action">Lihat</a>';
                         }
                     },
                     {
@@ -468,12 +549,13 @@
                 dom: 'ltrip'
             });
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
+                generateMapDirectPassage();
             });
 
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let track = $('#track-option').val();

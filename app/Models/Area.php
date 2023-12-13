@@ -26,4 +26,9 @@ class Area extends Model
     {
         return $this->belongsTo(ServiceUnit::class, 'service_unit_id');
     }
+
+    public function service_units()
+    {
+        return $this->belongsToMany(ServiceUnit::class, 'service_unit_areas');
+    }
 }

@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                     <th width="5%" class="text-center">#</th>
-                    <th width="15%" class="text-center">Jenis Gerbong</th>
+                    <th width="12%" class="text-center">Jenis</th>
                     <th width="12%" class="text-center">Kode</th>
                     <th>Nama</th>
                     <th width="10%" class="text-center">Aksi</th>

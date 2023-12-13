@@ -39,7 +39,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
             try {
                 $data_request = [
                     'special_equipment_type_id' => $this->postField('special_equipment_type'),
-                    'empty_weight' => $this->postField('empty_weight') ,
+                    'empty_weight' => $this->postField('empty_weight'),
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
                     'long' => $this->postField('long'),
@@ -66,7 +66,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
             try {
                 $data_request = [
                     'special_equipment_type_id' => $this->postField('special_equipment_type'),
-                    'empty_weight' => $this->postField('empty_weight') ,
+                    'empty_weight' => $this->postField('empty_weight'),
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
                     'long' => $this->postField('long'),
@@ -127,12 +127,14 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                 if ($this->request->hasFile('files')) {
                     foreach ($this->request->file('files') as $file) {
                         $extension = $file->getClientOriginalExtension();
+                        $originalName = $file->getClientOriginalName();
                         $document = Uuid::uuid4()->toString() . '.' . $extension;
                         $storage_path = public_path('tech-document');
                         $documentName = $storage_path . '/' . $document;
                         $dataDocument = [
                             'ts_special_equipment_id' => $data->id,
-                            'document' => '/tech-document/' . $document
+                            'document' => '/tech-document/' . $document,
+                            'name' => $originalName
                         ];
                         TechnicalSpecSpecialEquipmentDocument::create($dataDocument);
                         $file->move($storage_path, $documentName);
@@ -147,7 +149,6 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.technical-specification.special-equipment.document')->with([
             'data' => $data
@@ -183,10 +184,29 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.technical-specification.special-equipment.image')->with([
             'data' => $data
         ]);
+    }
+
+    public function destroy_document($id)
+    {
+        try {
+            TechnicalSpecSpecialEquipmentDocument::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
+    }
+
+    public function destroy_image($id)
+    {
+        try {
+            TechnicalSpecSpecialEquipmentImage::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 }
