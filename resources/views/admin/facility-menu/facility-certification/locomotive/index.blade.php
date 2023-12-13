@@ -3,8 +3,8 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SERTIFIKASI SARANA LOKOMOTIF {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Sertifikasi Sarana Lokomotif {{ $service_unit->name }}</p>
+            <h1 class="h1">SERTIFIKASI SARANA LOKOMOTIF</h1>
+            <p class="mb-0">Manajemen Data Sertifikasi Sarana Lokomotif</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
@@ -58,7 +58,7 @@
         <div class="title">
             <p>Data Sertifikasi Sarana Lokomotif</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.facility-certification.locomotive.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.facility-certification.locomotive.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd" href="#" id="btn-export"
