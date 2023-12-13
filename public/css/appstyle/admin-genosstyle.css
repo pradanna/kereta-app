@@ -1,0 +1,504 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.admin .sidebar {
+  width: 235px;
+  box-shadow: 1px 0px 10px #eee;
+  min-height: 100vh;
+  z-index: 5;
+  transition: all 300ms ease-in-out;
+}
+.admin .sidebar .logo-container {
+  text-align: center;
+  padding-top: 16px;
+  padding-bottom: 32px;
+  width: 100%;
+  transition: all 500ms ease-in-out;
+}
+.admin .sidebar .logo-container .company-logos {
+  width: 80%;
+}
+.admin .sidebar .logo-container .company-logos-minimize {
+  display: none;
+}
+.admin .sidebar .menu-container {
+  padding-left: 16px;
+}
+.admin .sidebar .menu-container ul {
+  padding-left: 0;
+}
+.admin .sidebar .menu-container ul li {
+  all: unset;
+}
+.admin .sidebar .menu-container .tooltiptext {
+  display: none;
+}
+.admin .sidebar .menu-container .menu {
+  all: unset;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 300ms ease-in-out;
+  padding: 10px;
+  border-radius: 50px 0 0 50px;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.admin .sidebar .menu-container .menu.multiple {
+  justify-content: space-between;
+}
+.admin .sidebar .menu-container .menu span {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+.admin .sidebar .menu-container .menu span.text-menu {
+  font-size: 0.8rem;
+}
+.admin .sidebar .menu-container .menu.active {
+  background-color: rgb(204, 51, 23);
+  color: white;
+}
+.admin .sidebar .menu-container .menu:hover {
+  background-color: rgba(204, 50, 23, 0.247);
+}
+.admin .sidebar .footer {
+  font-size: 0.8rem;
+  margin-top: 50px;
+}
+.admin .sidebar .footer p {
+  text-align: center;
+  margin-bottom: 0;
+}
+.admin .sidebar .footer .top {
+  color: gray;
+}
+.admin .sidebar .footer .bot {
+  color: #ed2a3a;
+  font-weight: bold;
+}
+.admin .gen-body {
+  width: 100%;
+  overflow: hidden;
+}
+.admin .gen-body .gen-nav {
+  height: 60px;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 1px 5px #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin .gen-body .gen-nav .start {
+  display: flex;
+  align-items: center;
+}
+.admin .gen-body .gen-nav .start .nav-button {
+  all: unset;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  color: gray;
+  padding: 5px;
+  background: white;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+}
+.admin .gen-body .gen-nav .start .nav-button .iconfwd {
+  display: none;
+}
+.admin .gen-body .gen-nav .start .nav-button .iconback {
+  display: block;
+}
+.admin .gen-body .gen-nav .start .nav-button:hover {
+  background: rgb(250, 204, 204);
+  color: black;
+}
+.admin .gen-body .gen-nav .end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.admin .gen-body .gen-nav .end .iconbtn {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  color: gray;
+  padding: 5px;
+  background: white;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+  position: relative;
+}
+.admin .gen-body .gen-nav .end .iconbtn .badges {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ed2a3a;
+}
+.admin .gen-body .gen-nav .end .iconbtn:hover {
+  background: rgb(250, 204, 204);
+  color: black;
+}
+.admin .gen-body .gen-nav .end .profile-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 30px;
+  padding: 5px;
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+}
+.admin .gen-body .gen-nav .end .profile-button:hover {
+  background-color: #efefef;
+}
+.admin .gen-body .gen-nav .end .profile-button .content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 50%;
+}
+.admin .gen-body .gen-nav .end .profile-button .content .dropdown-menu {
+  padding: 8px;
+  font-size: 0.8rem;
+}
+.admin .gen-body .gen-nav .end .profile-button .content .dropdown-menu .user {
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.admin .gen-body .gen-nav .end .profile-button .content .dropdown-menu .email {
+  color: gray;
+  border-radius: 0;
+  margin-bottom: 0;
+  font-size: 0.7rem;
+}
+.admin .gen-body .gen-nav .end .profile-button .content .dropdown-menu hr {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.admin .gen-body .gen-nav .end .profile-button .content .dropdown-menu .logout {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  color: red;
+  border-radius: 0;
+  transition: all 300ms ease-in-out;
+}
+.admin .gen-body .gen-nav .end .profile-button .content .dropdown-menu .logout:hover {
+  background-color: #efefef;
+  padding: 5px;
+}
+.admin .gen-body .gen-nav .end .profile-button .content a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 50%;
+  background: white;
+  overflow: hidden;
+}
+.admin .gen-body .gen-nav .end .profile-button .content img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.admin .gen-body .gen-nav .dropdown-menu {
+  border: 1px solid rgba(0, 0, 0, 0.01);
+  box-shadow: 1px 0px 10px #eee;
+}
+.admin .gen-body .gen-nav .menudropdown hr {
+  color: #ddd;
+  margin: 0;
+}
+.admin .gen-body .gen-nav .menudropdown.notif {
+  width: 400px;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .title-container {
+  padding: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .title-container .title {
+  all: unset;
+  margin-bottom: 0;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .title-container .action {
+  all: unset;
+  font-weight: bold;
+  color: #ed2a3a;
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .title-container .action:hover {
+  font-weight: 400;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .notif-container .notif-item {
+  padding: 16px;
+  display: flex;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .notif-container .notif-item.unread {
+  background-color: #f2f6fc;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .notif-container .notif-item .avatar {
+  flex-shrink: 0;
+  width: 45px !important;
+  height: 45px !important;
+  border-radius: 50%;
+  margin-right: 10px;
+  overflow: hidden;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .notif-container .notif-item .avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .notif-container .notif-item .content-container .title-content {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .notif-container .notif-item .content-container .body-content {
+  font-size: 0.8rem;
+  color: gray;
+  margin-bottom: 0;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .footer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .footer-container a {
+  all: unset;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #642aed;
+  font-weight: bold;
+  transition: all 100ms ease-in-out;
+}
+.admin .gen-body .gen-nav .menudropdown.notif .footer-container a:hover {
+  font-weight: 400;
+}
+.admin .gen-body .gen-content {
+  background-color: #eff2f4;
+  min-height: 100%;
+}
+.admin .gen-body .gen-content .dashboard {
+  padding: 16px;
+}
+.admin .gen-body .gen-content .dashboard .status-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status {
+  display: flex;
+  justify-content: space-between;
+  height: 120px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 1px 5px #eee;
+  padding: 16px;
+  width: 24%;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .content .stat p {
+  margin-bottom: 0;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .content .stat .title {
+  color: gray;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .content .stat .val {
+  color: #ed2a3a;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .content .report p {
+  margin-bottom: 0;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .content .report p span {
+  font-weight: bold;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .content .report p span.up {
+  color: green;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .content .report p span.down {
+  color: red;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .icon-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ed2a3a;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status .icon-container span {
+  color: white;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status.color1 .content .val {
+  color: #ff8f8f;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status.color1 .icon-container {
+  background-color: #ff8f8f;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status.color2 .content .val {
+  color: #f3b664;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status.color2 .icon-container {
+  background-color: #f3b664;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status.color3 .content .val {
+  color: #9ade7b;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status.color3 .icon-container {
+  background-color: #9ade7b;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status.color4 .content .val {
+  color: #508d69;
+}
+.admin .gen-body .gen-content .dashboard .status-container .card-status.color4 .icon-container {
+  background-color: #508d69;
+}
+.admin .gen-body .gen-content .dashboard .status-container.icon-circle .card-status .icon-container {
+  border-radius: 50%;
+}
+.admin .gen-body .gen-content .dashboard .status-container a {
+  all: unset;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #642aed;
+  font-weight: bold;
+  transition: all 100ms ease-in-out;
+}
+.admin .gen-body .gen-content .dashboard .status-container a:hover {
+  font-weight: 400;
+}
+.admin .gen-body .gen-content .dashboard .chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.admin .gen-body .gen-content .dashboard .chart-container .chart {
+  justify-content: space-between;
+  height: 250px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 1px 5px #eee;
+  padding: 16px;
+  width: 49%;
+}
+.admin .gen-body .gen-content .dashboard .chart-container .chart .title-container {
+  display: flex;
+  justify-content: space-between;
+}
+.admin .gen-body .gen-content .dashboard .chart-container .chart .title-container .title {
+  font-weight: bold;
+}
+.admin .gen-body .gen-content .dashboard .chart-container .chart .title-container .action {
+  all: unset;
+  display: flex;
+  background-color: rgb(250, 204, 204);
+  color: #ed2a3a;
+  padding: 3px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.admin.minimize .sidebar {
+  width: 70px;
+}
+.admin.minimize .sidebar .logo-container {
+  display: flex;
+  justify-content: center;
+}
+.admin.minimize .sidebar .logo-container .company-logos {
+  display: none;
+}
+.admin.minimize .sidebar .logo-container .company-logos-minimize {
+  width: 80%;
+  display: block;
+  height: 50px;
+  -o-object-fit: scale-down;
+     object-fit: scale-down;
+}
+.admin.minimize .sidebar .menu-container .tooltip {
+  margin-right: 16px;
+  position: relative;
+  transition: all 300ms ease-in-out;
+}
+.admin.minimize .sidebar .menu-container .tooltip .tooltiptext {
+  display: none;
+  white-space: nowrap;
+  background-color: rgb(250, 204, 204);
+  color: black;
+  text-align: center;
+  border-radius: 0 50px 50px 0;
+  padding: 5px 0;
+  padding-right: 16px;
+  padding-left: 16px;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+.admin.minimize .sidebar .menu-container .tooltip.hovering {
+  margin-right: 3px;
+  border-radius: 50px 0 0 50px !important;
+}
+.admin.minimize .sidebar .menu-container .tooltip.hovering .tooltiptext {
+  display: block;
+  position: absolute;
+  left: 50px;
+}
+.admin.minimize .sidebar .menu-container .menu {
+  border-radius: 50px;
+}
+.admin.minimize .sidebar .menu-container .menu .text-menu {
+  display: none;
+}
+.admin.minimize .sidebar .menu-container .menu .iconbtn {
+  display: none;
+}
+.admin.minimize .sidebar .footer {
+  display: none !important;
+}
+.admin.minimize .gen-nav .start .nav-button .iconfwd {
+  display: block;
+}
+.admin.minimize .gen-nav .start .nav-button .iconback {
+  display: none;
+}
