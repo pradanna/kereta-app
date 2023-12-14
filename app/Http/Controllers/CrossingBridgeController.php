@@ -6,13 +6,14 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Models\Area;
+use App\Models\CrossingBridge;
 use App\Models\District;
 use App\Models\SafetyAssessment;
 use App\Models\ServiceUnit;
 use App\Models\SubTrack;
 use Illuminate\Database\Eloquent\Builder;
 
-class SafetyAssessmentController extends CustomController
+class CrossingBridgeController extends CustomController
 {
     public function __construct()
     {
@@ -22,7 +23,7 @@ class SafetyAssessmentController extends CustomController
     public function index()
     {
         $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.service-unit')
+        return view('admin.infrastructure.crossing-bridge.service-unit')
             ->with([
                 'service_units' => $service_units
             ]);
@@ -38,14 +39,14 @@ class SafetyAssessmentController extends CustomController
             })
             ->orderBy('name', 'ASC')->get();
         if ($this->request->ajax()) {
-            $query = SafetyAssessment::with(['sub_track.track.area', 'district.city.province']);
+            $query = CrossingBridge::with(['sub_track.track.area']);
             $area = $this->request->query->get('area');
             $name = $this->request->query->get('name');
             if ($area !== '') {
                 $query->whereHas('sub_track', function ($qst) use ($area) {
                     /** @var $qst Builder */
                     return $qst->whereHas('track', function ($qt) use ($area) {
-                       /** @var $qt Builder */
+                        /** @var $qt Builder */
                         return $qt->where('area_id', '=', $area);
                     });
                 });
@@ -73,7 +74,7 @@ class SafetyAssessmentController extends CustomController
                 ->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.infrastructure.safety-assessment.index')->with([
+        return view('admin.infrastructure.crossing-bridge.index')->with([
             'service_unit' => $service_unit,
             'areas' => $areas
         ]);
@@ -97,10 +98,13 @@ class SafetyAssessmentController extends CustomController
                     'district_id' => $this->postField('district'),
                     'stakes' => $this->postField('stakes'),
                     'recommendation_number' => $this->postField('recommendation_number'),
-                    'organizer' => $this->postField('organizer'),
+                    'responsible_person' => $this->postField('responsible_person'),
+                    'long' => $this->postField('long'),
+                    'width' => $this->postField('width'),
+                    'road_class' => $this->postField('road_class'),
                     'description' => $this->postField('description'),
                 ];
-                SafetyAssessment::create($data_request);
+                CrossingBridge::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error...');
@@ -112,19 +116,19 @@ class SafetyAssessmentController extends CustomController
                 return $qt->whereIn('area_id', $areaIDS);
             })
             ->orderBy('name', 'ASC')->get();
-        $districts = District::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.add')->with([
+//        $districts = District::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.infrastructure.crossing-bridge.add')->with([
             'service_unit' => $service_unit,
             'areas' => $areas,
             'sub_tracks' => $sub_tracks,
-            'districts' => $districts,
+//            'districts' => $districts,
         ]);
     }
 
     public function patch($service_unit_id, $id)
     {
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $data = SafetyAssessment::findOrFail($id);
+        $data = CrossingBridge::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
@@ -132,7 +136,10 @@ class SafetyAssessmentController extends CustomController
                     'district_id' => $this->postField('district'),
                     'stakes' => $this->postField('stakes'),
                     'recommendation_number' => $this->postField('recommendation_number'),
-                    'organizer' => $this->postField('organizer'),
+                    'responsible_person' => $this->postField('responsible_person'),
+                    'long' => $this->postField('long'),
+                    'width' => $this->postField('width'),
+                    'road_class' => $this->postField('road_class'),
                     'description' => $this->postField('description'),
                 ];
                 $data->update($data_request);
@@ -154,12 +161,10 @@ class SafetyAssessmentController extends CustomController
                 return $qt->whereIn('area_id', $areaIDS);
             })
             ->orderBy('name', 'ASC')->get();
-        $districts = District::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.edit')->with([
+        return view('admin.infrastructure.crossing-bridge.edit')->with([
             'service_unit' => $service_unit,
             'areas' => $areas,
             'sub_tracks' => $sub_tracks,
-            'districts' => $districts,
             'data' => $data,
         ]);
     }
@@ -171,7 +176,7 @@ class SafetyAssessmentController extends CustomController
             if (!$service_unit) {
                 return $this->jsonErrorResponse('Satuan Pelayanan Tidak Di Temukan...');
             }
-            SafetyAssessment::destroy($id);
+            CrossingBridge::destroy($id);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
@@ -185,7 +190,7 @@ class SafetyAssessmentController extends CustomController
             if (!$service_unit) {
                 return $this->jsonErrorResponse('Satuan Pelayanan Tidak Di Temukan...');
             }
-            $data = SafetyAssessment::with(['sub_track.track.area', 'district.city'])
+            $data = CrossingBridge::with(['sub_track.track.area'])
                 ->where('id', '=', $id)
                 ->first();
             return $this->jsonSuccessResponse('success', $data);

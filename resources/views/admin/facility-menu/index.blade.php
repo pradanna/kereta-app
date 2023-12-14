@@ -99,7 +99,7 @@
 @section('js')
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
-        var path = '{{ route('infrastructure') }}';
+        var path = '{{ route('means') }}';
         $(document).ready(function () {
             $('.card-menu').on('click', function () {
                 let slug = this.dataset.slug;

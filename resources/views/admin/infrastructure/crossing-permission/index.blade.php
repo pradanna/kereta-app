@@ -3,14 +3,14 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SAFETY ASSESSMENT {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Safety Assessment {{ $service_unit->name }}</p>
+            <h1 class="h1">PERMOHONAN IZIN MELINTAS REL {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Permohonan Izin Melintas Rel {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Safety Assessment {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Permohonan Izin Melintas
+                    Rel {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -21,7 +21,8 @@
                     <div class="col-3">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option"
+                                    style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -29,11 +30,22 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-9">
+                    <div class="col-3">
+                        <div class="form-group w-100">
+                            <label for="status-option" class="form-label d-none">Status</label>
+                            <select class="select2 form-control" name="status-option" id="status-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Status</option>
+                                <option value="1">Berlaku</option>
+                                <option value="0">Habis Masa Berlaku</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari KM/HM atau No. Surat Rekomendasi">
+                                   placeholder="Cari KM/HM atau No. SK">
                         </div>
                     </div>
                 </div>
@@ -45,9 +57,10 @@
     </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
-            <p>Data Sertifikasi Sarana Lokomotif</p>
+            <p>Data Permohonan Izin Melintas Rel</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.safety.assessment.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                <a class="btn-utama sml rnd me-2"
+                   href="{{ route('infrastructure.crossing.permission.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd"
@@ -67,9 +80,10 @@
                     <th class="text-center middle-header" width="10%">Lintas</th>
                     <th class="text-center middle-header" width="10%">Petak</th>
                     <th class="text-center middle-header" width="10%">KM/HM</th>
-                    <th class="text-center middle-header" width="10%">Kota</th>
-                    <th class="text-center middle-header" width="10%">Kecamatan</th>
-                    <th class="text-center middle-header">No. Rekomendasi</th>
+                    <th class="text-center middle-header" width="10%">No. SK</th>
+                    <th class="text-center middle-header" width="10%">Tanggal SK</th>
+                    <th class="text-center middle-header" width="10%">Masa Berlaku</th>
+                    <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -83,7 +97,8 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Safety Assessment</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Permohonan Izin
+                        Melintas Rel</p>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-6">
@@ -101,21 +116,6 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="city" class="form-label">Kota / Kabupaten</label>
-                                <input type="text" class="form-control" id="city" name="city" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="district" class="form-label">Kecamatan</label>
-                                <input type="text" class="form-control" id="district" name="district" disabled>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
                                 <input type="text" class="form-control" id="stakes" name="stakes" disabled>
@@ -123,27 +123,65 @@
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="recommendation_number" class="form-label">No. Surat Rekomendasi</label>
-                                <input type="text" class="form-control" id="recommendation_number"
-                                       name="recommendation_number" disabled>
+                                <label for="decree_number" class="form-label">No. SK</label>
+                                <input type="text" class="form-control" id="decree_number"
+                                       name="decree_number" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="decree_date" class="form-label">Tanggal SK</label>
+                                <input type="text" class="form-control datepicker" id="decree_date"
+                                       name="decree_date" placeholder="dd-mm-yyyy" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
                             <div class="w-100">
-                                <label for="organizer" class="form-label">Penyelenggara</label>
-                                <input type="text" class="form-control" id="organizer"
-                                       name="organizer" disabled>
+                                <label for="intersection" class="form-label">Jenis Perpotongan / Persinggungan</label>
+                                <input type="text" class="form-control" id="intersection"
+                                       name="intersection" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-12">
+
+                        <div class="col-6">
                             <div class="w-100">
-                                <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" id="description"
-                                          name="description" disabled></textarea>
+                                <label for="building_type" class="form-label">Jenis Bangunan</label>
+                                <input type="text" class="form-control" id="building_type"
+                                       name="building_type" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="agency" class="form-label">Badan Hukum / Instansi</label>
+                                <input type="text" class="form-control" id="agency"
+                                       name="agency" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="expired_date" class="form-label">Tanggal Habis Masa Berlaku</label>
+                                <input type="text" class="form-control datepicker" id="expired_date"
+                                       name="expired_date" placeholder="dd-mm-yyyy" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="expired_in" class="form-label">Akan Habis (Hari)</label>
+                                <input type="text" class="form-control" id="expired_in" name="expired_in" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="status" name="status" disabled>
                             </div>
                         </div>
                     </div>
@@ -163,11 +201,12 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
+        let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail'));
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function(e) {
+            $('.btn-delete').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -190,7 +229,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function() {
+            AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
@@ -198,7 +237,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function(e) {
+            $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -212,20 +251,26 @@
                 let data = response['data'];
                 let subTrack = data['sub_track']['code'];
                 let track = data['sub_track']['track']['code'];
-                let district = data['district']['name'];
-                let city = data['district']['city']['name'];
                 let stakes = data['stakes'];
-                let recommendation_number = data['recommendation_number'];
-                let organizer = data['organizer'];
-                let description = data['description'];
+                let decree_number = data['decree_number'];
+                let decree_date = data['decree_date'];
+                let intersection = data['intersection'];
+                let building_type = data['building_type'];
+                let agency = data['agency'];
+                let expired_date = data['expired_date'];
+                let expiredIn = data['expired_in'];
+                let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
-                $('#district').val(district);
-                $('#city').val(city);
                 $('#stakes').val(stakes);
-                $('#recommendation_number').val(recommendation_number);
-                $('#organizer').val(organizer);
-                $('#description').val(description);
+                $('#decree_number').val(decree_number);
+                $('#decree_date').val(decree_date);
+                $('#intersection').val(intersection);
+                $('#building_type').val(building_type);
+                $('#agency').val(agency);
+                $('#expired_date').val(expired_date);
+                $('#expired_in').val(expiredIn);
+                $('#status').val(status);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
@@ -245,6 +290,7 @@
                     'data': function (d) {
                         d.area = $('#area-option').val();
                         d.name = $('#name').val();
+                        d.status = $('#status-option').val();
                     }
                 },
                 columns: [{
@@ -276,19 +322,42 @@
                         className: 'text-center'
                     },
                     {
-                        data: 'district.city.name',
-                        name: 'district.city.name',
+                        data: 'decree_number',
+                        name: 'decree_number',
                         className: 'text-center'
                     },
                     {
-                        data: 'district.name',
-                        name: 'district.name',
-                        className: 'text-center'
+                        data: 'decree_date',
+                        name: 'decree_date',
+                        render: function (data) {
+                            const v = new Date(data);
+                            return v.toLocaleDateString('id-ID', {
+                                month: '2-digit',
+                                year: 'numeric',
+                                day: '2-digit'
+                            }).split('/').join('-')
+                        },
+                        className: 'text-center',
                     },
-
                     {
-                        data: 'recommendation_number',
-                        name: 'recommendation_number',
+                        data: 'expired_date',
+                        name: 'expired_date',
+                        render: function (data) {
+                            const v = new Date(data);
+                            return v.toLocaleDateString('id-ID', {
+                                month: '2-digit',
+                                year: 'numeric',
+                                day: '2-digit'
+                            }).split('/').join('-')
+                        },
+                        className: 'text-center',
+                    },
+                    {
+                        data: 'expired_in',
+                        name: 'expired_in',
+                        render: function (data) {
+                            return data;
+                        },
                         className: 'text-center',
                     },
                     {
@@ -318,6 +387,13 @@
                 "fnDrawCallback": function (setting) {
                     deleteEvent();
                     eventOpenDetail();
+                },
+                createdRow: function (row, data, index) {
+                    if (data['expired_in'] < expiration) {
+                        $('td', row).css({
+                            'background-color': '#fecba1'
+                        });
+                    }
                 },
                 dom: 'ltrip'
             });

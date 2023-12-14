@@ -40,6 +40,32 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
         Route::match(['post', 'get'], '/{service_unit_id}/{id}/edit', [\App\Http\Controllers\StoreHouseController::class, 'patch'])->name('means.storehouse.service-unit.patch');
         Route::post('/{id}/delete', [\App\Http\Controllers\StoreHouseController::class, 'destroy'])->name('means.storehouse.service-unit.destroy');
     });
+
+    Route::group(['prefix' => 'amus'], function () {
+        Route::get('/', [\App\Http\Controllers\MaterialToolController::class, 'index'])->name('means.material-tool');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\MaterialToolController::class, 'main_page'])->name('means.material-tool.main');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\MaterialToolController::class, 'store'])->name('means.material-tool.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\MaterialToolController::class, 'patch'])->name('means.material-tool.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\MaterialToolController::class, 'destroy'])->name('means.material-tool.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\MaterialToolController::class, 'detail'])->name('means.material-tool.detail');
+        });
+    });
+
+    Route::group(['prefix' => 'sumber-daya-manusia'], function () {
+        Route::get('/', [\App\Http\Controllers\HumanResourceController::class, 'category_page'])->name('means.human-resource');
+
+        Route::group(['prefix' => '{slug}'], function () {
+            Route::get('/', [\App\Http\Controllers\HumanResourceController::class, 'index'])->name('means.human-resource.service-unit');
+            Route::group(['prefix' => '{service_unit_id}'], function () {
+                Route::get('/', [\App\Http\Controllers\HumanResourceController::class, 'main_page'])->name('means.human-resource.main');
+                Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\HumanResourceController::class, 'store'])->name('means.human-resource.create');
+                Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\HumanResourceController::class, 'patch'])->name('means.human-resource.patch');
+                Route::post('/{id}/delete', [\App\Http\Controllers\HumanResourceController::class, 'destroy'])->name('means.human-resource.destroy');
+                Route::get('/{id}/detail', [\App\Http\Controllers\HumanResourceController::class, 'detail'])->name('means.human-resource.detail');
+            });
+        });
+    });
 });
 
 Route::group(['prefix' => 'prasarana'], function () {
@@ -49,10 +75,61 @@ Route::group(['prefix' => 'prasarana'], function () {
         Route::get('/', [\App\Http\Controllers\SafetyAssessmentController::class, 'index'])->name('infrastructure.safety.assessment');
         Route::group(['prefix' => '{service_unit_id}'], function () {
             Route::get('/', [\App\Http\Controllers\SafetyAssessmentController::class, 'main_page'])->name('infrastructure.safety.assessment.main');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\SafetyAssessmentController::class, 'store'])->name('infrastructure.safety.assessment.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\SafetyAssessmentController::class, 'patch'])->name('infrastructure.safety.assessment.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\SafetyAssessmentController::class, 'destroy'])->name('infrastructure.safety.assessment.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\SafetyAssessmentController::class, 'detail'])->name('infrastructure.safety.assessment.detail');
+        });
+    });
+
+    Route::group(['prefix' => 'jembatan-penyebrangan'], function () {
+        Route::get('/', [\App\Http\Controllers\CrossingBridgeController::class, 'index'])->name('infrastructure.crossing.bridge');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\CrossingBridgeController::class, 'main_page'])->name('infrastructure.crossing.bridge.main');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\CrossingBridgeController::class, 'store'])->name('infrastructure.crossing.bridge.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\CrossingBridgeController::class, 'patch'])->name('infrastructure.crossing.bridge.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\CrossingBridgeController::class, 'destroy'])->name('infrastructure.crossing.bridge.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\CrossingBridgeController::class, 'detail'])->name('infrastructure.crossing.bridge.detail');
+        });
+    });
+
+    Route::group(['prefix' => 'permohonan-izin-melintas-rel'], function () {
+        Route::get('/', [\App\Http\Controllers\CrossingPermissionController::class, 'index'])->name('infrastructure.crossing.permission');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\CrossingPermissionController::class, 'main_page'])->name('infrastructure.crossing.permission.main');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\CrossingPermissionController::class, 'store'])->name('infrastructure.crossing.permission.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\CrossingPermissionController::class, 'patch'])->name('infrastructure.crossing.permission.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\CrossingPermissionController::class, 'destroy'])->name('infrastructure.crossing.permission.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\CrossingPermissionController::class, 'detail'])->name('infrastructure.crossing.permission.detail');
+        });
+    });
+
+    Route::group(['prefix' => 'jembatan-kereta-api'], function () {
+        Route::get('/', [\App\Http\Controllers\TrainBridgesController::class, 'index'])->name('infrastructure.train.bridges');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\TrainBridgesController::class, 'main_page'])->name('infrastructure.train.bridges.main');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TrainBridgesController::class, 'store'])->name('infrastructure.train.bridges.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TrainBridgesController::class, 'patch'])->name('infrastructure.train.bridges.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\TrainBridgesController::class, 'destroy'])->name('infrastructure.train.bridges.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\TrainBridgesController::class, 'detail'])->name('infrastructure.train.bridges.detail');
         });
     });
 });
 
+Route::group(['prefix' => 'lalu-lintas'], function () {
+    Route::get('/', [\App\Http\Controllers\TrafficController::class, 'index'])->name('traffic');
+
+    Route::group(['prefix' => 'stasiun-kereta-api'], function () {
+        Route::get('/', [\App\Http\Controllers\RailwayStationController::class, 'index'])->name('traffic.railway-station');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\RailwayStationController::class, 'main_page'])->name('traffic.railway-station.main');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\RailwayStationController::class, 'store'])->name('traffic.railway-station.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\RailwayStationController::class, 'patch'])->name('traffic.railway-station.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\RailwayStationController::class, 'destroy'])->name('traffic.railway-station.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\RailwayStationController::class, 'detail'])->name('traffic.railway-station.detail');
+        });
+    });
+});
 Route::group(['prefix' => 'pengguna'], function () {
     Route::get('/', [\App\Http\Controllers\UserController::class, 'index'])->name('user');
     Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\UserController::class, 'store'])->name('user.create');

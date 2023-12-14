@@ -3,14 +3,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SAFETY ASSESSMENT {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Safety Assessment {{ $service_unit->name }}</p>
+            <h1 class="h1">AMUS {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Amus {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Safety Assessment {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Amus {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -33,7 +32,7 @@
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari KM/HM atau No. Surat Rekomendasi">
+                                   placeholder="Cari Jenis Amus">
                         </div>
                     </div>
                 </div>
@@ -45,9 +44,9 @@
     </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
-            <p>Data Sertifikasi Sarana Lokomotif</p>
+            <p>Data Amus</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.safety.assessment.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                <a class="btn-utama sml rnd me-2" href="{{ route('means.material-tool.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd"
@@ -64,12 +63,10 @@
                 <tr>
                     <th class="text-center middle-header" width="5%">#</th>
                     <th class="text-center middle-header" width="10%">Wilayah</th>
-                    <th class="text-center middle-header" width="10%">Lintas</th>
-                    <th class="text-center middle-header" width="10%">Petak</th>
-                    <th class="text-center middle-header" width="10%">KM/HM</th>
-                    <th class="text-center middle-header" width="10%">Kota</th>
-                    <th class="text-center middle-header" width="10%">Kecamatan</th>
-                    <th class="text-center middle-header">No. Rekomendasi</th>
+                    <th class="text-center middle-header" width="10%">Resort</th>
+                    <th class="middle-header">Jenis Amus</th>
+                    <th class="text-center middle-header" width="10%">Jumlah</th>
+                    <th class="text-center middle-header" width="10%">Satuan</th>
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -88,53 +85,38 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="track" class="form-label">Perlintasan</label>
-                                <input type="text" class="form-control" id="track" name="track" disabled>
+                                <label for="area" class="form-label">Wilayah (Daerah Operasi)</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="sub_track" class="form-label">Petak</label>
-                                <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="city" class="form-label">Kota / Kabupaten</label>
-                                <input type="text" class="form-control" id="city" name="city" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="district" class="form-label">Kecamatan</label>
-                                <input type="text" class="form-control" id="district" name="district" disabled>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="stakes" class="form-label">KM/HM</label>
-                                <input type="text" class="form-control" id="stakes" name="stakes" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="recommendation_number" class="form-label">No. Surat Rekomendasi</label>
-                                <input type="text" class="form-control" id="recommendation_number"
-                                       name="recommendation_number" disabled>
+                                <label for="resort" class="form-label">Resort</label>
+                                <input type="text" class="form-control" id="resort" name="resort" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
                             <div class="w-100">
-                                <label for="organizer" class="form-label">Penyelenggara</label>
-                                <input type="text" class="form-control" id="organizer"
-                                       name="organizer" disabled>
+                                <label for="type" class="form-label">Jenis Amus</label>
+                                <input type="text" class="form-control" id="type"
+                                       name="type" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="qty" class="form-label">Jumlah</label>
+                                <input type="number" step="any" class="form-control" id="qty" name="qty" value="0" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="unit" class="form-label">Satuan</label>
+                                <input type="text" class="form-control" id="unit"
+                                       name="unit" disabled>
                             </div>
                         </div>
                     </div>
@@ -142,8 +124,7 @@
                         <div class="col-12">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" id="description"
-                                          name="description" disabled></textarea>
+                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -210,21 +191,17 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let subTrack = data['sub_track']['code'];
-                let track = data['sub_track']['track']['code'];
-                let district = data['district']['name'];
-                let city = data['district']['city']['name'];
-                let stakes = data['stakes'];
-                let recommendation_number = data['recommendation_number'];
-                let organizer = data['organizer'];
+                let area = data['area']['name'];
+                let resort = data['resort']['name'];
+                let type = data['type'];
+                let qty = data['qty'];
+                let unit = data['unit'];
                 let description = data['description'];
-                $('#sub_track').val(subTrack);
-                $('#track').val(track);
-                $('#district').val(district);
-                $('#city').val(city);
-                $('#stakes').val(stakes);
-                $('#recommendation_number').val(recommendation_number);
-                $('#organizer').val(organizer);
+                $('#area').val(area);
+                $('#resort').val(resort);
+                $('#type').val(type);
+                $('#qty').val(qty);
+                $('#unit').val(unit);
                 $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
@@ -256,40 +233,28 @@
                     // width: '30px'
                 },
                     {
-                        data: 'sub_track.track.area.name',
-                        name: 'sub_track.track.area.name',
+                        data: 'area.name',
+                        name: 'area.name',
                         className: 'text-center'
                     },
                     {
-                        data: 'sub_track.track.code',
-                        name: 'sub_track.track.code',
+                        data: 'resort.name',
+                        name: 'resort.name',
                         className: 'text-center'
                     },
                     {
-                        data: 'sub_track.code',
-                        name: 'sub_track.code',
+                        data: 'type',
+                        name: 'type',
+                    },
+                    {
+                        data: 'qty',
+                        name: 'qty',
                         className: 'text-center'
                     },
                     {
-                        data: 'stakes',
-                        name: 'stakes',
+                        data: 'unit',
+                        name: 'unit',
                         className: 'text-center'
-                    },
-                    {
-                        data: 'district.city.name',
-                        name: 'district.city.name',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'district.name',
-                        name: 'district.name',
-                        className: 'text-center'
-                    },
-
-                    {
-                        data: 'recommendation_number',
-                        name: 'recommendation_number',
-                        className: 'text-center',
                     },
                     {
                         data: null,

@@ -101,7 +101,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu" href="{{ route('dashboard') }}">
+                    <a class="nav-link menu {{ request()->is('lalu-lintas*') ? 'active' : '' }}"
+                        href="{{ route('traffic') }}">
                         <span class="material-symbols-outlined menu-icon">
                             signpost
                         </span>
