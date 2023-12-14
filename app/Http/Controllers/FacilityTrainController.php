@@ -34,20 +34,20 @@ class FacilityTrainController extends CustomController
 
         $query = FacilityTrain::with(['area', 'storehouse.storehouse_type', 'train_type']);
 
-        if ($service_unit !== '' && $service_unit !== null) {
-            $query->whereHas('area', function ($qt) use ($service_unit){
-                /** @var $qt Builder */
-                return $qt->where('service_unit_id', '=', $service_unit);
-            });
-        }
+//        if ($service_unit !== '' && $service_unit !== null) {
+//            $query->whereHas('area', function ($qt) use ($service_unit){
+//                /** @var $qt Builder */
+//                return $qt->where('service_unit_id', '=', $service_unit);
+//            });
+//        }
 
         if ($area !== '') {
             $query->where('area_id', '=', $area);
         }
 
-        if ($storehouse !== '') {
-            $query->where('storehouse_id', '=', $storehouse);
-        }
+//        if ($storehouse !== '') {
+//            $query->where('storehouse_id', '=', $storehouse);
+//        }
 
         if ($engineType !== '') {
             $query->where('engine_type', '=', $engineType);
@@ -83,7 +83,7 @@ class FacilityTrainController extends CustomController
         }
         $train_types = TrainType::all();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.train.index')->with([
+        return view('admin.facility-menu.facility-certification.train.index')->with([
             'train_types' => $train_types,
             'areas' => $areas,
         ]);
@@ -96,7 +96,7 @@ class FacilityTrainController extends CustomController
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
-                    'train_type_id' => $this->postField('train_type'),
+                    'train_type_id' => null,
                     'engine_type' => $this->postField('engine_type'),
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
@@ -112,7 +112,7 @@ class FacilityTrainController extends CustomController
         }
         $train_types = TrainType::with([])->orderBy('code', 'ASC')->get();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.train.add')->with([
+        return view('admin.facility-menu.facility-certification.train.add')->with([
             'train_types' => $train_types,
             'areas' => $areas
         ]);
@@ -126,7 +126,7 @@ class FacilityTrainController extends CustomController
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
-                    'train_type_id' => $this->postField('train_type'),
+                    'train_type_id' => null,
                     'engine_type' => $this->postField('engine_type'),
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
@@ -142,7 +142,7 @@ class FacilityTrainController extends CustomController
         }
         $train_types = TrainType::with([])->orderBy('code', 'ASC')->get();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.train.edit')->with([
+        return view('admin.facility-menu.facility-certification.train.edit')->with([
             'data' => $data,
             'train_types' => $train_types,
             'areas' => $areas

@@ -20,7 +20,7 @@ class TechnicalSpecWagon extends Model
         'width',
         'height_from_rail',
         'axle_load',
-        'bogie_distance',
+        'boogie_distance',
         'usability',
     ];
 

@@ -16,7 +16,7 @@ class CreateFacilitySpecialEquipment extends Migration
         Schema::create('facility_special_equipment', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('area_id');
-            $table->foreignUuid('special_equipment_type_id');
+            $table->foreignUuid('special_equipment_type_id')->nullable();
             $table->foreignUuid('storehouse_id')->nullable();
             $table->string('ownership');
             $table->string('old_facility_number');

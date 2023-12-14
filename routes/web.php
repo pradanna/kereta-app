@@ -29,6 +29,33 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
         Route::group(['prefix' => 'lokomotif'], function () {
             Route::get('/', [\App\Http\Controllers\FacilityLocomotiveController::class, 'index'])->name('means.facility-certification.locomotive');
             Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityLocomotiveController::class, 'store'])->name('means.facility-certification.locomotive.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityLocomotiveController::class, 'patch'])->name('means.facility-certification.locomotive.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\FacilityLocomotiveController::class, 'destroy'])->name('means.facility-certification.locomotive.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\FacilityLocomotiveController::class, 'detail'])->name('means.facility-certification.locomotive.detail');
+        });
+
+        Route::group(['prefix' => 'kereta'], function () {
+            Route::get('/', [\App\Http\Controllers\FacilityTrainController::class, 'index'])->name('means.facility-certification.train');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityTrainController::class, 'store'])->name('means.facility-certification.train.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityTrainController::class, 'patch'])->name('means.facility-certification.train.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\FacilityTrainController::class, 'destroy'])->name('means.facility-certification.train.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\FacilityTrainController::class, 'detail'])->name('means.facility-certification.train.detail');
+        });
+
+        Route::group(['prefix' => 'gerbong'], function () {
+            Route::get('/', [\App\Http\Controllers\FacilityWagonController::class, 'index'])->name('means.facility-certification.wagon');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilityWagonController::class, 'store'])->name('means.facility-certification.wagon.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityWagonController::class, 'patch'])->name('means.facility-certification.wagon.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\FacilityWagonController::class, 'destroy'])->name('means.facility-certification.wagon.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\FacilityWagonController::class, 'detail'])->name('means.facility-certification.wagon.detail');
+        });
+
+        Route::group(['prefix' => 'peralatan-khusus'], function () {
+            Route::get('/', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'index'])->name('means.facility-certification.special-equipment');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'store'])->name('means.facility-certification.special-equipment.create');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'patch'])->name('means.facility-certification.special-equipment.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'destroy'])->name('means.facility-certification.special-equipment.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'detail'])->name('means.facility-certification.special-equipment.detail');
         });
 
     });
@@ -42,6 +69,103 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
         Route::post('/{id}/delete', [\App\Http\Controllers\StoreHouseController::class, 'destroy'])->name('means.storehouse.service-unit.destroy');
     });
 
+    //spesifikasi teknis
+    Route::group(['prefix' => 'spesifikasi-teknis'], function () {
+        Route::get('/', [\App\Http\Controllers\MeansController::class, 'technical_specification_page'])->name('means.technical-specification');
+        Route::group(['prefix' => 'lokomotif'], function () {
+            Route::get('/', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'index'])->name('means.technical-specification.locomotive');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'store'])->name('means.technical-specification.locomotive.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'patch'])->name('means.technical-specification.locomotive.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy'])->name('means.technical-specification.locomotive.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'detail'])->name('means.technical-specification.locomotive.detail');
+            Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'document_page'])->name('means.technical-specification.locomotive.document');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'image_page'])->name('means.technical-specification.locomotive.image');
+            Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy_document'])->name('means.technical-specification.locomotive.document.delete');
+            Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy_image'])->name('means.technical-specification.locomotive.image.delete');
+        });
+
+        Route::group(['prefix' => 'kereta'], function () {
+            Route::get('/', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'index'])->name('means.technical-specification.train');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'store'])->name('means.technical-specification.train.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'patch'])->name('means.technical-specification.train.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy'])->name('means.technical-specification.train.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'detail'])->name('means.technical-specification.train.detail');
+            Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'document_page'])->name('means.technical-specification.train.document');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'image_page'])->name('means.technical-specification.train.image');
+            Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy_document'])->name('means.technical-specification.train.document.delete');
+            Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy_image'])->name('means.technical-specification.train.image.delete');
+
+        });
+
+        Route::group(['prefix' => 'gerbong'], function () {
+            Route::get('/', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'index'])->name('means.technical-specification.wagon');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'store'])->name('means.technical-specification.wagon.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'patch'])->name('means.technical-specification.wagon.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy'])->name('means.technical-specification.wagon.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'detail'])->name('means.technical-specification.wagon.detail');
+            Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'document_page'])->name('means.technical-specification.wagon.document');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'image_page'])->name('means.technical-specification.wagon.image');
+            Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy_document'])->name('means.technical-specification.wagon.document.delete');
+            Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy_image'])->name('means.technical-specification.wagon.image.delete');
+        });
+
+        Route::group(['prefix' => 'peralatan-khusus'], function () {
+            Route::get('/', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'index'])->name('means.technical-specification.special-equipment');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'store'])->name('means.technical-specification.special-equipment.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'patch'])->name('means.technical-specification.special-equipment.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'destroy'])->name('means.technical-specification.special-equipment.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'detail'])->name('means.technical-specification.special-equipment.detail');
+            Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'document_page'])->name('means.technical-specification.special-equipment.document');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'image_page'])->name('means.technical-specification.special-equipment.image');
+            Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'destroy_document'])->name('means.technical-specification.special-equipment.document.delete');
+            Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'destroy_image'])->name('means.technical-specification.special-equipment.image.delete');
+
+        });
+    });
+
+    //jalur perlintasan langsung
+    Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {
+        Route::get('/', [\App\Http\Controllers\DirectPassageController::class, 'service_unit_page'])->name('means.direct-passage');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\DirectPassageController::class, 'index'])->name('means.direct-passage.service-unit');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageController::class, 'store'])->name('means.direct-passage.service-unit.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageController::class, 'patch'])->name('means.direct-passage.service-unit.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageController::class, 'destroy'])->name('means.direct-passage.service-unit.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\DirectPassageController::class, 'detail'])->name('means.direct-passage.detail');
+            Route::get('/{id}/penjaga-jalur-lintasan', [\App\Http\Controllers\DirectPassageController::class, 'direct_passage_guard_page'])->name('means.direct-passage.guard');
+            Route::get('/{id}/peristiwa-luar-biasa-hebat', [\App\Http\Controllers\DirectPassageController::class, 'direct_passage_accident_page'])->name('means.direct-passage.accident');
+            Route::get('/excel', [\App\Http\Controllers\DirectPassageController::class, 'export_to_excel'])->name('means.direct-passage.excel');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\DirectPassageController::class, 'image_page'])->name('means.direct-passage.image');
+            Route::post('/{id}/delete-image', [\App\Http\Controllers\DirectPassageController::class, 'destroy_image'])->name('means.direct-passage.image.destroy');
+        });
+    });
+
+    Route::group(['prefix' => 'daerah-rawan-bencana'], function () {
+        Route::get('/', [\App\Http\Controllers\DisasterAreaController::class, 'service_unit_page'])->name('means.disaster-area');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\DisasterAreaController::class, 'index'])->name('means.disaster-area.service-unit');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DisasterAreaController::class, 'store'])->name('means.disaster-area.service-unit.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DisasterAreaController::class, 'patch'])->name('means.disaster-area.service-unit.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\DisasterAreaController::class, 'destroy'])->name('means.disaster-area.service-unit.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\DisasterAreaController::class, 'detail'])->name('means.disaster-area.service-unit.detail');
+            Route::get('/excel', [\App\Http\Controllers\DisasterAreaController::class, 'export_to_excel'])->name('means.disaster-area.service-unit.excel');
+
+        });
+    });
+
+    Route::group(['prefix' => 'peristiwa-luar-biasa-hebat'], function () {
+        Route::get('/', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'service_unit_page'])->name('means.direct-passage-accident');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'index'])->name('means.direct-passage-accident.service-unit');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'store'])->name('means.direct-passage-accident.service-unit.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'patch'])->name('means.direct-passage-accident.service-unit.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'destroy'])->name('means.direct-passage-accident.service-unit.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'detail'])->name('means.direct-passage-accident.service-unit.detail');
+            Route::get('/excel', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'export_to_excel'])->name('means.direct-passage-accident.service-unit.excel');
+
+        });
+    });
+
     Route::group(['prefix' => 'amus'], function () {
         Route::get('/', [\App\Http\Controllers\MaterialToolController::class, 'index'])->name('means.material-tool');
         Route::group(['prefix' => '{service_unit_id}'], function () {
@@ -53,10 +177,23 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
         });
     });
 
+    Route::group(['prefix' => 'bangunan-liar'], function () {
+        Route::get('/', [\App\Http\Controllers\IllegalBuildingController::class, 'service_unit_page'])->name('means.illegal-building');
+        Route::group(['prefix' => '{service_unit_id}'], function () {
+            Route::get('/', [\App\Http\Controllers\IllegalBuildingController::class, 'index'])->name('means.illegal-building.service-unit');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\IllegalBuildingController::class, 'store'])->name('means.illegal-building.service-unit.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\IllegalBuildingController::class, 'patch'])->name('means.illegal-building.service-unit.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\IllegalBuildingController::class, 'destroy'])->name('means.illegal-building.service-unit.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\IllegalBuildingController::class, 'detail'])->name('means.illegal-building.service-unit.detail');
+            Route::get('/excel', [\App\Http\Controllers\IllegalBuildingController::class, 'export_to_excel'])->name('means.illegal-building.service-unit.excel');
+
+        });
+    });
+
     Route::group(['prefix' => 'sumber-daya-manusia'], function () {
         Route::get('/', [\App\Http\Controllers\HumanResourceController::class, 'category_page'])->name('means.human-resource');
 
-        Route::group(['prefix' => '{slug}'], function (){
+        Route::group(['prefix' => '{slug}'], function () {
             Route::get('/', [\App\Http\Controllers\HumanResourceController::class, 'index'])->name('means.human-resource.service-unit');
             Route::group(['prefix' => '{service_unit_id}'], function () {
                 Route::get('/', [\App\Http\Controllers\HumanResourceController::class, 'main_page'])->name('means.human-resource.main');
@@ -316,57 +453,6 @@ Route::group(['prefix' => 'sertifikasi-sarana-peralatan-khusus'], function () {
     Route::get('/excel', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'export_to_excel'])->name('facility-certification-special-equipment.excel');
 });
 
-Route::group(['prefix' => 'spesifikasi-teknis-sarana-lokomotif'], function () {
-    Route::get('/', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'index'])->name('technical-specification.locomotive');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'store'])->name('technical-specification.locomotive.add');
-    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'patch'])->name('technical-specification.locomotive.patch');
-    Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy'])->name('technical-specification.locomotive.destroy');
-    Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'detail'])->name('technical-specification.locomotive.detail');
-    Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'document_page'])->name('technical-specification.locomotive.document');
-    Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'image_page'])->name('technical-specification.locomotive.image');
-    Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy_document'])->name('technical-specification.locomotive.document.delete');
-    Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationLocomotiveController::class, 'destroy_image'])->name('technical-specification.locomotive.image.delete');
-
-});
-
-Route::group(['prefix' => 'spesifikasi-teknis-sarana-kereta'], function () {
-    Route::get('/', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'index'])->name('technical-specification.train');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'store'])->name('technical-specification.train.add');
-    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'patch'])->name('technical-specification.train.patch');
-    Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy'])->name('technical-specification.train.destroy');
-    Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'detail'])->name('technical-specification.train.detail');
-    Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'document_page'])->name('technical-specification.train.document');
-    Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'image_page'])->name('technical-specification.train.image');
-    Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy_document'])->name('technical-specification.train.document.delete');
-    Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationTrainController::class, 'destroy_image'])->name('technical-specification.train.image.delete');
-
-});
-
-Route::group(['prefix' => 'spesifikasi-teknis-sarana-gerbong'], function () {
-    Route::get('/', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'index'])->name('technical-specification.wagon');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'store'])->name('technical-specification.wagon.add');
-    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'patch'])->name('technical-specification.wagon.patch');
-    Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy'])->name('technical-specification.wagon.destroy');
-    Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'detail'])->name('technical-specification.wagon.detail');
-    Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'document_page'])->name('technical-specification.wagon.document');
-    Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'image_page'])->name('technical-specification.wagon.image');
-    Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy_document'])->name('technical-specification.wagon.document.delete');
-    Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationWagonController::class, 'destroy_image'])->name('technical-specification.wagon.image.delete');
-
-});
-
-Route::group(['prefix' => 'spesifikasi-teknis-sarana-peralatan-khusus'], function () {
-    Route::get('/', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'index'])->name('technical-specification.special-equipment');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'store'])->name('technical-specification.special-equipment.add');
-    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'patch'])->name('technical-specification.special-equipment.patch');
-    Route::post('/{id}/delete', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'destroy'])->name('technical-specification.special-equipment.destroy');
-    Route::get('/{id}/detail', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'detail'])->name('technical-specification.special-equipment.detail');
-    Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'document_page'])->name('technical-specification.special-equipment.document');
-    Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'image_page'])->name('technical-specification.special-equipment.image');
-    Route::post('/{id}/delete-document', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'destroy_document'])->name('technical-specification.special-equipment.document.delete');
-    Route::post('/{id}/delete-image', [\App\Http\Controllers\TechnicalSpecificationSpecialEquipmentController::class, 'destroy_image'])->name('technical-specification.special-equipment.image.delete');
-
-});
 
 Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {
     Route::get('/', [\App\Http\Controllers\DirectPassageController::class, 'index'])->name('direct-passage');
@@ -381,23 +467,6 @@ Route::group(['prefix' => 'jalur-perlintasan-langsung'], function () {
     Route::post('/{id}/delete-image', [\App\Http\Controllers\DirectPassageController::class, 'destroy_image'])->name('direct-passage.image.destroy');
 });
 
-Route::group(['prefix' => 'daerah-rawan-bencana'], function () {
-    Route::get('/', [\App\Http\Controllers\DisasterAreaController::class, 'index'])->name('disaster-area');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\DisasterAreaController::class, 'store'])->name('disaster-area.add');
-    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\DisasterAreaController::class, 'patch'])->name('disaster-area.patch');
-    Route::post('/{id}/delete', [\App\Http\Controllers\DisasterAreaController::class, 'destroy'])->name('disaster-area.destroy');
-    Route::get('/{id}/detail', [\App\Http\Controllers\DisasterAreaController::class, 'detail'])->name('disaster-area.detail');
-    Route::get('/excel', [\App\Http\Controllers\DisasterAreaController::class, 'export_to_excel'])->name('disaster-area.excel');
-});
-
-Route::group(['prefix' => 'bangunan-liar'], function () {
-    Route::get('/', [\App\Http\Controllers\IllegalBuildingController::class, 'index'])->name('illegal-building');
-    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\IllegalBuildingController::class, 'store'])->name('illegal-building.add');
-    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\IllegalBuildingController::class, 'patch'])->name('illegal-building.patch');
-    Route::post('/{id}/delete', [\App\Http\Controllers\IllegalBuildingController::class, 'destroy'])->name('illegal-building.destroy');
-    Route::get('/{id}/detail', [\App\Http\Controllers\IllegalBuildingController::class, 'detail'])->name('illegal-building.detail');
-    Route::get('/excel', [\App\Http\Controllers\IllegalBuildingController::class, 'export_to_excel'])->name('illegal-building.excel');
-});
 
 Route::group(['prefix' => 'penjaga-jalur-lintasan'], function () {
     Route::get('/', [\App\Http\Controllers\DirectPassageGuardController::class, 'index'])->name('direct-passage-guard');

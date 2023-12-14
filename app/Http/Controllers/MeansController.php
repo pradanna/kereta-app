@@ -40,6 +40,11 @@ class MeansController extends CustomController
             ]);
     }
 
+    public function technical_specification_page()
+    {
+        return view('admin.facility-menu.technical-specification.index');
+    }
+
 
     private function generateTotalFacilityData()
     {

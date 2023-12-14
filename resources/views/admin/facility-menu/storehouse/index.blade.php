@@ -8,7 +8,7 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Depo Dan Balai
                     Yasa {{ $service_unit->name }}</li>
             </ol>
@@ -52,7 +52,7 @@
     <div class="panel w-100 shadow-sm">
         <div class="title">
             <p>Data Depo dan Balai Yasa</p>
-            <a class="btn-utama sml rnd" href="{{ route('infrastructure.storehouse.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
+            <a class="btn-utama sml rnd" href="{{ route('means.storehouse.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>
         </div>
@@ -161,7 +161,7 @@
         }
 
         function destroy(id) {
-            let storehousePath = '{{ route('infrastructure.storehouse') }}';
+            let storehousePath = '{{ route('means.storehouse') }}';
             let url = storehousePath + '/' + id + '/delete';
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {

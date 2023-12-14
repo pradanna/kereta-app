@@ -14,7 +14,7 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('infrastructure.facility-certification.locomotive') }}';
+                window.location.href = '{{ route('means.facility-certification.locomotive') }}';
             })
         </script>
     @endif
@@ -25,8 +25,8 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure.facility-certification.locomotive') }}">Sertifikasi
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.facility-certification.locomotive') }}">Sertifikasi
                         Sarana Lokomotif</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
@@ -40,7 +40,7 @@
             <form method="post" id="form-data">
                 @csrf
                 <div class="row mb-3">
-                    <div class="col-6">
+                    <div class="col-12">
                         <div class="form-group w-100">
                             <label for="area" class="form-label">Wilayah</label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
@@ -50,17 +50,17 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="locomotive_type" class="form-label">Jenis Lokomotif</label>
-                            <select class="select2 form-control" name="locomotive_type" id="locomotive_type"
-                                    style="width: 100%;">
-                                @foreach ($locomotive_types as $locomotive_type)
-                                    <option value="{{ $locomotive_type->id }}">{{ $locomotive_type->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+{{--                    <div class="col-6">--}}
+{{--                        <div class="form-group w-100">--}}
+{{--                            <label for="locomotive_type" class="form-label">Jenis Lokomotif</label>--}}
+{{--                            <select class="select2 form-control" name="locomotive_type" id="locomotive_type"--}}
+{{--                                    style="width: 100%;">--}}
+{{--                                @foreach ($locomotive_types as $locomotive_type)--}}
+{{--                                    <option value="{{ $locomotive_type->id }}">{{ $locomotive_type->name }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
@@ -138,8 +138,6 @@
             integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        let areaPath = '{{ route('area') }}';
-
         function getDataStorehouse() {
             let areaID = $('#area').val();
             let storehousePath = '{{ route('storehouse.by.area') }}';

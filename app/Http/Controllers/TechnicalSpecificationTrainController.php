@@ -31,7 +31,7 @@ class TechnicalSpecificationTrainController extends CustomController
                 ->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.technical-specification.train.index');
+        return view('admin.facility-menu.technical-specification.train.index');
     }
 
     public function store()
@@ -58,7 +58,7 @@ class TechnicalSpecificationTrainController extends CustomController
             }
         }
         $train_types = TrainType::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.technical-specification.train.add')->with([
+        return view('admin.facility-menu.technical-specification.train.add')->with([
             'train_types' => $train_types,
         ]);
     }
@@ -88,7 +88,7 @@ class TechnicalSpecificationTrainController extends CustomController
             }
         }
         $train_types = TrainType::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.technical-specification.train.edit')->with([
+        return view('admin.facility-menu.technical-specification.train.edit')->with([
             'data' => $data,
             'train_types' => $train_types,
         ]);
@@ -158,7 +158,7 @@ class TechnicalSpecificationTrainController extends CustomController
             }
 
         }
-        return view('admin.technical-specification.train.document')->with([
+        return view('admin.facility-menu.technical-specification.train.document')->with([
             'data' => $data
         ]);
     }
@@ -194,7 +194,7 @@ class TechnicalSpecificationTrainController extends CustomController
             }
 
         }
-        return view('admin.technical-specification.train.image')->with([
+        return view('admin.facility-menu.technical-specification.train.image')->with([
             'data' => $data
         ]);
     }

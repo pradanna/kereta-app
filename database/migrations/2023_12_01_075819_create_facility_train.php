@@ -16,7 +16,7 @@ class CreateFacilityTrain extends Migration
         Schema::create('facility_trains', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('area_id');
-            $table->foreignUuid('train_type_id');
+            $table->foreignUuid('train_type_id')->nullable();
             $table->foreignUuid('storehouse_id');
             $table->enum('engine_type', ['train', 'electric-train', 'diesel-train'])->default('train');
             $table->string('ownership');

@@ -8,8 +8,9 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Sertifikasi Sarana Lokomotif</li>
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.facility-certification') }}">Sertifikasi Sarana</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Lokomotif</li>
             </ol>
         </nav>
     </div>
@@ -58,7 +59,7 @@
         <div class="title">
             <p>Data Sertifikasi Sarana Lokomotif</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.facility-certification.locomotive.create') }}">Tambah
+                <a class="btn-utama sml rnd me-2" href="{{ route('means.facility-certification.locomotive.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd" href="#" id="btn-export"
@@ -95,26 +96,25 @@
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Sarana Lokomotif</p>
                     <hr>
                     <div class="row mb-3">
-
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="area" class="form-label">Wilayah</label>
                                 <input type="text" class="form-control" id="area" name="area" disabled>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="storehouse" class="form-label">Depo Induk</label>
-                                <input type="text" class="form-control" id="storehouse" name="storehouse" disabled>
-                            </div>
-                        </div>
+{{--                        <div class="col-6">--}}
+{{--                            <div class="form-group w-100">--}}
+{{--                                <label for="locomotive_type" class="form-label">Jenis Sarana</label>--}}
+{{--                                <input type="text" class="form-control" id="locomotive_type" name="locomotive_type"--}}
+{{--                                       disabled>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="locomotive_type" class="form-label">Jenis Sarana</label>
-                                <input type="text" class="form-control" id="locomotive_type" name="locomotive_type"
-                                       disabled>
+                                <label for="storehouse" class="form-label">Depo Induk</label>
+                                <input type="text" class="form-control" id="storehouse" name="storehouse" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -276,7 +276,14 @@
                     {
                         data: null,
                         render: function (data) {
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>';
+                            let urlEdit = path + '/' + data['id'] + '/edit';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
+                                    'id'] + '">Detail</a>' +
+                                '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '">Edit</a>' +
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '">Delete</a>';
                         },
                         orderable: false,
                         className: 'text-center',
@@ -291,6 +298,7 @@
                 paging: true,
                 "fnDrawCallback": function (setting) {
                     eventOpenDetail();
+                    deleteEvent();
                 },
                 createdRow: function (row, data, index) {
                     if (data['expired_in'] < expiration) {
@@ -316,7 +324,7 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let locomotiveType = data['locomotive_type']['name'];
+                // let locomotiveType = data['locomotive_type']['name'];
                 let area = data['area']['name'];
                 let storehouse = data['storehouse']['name'];
                 let storehouseType = data['storehouse']['storehouse_type']['name'];
@@ -327,7 +335,7 @@
                 let serviceExpiredDate = data['service_expired_date'];
                 let expiredIn = data['expired_in'];
                 let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
-                $('#locomotive_type').val(locomotiveType);
+                // $('#locomotive_type').val(locomotiveType);
                 $('#area').val(area);
                 $('#storehouse').val(storehouse + ' (' + storehouseType + ')');
                 $('#ownership').val(ownership);
@@ -341,6 +349,37 @@
             } catch (e) {
                 alert('internal server error...')
             }
+        }
+
+        function deleteEvent() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus data?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = path + '/' + id + '/delete';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    table.ajax.reload();
+                });
+            });
         }
         $(document).ready(function () {
             $('.select2').select2({

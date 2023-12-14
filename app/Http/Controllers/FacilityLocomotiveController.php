@@ -81,7 +81,7 @@ class FacilityLocomotiveController extends CustomController
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
-                    'locomotive_type_id' => $this->postField('locomotive_type'),
+                    'locomotive_type_id' => null,
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
@@ -110,7 +110,7 @@ class FacilityLocomotiveController extends CustomController
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
-                    'locomotive_type_id' => $this->postField('locomotive_type'),
+                    'locomotive_type_id' => null,
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
@@ -125,7 +125,7 @@ class FacilityLocomotiveController extends CustomController
         }
         $locomotive_types = LocomotiveType::all();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.locomotive.edit')->with([
+        return view('admin.facility-menu.facility-certification.locomotive.edit')->with([
             'data' => $data,
             'locomotive_types' => $locomotive_types,
             'areas' => $areas

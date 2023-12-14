@@ -8,7 +8,7 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Sertifikasi Sarana</li>
             </ol>
         </nav>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3 mb-3">
-                <div class="card-service-unit" data-slug="gerbong">
+                <div class="card-service-unit" data-slug="peralatan-khusus">
                     <span>Peralatan Khusus</span>
                     <span class="material-symbols-outlined">chevron_right</span>
                 </div>

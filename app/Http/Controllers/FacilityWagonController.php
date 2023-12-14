@@ -33,20 +33,20 @@ class FacilityWagonController extends CustomController
 
         $query = FacilityWagon::with(['area', 'storehouse.storehouse_type', 'wagon_sub_type.wagon_type']);
 
-        if ($service_unit !== '' && $service_unit !== null) {
-            $query->whereHas('area', function ($qw) use ($service_unit){
-                /** @var $qw Builder */
-                return $qw->where('service_unit_id', '=', $service_unit);
-            });
-        }
+//        if ($service_unit !== '' && $service_unit !== null) {
+//            $query->whereHas('area', function ($qw) use ($service_unit){
+//                /** @var $qw Builder */
+//                return $qw->where('service_unit_id', '=', $service_unit);
+//            });
+//        }
 
         if ($area !== '') {
             $query->where('area_id', '=', $area);
         }
 
-        if ($storehouse !== '') {
-            $query->where('storehouse_id', '=', $storehouse);
-        }
+//        if ($storehouse !== '') {
+//            $query->where('storehouse_id', '=', $storehouse);
+//        }
 
         if ($name !== '') {
             $query->where(function ($q) use ($name) {
@@ -77,7 +77,7 @@ class FacilityWagonController extends CustomController
         }
         $wagon_sub_types = WagonSubType::all();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.wagon.index')->with([
+        return view('admin.facility-menu.facility-certification.wagon.index')->with([
             'wagon_sub_types' => $wagon_sub_types,
             'areas' => $areas,
         ]);
@@ -90,7 +90,7 @@ class FacilityWagonController extends CustomController
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
-                    'wagon_sub_type_id' => $this->postField('wagon_sub_type'),
+                    'wagon_sub_type_id' => null,
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
@@ -105,7 +105,7 @@ class FacilityWagonController extends CustomController
         }
         $wagon_sub_types = WagonSubType::with(['wagon_type'])->get();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.wagon.add')->with([
+        return view('admin.facility-menu.facility-certification.wagon.add')->with([
             'wagon_sub_types' => $wagon_sub_types,
             'areas' => $areas
         ]);
@@ -119,7 +119,7 @@ class FacilityWagonController extends CustomController
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
-                    'train_type_id' => $this->postField('train_type'),
+                    'wagon_sub_type_id' => null,
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
@@ -134,7 +134,7 @@ class FacilityWagonController extends CustomController
         }
         $wagon_sub_types = WagonSubType::with(['wagon_type'])->get();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.wagon.edit')->with([
+        return view('admin.facility-menu.facility-certification.wagon.edit')->with([
             'data' => $data,
             'wagon_sub_types' => $wagon_sub_types,
             'areas' => $areas

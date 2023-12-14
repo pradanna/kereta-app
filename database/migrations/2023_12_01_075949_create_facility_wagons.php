@@ -16,7 +16,7 @@ class CreateFacilityWagons extends Migration
         Schema::create('facility_wagons', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('area_id');
-            $table->foreignUuid('wagon_sub_type_id');
+            $table->foreignUuid('wagon_sub_type_id')->nullable();
             $table->foreignUuid('storehouse_id');
             $table->string('ownership');
             $table->string('facility_number');

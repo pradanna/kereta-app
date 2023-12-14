@@ -30,7 +30,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                 ->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.technical-specification.special-equipment.index');
+        return view('admin.facility-menu.technical-specification.special-equipment.index');
     }
 
     public function store()
@@ -45,16 +45,19 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                     'long' => $this->postField('long'),
                     'width' => $this->postField('width'),
                     'height' => $this->postField('height'),
+                    'coupler_height' => 0,
                     'spoor_width' => $this->postField('spoor_width'),
+                    'axle_load' => 0,
                 ];
                 TechnicalSpecSpecialEquipment::create($data_request);
-                return redirect()->route('technical-specification.special-equipment');
+                return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
         $special_equipment_types = SpecialEquipmentType::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.technical-specification.special-equipment.add')->with([
+        return view('admin.facility-menu.technical-specification.special-equipment.add')->with([
             'special_equipment_types' => $special_equipment_types,
         ]);
     }
@@ -72,7 +75,9 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                     'long' => $this->postField('long'),
                     'width' => $this->postField('width'),
                     'height' => $this->postField('height'),
+                    'coupler_height' => 0,
                     'spoor_width' => $this->postField('spoor_width'),
+                    'axle_load' => 0,
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -81,7 +86,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
             }
         }
         $special_equipment_types = SpecialEquipmentType::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.technical-specification.special-equipment.edit')->with([
+        return view('admin.facility-menu.technical-specification.special-equipment.edit')->with([
             'data' => $data,
             'special_equipment_types' => $special_equipment_types,
         ]);
@@ -151,7 +156,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
             }
 
         }
-        return view('admin.technical-specification.special-equipment.document')->with([
+        return view('admin.facility-menu.technical-specification.special-equipment.document')->with([
             'data' => $data
         ]);
     }
@@ -187,7 +192,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
             }
 
         }
-        return view('admin.technical-specification.special-equipment.image')->with([
+        return view('admin.facility-menu.technical-specification.special-equipment.image')->with([
             'data' => $data
         ]);
     }
