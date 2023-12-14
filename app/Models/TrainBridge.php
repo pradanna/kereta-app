@@ -14,6 +14,7 @@ class TrainBridge extends Model
         'sub_track_id',
         'stakes',
         'corridor',
+        'reference_number',
         'bridge_type',
         'building_type',
         'span',
@@ -21,7 +22,8 @@ class TrainBridge extends Model
         'replaced_date',
         'strengthened_date',
         'volume',
-        'bolt'
+        'bolt',
+        'bearing',
     ];
 
     public function sub_track()

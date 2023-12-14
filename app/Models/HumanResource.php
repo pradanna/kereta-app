@@ -8,24 +8,26 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CrossingPermission extends Model
+class HumanResource extends Model
 {
     use HasFactory, Uuids;
 
     protected $fillable = [
-        'sub_track_id',
-        'stakes',
-        'decree_number',
-        'decree_date',
-        'intersection',
-        'building_type',
-        'agency',
-        'expired_date'
+        'area_id',
+        'name',
+        'birth_place',
+        'date_of_birth',
+        'identity_number',
+        'type',
+        'certification_unit',
+        'certification_number',
+        'expired_date',
+        'description',
     ];
 
-    public function sub_track()
+    public function area()
     {
-        return $this->belongsTo(SubTrack::class, 'sub_track_id');
+        return $this->belongsTo(Area::class, 'area_id');
     }
 
     public function getExpiredInAttribute()

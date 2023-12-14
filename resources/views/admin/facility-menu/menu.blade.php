@@ -88,12 +88,11 @@
 @section('js')
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
-        var path = '{{ route('infrastructure') }}';
-        var dataID = '{{ $service_unit->id }}';
+        var path = '{{ route('means') }}';
         $(document).ready(function () {
             $('.card-menu').on('click', function () {
                 let slug = this.dataset.slug;
-                window.location.href = path + '/' + dataID + '/' + slug;
+                window.location.href = path + '/' + slug;
             });
         });
     </script>

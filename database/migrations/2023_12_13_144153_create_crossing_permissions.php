@@ -14,7 +14,7 @@ class CreateCrossingPermissions extends Migration
     public function up()
     {
         Schema::create('crossing_permissions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignUuid('sub_track_id');
             $table->string('stakes');
             $table->string('decree_number');

@@ -3,14 +3,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SAFETY ASSESSMENT {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Safety Assessment {{ $service_unit->name }}</p>
+            <h1 class="h1">JEMBATAN PENYEBRANGAN {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Jembatan Penyebrangan {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Safety Assessment {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Jembatan Penyebrangan {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -47,7 +46,7 @@
         <div class="title">
             <p>Data Sertifikasi Sarana Lokomotif</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.safety.assessment.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.crossing.bridge.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd"
@@ -67,8 +66,8 @@
                     <th class="text-center middle-header" width="10%">Lintas</th>
                     <th class="text-center middle-header" width="10%">Petak</th>
                     <th class="text-center middle-header" width="10%">KM/HM</th>
-                    <th class="text-center middle-header" width="10%">Kota</th>
-                    <th class="text-center middle-header" width="10%">Kecamatan</th>
+                    <th class="text-center middle-header" width="10%">Panjang (m)</th>
+                    <th class="text-center middle-header" width="10%">Lebar (m)</th>
                     <th class="text-center middle-header">No. Rekomendasi</th>
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
@@ -83,7 +82,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Safety Assessment</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Jembatan Penyebrangan</p>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-6">
@@ -101,21 +100,6 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="city" class="form-label">Kota / Kabupaten</label>
-                                <input type="text" class="form-control" id="city" name="city" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="district" class="form-label">Kecamatan</label>
-                                <input type="text" class="form-control" id="district" name="district" disabled>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
                                 <input type="text" class="form-control" id="stakes" name="stakes" disabled>
@@ -130,11 +114,34 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="w-100">
-                                <label for="organizer" class="form-label">Penyelenggara</label>
-                                <input type="text" class="form-control" id="organizer"
-                                       name="organizer" disabled>
+                                <label for="responsible_person" class="form-label">Penanggung Jawab Bangunan</label>
+                                <input type="text" class="form-control" id="responsible_person"
+                                       name="responsible_person" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="road_class" class="form-label">Kelas Jalan</label>
+                                <input type="text" class="form-control" id="road_class"
+                                       name="road_class" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="long" class="form-label">Panjang Bangunan (m)</label>
+                                <input type="number" step="any" class="form-control" id="long"
+                                       name="long" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="width" class="form-label">Lebar Bangunan (m)</label>
+                                <input type="number" step="any" class="form-control" id="width"
+                                       name="width" disabled>
                             </div>
                         </div>
                     </div>
@@ -212,19 +219,21 @@
                 let data = response['data'];
                 let subTrack = data['sub_track']['code'];
                 let track = data['sub_track']['track']['code'];
-                let district = data['district']['name'];
-                let city = data['district']['city']['name'];
                 let stakes = data['stakes'];
                 let recommendation_number = data['recommendation_number'];
-                let organizer = data['organizer'];
+                let responsible_person = data['responsible_person'];
+                let road_class = data['road_class'];
+                let long = data['long'];
+                let width = data['width'];
                 let description = data['description'];
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
-                $('#district').val(district);
-                $('#city').val(city);
                 $('#stakes').val(stakes);
                 $('#recommendation_number').val(recommendation_number);
-                $('#organizer').val(organizer);
+                $('#responsible_person').val(responsible_person);
+                $('#road_class').val(road_class);
+                $('#long').val(long);
+                $('#width').val(width);
                 $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
@@ -276,16 +285,15 @@
                         className: 'text-center'
                     },
                     {
-                        data: 'district.city.name',
-                        name: 'district.city.name',
+                        data: 'long',
+                        name: 'long',
                         className: 'text-center'
                     },
                     {
-                        data: 'district.name',
-                        name: 'district.name',
+                        data: 'width',
+                        name: 'width',
                         className: 'text-center'
                     },
-
                     {
                         data: 'recommendation_number',
                         name: 'recommendation_number',

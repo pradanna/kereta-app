@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
-use App\Models\District;
-use App\Models\SafetyAssessment;
+use App\Models\CrossingBridge;
+use App\Models\CrossingPermission;
 use App\Models\ServiceUnit;
 use App\Models\SubTrack;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
-class SafetyAssessmentController extends CustomController
+class CrossingPermissionController extends CustomController
 {
     public function __construct()
     {
@@ -22,7 +24,7 @@ class SafetyAssessmentController extends CustomController
     public function index()
     {
         $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.service-unit')
+        return view('admin.infrastructure.crossing-permission.service-unit')
             ->with([
                 'service_units' => $service_units
             ]);
@@ -38,14 +40,15 @@ class SafetyAssessmentController extends CustomController
             })
             ->orderBy('name', 'ASC')->get();
         if ($this->request->ajax()) {
-            $query = SafetyAssessment::with(['sub_track.track.area', 'district.city.province']);
+            $query = CrossingPermission::with(['sub_track.track.area']);
             $area = $this->request->query->get('area');
             $name = $this->request->query->get('name');
+            $status = $this->request->query->get('status');
             if ($area !== '') {
                 $query->whereHas('sub_track', function ($qst) use ($area) {
                     /** @var $qst Builder */
                     return $qst->whereHas('track', function ($qt) use ($area) {
-                       /** @var $qt Builder */
+                        /** @var $qt Builder */
                         return $qt->where('area_id', '=', $area);
                     });
                 });
@@ -64,16 +67,26 @@ class SafetyAssessmentController extends CustomController
                 $query->where(function ($q) use ($name) {
                     /** @var $q Builder */
                     $q->where('stakes', 'LIKE', '%' . $name . '%')
-                        ->orWhere('recommendation_number', 'LIKE', '%' . $name . '%');
+                        ->orWhere('decree_number', 'LIKE', '%' . $name . '%');
                 });
             }
 
             $data = $query
                 ->orderBy('created_at', 'ASC')
-                ->get();
+                ->get()->append(['expired_in', 'status']);
+
+            if ($status !== '') {
+                if ($status === '1') {
+                    $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+                }
+
+                if ($status === '0') {
+                    $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+                }
+            }
             return $this->basicDataTables($data);
         }
-        return view('admin.infrastructure.safety-assessment.index')->with([
+        return view('admin.infrastructure.crossing-permission.index')->with([
             'service_unit' => $service_unit,
             'areas' => $areas
         ]);
@@ -94,13 +107,15 @@ class SafetyAssessmentController extends CustomController
             try {
                 $data_request = [
                     'sub_track_id' => $this->postField('sub_track'),
-                    'district_id' => $this->postField('district'),
                     'stakes' => $this->postField('stakes'),
-                    'recommendation_number' => $this->postField('recommendation_number'),
-                    'organizer' => $this->postField('organizer'),
-                    'description' => $this->postField('description'),
+                    'decree_number' => $this->postField('decree_number'),
+                    'decree_date' => Carbon::createFromFormat('d-m-Y', $this->postField('decree_date'))->format('Y-m-d'),
+                    'intersection' => $this->postField('intersection'),
+                    'building_type' => $this->postField('building_type'),
+                    'agency' => $this->postField('agency'),
+                    'expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('expired_date'))->format('Y-m-d')
                 ];
-                SafetyAssessment::create($data_request);
+                CrossingPermission::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error...');
@@ -112,28 +127,28 @@ class SafetyAssessmentController extends CustomController
                 return $qt->whereIn('area_id', $areaIDS);
             })
             ->orderBy('name', 'ASC')->get();
-        $districts = District::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.add')->with([
+        return view('admin.infrastructure.crossing-permission.add')->with([
             'service_unit' => $service_unit,
             'areas' => $areas,
             'sub_tracks' => $sub_tracks,
-            'districts' => $districts,
         ]);
     }
 
     public function patch($service_unit_id, $id)
     {
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $data = SafetyAssessment::findOrFail($id);
+        $data = CrossingPermission::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
                     'sub_track_id' => $this->postField('sub_track'),
-                    'district_id' => $this->postField('district'),
                     'stakes' => $this->postField('stakes'),
-                    'recommendation_number' => $this->postField('recommendation_number'),
-                    'organizer' => $this->postField('organizer'),
-                    'description' => $this->postField('description'),
+                    'decree_number' => $this->postField('decree_number'),
+                    'decree_date' => Carbon::createFromFormat('d-m-Y', $this->postField('decree_date'))->format('Y-m-d'),
+                    'intersection' => $this->postField('intersection'),
+                    'building_type' => $this->postField('building_type'),
+                    'agency' => $this->postField('agency'),
+                    'expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('expired_date'))->format('Y-m-d')
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -154,12 +169,10 @@ class SafetyAssessmentController extends CustomController
                 return $qt->whereIn('area_id', $areaIDS);
             })
             ->orderBy('name', 'ASC')->get();
-        $districts = District::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.edit')->with([
+        return view('admin.infrastructure.crossing-permission.edit')->with([
             'service_unit' => $service_unit,
             'areas' => $areas,
             'sub_tracks' => $sub_tracks,
-            'districts' => $districts,
             'data' => $data,
         ]);
     }
@@ -171,7 +184,7 @@ class SafetyAssessmentController extends CustomController
             if (!$service_unit) {
                 return $this->jsonErrorResponse('Satuan Pelayanan Tidak Di Temukan...');
             }
-            SafetyAssessment::destroy($id);
+            CrossingPermission::destroy($id);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
@@ -185,9 +198,9 @@ class SafetyAssessmentController extends CustomController
             if (!$service_unit) {
                 return $this->jsonErrorResponse('Satuan Pelayanan Tidak Di Temukan...');
             }
-            $data = SafetyAssessment::with(['sub_track.track.area', 'district.city'])
+            $data = CrossingPermission::with(['sub_track.track.area'])
                 ->where('id', '=', $id)
-                ->first();
+                ->first()->append(['expired_in', 'status']);
             return $this->jsonSuccessResponse('success', $data);
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());

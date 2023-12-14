@@ -3,14 +3,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SAFETY ASSESSMENT {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Safety Assessment {{ $service_unit->name }}</p>
+            <h1 class="h1">JEMBATAN KERETA API {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Jembatan Kereta Api {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Safety Assessment {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Jembatan Kereta Api {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -21,7 +20,8 @@
                     <div class="col-3">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option"
+                                    style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -33,7 +33,7 @@
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari KM/HM atau No. Surat Rekomendasi">
+                                   placeholder="Cari KM/HM atau Koridor">
                         </div>
                     </div>
                 </div>
@@ -45,9 +45,10 @@
     </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
-            <p>Data Sertifikasi Sarana Lokomotif</p>
+            <p>Data Jembatan Kereta Api</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.safety.assessment.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                <a class="btn-utama sml rnd me-2"
+                   href="{{ route('infrastructure.train.bridges.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd"
@@ -67,9 +68,8 @@
                     <th class="text-center middle-header" width="10%">Lintas</th>
                     <th class="text-center middle-header" width="10%">Petak</th>
                     <th class="text-center middle-header" width="10%">KM/HM</th>
-                    <th class="text-center middle-header" width="10%">Kota</th>
-                    <th class="text-center middle-header" width="10%">Kecamatan</th>
-                    <th class="text-center middle-header">No. Rekomendasi</th>
+                    <th class="middle-header">Koridor</th>
+                    <th class="text-center middle-header" width="12%">Tanggal Di Pasang</th>
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -83,7 +83,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Safety Assessment</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Jembatan Kereta Api</p>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-6">
@@ -101,21 +101,6 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="city" class="form-label">Kota / Kabupaten</label>
-                                <input type="text" class="form-control" id="city" name="city" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="district" class="form-label">Kecamatan</label>
-                                <input type="text" class="form-control" id="district" name="district" disabled>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
                                 <input type="text" class="form-control" id="stakes" name="stakes" disabled>
@@ -123,29 +108,97 @@
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="recommendation_number" class="form-label">No. Surat Rekomendasi</label>
-                                <input type="text" class="form-control" id="recommendation_number"
-                                       name="recommendation_number" disabled>
+                                <label for="corridor" class="form-label">Koridor</label>
+                                <input type="text" class="form-control" id="corridor"
+                                       name="corridor" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-12">
+
+                        <div class="col-6">
                             <div class="w-100">
-                                <label for="organizer" class="form-label">Penyelenggara</label>
-                                <input type="text" class="form-control" id="organizer"
-                                       name="organizer" disabled>
+                                <label for="reference_number" class="form-label">No. BH</label>
+                                <input type="text" class="form-control" id="reference_number"
+                                       name="reference_number" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="building_type" class="form-label">Jenis Bangunan</label>
+                                <input type="text" class="form-control" id="building_type"
+                                       name="building_type" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-12">
+
+                        <div class="col-6">
                             <div class="w-100">
-                                <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" id="description"
-                                          name="description" disabled></textarea>
+                                <label for="span" class="form-label">Bentang</label>
+                                <input type="text" class="form-control" id="span"
+                                       name="span" disabled>
                             </div>
                         </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="installed_date" class="form-label">Di Pasang</label>
+                                <input type="text" class="form-control datepicker" id="installed_date"
+                                       name="installed_date" placeholder="dd-mm-yyyy" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="replaced_date" class="form-label">Di Ganti</label>
+                                <input type="text" class="form-control datepicker" id="replaced_date"
+                                       name="replaced_date" placeholder="dd-mm-yyyy" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="strengthened_date" class="form-label">Di Perkuat</label>
+                                <input type="text" class="form-control datepicker" id="strengthened_date"
+                                       name="strengthened_date" placeholder="dd-mm-yyyy" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="bridge_type" class="form-label">Jembatan</label>
+                                <input type="text" class="form-control" id="bridge_type"
+                                       name="bridge_type" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="volume" class="form-label">Volume Andas (Buah)</label>
+                                <input type="number" step="any" class="form-control" id="volume"
+                                       name="volume" value="0" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="bearing" class="form-label">Jumlah Bantalan (Buah)</label>
+                                <input type="number" step="any" class="form-control" id="bearing"
+                                       name="bearing" value="0" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="bolt" class="form-label">Jumlah Baut (Buah)</label>
+                                <input type="number" step="any" class="form-control" id="bolt"
+                                       name="bolt" value="0" disabled>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -163,11 +216,12 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
+        let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail'));
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function(e) {
+            $('.btn-delete').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -190,7 +244,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function() {
+            AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
@@ -198,7 +252,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function(e) {
+            $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -212,20 +266,34 @@
                 let data = response['data'];
                 let subTrack = data['sub_track']['code'];
                 let track = data['sub_track']['track']['code'];
-                let district = data['district']['name'];
-                let city = data['district']['city']['name'];
                 let stakes = data['stakes'];
-                let recommendation_number = data['recommendation_number'];
-                let organizer = data['organizer'];
-                let description = data['description'];
+                let reference_number = data['reference_number'];
+                let corridor = data['corridor'];
+                let bridge_type = data['bridge_type'];
+                let building_type = data['building_type'];
+                let span = data['span'];
+                let installed_date = data['installed_date'];
+                let replaced_date = data['replaced_date'];
+                let strengthened_date = data['strengthened_date'];
+                let volume = data['volume'];
+                let bolt = data['bolt'];
+                let bearing = data['bearing'];
+
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
-                $('#district').val(district);
-                $('#city').val(city);
                 $('#stakes').val(stakes);
-                $('#recommendation_number').val(recommendation_number);
-                $('#organizer').val(organizer);
-                $('#description').val(description);
+                $('#reference_number').val(reference_number);
+                $('#corridor').val(corridor);
+                $('#bridge_type').val(bridge_type);
+                $('#building_type').val(building_type);
+                $('#span').val(span);
+                $('#installed_date').val(installed_date);
+                $('#replaced_date').val(replaced_date);
+                $('#strengthened_date').val(strengthened_date);
+                $('#volume').val(volume);
+                $('#bolt').val(bolt);
+                $('#bearing').val(bearing);
+
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
@@ -276,19 +344,20 @@
                         className: 'text-center'
                     },
                     {
-                        data: 'district.city.name',
-                        name: 'district.city.name',
-                        className: 'text-center'
+                        data: 'corridor',
+                        name: 'corridor',
                     },
                     {
-                        data: 'district.name',
-                        name: 'district.name',
-                        className: 'text-center'
-                    },
-
-                    {
-                        data: 'recommendation_number',
-                        name: 'recommendation_number',
+                        data: 'installed_date',
+                        name: 'installed_date',
+                        render: function (data) {
+                            const v = new Date(data);
+                            return v.toLocaleDateString('id-ID', {
+                                month: '2-digit',
+                                year: 'numeric',
+                                day: '2-digit'
+                            }).split('/').join('-')
+                        },
                         className: 'text-center',
                     },
                     {
@@ -318,6 +387,13 @@
                 "fnDrawCallback": function (setting) {
                     deleteEvent();
                     eventOpenDetail();
+                },
+                createdRow: function (row, data, index) {
+                    if (data['expired_in'] < expiration) {
+                        $('td', row).css({
+                            'background-color': '#fecba1'
+                        });
+                    }
                 },
                 dom: 'ltrip'
             });

@@ -7,12 +7,13 @@ namespace App\Http\Controllers;
 use App\Helper\CustomController;
 use App\Models\Area;
 use App\Models\District;
+use App\Models\RailwayStation;
 use App\Models\SafetyAssessment;
 use App\Models\ServiceUnit;
 use App\Models\SubTrack;
 use Illuminate\Database\Eloquent\Builder;
 
-class SafetyAssessmentController extends CustomController
+class RailwayStationController extends CustomController
 {
     public function __construct()
     {
@@ -22,7 +23,7 @@ class SafetyAssessmentController extends CustomController
     public function index()
     {
         $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.service-unit')
+        return view('admin.traffic.railway-station.service-unit')
             ->with([
                 'service_units' => $service_units
             ]);
@@ -38,33 +39,21 @@ class SafetyAssessmentController extends CustomController
             })
             ->orderBy('name', 'ASC')->get();
         if ($this->request->ajax()) {
-            $query = SafetyAssessment::with(['sub_track.track.area', 'district.city.province']);
+            $query = RailwayStation::with(['area', 'district.city.province']);
             $area = $this->request->query->get('area');
             $name = $this->request->query->get('name');
             if ($area !== '') {
-                $query->whereHas('sub_track', function ($qst) use ($area) {
-                    /** @var $qst Builder */
-                    return $qst->whereHas('track', function ($qt) use ($area) {
-                       /** @var $qt Builder */
-                        return $qt->where('area_id', '=', $area);
-                    });
-                });
+                $query->where('area_id', '=', $area);
             } else {
                 $areaIDS = $areas->pluck('id')->toArray();
-                $query->whereHas('sub_track', function ($qst) use ($areaIDS) {
-                    /** @var $qst Builder */
-                    return $qst->whereHas('track', function ($qt) use ($areaIDS) {
-                        /** @var $qt Builder */
-                        return $qt->whereIn('area_id', $areaIDS);
-                    });
-                });
+                $query->whereIn('area_id', $areaIDS);
             }
 
             if ($name !== '') {
                 $query->where(function ($q) use ($name) {
                     /** @var $q Builder */
-                    $q->where('stakes', 'LIKE', '%' . $name . '%')
-                        ->orWhere('recommendation_number', 'LIKE', '%' . $name . '%');
+                    $q->where('name', 'LIKE', '%' . $name . '%')
+                        ->orWhere('nickname', 'LIKE', '%' . $name . '%');
                 });
             }
 
@@ -73,7 +62,7 @@ class SafetyAssessmentController extends CustomController
                 ->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.infrastructure.safety-assessment.index')->with([
+        return view('admin.traffic.railway-station.index')->with([
             'service_unit' => $service_unit,
             'areas' => $areas
         ]);
@@ -88,35 +77,32 @@ class SafetyAssessmentController extends CustomController
                 return $qs->where('service_unit_id', '=', $service_unit_id);
             })
             ->orderBy('name', 'ASC')->get();
-        $areaIDS = $areas->pluck('id')->toArray();
 
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'sub_track_id' => $this->postField('sub_track'),
+                    'area_id'  => $this->postField('area'),
                     'district_id' => $this->postField('district'),
-                    'stakes' => $this->postField('stakes'),
-                    'recommendation_number' => $this->postField('recommendation_number'),
-                    'organizer' => $this->postField('organizer'),
-                    'description' => $this->postField('description'),
+                    'name'  => $this->postField('name'),
+                    'nickname'  => $this->postField('nickname'),
+                    'stakes'  => $this->postField('stakes'),
+                    'height'  => $this->postField('height'),
+                    'latitude'  => $this->postField('latitude'),
+                    'longitude'  => $this->postField('longitude'),
+                    'type'  => $this->postField('type'),
+                    'status'  => $this->postField('status'),
                 ];
-                SafetyAssessment::create($data_request);
+                RailwayStation::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
-        $sub_tracks = SubTrack::with(['track.area'])
-            ->whereHas('track', function ($qt) use ($areaIDS) {
-                /** @var $qt Builder */
-                return $qt->whereIn('area_id', $areaIDS);
-            })
-            ->orderBy('name', 'ASC')->get();
+
         $districts = District::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.add')->with([
+        return view('admin.traffic.railway-station.add')->with([
             'service_unit' => $service_unit,
             'areas' => $areas,
-            'sub_tracks' => $sub_tracks,
             'districts' => $districts,
         ]);
     }
@@ -124,16 +110,20 @@ class SafetyAssessmentController extends CustomController
     public function patch($service_unit_id, $id)
     {
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $data = SafetyAssessment::findOrFail($id);
+        $data = RailwayStation::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'sub_track_id' => $this->postField('sub_track'),
+                    'area_id'  => $this->postField('area'),
                     'district_id' => $this->postField('district'),
-                    'stakes' => $this->postField('stakes'),
-                    'recommendation_number' => $this->postField('recommendation_number'),
-                    'organizer' => $this->postField('organizer'),
-                    'description' => $this->postField('description'),
+                    'name'  => $this->postField('name'),
+                    'nickname'  => $this->postField('nickname'),
+                    'stakes'  => $this->postField('stakes'),
+                    'height'  => $this->postField('height'),
+                    'latitude'  => $this->postField('latitude'),
+                    'longitude'  => $this->postField('longitude'),
+                    'type'  => $this->postField('type'),
+                    'status'  => $this->postField('status'),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -147,18 +137,10 @@ class SafetyAssessmentController extends CustomController
                 return $qs->where('service_unit_id', '=', $service_unit_id);
             })
             ->orderBy('name', 'ASC')->get();
-        $areaIDS = $areas->pluck('id')->toArray();
-        $sub_tracks = SubTrack::with(['track.area'])
-            ->whereHas('track', function ($qt) use ($areaIDS) {
-                /** @var $qt Builder */
-                return $qt->whereIn('area_id', $areaIDS);
-            })
-            ->orderBy('name', 'ASC')->get();
         $districts = District::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.infrastructure.safety-assessment.edit')->with([
+        return view('admin.traffic.railway-station.edit')->with([
             'service_unit' => $service_unit,
             'areas' => $areas,
-            'sub_tracks' => $sub_tracks,
             'districts' => $districts,
             'data' => $data,
         ]);
@@ -171,7 +153,7 @@ class SafetyAssessmentController extends CustomController
             if (!$service_unit) {
                 return $this->jsonErrorResponse('Satuan Pelayanan Tidak Di Temukan...');
             }
-            SafetyAssessment::destroy($id);
+            RailwayStation::destroy($id);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
@@ -185,7 +167,7 @@ class SafetyAssessmentController extends CustomController
             if (!$service_unit) {
                 return $this->jsonErrorResponse('Satuan Pelayanan Tidak Di Temukan...');
             }
-            $data = SafetyAssessment::with(['sub_track.track.area', 'district.city'])
+            $data = RailwayStation::with(['area', 'district.city.province'])
                 ->where('id', '=', $id)
                 ->first();
             return $this->jsonSuccessResponse('success', $data);

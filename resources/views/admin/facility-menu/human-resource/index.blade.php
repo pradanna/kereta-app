@@ -3,14 +3,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SAFETY ASSESSMENT {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Safety Assessment {{ $service_unit->name }}</p>
+            <h1 class="h1">SDM {{ $type }} {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data SDM {{ $type }} {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Safety Assessment {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item active" aria-current="page">SDM {{ $type }} {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -29,11 +28,22 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-9">
+                    <div class="col-3">
+                        <div class="form-group w-100">
+                            <label for="status-option" class="form-label d-none">Status</label>
+                            <select class="select2 form-control" name="status-option" id="status-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Status</option>
+                                <option value="1">Berlaku</option>
+                                <option value="0">Habis Masa Berlaku</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari KM/HM atau No. Surat Rekomendasi">
+                                   placeholder="Cari Nama SDM">
                         </div>
                     </div>
                 </div>
@@ -45,9 +55,9 @@
     </div>
     <div class="panel w-100 shadow-sm">
         <div class="title">
-            <p>Data Sertifikasi Sarana Lokomotif</p>
+            <p>Data Amus</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.safety.assessment.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                <a class="btn-utama sml rnd me-2" href="{{ route('means.human-resource.create', ['service_unit_id' => $service_unit->id, 'slug' => $slug]) }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd"
@@ -64,12 +74,12 @@
                 <tr>
                     <th class="text-center middle-header" width="5%">#</th>
                     <th class="text-center middle-header" width="10%">Wilayah</th>
-                    <th class="text-center middle-header" width="10%">Lintas</th>
-                    <th class="text-center middle-header" width="10%">Petak</th>
-                    <th class="text-center middle-header" width="10%">KM/HM</th>
-                    <th class="text-center middle-header" width="10%">Kota</th>
-                    <th class="text-center middle-header" width="10%">Kecamatan</th>
-                    <th class="text-center middle-header">No. Rekomendasi</th>
+                    <th class="middle-header">Nama</th>
+                    <th class="text-center middle-header" width="12%">Nomor Identitas</th>
+                    <th class="text-center middle-header" width="12%">Unit Pengajuan Sertifikasi</th>
+                    <th class="text-center middle-header" width="12%">Kodefikasi Sertifikat</th>
+                    <th class="text-center middle-header" width="10%">Masa Berlaku</th>
+                    <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -88,53 +98,63 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="track" class="form-label">Perlintasan</label>
-                                <input type="text" class="form-control" id="track" name="track" disabled>
+                                <label for="area" class="form-label">Wilayah (Daerah Operasi)</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="sub_track" class="form-label">Petak</label>
-                                <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
+                            <div class="w-100">
+                                <label for="human-name" class="form-label">Nama</label>
+                                <input type="text" class="form-control" id="human-name"
+                                       name="human-name" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="city" class="form-label">Kota / Kabupaten</label>
-                                <input type="text" class="form-control" id="city" name="city" disabled>
+                            <div class="w-100">
+                                <label for="birth_place" class="form-label">Tempat Lahir</label>
+                                <input type="text" class="form-control" id="birth_place"
+                                       name="birth_place" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="district" class="form-label">Kecamatan</label>
-                                <input type="text" class="form-control" id="district" name="district" disabled>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="stakes" class="form-label">KM/HM</label>
-                                <input type="text" class="form-control" id="stakes" name="stakes" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="recommendation_number" class="form-label">No. Surat Rekomendasi</label>
-                                <input type="text" class="form-control" id="recommendation_number"
-                                       name="recommendation_number" disabled>
+                                <label for="date_of_birth" class="form-label">Tanggal Lahir</label>
+                                <input type="text" class="form-control datepicker" id="date_of_birth"
+                                       name="date_of_birth" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="w-100">
-                                <label for="organizer" class="form-label">Penyelenggara</label>
-                                <input type="text" class="form-control" id="organizer"
-                                       name="organizer" disabled>
+                                <label for="identity_number" class="form-label">No. Identitas</label>
+                                <input type="text" class="form-control" id="identity_number"
+                                       name="identity_number" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="certification_unit" class="form-label">Unit Pengajuan Sertifikasi</label>
+                                <input type="text" class="form-control" id="certification_unit"
+                                       name="certification_unit" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="certification_number" class="form-label">Kodefikasi Sertifikat</label>
+                                <input type="text" class="form-control" id="certification_number"
+                                       name="certification_number" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="expired_date" class="form-label">Tanggal Habis Berlaku</label>
+                                <input type="text" class="form-control datepicker" id="expired_date"
+                                       name="expired_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
                     </div>
@@ -142,8 +162,21 @@
                         <div class="col-12">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" id="description"
-                                          name="description" disabled></textarea>
+                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="expired_in" class="form-label">Akan Habis (Hari)</label>
+                                <input type="text" class="form-control" id="expired_in" name="expired_in" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="status" name="status" disabled>
                             </div>
                         </div>
                     </div>
@@ -165,6 +198,7 @@
         var path = '/{{ request()->path() }}';
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail'));
+        let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
 
         function deleteEvent() {
             $('.btn-delete').on('click', function(e) {
@@ -210,21 +244,27 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let subTrack = data['sub_track']['code'];
-                let track = data['sub_track']['track']['code'];
-                let district = data['district']['name'];
-                let city = data['district']['city']['name'];
-                let stakes = data['stakes'];
-                let recommendation_number = data['recommendation_number'];
-                let organizer = data['organizer'];
+                let area = data['area']['name'];
+                let name = data['name'];
+                let birth_place = data['birth_place'];
+                let date_of_birth = data['date_of_birth'];
+                let identity_number = data['identity_number'];
+                let certification_unit = data['certification_unit'];
+                let certification_number = data['certification_number'];
+                let expired_date = data['expired_date'];
                 let description = data['description'];
-                $('#sub_track').val(subTrack);
-                $('#track').val(track);
-                $('#district').val(district);
-                $('#city').val(city);
-                $('#stakes').val(stakes);
-                $('#recommendation_number').val(recommendation_number);
-                $('#organizer').val(organizer);
+                let expiredIn = data['expired_in'];
+                let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+                $('#area').val(area);
+                $('#human-name').val(name);
+                $('#birth_place').val(birth_place);
+                $('#date_of_birth').val(date_of_birth);
+                $('#identity_number').val(identity_number);
+                $('#certification_unit').val(certification_unit);
+                $('#certification_number').val(certification_number);
+                $('#expired_date').val(expired_date);
+                $('#expired_in').val(expiredIn);
+                $('#status').val(status);
                 $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
@@ -245,6 +285,7 @@
                     'data': function (d) {
                         d.area = $('#area-option').val();
                         d.name = $('#name').val();
+                        d.status = $('#status-option').val();
                     }
                 },
                 columns: [{
@@ -256,40 +297,50 @@
                     // width: '30px'
                 },
                     {
-                        data: 'sub_track.track.area.name',
-                        name: 'sub_track.track.area.name',
+                        data: 'area.name',
+                        name: 'area.name',
                         className: 'text-center'
                     },
                     {
-                        data: 'sub_track.track.code',
-                        name: 'sub_track.track.code',
+                        data: 'name',
+                        name: 'name',
+                    },
+                    {
+                        data: 'identity_number',
+                        name: 'identity_number',
                         className: 'text-center'
                     },
                     {
-                        data: 'sub_track.code',
-                        name: 'sub_track.code',
+                        data: 'certification_unit',
+                        name: 'certification_unit',
                         className: 'text-center'
                     },
                     {
-                        data: 'stakes',
-                        name: 'stakes',
+                        data: 'certification_number',
+                        name: 'certification_number',
                         className: 'text-center'
                     },
                     {
-                        data: 'district.city.name',
-                        name: 'district.city.name',
-                        className: 'text-center'
-                    },
-                    {
-                        data: 'district.name',
-                        name: 'district.name',
-                        className: 'text-center'
-                    },
-
-                    {
-                        data: 'recommendation_number',
-                        name: 'recommendation_number',
+                        data: 'expired_date',
+                        name: 'expired_date',
+                        render: function (data) {
+                            const v = new Date(data);
+                            return v.toLocaleDateString('id-ID', {
+                                month: '2-digit',
+                                year: 'numeric',
+                                day: '2-digit'
+                            }).split('/').join('-')
+                        },
                         className: 'text-center',
+                    },
+                    {
+                        data: 'expired_in',
+                        name: 'expired_in',
+                        render: function (data) {
+                            return data;
+                        },
+                        className: 'text-center',
+                        // width: '80px',
                     },
                     {
                         data: null,
@@ -319,7 +370,14 @@
                     deleteEvent();
                     eventOpenDetail();
                 },
-                dom: 'ltrip'
+                dom: 'ltrip',
+                createdRow: function (row, data, index) {
+                    if (data['expired_in'] < expiration) {
+                        $('td', row).css({
+                            'background-color': '#fecba1'
+                        });
+                    }
+                },
             });
         }
 

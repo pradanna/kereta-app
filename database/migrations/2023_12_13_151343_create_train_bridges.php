@@ -17,6 +17,7 @@ class CreateTrainBridges extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('sub_track_id');
             $table->string('stakes');
+            $table->string('reference_number');
             $table->string('corridor');
             $table->string('bridge_type');
             $table->string('building_type');
@@ -26,6 +27,7 @@ class CreateTrainBridges extends Migration
             $table->date('strengthened_date')->nullable();
             $table->double('volume')->default(0);
             $table->double('bolt')->default(0);
+            $table->double('bearing')->default(0);
             $table->timestamps();
             $table->foreign('sub_track_id')->references('id')->on('sub_tracks');
         });
