@@ -1,22 +1,22 @@
-@extends('admin/base')
+@extends('admin.base')
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MANAJEMEN PENGGUNA APLIKASI</h1>
-            <p class="mb-0">Manajemen Data Pengguna Aplikasi</p>
+            <h1 class="h1">MASTER SUB JENIS GERBONG</h1>
+            <p class="mb-0">Manajemen Data Master Sub Jenis Gerbong</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Manajemen Pengguna Aplikasi</li>
+                <li class="breadcrumb-item"><a href="{{ route('master-data') }}">Master Data</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Sub Jenis Gerbong</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Data Pengguna Aplikasi</p>
-            <a class="btn-utama sml rnd " href="{{ route('user.create') }}">Tambah
+            <p>Data Jenis Sub Jenis Gerbong</p>
+            <a class="btn-utama sml rnd " href="{{ route('wagon-sub-type.create') }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>
         </div>
@@ -25,11 +25,10 @@
                 <thead>
                 <tr>
                     <th width="5%" class="text-center">#</th>
-                    <th width="15%">Username</th>
-                    <th width="15%">Nickname</th>
-                    <th width="20%">Wilayah</th>
-                    <th>Hak Akses</th>
-                    <th width="12%" class="text-center">Aksi</th>
+                    <th width="12%" class="text-center">Jenis</th>
+                    <th width="12%" class="text-center">Kode</th>
+                    <th>Nama</th>
+                    <th width="10%" class="text-center">Aksi</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -46,7 +45,7 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let path = '{{ route('user') }}';
+        let path = '{{ route('wagon-sub-type') }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -79,7 +78,7 @@
             });
         }
 
-        function generateTable() {
+        $(document).ready(function () {
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -89,8 +88,6 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
-                    }
                 },
                 columns: [{
                     data: 'DT_RowIndex',
@@ -99,46 +96,16 @@
                     orderable: false
                 },
                     {
-                        data: 'username',
-                        name: 'username'
+                        data: 'wagon_type.code',
+                        name: 'wagon_type.code'
                     },
                     {
-                        data: 'nickname',
-                        name: 'nickname'
+                        data: 'code',
+                        name: 'code'
                     },
                     {
-                        data: null,
-                        name: null,
-                        render: function (data) {
-                            if (data['service_unit'] !== null) {
-                                value = data['service_unit']['name'];
-                            }
-                            return value;
-                        }
-                    },
-                    {
-                        data: 'role',
-                        name: 'role',
-                        render: function (data) {
-                            let value = '-';
-                            switch (data) {
-                                case 'admin-area':
-                                    value = 'Admin Daerah Operasi (DAOP)';
-                                    break;
-                                case 'chief-area':
-                                    value = 'Kepala Daerah Operasi (DAOP)';
-                                    break;
-                                case 'admin-service-unit':
-                                    value = 'Admin Satuan Pelayanan (SATPEL)';
-                                    break;
-                                case 'chief-service-unit':
-                                    value = 'Kepala Satuan Pelayanan (SATPEL)';
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return value;
-                        },
+                        data: 'name',
+                        name: 'name'
                     },
                     {
                         data: null,
@@ -146,13 +113,14 @@
                             let urlEdit = path + '/' + data['id'] + '/edit';
                             return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] + '">Delete</a>'
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '">Delete</a>'
                         },
                         orderable: false
                     }
                 ],
                 columnDefs: [{
-                    targets: '_all',
+                    targets: [0, 1, 2, 4],
                     className: 'text-center'
                 }],
                 paging: true,
@@ -160,10 +128,6 @@
                     deleteEvent();
                 }
             })
-        }
-
-        $(document).ready(function () {
-            generateTable();
         })
     </script>
 @endsection

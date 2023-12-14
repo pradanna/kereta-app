@@ -21,7 +21,7 @@ class WagonTypeController extends CustomController
             $data = WagonType::with([])->orderBy('created_at', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.wagon-type.index');
+        return view('admin.master-data.wagon-type.index');
     }
 
     public function store()
@@ -38,7 +38,7 @@ class WagonTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.wagon-type.add');
+        return view('admin.master-data.wagon-type.add');
     }
 
     public function patch($id)
@@ -56,7 +56,7 @@ class WagonTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.wagon-type.edit')->with(['data' => $data]);
+        return view('admin.master-data.wagon-type.edit')->with(['data' => $data]);
     }
 
     public function destroy($id)

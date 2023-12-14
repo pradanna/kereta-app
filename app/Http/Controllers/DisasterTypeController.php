@@ -20,7 +20,7 @@ class DisasterTypeController extends CustomController
             $data = DisasterType::with([])->orderBy('name', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.disaster-type.index');
+        return view('admin.master-data.disaster-type.index');
     }
 
     public function store()
@@ -36,7 +36,7 @@ class DisasterTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.disaster-type.add');
+        return view('admin.master-data.disaster-type.add');
     }
 
     public function patch($id)
@@ -54,7 +54,7 @@ class DisasterTypeController extends CustomController
             }
 
         }
-        return view('admin.master.disaster-type.edit')->with(['data' => $data]);
+        return view('admin.master-data.disaster-type.edit')->with(['data' => $data]);
     }
 
     public function destroy($id)

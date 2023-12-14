@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Helper\CustomController;
 use App\Models\Area;
 use App\Models\FacilityTrain;
+use App\Models\ServiceUnit;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,8 +19,25 @@ class TrackController extends CustomController
         parent::__construct();
     }
 
-    public function index()
+    public function service_unit_page()
     {
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.master-data.track.service-unit')
+            ->with([
+                'service_units' => $service_units
+            ]);
+    }
+
+    public function index($service_unit_id)
+    {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
         if ($this->request->ajax()) {
             $service_unit = $this->request->query->get('service_unit');
             $area = $this->request->query->get('area');
@@ -27,14 +45,10 @@ class TrackController extends CustomController
 
             $query = Track::with(['area']);
 
-            if ($service_unit !== '' && $service_unit !== null) {
-                $query->where('area', function ($qa) use ($service_unit){
-                    /** @var $qa Builder */
-                    return $qa->where('service_unit_id', '=', $service_unit);
-                });
-            }
             if ($area !== '') {
                 $query->where('area_id', '=', $area);
+            } else {
+                $query->whereIn('area_id', $areaIDS);
             }
 
             if ($name !== '') {
@@ -47,14 +61,21 @@ class TrackController extends CustomController
             $data = $query->orderBy('created_at', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.master.track.index')->with([
+        return view('admin.master-data.track.index')->with([
             'areas' => $areas,
+            'service_unit' => $service_unit,
         ]);
     }
 
-    public function store()
+    public function store($service_unit_id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
@@ -68,13 +89,21 @@ class TrackController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $areas = Area::with(['service_unit'])->orderBy('name', 'ASC')
-            ->get();
-        return view('admin.master.track.add')->with(['areas' => $areas]);
+        return view('admin.master-data.track.add')->with([
+            'areas' => $areas,
+            'service_unit' => $service_unit
+        ]);
     }
 
-    public function patch($id)
+    public function patch($service_unit_id, $id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
         $data = Track::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
@@ -90,14 +119,15 @@ class TrackController extends CustomController
             }
 
         }
-        $areas = Area::all();
-        return view('admin.master.track.edit')->with([
+
+        return view('admin.master-data.track.edit')->with([
             'data' => $data,
-            'areas' => $areas
+            'areas' => $areas,
+            'service_unit' => $service_unit
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($service_unit_id, $id)
     {
         try {
             Track::destroy($id);

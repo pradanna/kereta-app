@@ -20,7 +20,7 @@ class LocomotiveTypeController extends CustomController
             $data = LocomotiveType::with([])->orderBy('code', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.locomotive-type.index');
+        return view('admin.master-data.locomotive-type.index');
     }
 
     public function store()
@@ -38,7 +38,7 @@ class LocomotiveTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.locomotive-type.add');
+        return view('admin.master-data.locomotive-type.add');
     }
 
     public function patch($id)
@@ -57,7 +57,7 @@ class LocomotiveTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.locomotive-type.edit')->with(['data' => $data]);
+        return view('admin.master-data.locomotive-type.edit')->with(['data' => $data]);
     }
 
     public function destroy($id)

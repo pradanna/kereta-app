@@ -3,20 +3,20 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MANAJEMEN PENGGUNA APLIKASI</h1>
-            <p class="mb-0">Manajemen Data Pengguna Aplikasi</p>
+            <h1 class="h1">MANAJEMEN KESELAMATAN DAN KESEHATAN KERJA</h1>
+            <p class="mb-0">Manajemen Data Kesalamatan Dan Kesehatan Kerja</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Manajemen Pengguna Aplikasi</li>
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Manajemen Kesalamatan Dan Kesehatan Kerja</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
             <p>Data Pengguna Aplikasi</p>
-            <a class="btn-utama sml rnd " href="{{ route('user.create') }}">Tambah
+            <a class="btn-utama sml rnd " href="{{ route('means.work-safety.add') }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>
         </div>
@@ -24,11 +24,14 @@
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
                 <tr>
-                    <th width="5%" class="text-center">#</th>
-                    <th width="15%">Username</th>
-                    <th width="15%">Nickname</th>
-                    <th width="20%">Wilayah</th>
-                    <th>Hak Akses</th>
+                    <th width="5%" class="text-center middle-header">#</th>
+                    <th width="10%" class="text-center middle-header">Unit Kerja</th>
+                    <th width="10%" class="text-center middle-header">Konsultan Supervisi</th>
+                    <th width="10%" class="text-center middle-header">Kontraktor</th>
+                    <th width="10%" class="text-center middle-header">Paket Pekerjaan</th>
+                    <th width="10%" class="text-center middle-header">Periode</th>
+                    <th width="10%" class="text-center middle-header">Kinerja</th>
+                    <th class="text-center middle-header">Keterangan</th>
                     <th width="12%" class="text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -46,7 +49,7 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let path = '{{ route('user') }}';
+        let path = '/{{ request()->path() }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -99,46 +102,31 @@
                     orderable: false
                 },
                     {
-                        data: 'username',
-                        name: 'username'
+                        data: 'work_unit',
+                        name: 'work_unit',
+                        className: 'text-center'
                     },
                     {
-                        data: 'nickname',
-                        name: 'nickname'
+                        data: 'supervision_consultant',
+                        name: 'supervision_consultant'
                     },
                     {
-                        data: null,
-                        name: null,
-                        render: function (data) {
-                            if (data['service_unit'] !== null) {
-                                value = data['service_unit']['name'];
-                            }
-                            return value;
-                        }
+                        data: 'contractor',
+                        name: 'contractor'
+                    },{
+                        data: 'work_package',
+                        name: 'work_package'
+                    },{
+                        data: 'period',
+                        name: 'period'
                     },
                     {
-                        data: 'role',
-                        name: 'role',
-                        render: function (data) {
-                            let value = '-';
-                            switch (data) {
-                                case 'admin-area':
-                                    value = 'Admin Daerah Operasi (DAOP)';
-                                    break;
-                                case 'chief-area':
-                                    value = 'Kepala Daerah Operasi (DAOP)';
-                                    break;
-                                case 'admin-service-unit':
-                                    value = 'Admin Satuan Pelayanan (SATPEL)';
-                                    break;
-                                case 'chief-service-unit':
-                                    value = 'Kepala Satuan Pelayanan (SATPEL)';
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return value;
-                        },
+                        data: 'performance',
+                        name: 'performance'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
                     },
                     {
                         data: null,

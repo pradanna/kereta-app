@@ -15,21 +15,36 @@ class ResortController extends CustomController
         parent::__construct();
     }
 
-    public function index()
+    public function service_unit_page()
     {
-        if ($this->request->ajax()) {
-            $data = Resort::with(['service_unit:id,name'])->orderBy('name', 'ASC')->get();
-            return $this->basicDataTables($data);
-        }
-        return view('admin.master.resort.index');
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.master-data.resort.service-unit')
+            ->with([
+                'service_units' => $service_units
+            ]);
     }
 
-    public function store()
+    public function index($service_unit_id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        if ($this->request->ajax()) {
+            $data = Resort::with(['service_unit:id,name'])
+                ->where('service_unit_id', '=', $service_unit_id)
+                ->orderBy('name', 'ASC')->get();
+            return $this->basicDataTables($data);
+        }
+        return view('admin.master-data.resort.index')->with([
+            'service_unit' => $service_unit
+        ]);
+    }
+
+    public function store($service_unit_id)
+    {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'service_unit_id' => $this->postField('service_unit'),
+                    'service_unit_id' => $service_unit_id,
                     'name' => $this->postField('name'),
                 ];
                 Resort::create($data_request);
@@ -38,17 +53,17 @@ class ResortController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.master.resort.add')->with(['service_units' => $service_units]);
+        return view('admin.master-data.resort.add')->with(['service_unit' => $service_unit]);
     }
 
-    public function patch($id)
+    public function patch($service_unit_id, $id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $data = Resort::with(['service_unit'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'service_unit_id' => $this->postField('service_unit'),
+                    'service_unit_id' => $service_unit_id,
                     'name' => $this->postField('name'),
                 ];
                 $data->update($data_request);
@@ -57,14 +72,13 @@ class ResortController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.master.resort.edit')->with([
+        return view('admin.master-data.resort.edit')->with([
             'data' => $data,
-            'service_units' => $service_units
+            'service_unit' => $service_unit
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($service_unit_id, $id)
     {
         try {
             Resort::destroy($id);

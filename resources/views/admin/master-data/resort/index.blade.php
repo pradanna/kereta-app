@@ -3,32 +3,31 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MANAJEMEN PENGGUNA APLIKASI</h1>
-            <p class="mb-0">Manajemen Data Pengguna Aplikasi</p>
+            <h1 class="h1">MASTER RESORT {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Master Resort {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Manajemen Pengguna Aplikasi</li>
+                <li class="breadcrumb-item"><a href="{{ route('master-data') }}">Master Data</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('resort') }}">Resort {{ $service_unit->name }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Data Pengguna Aplikasi</p>
-            <a class="btn-utama sml rnd " href="{{ route('user.create') }}">Tambah
+            <p>DataResort</p>
+            <a class="btn-utama sml rnd " href="{{ route('resort.service-unit.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
                 <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
             </a>
         </div>
         <div class="isi">
-            <table id="table-data" class="display table table-striped w-100">
+            <table id="table-data" class="display table w-100">
                 <thead>
                 <tr>
                     <th width="5%" class="text-center">#</th>
-                    <th width="15%">Username</th>
-                    <th width="15%">Nickname</th>
-                    <th width="20%">Wilayah</th>
-                    <th>Hak Akses</th>
+                    <th width="20%">Satuan Pelayanan</th>
+                    <th>Nama Resort</th>
                     <th width="12%" class="text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -46,7 +45,7 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        let path = '{{ route('user') }}';
+        let path = '/{{ request()->path() }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -75,11 +74,12 @@
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
+                    generateMapArea();
                 });
             });
         }
 
-        function generateTable() {
+        function generateTableArea() {
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -90,6 +90,7 @@
                     type: 'GET',
                     url: path,
                     'data': function (d) {
+                        d.type = 'table';
                     }
                 },
                 columns: [{
@@ -99,46 +100,12 @@
                     orderable: false
                 },
                     {
-                        data: 'username',
-                        name: 'username'
+                        data: 'service_unit.name',
+                        name: 'service_unit.name'
                     },
                     {
-                        data: 'nickname',
-                        name: 'nickname'
-                    },
-                    {
-                        data: null,
-                        name: null,
-                        render: function (data) {
-                            if (data['service_unit'] !== null) {
-                                value = data['service_unit']['name'];
-                            }
-                            return value;
-                        }
-                    },
-                    {
-                        data: 'role',
-                        name: 'role',
-                        render: function (data) {
-                            let value = '-';
-                            switch (data) {
-                                case 'admin-area':
-                                    value = 'Admin Daerah Operasi (DAOP)';
-                                    break;
-                                case 'chief-area':
-                                    value = 'Kepala Daerah Operasi (DAOP)';
-                                    break;
-                                case 'admin-service-unit':
-                                    value = 'Admin Satuan Pelayanan (SATPEL)';
-                                    break;
-                                case 'chief-service-unit':
-                                    value = 'Kepala Satuan Pelayanan (SATPEL)';
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return value;
-                        },
+                        data: 'name',
+                        name: 'name'
                     },
                     {
                         data: null,
@@ -152,7 +119,7 @@
                     }
                 ],
                 columnDefs: [{
-                    targets: '_all',
+                    targets: [0, 1, 3],
                     className: 'text-center'
                 }],
                 paging: true,
@@ -163,7 +130,7 @@
         }
 
         $(document).ready(function () {
-            generateTable();
+            generateTableArea();
         })
     </script>
 @endsection

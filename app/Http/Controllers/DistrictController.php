@@ -21,7 +21,7 @@ class DistrictController extends CustomController
             $data = District::with(['city'])->orderBy('created_at', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.district.index');
+        return view('admin.master-data.district.index');
     }
 
     public function store()
@@ -39,7 +39,7 @@ class DistrictController extends CustomController
             }
         }
         $cities = City::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.master.district.add')->with(['cities' => $cities]);
+        return view('admin.master-data.district.add')->with(['cities' => $cities]);
     }
 
     public function patch($id)
@@ -58,7 +58,7 @@ class DistrictController extends CustomController
             }
         }
         $cities = City::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.master.district.edit')->with([
+        return view('admin.master-data.district.edit')->with([
             'data' => $data,
             'cities' => $cities
         ]);

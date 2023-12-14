@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
-use App\Models\Area;
 use App\Models\ServiceUnit;
 use App\Models\User;
+use App\Models\WorkSafety;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends CustomController
+class WorkSafetyController extends CustomController
 {
     public function __construct()
     {
@@ -20,12 +20,11 @@ class UserController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = User::with(['service_unit'])
-                ->where('role', '!=', 'superadmin')
+            $data = WorkSafety::with([])
                 ->orderBy('created_at', 'DESC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.user.index');
+        return view('admin.facility-menu.work-safety.index');
     }
 
     public function store()
@@ -33,54 +32,52 @@ class UserController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'username' => $this->postField('username'),
-                    'nickname' => $this->postField('nickname'),
-                    'password' => Hash::make($this->postField('password')),
-                    'role' => $this->postField('role'),
-                    'service_unit_id' => $this->postField('service_unit'),
+                    'work_unit' => $this->postField('work_unit'),
+                    'supervision_consultant' => $this->postField('supervision_consultant'),
+                    'contractor' => $this->postField('contractor'),
+                    'work_package' => $this->postField('work_package'),
+                    'period' => $this->postField('period'),
+                    'performance' => $this->postField('performance'),
+                    'description' => $this->postField('description'),
                 ];
-                User::create($data_request);
+                WorkSafety::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $service_units = ServiceUnit::with([])->orderBy('name','ASC')->get();
-        return view('admin.user.add')->with(['service_units' => $service_units]);
+        return view('admin.facility-menu.work-safety.add');
     }
 
     public function patch($id)
     {
-        $data = User::with(['area'])->findOrFail($id);
+        $data = WorkSafety::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'username' => $this->postField('username'),
-                    'nickname' => $this->postField('nickname'),
-                    'role' => $this->postField('role'),
-                    'area_id' => $this->postField('area'),
+                    'work_unit' => $this->postField('work_unit'),
+                    'supervision_consultant' => $this->postField('supervision_consultant'),
+                    'contractor' => $this->postField('contractor'),
+                    'work_package' => $this->postField('work_package'),
+                    'period' => $this->postField('period'),
+                    'performance' => $this->postField('performance'),
+                    'description' => $this->postField('description'),
                 ];
-
-                if ($this->postField('password') !== '') {
-                    $data_request['password'] = Hash::make($this->postField('password'));
-                }
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $service_units = ServiceUnit::with([])->orderBy('name','ASC')->get();
-        return view('admin.user.edit')->with([
+        return view('admin.facility-menu.work-safety.edit')->with([
             'data' => $data,
-            'service_units' => $service_units
         ]);
     }
 
     public function destroy($id)
     {
         try {
-            User::destroy($id);
+            WorkSafety::destroy($id);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
