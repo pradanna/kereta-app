@@ -99,6 +99,8 @@ class SafetyAssessmentController extends CustomController
                     'recommendation_number' => $this->postField('recommendation_number'),
                     'organizer' => $this->postField('organizer'),
                     'description' => $this->postField('description'),
+                    'job_scope' => $this->postField('job_scope'),
+                    'follow_up' => $this->postField('follow_up'),
                 ];
                 SafetyAssessment::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -134,6 +136,8 @@ class SafetyAssessmentController extends CustomController
                     'recommendation_number' => $this->postField('recommendation_number'),
                     'organizer' => $this->postField('organizer'),
                     'description' => $this->postField('description'),
+                    'job_scope' => $this->postField('job_scope'),
+                    'follow_up' => $this->postField('follow_up'),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');

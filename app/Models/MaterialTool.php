@@ -17,6 +17,14 @@ class MaterialTool extends Model
         'qty',
         'unit',
         'description',
+        'latitude',
+        'longitude',
+        'stakes',
+    ];
+
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
     ];
 
     public function area()

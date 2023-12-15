@@ -16,7 +16,9 @@ class SafetyAssessment extends Model
         'stakes',
         'recommendation_number',
         'organizer',
-        'description'
+        'description',
+        'job_scope',
+        'follow_up',
     ];
 
     public function sub_track()

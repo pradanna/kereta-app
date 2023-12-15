@@ -96,6 +96,21 @@
                     </div>
                 </div>
                 <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="job_scope" class="form-label">Ruang Lingkup Pekerjaan</label>
+                            <input type="text" class="form-control" id="job_scope" name="job_scope" value="{{ $data->job_scope }}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="follow_up" class="form-label">Rekomendasi Tindak Lanjut</label>
+                            <input type="text" class="form-control" id="follow_up"
+                                   name="follow_up" value="{{ $data->follow_up }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
                     <div class="col-12">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>
