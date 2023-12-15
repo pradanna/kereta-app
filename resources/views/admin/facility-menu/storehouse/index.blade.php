@@ -91,9 +91,9 @@
                         <tr>
                             <th width="5%" class="text-center">#</th>
                             <th width="15%" class="text-center">Daerah Operasi</th>
-                            <th width="15%" class="text-center">Kota</th>
+                            <th width="15%" class="text-center">Kabupaten/Kota</th>
                             <th width="15%">Tipe</th>
-                            <th>Nama</th>
+                            <th>Depo / Balai Yasa</th>
                             <th class="text-center middle-header" width="12%">Gambar</th>
                             <th width="12%" class="text-center">Aksi</th>
                         </tr>

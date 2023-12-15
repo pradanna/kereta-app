@@ -66,7 +66,7 @@
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="amus">
                     <span class="material-symbols-outlined">carpenter</span>
-                    <span class="text-center">AMUS</span>
+                    <span class="text-center">Alat Material Untuk Siaga (AMUS)</span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">

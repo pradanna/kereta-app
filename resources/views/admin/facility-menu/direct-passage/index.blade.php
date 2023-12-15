@@ -81,12 +81,12 @@
                         <tr>
                             <th class="text-center middle-header" width="5%">#</th>
                             <th class="text-center middle-header" width="10%">Wilayah</th>
-                            <th class="text-center middle-header" width="10%">Perlintasan</th>
+                            <th class="text-center middle-header" width="10%">Lintas</th>
                             <th class="text-center middle-header">Petak</th>
                             <th class="text-center middle-header" width="7%">JPL</th>
                             <th class="text-center middle-header" width="8%">KM/HM</th>
-                            <th class="text-center middle-header" width="8%">PLH</th>
-                            <th class="text-center middle-header" width="8%">PJL</th>
+                            <th class="text-center middle-header" width="8%">Jumlah PLH</th>
+                            <th class="text-center middle-header" width="8%">Jumlah PJL</th>
                             <th class="text-center middle-header" width="8%">Gambar</th>
                             <th class="text-center middle-header" width="15%">Aksi</th>
                         </tr>

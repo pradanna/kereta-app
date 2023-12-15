@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="name" class="form-label">JPL</label>
+                                        <label for="name" class="form-label">No. JPL</label>
                                         <input type="text" class="form-control" id="name" name="name"
                                                placeholder="JPL" value="{{ $data->name }}">
                                     </div>
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group w-100">
-                                        <label for="city" class="form-label">Kota</label>
+                                        <label for="city" class="form-label">Kabupaten / Kota</label>
                                         <select class="select2 form-control" name="city" id="city"
                                                 style="width: 100%;">
                                             @foreach ($cities as $city)
@@ -159,9 +159,10 @@
                                                 style="width: 100%;">
                                             <option value="0" {{ (0 === $data->guarded_by) ? 'selected' :'' }}>OP (PT. KAI)</option>
                                             <option value="1" {{ (1 === $data->guarded_by) ? 'selected' :'' }}>JJ (PT. KAI)</option>
-                                            <option value="2" {{ (2 === $data->guarded_by) ? 'selected' :'' }}>Instansi Lain</option>
+                                            <option value="2" {{ (2 === $data->guarded_by) ? 'selected' :'' }}>Pemda / Instansi Lain</option>
                                             <option value="3" {{ (3 === $data->guarded_by) ? 'selected' :'' }}>Resmi Tidak Dijaga</option>
                                             <option value="4" {{ (4 === $data->guarded_by) ? 'selected' :'' }}>Liar</option>
+                                            <option value="5" {{ (5 === $data->guarded_by) ? 'selected' :'' }}>Swadaya</option>
                                         </select>
                                     </div>
                                 </div>

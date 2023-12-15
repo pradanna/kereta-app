@@ -390,6 +390,10 @@
                 window.location.href = path + '/' + id;
             });
 
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
             generateTableFacilityCertification();
         });
     </script>

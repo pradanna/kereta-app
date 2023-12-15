@@ -55,7 +55,7 @@
                         <select class="select2 form-control" name="type-option" id="type-option"
                                 style="width: 100%;">
                             <option value="">Semua Tipe</option>
-                            <option value="train">Kereta Api</option>
+                            <option value="train">Kereta Non Penggerak</option>
                             <option value="electric-train">KRL</option>
                             <option value="diesel-train">KRD</option>
                         </select>

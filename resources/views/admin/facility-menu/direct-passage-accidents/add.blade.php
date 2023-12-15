@@ -41,7 +41,7 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
-                            <label for="direct_passage" class="form-label">Jalur Perlintasan Langsung</label>
+                            <label for="direct_passage" class="form-label">No. JPL</label>
                             <select class="select2 form-control" name="direct_passage" id="direct_passage"
                                     style="width: 100%;">
                                 @foreach ($direct_passages as $direct_passage)
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="died" class="form-label">Korban Meninggal</label>
+                            <label for="died" class="form-label">Korban Meninggal Dunia</label>
                             <input type="number" class="form-control" id="died" name="died" value="0">
                         </div>
                     </div>

@@ -20,6 +20,13 @@ class IllegalBuilding extends Model
         'illegal_building',
         'demolished',
         'description',
+        'latitude',
+        'longitude'
+    ];
+
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
     ];
 
     public function sub_track()

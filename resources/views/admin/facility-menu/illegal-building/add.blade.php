@@ -82,7 +82,7 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="building_area" class="form-label">Luas Bangunan (m2)</label>
+                            <label for="building_area" class="form-label">Luas Bangunan (m2) (+/-)</label>
                             <input type="number" step="any" class="form-control" id="building_area"
                                    name="building_area"
                                    placeholder="0" value="0">
@@ -112,6 +112,22 @@
                             <input type="number" step="any" class="form-control" id="demolished"
                                    name="demolished"
                                    placeholder="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="latitude" class="form-label">Latitude</label>
+                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"
+                                   placeholder="Contoh: 7.1129489">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="longitude" class="form-label">Longitude</label>
+                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"
+                                   placeholder="Contoh: 110.1129489">
                         </div>
                     </div>
                 </div>

@@ -24,19 +24,19 @@
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="jembatan-penyebrangan">
                     <span class="material-symbols-outlined">fort</span>
-                    <span class="text-center">Jembatan Penyebrangan</span>
+                    <span class="text-center">Jembatan Penyebrangan (JPOM, Underpass, Flyover)</span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="permohonan-izin-melintas-rel">
                     <span class="material-symbols-outlined">vpn_key</span>
-                    <span class="text-center">Permohonan Izin Melintas Rel</span>
+                    <span class="text-center">Permohonan Izin Melintas Rel (Crossing)</span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="jembatan-kereta-api">
                     <span class="material-symbols-outlined">timeline</span>
-                    <span class="text-center">Jembatan Kereta Api</span>
+                    <span class="text-center">Jembatan Kereta Api (BH)</span>
                 </div>
             </div>
         </div>

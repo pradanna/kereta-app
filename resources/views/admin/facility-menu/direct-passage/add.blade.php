@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="name" class="form-label">JPL</label>
+                                        <label for="name" class="form-label">No. JPL</label>
                                         <input type="text" class="form-control" id="name" name="name"
                                                placeholder="JPL">
                                     </div>
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group w-100">
-                                        <label for="city" class="form-label">Kota</label>
+                                        <label for="city" class="form-label">Kabupaten / Kota</label>
                                         <select class="select2 form-control" name="city" id="city"
                                                 style="width: 100%;">
                                             @foreach ($cities as $city)
@@ -151,9 +151,10 @@
                                                 style="width: 100%;">
                                             <option value="0">OP (PT. KAI)</option>
                                             <option value="1">JJ (PT. KAI)</option>
-                                            <option value="2">Instansi Lain</option>
+                                            <option value="2">Pemda / Instansi Lain</option>
                                             <option value="3">Resmi Tidak Dijaga</option>
                                             <option value="4">Liar</option>
+                                            <option value="5">Swadaya</option>
                                         </select>
                                     </div>
                                 </div>
@@ -171,7 +172,7 @@
                                     <div class="w-100">
                                         <label for="road_name" class="form-label">Nama Jalan / Daerah</label>
                                         <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name" name="road_name"
-                                                  placeholder="Konstruksi Jalan"></textarea>
+                                                  placeholder="Nama Jalan / Daerah"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-6">

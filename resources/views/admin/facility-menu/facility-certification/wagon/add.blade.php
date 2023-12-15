@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="testing_number" class="form-label">No. BA Pengujian</label>
+                            <label for="testing_number" class="form-label">No. BA Pengujian Terakhir</label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
                                    placeholder="Nomor BA Pengujian">
                         </div>

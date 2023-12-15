@@ -36,7 +36,7 @@ class DirectPassageAccidentsController extends CustomController
     {
         $area = $this->request->query->get('area');
         $track = $this->request->query->get('track');
-        $query = DirectPassageAccident::with(['direct_passage.sub_track.track.area']);
+        $query = DirectPassageAccident::with(['direct_passage.sub_track.track.area', 'direct_passage.city']);
 
         if ($area !== '') {
             $query->whereHas('direct_passage', function ($qdp) use ($area) {

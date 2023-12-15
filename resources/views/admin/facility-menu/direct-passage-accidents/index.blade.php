@@ -56,6 +56,7 @@
                 <tr>
                     <th class="text-center middle-header" width="5%" rowspan="2">#</th>
                     <th class="text-center middle-header" width="8%" rowspan="2">Wilayah</th>
+                    <th class="text-center middle-header" width="8%" rowspan="2">Kota</th>
                     <th class="text-center middle-header" width="8%" rowspan="2">JPL</th>
                     <th class="text-center middle-header" width="8%" rowspan="2">Waktu</th>
                     <th class="middle-header" rowspan="2">Jenis Kereta Api</th>
@@ -286,6 +287,11 @@
                     {
                         data: 'direct_passage.sub_track.track.area.name',
                         name: 'direct_passage.sub_track.track.area.name',
+                        className: 'text-center middle-header',
+                    },
+                    {
+                        data: 'direct_passage.city.name',
+                        name: 'direct_passage.city.name',
                         className: 'text-center middle-header',
                     },
                     {

@@ -54,7 +54,7 @@
                     <tr>
                         <th class="text-center middle-header" width="5%" rowspan="2">#</th>
                         <th class="text-center middle-header" width="10%" rowspan="2">Wilayah</th>
-                        <th class="text-center middle-header" width="10%" rowspan="2">Perlintasan</th>
+                        <th class="text-center middle-header" width="10%" rowspan="2">Lintas</th>
                         <th class="text-center middle-header" width="10%" rowspan="2">Petak</th>
                         <th class="text-center middle-header" rowspan="2">KM/HM</th>
                         <th class="text-center middle-header" width="12%" rowspan="2">Kecamatan</th>

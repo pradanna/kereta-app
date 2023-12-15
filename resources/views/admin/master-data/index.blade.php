@@ -52,7 +52,7 @@
             </div>
             <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-3">
                 <div class="card-service-unit" data-slug="perlintasan">
-                    <span>Perlintasan</span>
+                    <span>Lintasan</span>
                     <span class="material-symbols-outlined">chevron_right</span>
                 </div>
             </div>

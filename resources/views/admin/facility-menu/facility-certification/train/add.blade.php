@@ -88,7 +88,7 @@
                             <label for="engine_type" class="form-label">Tipe Kereta</label>
                             <select class="select2 form-control" name="engine_type" id="engine_type"
                                     style="width: 100%;">
-                                <option value="train">Kereta Api</option>
+                                <option value="train">Kereta Non Penggerak</option>
                                 <option value="electric-train">KRL</option>
                                 <option value="diesel-train">KRD</option>
                             </select>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="testing_number" class="form-label">No. BA Pengujian</label>
+                            <label for="testing_number" class="form-label">No. BA Pengujian Terakhir</label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
                                    placeholder="Nomor BA Pengujian">
                         </div>

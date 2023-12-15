@@ -123,6 +123,8 @@ class IllegalBuildingController extends CustomController
                     'illegal_building' => $this->postField('illegal_building'),
                     'demolished' => $this->postField('demolished'),
                     'description' => $this->postField('description'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
                 ];
                 IllegalBuilding::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -167,6 +169,8 @@ class IllegalBuildingController extends CustomController
                     'illegal_building' => $this->postField('illegal_building'),
                     'demolished' => $this->postField('demolished'),
                     'description' => $this->postField('description'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');

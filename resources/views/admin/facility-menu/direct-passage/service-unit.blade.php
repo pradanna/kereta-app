@@ -3,7 +3,7 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">JALUR PERLINTASAN LANGSUNG (JPL)</h1>
+            <h1 class="h1">PERLINTASAN KERETA API (JPL)</h1>
             <p class="mb-0">Manajemen Data Jalur Perlintasan Langsung</p>
         </div>
         <nav aria-label="breadcrumb">
