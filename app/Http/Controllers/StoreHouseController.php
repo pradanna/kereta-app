@@ -191,7 +191,7 @@ class StoreHouseController extends CustomController
         }
     }
 
-    public function image_page($id)
+    public function image_page($service_unit_id, $id)
     {
         $data = Storehouse::with(['area', 'storehouse_type', 'images'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
@@ -227,10 +227,10 @@ class StoreHouseController extends CustomController
         ]);
     }
 
-    public function destroy_image($id)
+    public function destroy_image($service_unit_id, $id, $idgambar)
     {
         try {
-            StorehouseImage::destroy($id);
+            StorehouseImage::destroy($idgambar);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());

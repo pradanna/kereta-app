@@ -12,6 +12,7 @@ use App\Models\DirectPassage;
 use App\Models\DirectPassageImage;
 use App\Models\DirectPassageSignEquipment;
 use App\Models\FacilityLocomotive;
+use App\Models\ServiceUnit;
 use App\Models\Storehouse;
 use App\Models\StorehouseImage;
 use App\Models\SubTrack;
@@ -27,6 +28,14 @@ class DirectPassageController extends CustomController
         parent::__construct();
     }
 
+    public function service_unit_page()
+    {
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.direct-passage.service-unit')
+            ->with([
+                'service_units' => $service_units
+            ]);
+    }
     private function generateData()
     {
         $service_unit = $this->request->query->get('service_unit');
@@ -57,19 +66,27 @@ class DirectPassageController extends CustomController
             });
         }
 
-        if ($track !== '') {
-            $query->whereHas('sub_track', function ($qstt) use ($track) {
-                /** @var $qstt Builder */
-                return $qstt->where('track_id', '=', $track);
-            });
-        }
+        //        if ($track !== '') {
+        //            $query->whereHas('sub_track', function ($qstt) use ($track) {
+        //                /** @var $qstt Builder */
+        //                return $qstt->where('track_id', '=', $track);
+        //            });
+        //
+        //        }
 
         return $query->orderBy('created_at', 'ASC')
             ->get()->append(['count_guard', 'count_accident']);
     }
 
-    public function index()
+    public function index($service_unit_id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
         if ($this->request->ajax()) {
             $type = $this->request->query->get('type');
             $data = $this->generateData();
@@ -82,15 +99,21 @@ class DirectPassageController extends CustomController
                     return $this->jsonSuccessResponse('success', []);
             }
         }
-        $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.direct-passage.index')->with([
+        return view('admin.facility-menu.direct-passage.index')->with([
             'areas' => $areas,
+            'service_unit' => $service_unit
         ]);
     }
 
-    public function store()
+    public function store($service_unit_id)
     {
-
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
         if ($this->request->method() === 'POST') {
             DB::beginTransaction();
             try {
@@ -105,13 +128,14 @@ class DirectPassageController extends CustomController
                     'guarded_by' => $this->postField('guarded_by'),
                     'is_closed' => false,
                     'is_not_found' => false,
-                    //                    'is_underpass' => false,
                     'arrangement_proposal' => false,
-                    'accident_history' => $this->postField('accident_history'),
+                    'accident_history' => 0,
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
                     'description' => $this->postField('description'),
                     'technical_documentation' => $this->postField('technical_documentation'),
+                    'road_class' => $this->postField('road_class'),
+                    'elevation' => $this->postField('elevation'),
                 ];
                 $direct_passage = DirectPassage::create($data_request_direct_passage);
 
@@ -132,18 +156,34 @@ class DirectPassageController extends CustomController
                 DB::commit();
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
-                dd($e->getMessage());
                 DB::rollBack();
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
-        $sub_tracks = SubTrack::with(['track.area'])->orderBy('name')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
+        $sub_tracks = SubTrack::with(['track.area'])
+            ->whereHas('track', function ($qt) use ($areaIDS) {
+                /** @var $qt Builder */
+                return $qt->whereIn('area_id', $areaIDS);
+            })
+            ->orderBy('name')->get();
         $cities = City::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.direct-passage.add')->with(['sub_tracks' => $sub_tracks, 'cities' => $cities]);
+        return view('admin.facility-menu.direct-passage.add')->with([
+            'sub_tracks' => $sub_tracks,
+            'cities' => $cities,
+            'service_unit' => $service_unit,
+        ]);
     }
 
-    public function patch($id)
+    public function patch($service_unit_id, $id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
         $data = DirectPassage::with(['sign_equipment'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             DB::beginTransaction();
@@ -159,13 +199,14 @@ class DirectPassageController extends CustomController
                     'guarded_by' => $this->postField('guarded_by'),
                     'is_closed' => false,
                     'is_not_found' => false,
-                    //                    'is_underpass' => false,
                     'arrangement_proposal' => false,
-                    'accident_history' => $this->postField('accident_history'),
+                    'accident_history' => 0,
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
                     'description' => $this->postField('description'),
                     'technical_documentation' => $this->postField('technical_documentation'),
+                    'road_class' => $this->postField('road_class'),
+                    'elevation' => $this->postField('elevation'),
                 ];
                 $data->update($data_request_direct_passage);
                 $data_request_direct_passage_equipment = [
@@ -189,16 +230,23 @@ class DirectPassageController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $sub_tracks = SubTrack::with(['track.area'])->orderBy('name')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
+        $sub_tracks = SubTrack::with(['track.area'])
+            ->whereHas('track', function ($qt) use ($areaIDS) {
+                /** @var $qt Builder */
+                return $qt->whereIn('area_id', $areaIDS);
+            })
+            ->orderBy('name')->get();
         $cities = City::all();
-        return view('admin.direct-passage.edit')->with([
+        return view('admin.facility-menu.direct-passage.edit')->with([
             'data' => $data,
             'sub_tracks' => $sub_tracks,
             'cities' => $cities,
+            'service_unit' => $service_unit,
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($service_unit_id, $id)
     {
         DB::beginTransaction();
         try {
@@ -212,7 +260,7 @@ class DirectPassageController extends CustomController
         }
     }
 
-    public function detail($id)
+    public function detail($service_unit_id, $id)
     {
         try {
             $data = DirectPassage::with(['sign_equipment', 'sub_track.track.area', 'city'])
@@ -234,8 +282,9 @@ class DirectPassageController extends CustomController
         );
     }
 
-    public function image_page($id)
+    public function image_page($service_unit_id, $id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $data = DirectPassage::with(['images'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             DB::beginTransaction();
@@ -264,12 +313,13 @@ class DirectPassageController extends CustomController
                 return $this->jsonErrorResponse('internal server error');
             }
         }
-        return view('admin.direct-passage.image')->with([
-            'data' => $data
+        return view('admin.facility-menu.direct-passage.image')->with([
+            'data' => $data,
+            'service_unit' => $service_unit,
         ]);
     }
 
-    public function destroy_image($id)
+    public function destroy_image($service_unit_id, $id)
     {
         try {
             DirectPassageImage::destroy($id);
@@ -279,7 +329,7 @@ class DirectPassageController extends CustomController
         }
     }
 
-    public function direct_passage_guard_page($id)
+    public function direct_passage_guard_page($service_unit_id, $id)
     {
         $data = DirectPassage::with(['direct_passage_guard.human_resource'])
             ->findOrFail($id)->append(['count_guard']);
@@ -289,12 +339,14 @@ class DirectPassageController extends CustomController
         return view('admin.direct-passage.guard')->with(['data' => $data]);
     }
 
-    public function direct_passage_accident_page($id)
+    public function direct_passage_accident_page($service_unit_id, $id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $data = DirectPassage::with([])
             ->findOrFail($id);
-        return view('admin.direct-passage.accidents')->with([
-            'data' => $data
+        return view('admin.facility-menu.direct-passage.dirrect-passage-accident')->with([
+            'data' => $data,
+            'service_unit' => $service_unit,
         ]);
     }
 }

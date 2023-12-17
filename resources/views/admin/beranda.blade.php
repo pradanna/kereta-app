@@ -49,71 +49,71 @@
     </style>
 @endsection
 @section('content')
-    <div class="panel p-3" style="min-height: 90vh">
-        <div class="d-flex gap-3 justify-content-between ">
-            {{-- ITEM --}}
-            <div class="dsh-item color1">
-                <p class="name">Lokomotif</p>
-                <p class="total">{{ $facility_locomotives }}</p>
-                <p class="keterangan">dari semua wilayah</p>
-            </div>
+{{--    <div class="panel p-3" style="min-height: 90vh">--}}
+{{--        <div class="d-flex gap-3 justify-content-between ">--}}
+{{--            --}}{{-- ITEM --}}
+{{--            <div class="dsh-item color1">--}}
+{{--                <p class="name">Lokomotif</p>--}}
+{{--                <p class="total">{{ $facility_locomotives }}</p>--}}
+{{--                <p class="keterangan">dari semua wilayah</p>--}}
+{{--            </div>--}}
 
-            <div class="dsh-item color2">
-                <p class="name">Kereta</p>
-                <p class="total">{{ $facility_trains }}</p>
-                <p class="keterangan">dari semua wilayah</p>
-            </div>
+{{--            <div class="dsh-item color2">--}}
+{{--                <p class="name">Kereta</p>--}}
+{{--                <p class="total">{{ $facility_trains }}</p>--}}
+{{--                <p class="keterangan">dari semua wilayah</p>--}}
+{{--            </div>--}}
 
-            <div class="dsh-item color3">
-                <p class="name">Gerbong</p>
-                <p class="total">{{ $facility_wagons }}</p>
-                <p class="keterangan">dari semua wilayah</p>
-            </div>
+{{--            <div class="dsh-item color3">--}}
+{{--                <p class="name">Gerbong</p>--}}
+{{--                <p class="total">{{ $facility_wagons }}</p>--}}
+{{--                <p class="keterangan">dari semua wilayah</p>--}}
+{{--            </div>--}}
 
-            <div class="dsh-item color4">
-                <p class="name">Peralatan Khusus</p>
-                <p class="total">{{ $facility_special_equipments }}</p>
-                <p class="keterangan">dari semua wilayah</p>
-            </div>
-        </div>
-        <p class="mb-1 mt-3 fw-bold" style="color: #777777;">Peta Satuan Pelayanan</p>
-        <div class="row gx-3">
-            <div class="col-8">
-                <div id="main-map" class="panel"
-                     style="margin-bottom: 0; width: 100%; height: 500px; border-radius: 10px;">
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="panel" style="margin-bottom: 10px;">
-                    <div class="title">
-                        <p class="fw-bold">Masa Berlaku Sarana Akan Habis</p>
-                        <a class="btn-detail btn-table-action" href="{{ route('summary-facility') }}">Detail</a>
-                    </div>
-                    <div class="isi">
-                        @foreach($facility_expirations as $facility_expiration)
-                            <div class="d-flex justify-content-between align-items-center mb-0">
-                                <p class="fw-bold">{{ $facility_expiration['type'] }}</p>
-                                <p class="fw-bold">{{ $facility_expiration['value'] }}</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="panel">
-                    <div class="title">
-                        <p class="fw-bold">Daerah Rawan Bencana</p>
-                        <a class="btn-detail btn-table-action" href="{{ route('disaster-area') }}">Detail</a>
-                    </div>
-                    <div class="isi">
-                        @foreach($service_units as $service_unit)
-                            <div class="d-flex justify-content-between align-items-center mb-0">
-                                <p class="fw-bold">{{ $service_unit->name }}</p>
-                                <p class="fw-bold">{{ $service_unit->disaster_areas }}</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--            <div class="dsh-item color4">--}}
+{{--                <p class="name">Peralatan Khusus</p>--}}
+{{--                <p class="total">{{ $facility_special_equipments }}</p>--}}
+{{--                <p class="keterangan">dari semua wilayah</p>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <p class="mb-1 mt-3 fw-bold" style="color: #777777;">Peta Satuan Pelayanan</p>--}}
+{{--        <div class="row gx-3">--}}
+{{--            <div class="col-8">--}}
+{{--                <div id="main-map" class="panel"--}}
+{{--                     style="margin-bottom: 0; width: 100%; height: 500px; border-radius: 10px;">--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="col-4">--}}
+{{--                <div class="panel" style="margin-bottom: 10px;">--}}
+{{--                    <div class="title">--}}
+{{--                        <p class="fw-bold">Masa Berlaku Sarana Akan Habis</p>--}}
+{{--                        <a class="btn-detail btn-table-action" href="{{ route('summary-facility') }}">Detail</a>--}}
+{{--                    </div>--}}
+{{--                    <div class="isi">--}}
+{{--                        @foreach($facility_expirations as $facility_expiration)--}}
+{{--                            <div class="d-flex justify-content-between align-items-center mb-0">--}}
+{{--                                <p class="fw-bold">{{ $facility_expiration['type'] }}</p>--}}
+{{--                                <p class="fw-bold">{{ $facility_expiration['value'] }}</p>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="panel">--}}
+{{--                    <div class="title">--}}
+{{--                        <p class="fw-bold">Daerah Rawan Bencana</p>--}}
+{{--                        <a class="btn-detail btn-table-action" href="{{ route('disaster-area') }}">Detail</a>--}}
+{{--                    </div>--}}
+{{--                    <div class="isi">--}}
+{{--                        @foreach($service_units as $service_unit)--}}
+{{--                            <div class="d-flex justify-content-between align-items-center mb-0">--}}
+{{--                                <p class="fw-bold">{{ $service_unit->name }}</p>--}}
+{{--                                <p class="fw-bold">{{ $service_unit->disaster_areas }}</p>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 {{--        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">--}}
 {{--            <li class="nav-item" role="presentation">--}}
 {{--                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"--}}
@@ -138,7 +138,7 @@
 {{--            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>--}}
 {{--            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>--}}
 {{--        </div>--}}
-    </div>
+{{--    </div>--}}
 
 
 
@@ -153,26 +153,26 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
         async></script>
     <script>
-        let currentPath = '{{ route('dashboard') }}';
-        let path = '{{ route('service-unit') }}';
-        function getDataServiceUnitMap() {
-            let url = path + '?type=map';
-            return $.get(url)
-        }
-
-        function generateMapServiceUnit() {
-            getDataServiceUnitMap().then((response) => {
-                removeMultiMarker();
-                let data = response.data;
-                if (data.length > 0) {
-                    createMultiMarkerServiceUnit(data)
-                }
-            }).catch((e) => {
-                console.log(e)
-            })
-        }
+        {{--let currentPath = '{{ route('dashboard') }}';--}}
+        {{--let path = '{{ route('service-unit') }}';--}}
+        // function getDataServiceUnitMap() {
+        //     let url = path + '?type=map';
+        //     return $.get(url)
+        // }
+        //
+        // function generateMapServiceUnit() {
+        //     getDataServiceUnitMap().then((response) => {
+        //         removeMultiMarker();
+        //         let data = response.data;
+        //         if (data.length > 0) {
+        //             createMultiMarkerServiceUnit(data)
+        //         }
+        //     }).catch((e) => {
+        //         console.log(e)
+        //     })
+        // }
         $(document).ready(function () {
-            generateMapServiceUnit()
+            // generateMapServiceUnit()
         });
     </script>
 @endsection

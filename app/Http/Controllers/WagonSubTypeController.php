@@ -23,7 +23,7 @@ class WagonSubTypeController extends CustomController
                 ->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.wagon-sub-type.index');
+        return view('admin.master-data.wagon-sub-type.index');
     }
 
     public function store()
@@ -42,7 +42,7 @@ class WagonSubTypeController extends CustomController
             }
         }
         $wagon_types = WagonType::with([])->orderBy('code', 'ASC')->get();
-        return view('admin.master.wagon-sub-type.add')->with([
+        return view('admin.master-data.wagon-sub-type.add')->with([
             'wagon_types' => $wagon_types
         ]);
     }
@@ -64,7 +64,7 @@ class WagonSubTypeController extends CustomController
             }
         }
         $wagon_types = WagonType::with([])->orderBy('code', 'ASC')->get();
-        return view('admin.master.wagon-sub-type.edit')->with([
+        return view('admin.master-data.wagon-sub-type.edit')->with([
             'data' => $data,
             'wagon_types' => $wagon_types
         ]);

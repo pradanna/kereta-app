@@ -73,7 +73,7 @@ class FacilitySpecialEquipmentController extends CustomController
         }
         $special_equipment_types = SpecialEquipmentType::all();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.special-equipment.index')->with([
+        return view('admin.facility-menu.facility-certification.special-equipment.index')->with([
             'special_equipment_types' => $special_equipment_types,
             'areas' => $areas,
         ]);
@@ -84,7 +84,7 @@ class FacilitySpecialEquipmentController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'special_equipment_type_id' => $this->postField('special_equipment_type'),
+                    'special_equipment_type_id' => null,
                     'area_id' => $this->postField('area'),
                     'ownership' => $this->postField('ownership'),
                     'new_facility_number' => $this->postField('new_facility_number'),
@@ -95,13 +95,12 @@ class FacilitySpecialEquipmentController extends CustomController
                 FacilitySpecialEquipment::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
-                dd($e->getMessage());
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
         $special_equipment_types = SpecialEquipmentType::all();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.facility-certification.special-equipment.add')->with([
+        return view('admin.facility-menu.facility-certification.special-equipment.add')->with([
             'special_equipment_types' => $special_equipment_types,
             'areas' => $areas,
         ]);

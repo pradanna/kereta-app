@@ -40,13 +40,9 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
-    <script src="{{ asset('js/map-control.js') }}"></script>
 @endsection
 
 @section('js')
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
-        async></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
@@ -114,11 +110,6 @@
                         data: null,
                         name: null,
                         render: function (data) {
-                            let value = '-';
-                            if (data['area'] !== null) {
-                                value = data['area']['name'];
-                            }
-
                             if (data['service_unit'] !== null) {
                                 value = data['service_unit']['name'];
                             }

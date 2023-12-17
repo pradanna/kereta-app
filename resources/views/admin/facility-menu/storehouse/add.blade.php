@@ -14,7 +14,7 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('infrastructure.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}';
+                window.location.href = '{{ route('means.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}';
             })
         </script>
     @endif
@@ -25,8 +25,8 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}">Depo Dan Balai
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}">Depo Dan Balai
                         Yasa {{ $service_unit->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>

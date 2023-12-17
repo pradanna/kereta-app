@@ -29,7 +29,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 ->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.technical-specification.locomotive.index');
+        return view('admin.facility-menu.technical-specification.locomotive.index');
     }
 
     public function store()
@@ -55,7 +55,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
             }
         }
         $locomotive_types = LocomotiveType::with([])->orderBy('code', 'ASC')->get();
-        return view('admin.technical-specification.locomotive.add')->with([
+        return view('admin.facility-menu.technical-specification.locomotive.add')->with([
             'locomotive_types' => $locomotive_types,
         ]);
     }
@@ -84,7 +84,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
             }
         }
         $locomotive_types = LocomotiveType::with([])->orderBy('code', 'ASC')->get();
-        return view('admin.technical-specification.locomotive.edit')->with([
+        return view('admin.facility-menu.technical-specification.locomotive.edit')->with([
             'data' => $data,
             'locomotive_types' => $locomotive_types,
         ]);
@@ -153,7 +153,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 return $this->jsonErrorResponse('internal server error');
             }
         }
-        return view('admin.technical-specification.locomotive.document')->with([
+        return view('admin.facility-menu.technical-specification.locomotive.document')->with([
             'data' => $data
         ]);
     }
@@ -188,7 +188,7 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 return $this->jsonErrorResponse('internal server error');
             }
         }
-        return view('admin.technical-specification.locomotive.image')->with([
+        return view('admin.facility-menu.technical-specification.locomotive.image')->with([
             'data' => $data
         ]);
     }

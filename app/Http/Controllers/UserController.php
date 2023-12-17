@@ -20,7 +20,7 @@ class UserController extends CustomController
     public function index()
     {
         if ($this->request->ajax()) {
-            $data = User::with(['area', 'service_unit'])
+            $data = User::with(['service_unit'])
                 ->where('role', '!=', 'superadmin')
                 ->orderBy('created_at', 'DESC')->get();
             return $this->basicDataTables($data);

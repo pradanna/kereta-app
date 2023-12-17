@@ -80,12 +80,15 @@ class MaterialToolController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'area_id'  => $this->postField('area'),
+                    'area_id' => $this->postField('area'),
                     'resort_id' => $this->postField('resort'),
                     'type' => $this->postField('type'),
                     'qty' => $this->postField('qty'),
                     'unit' => $this->postField('unit'),
-                    'description'  => $this->postField('description'),
+                    'description' => $this->postField('description'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
+                    'stakes' => $this->postField('stakes'),
                 ];
                 MaterialTool::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -109,12 +112,15 @@ class MaterialToolController extends CustomController
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
-                    'area_id'  => $this->postField('area'),
+                    'area_id' => $this->postField('area'),
                     'resort_id' => $this->postField('resort'),
                     'type' => $this->postField('type'),
                     'qty' => $this->postField('qty'),
                     'unit' => $this->postField('unit'),
-                    'description'  => $this->postField('description'),
+                    'description' => $this->postField('description'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
+                    'stakes' => $this->postField('stakes'),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');

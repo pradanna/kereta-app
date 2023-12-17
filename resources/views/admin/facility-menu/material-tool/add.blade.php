@@ -66,11 +66,34 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="w-100">
                             <label for="type" class="form-label">Jenis Amus</label>
                             <input type="text" class="form-control" id="type"
                                    name="type">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="stakes" class="form-label">KM/HM</label>
+                            <input type="text" class="form-control" id="stakes" name="stakes"
+                                   placeholder="KM/HM">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="latitude" class="form-label">Latitude</label>
+                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"
+                                   placeholder="Contoh: 7.1129489">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="longitude" class="form-label">Longitude</label>
+                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"
+                                   placeholder="Contoh: 110.1129489">
                         </div>
                     </div>
                 </div>

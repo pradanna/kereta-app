@@ -20,7 +20,7 @@ class TrainTypeController extends CustomController
             $data = TrainType::with([])->orderBy('code', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.train-type.index');
+        return view('admin.master-data.train-type.index');
     }
 
     public function store()
@@ -37,7 +37,7 @@ class TrainTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.train-type.add');
+        return view('admin.master-data.train-type.add');
     }
 
     public function patch($id)
@@ -55,7 +55,7 @@ class TrainTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.train-type.edit')->with(['data' => $data]);
+        return view('admin.master-data.train-type.edit')->with(['data' => $data]);
     }
 
     public function destroy($id)

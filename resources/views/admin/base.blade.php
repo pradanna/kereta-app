@@ -73,15 +73,15 @@
         <nav id="sidebar" class="sidebar card py-2" style="min-height: 100vh; width: 250px;">
             <ul class="nav flex-column " style=" " id="nav_accordion">
 
-                {{--                <li class="nav-item"> --}}
-                {{--                    <a class="nav-link menu {{ request()->is('dashboard') ? 'active' : '' }}" --}}
-                {{--                        href="{{ route('dashboard') }}"> --}}
-                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
-                {{--                            home --}}
-                {{--                        </span> --}}
-                {{--                        <p class="menu-text">Dashboard</p> --}}
-                {{--                    </a> --}}
-                {{--                </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('dashboard') ? 'active' : '' }}"
+                        href="{{ route('dashboard') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            home
+                        </span>
+                        <p class="menu-text">Dashboard</p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('sarana-dan-keselamatan*') ? 'active' : '' }}"
                         href="{{ route('means') }}">
@@ -107,6 +107,15 @@
                             signpost
                         </span>
                         <p class="menu-text">LALU LINTAS</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('master*') ? 'active' : '' }}"
+                        href="{{ route('master-data') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            widgets
+                        </span>
+                        <p class="menu-text">MASTER DATA</p>
                     </a>
                 </li>
                 <li class="nav-item">

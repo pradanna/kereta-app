@@ -11,6 +11,7 @@ use App\Models\DirectPassage;
 use App\Models\DirectPassageSignEquipment;
 use App\Models\District;
 use App\Models\IllegalBuilding;
+use App\Models\ServiceUnit;
 use App\Models\SubTrack;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,16 @@ class IllegalBuildingController extends CustomController
         parent::__construct();
     }
 
-    private function generateData() {
+    public function service_unit_page()
+    {
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.illegal-building.service-unit')
+            ->with([
+                'service_units' => $service_units
+            ]);
+    }
+
+    private function generateData($areaIDS) {
         $service_unit = $this->request->query->get('service_unit');
         $area = $this->request->query->get('area');
         $track = $this->request->query->get('track');
@@ -51,33 +61,56 @@ class IllegalBuildingController extends CustomController
                     return $qta->where('area_id', '=', $area);
                 });
             });
-        }
-
-        if ($track !== '') {
-            $query->whereHas('sub_track', function ($qstt) use ($track){
-                /** @var $qstt Builder */
-                return $qstt->where('track_id', '=', $track);
+        } else {
+            $query->whereHas('sub_track', function ($qsta) use ($areaIDS){
+                /** @var $qsta Builder */
+                return $qsta->whereHas('track', function ($qta) use ($areaIDS){
+                    /** @var $qta Builder */
+                    return $qta->whereIn('area_id', $areaIDS);
+                });
             });
-
         }
+
+//        if ($track !== '') {
+//            $query->whereHas('sub_track', function ($qstt) use ($track){
+//                /** @var $qstt Builder */
+//                return $qstt->where('track_id', '=', $track);
+//            });
+//
+//        }
 
         return $query->orderBy('created_at', 'ASC')->get();
     }
-    public function index()
+    public function index($service_unit_id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
         if ($this->request->ajax()) {
-            $data = $this->generateData();
+            $data = $this->generateData($areaIDS);
             return $this->basicDataTables($data);
         }
-        $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.illegal-building.index')->with([
+        return view('admin.facility-menu.illegal-building.index')->with([
             'areas' => $areas,
+            'service_unit' => $service_unit,
         ]);
     }
 
-    public function store()
+    public function store($service_unit_id)
     {
-
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [
@@ -90,6 +123,8 @@ class IllegalBuildingController extends CustomController
                     'illegal_building' => $this->postField('illegal_building'),
                     'demolished' => $this->postField('demolished'),
                     'description' => $this->postField('description'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
                 ];
                 IllegalBuilding::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -97,17 +132,30 @@ class IllegalBuildingController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
-        $sub_tracks = SubTrack::with(['track.area'])->orderBy('code', 'ASC')->get();
+        $sub_tracks = SubTrack::with(['track.area'])
+            ->whereHas('track', function ($qt) use ($areaIDS) {
+                /** @var $qt Builder */
+                return $qt->whereIn('area_id', $areaIDS);
+            })
+            ->orderBy('name')->get();
         $districts = District::with([])->orderBy('name', 'ASC')->get();
-
-        return view('admin.illegal-building.add')->with([
+        return view('admin.facility-menu.illegal-building.add')->with([
             'sub_tracks' => $sub_tracks,
             'districts' => $districts,
+            'service_unit' => $service_unit,
         ]);
     }
 
-    public function patch($id)
+    public function patch($service_unit_id, $id)
     {
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
         $data = IllegalBuilding::with(['sub_track.track.area', 'district.city'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
@@ -121,6 +169,8 @@ class IllegalBuildingController extends CustomController
                     'illegal_building' => $this->postField('illegal_building'),
                     'demolished' => $this->postField('demolished'),
                     'description' => $this->postField('description'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -128,16 +178,22 @@ class IllegalBuildingController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $sub_tracks = SubTrack::all();
-        $districts = District::all();
-        return view('admin.illegal-building.edit')->with([
+        $sub_tracks = SubTrack::with(['track.area'])
+            ->whereHas('track', function ($qt) use ($areaIDS) {
+                /** @var $qt Builder */
+                return $qt->whereIn('area_id', $areaIDS);
+            })
+            ->orderBy('name')->get();
+        $districts = District::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.facility-menu.illegal-building.edit')->with([
             'data' => $data,
             'sub_tracks' => $sub_tracks,
-            'districts' => $districts
+            'districts' => $districts,
+            'service_unit' => $service_unit,
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($service_unit_id, $id)
     {
         try {
             IllegalBuilding::destroy($id);
@@ -147,7 +203,7 @@ class IllegalBuildingController extends CustomController
         }
     }
 
-    public function detail($id)
+    public function detail($service_unit_id, $id)
     {
         try {
             $data = IllegalBuilding::with(['sub_track.track.area', 'district.city'])

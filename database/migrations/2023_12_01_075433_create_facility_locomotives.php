@@ -16,7 +16,7 @@ class CreateFacilityLocomotives extends Migration
         Schema::create('facility_locomotives', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('area_id');
-            $table->foreignUuid('locomotive_type_id');
+            $table->foreignUuid('locomotive_type_id')->nullable();
             $table->foreignUuid('storehouse_id');
             $table->string('ownership');
             $table->string('facility_number');

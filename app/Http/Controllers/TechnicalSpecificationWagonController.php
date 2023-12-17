@@ -31,7 +31,7 @@ class TechnicalSpecificationWagonController extends CustomController
                 ->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.technical-specification.wagon.index');
+        return view('admin.facility-menu.technical-specification.wagon.index');
     }
 
     public function store()
@@ -47,7 +47,7 @@ class TechnicalSpecificationWagonController extends CustomController
                     'width' => $this->postField('width'),
                     'height_from_rail' => $this->postField('height_from_rail'),
                     'axle_load' => $this->postField('axle_load'),
-                    'bogie_distance' => $this->postField('bogie_distance'),
+                    'boogie_distance' => $this->postField('bogie_distance'),
                     'usability' => $this->postField('usability'),
                 ];
                 TechnicalSpecWagon::create($data_request);
@@ -57,7 +57,7 @@ class TechnicalSpecificationWagonController extends CustomController
             }
         }
         $wagon_sub_types = WagonSubType::with(['wagon_type'])->orderBy('code', 'ASC')->get();
-        return view('admin.technical-specification.wagon.add')->with([
+        return view('admin.facility-menu.technical-specification.wagon.add')->with([
             'wagon_sub_types' => $wagon_sub_types,
         ]);
     }
@@ -76,7 +76,7 @@ class TechnicalSpecificationWagonController extends CustomController
                     'width' => $this->postField('width'),
                     'height_from_rail' => $this->postField('height_from_rail'),
                     'axle_load' => $this->postField('axle_load'),
-                    'bogie_distance' => $this->postField('bogie_distance'),
+                    'boogie_distance' => $this->postField('bogie_distance'),
                     'usability' => $this->postField('usability'),
                 ];
                 $data->update($data_request);
@@ -86,7 +86,7 @@ class TechnicalSpecificationWagonController extends CustomController
             }
         }
         $wagon_sub_types = WagonSubType::with(['wagon_type'])->orderBy('code', 'ASC')->get();
-        return view('admin.technical-specification.wagon.edit')->with([
+        return view('admin.facility-menu.technical-specification.wagon.edit')->with([
             'data' => $data,
             'wagon_sub_types' => $wagon_sub_types,
         ]);
@@ -155,7 +155,7 @@ class TechnicalSpecificationWagonController extends CustomController
                 return $this->jsonErrorResponse('internal server error');
             }
         }
-        return view('admin.technical-specification.wagon.document')->with([
+        return view('admin.facility-menu.technical-specification.wagon.document')->with([
             'data' => $data
         ]);
     }
@@ -190,7 +190,7 @@ class TechnicalSpecificationWagonController extends CustomController
                 return $this->jsonErrorResponse('internal server error');
             }
         }
-        return view('admin.technical-specification.wagon.image')->with([
+        return view('admin.facility-menu.technical-specification.wagon.image')->with([
             'data' => $data
         ]);
     }

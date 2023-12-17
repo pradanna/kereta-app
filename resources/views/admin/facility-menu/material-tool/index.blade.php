@@ -63,6 +63,7 @@
                 <tr>
                     <th class="text-center middle-header" width="5%">#</th>
                     <th class="text-center middle-header" width="10%">Wilayah</th>
+                    <th class="text-center middle-header" width="10%">KM/HM</th>
                     <th class="text-center middle-header" width="10%">Resort</th>
                     <th class="middle-header">Jenis Amus</th>
                     <th class="text-center middle-header" width="10%">Jumlah</th>
@@ -235,6 +236,11 @@
                     {
                         data: 'area.name',
                         name: 'area.name',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'stakes',
+                        name: 'stakes',
                         className: 'text-center'
                     },
                     {

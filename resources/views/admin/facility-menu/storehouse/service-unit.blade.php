@@ -9,7 +9,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Sarana Dan Keselamatan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Depo Dan Balai Yasa</li>
             </ol>
         </nav>
@@ -36,7 +36,7 @@
 @section('js')
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
-        var path = '{{ route('infrastructure.storehouse') }}';
+        var path = '{{ route('means.storehouse') }}';
         $(document).ready(function () {
             $('.card-service-unit').on('click', function () {
                 let id = this.dataset.id;

@@ -16,7 +16,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('storehouse') }}">Depo Dan Balai Yasa</a></li>
+                <li class="breadcrumb-item"><a href="#">Depo Dan Balai Yasa</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $data->name }}
                     ({{ $data->storehouse_type->name }})
                 </li>
@@ -111,7 +111,7 @@
         }
 
         function destroy(id) {
-            let url = '{{ route('storehouse') }}' + '/' + id + '/delete-image';
+            let url = '/{{ request()->path() }}' + '/' + id + '/delete-image';
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     window.location.reload();

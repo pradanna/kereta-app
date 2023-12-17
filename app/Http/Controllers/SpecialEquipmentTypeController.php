@@ -20,7 +20,7 @@ class SpecialEquipmentTypeController extends CustomController
             $data = SpecialEquipmentType::with([])->orderBy('created_at', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        return view('admin.master.special-equipment-type.index');
+        return view('admin.master-data.special-equipment-type.index');
     }
 
     public function store()
@@ -37,7 +37,7 @@ class SpecialEquipmentTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.special-equipment-type.add');
+        return view('admin.master-data.special-equipment-type.add');
     }
 
     public function patch($id)
@@ -55,7 +55,7 @@ class SpecialEquipmentTypeController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master.special-equipment-type.edit')->with(['data' => $data]);
+        return view('admin.master-data.special-equipment-type.edit')->with(['data' => $data]);
     }
 
     public function destroy($id)

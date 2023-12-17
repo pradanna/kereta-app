@@ -24,7 +24,7 @@ class CreateTsSpecialEquipmen extends Migration
             $table->double('height', 8, 2);
             $table->double('axle_load', 8, 2);
             $table->double('coupler_height', 8, 2);
-            $table->double('axle_width', 8, 2);
+            $table->double('spoor_width', 8, 2);
             $table->timestamps();
             $table->foreign('special_equipment_type_id')->references('id')->on('special_equipment_types');
         });

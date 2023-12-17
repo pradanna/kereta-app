@@ -28,6 +28,8 @@ class DirectPassage extends Model
         'longitude',
         'description',
         'technical_documentation',
+        'elevation',
+        'road_class',
     ];
 
     protected $casts = [
