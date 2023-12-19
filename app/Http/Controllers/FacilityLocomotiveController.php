@@ -35,12 +35,9 @@ class FacilityLocomotiveController extends CustomController
             $query->where('area_id', '=', $area);
         }
 
-//        if ($storehouse !== '') {
-//            $query->where('storehouse_id', '=', $storehouse);
-//        }
-
         if ($name !== '') {
             $query->where(function ($q) use ($name) {
+                /** @var $q Builder */
                 $q->where('facility_number', 'LIKE', '%' . $name . '%')
                     ->orWhere('testing_number', 'LIKE', '%' . $name . '%');
             });

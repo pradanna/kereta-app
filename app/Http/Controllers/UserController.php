@@ -36,7 +36,8 @@ class UserController extends CustomController
                     'username' => $this->postField('username'),
                     'nickname' => $this->postField('nickname'),
                     'password' => Hash::make($this->postField('password')),
-                    'role' => $this->postField('role'),
+//                    'role' => $this->postField('role'),
+                    'role' => 'admin',
                     'service_unit_id' => $this->postField('service_unit'),
                 ];
                 User::create($data_request);
@@ -57,7 +58,8 @@ class UserController extends CustomController
                 $data_request = [
                     'username' => $this->postField('username'),
                     'nickname' => $this->postField('nickname'),
-                    'role' => $this->postField('role'),
+//                    'role' => $this->postField('role'),
+                    'role' => 'admin',
                     'area_id' => $this->postField('area'),
                 ];
 
