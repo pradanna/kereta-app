@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Models\AccessMenu;
 use App\Models\AppMenu;
 use App\Models\User;
 
@@ -27,12 +28,14 @@ class UserAccessController extends CustomController
             ]);
     }
 
-    public function getAppMenu()
+    public function getAccessMenu()
     {
         try {
-            $app_menus = AppMenu::with([])
+            $userID = $this->request->query->get('user');
+            $access_menus = AccessMenu::with(['user', 'app_menu'])
+                ->where('user_id', '=', $userID)
                 ->get();
-            return $this->jsonSuccessResponse('success', $app_menus);
+            return $this->jsonSuccessResponse('success', $access_menus);
         }catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }

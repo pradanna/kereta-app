@@ -199,3 +199,10 @@ input.form-control {
     color: white;
     font-size: 72px !important;
 }
+
+.menu-access {
+    background-color: #4e28f7;
+    padding: 10px 10px;
+    color: white;
+    border-radius: 5px;
+}

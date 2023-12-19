@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Models\AccessMenu;
+use App\Models\AppMenu;
 use App\Models\Area;
 use App\Models\ServiceUnit;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends CustomController
@@ -31,6 +34,10 @@ class UserController extends CustomController
     public function store()
     {
         if ($this->request->method() === 'POST') {
+            DB::beginTransaction();
+            $app_menus = AppMenu::with([])
+                ->orderBy('id', 'ASC')
+                ->get();
             try {
                 $data_request = [
                     'username' => $this->postField('username'),
@@ -40,9 +47,21 @@ class UserController extends CustomController
                     'role' => 'admin',
                     'service_unit_id' => $this->postField('service_unit'),
                 ];
-                User::create($data_request);
+                $user = User::create($data_request);
+                foreach ($app_menus as $app_menu) {
+                    $data_access = [
+                        'user_id' => $user->id,
+                        'app_menu_id' => $app_menu->id,
+                        'is_granted_create' => false,
+                        'is_granted_update' => false,
+                        'is_granted_delete' => false
+                    ];
+                    AccessMenu::create($data_access);
+                }
+                DB::commit();
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
+                DB::rollBack();
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }

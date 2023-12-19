@@ -382,7 +382,7 @@ Route::group(['prefix' => 'pengguna'], function () {
 
 Route::group(['prefix' => 'akses-pengguna'], function () {
     Route::get('/', [\App\Http\Controllers\UserAccessController::class, 'index'])->name('user-access');
-    Route::get('/app-menu', [\App\Http\Controllers\UserAccessController::class, 'getAppMenu'])->name('user-access.menu');
+    Route::get('/access-menu', [\App\Http\Controllers\UserAccessController::class, 'getAccessMenu'])->name('user-access.menu');
 //    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\UserController::class, 'store'])->name('user.create');
 //    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\UserController::class, 'patch'])->name('user.patch');
 //    Route::post('/{id}/delete', [\App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
