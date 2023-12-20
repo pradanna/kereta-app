@@ -13,6 +13,7 @@ use App\Models\LocomotiveType;
 use App\Models\TrainType;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FacilityTrainController extends CustomController
@@ -30,6 +31,7 @@ class FacilityTrainController extends CustomController
         $name = $this->request->query->get('name');
         $status = $this->request->query->get('status');
         $engineType = $this->request->query->get('engine_type');
+        $train_type_string = $this->request->query->get('train_type_string');
 
 
         $query = FacilityTrain::with(['area', 'storehouse.storehouse_type', 'train_type']);
@@ -53,14 +55,19 @@ class FacilityTrainController extends CustomController
             $query->where('engine_type', '=', $engineType);
         }
 
+        if ($train_type_string !== '') {
+            $query->where('train_type_string', 'LIKE', '%' . $train_type_string . '%');
+        }
+
         if ($name !== '') {
             $query->where(function ($q) use ($name) {
+                /** @var Builder $q */
                 $q->where('facility_number', 'LIKE', '%' . $name . '%')
                     ->orWhere('testing_number', 'LIKE', '%' . $name . '%');
             });
         }
 
-        $data = $query->orderBy('created_at', 'ASC')
+        $data = $query->orderBy('created_at', 'DESC')
             ->get()->append(['expired_in', 'status']);
 
         if ($status !== '') {
@@ -89,20 +96,52 @@ class FacilityTrainController extends CustomController
         ]);
     }
 
+    private $rule = [
+        'area' => 'required',
+        'storehouse' => 'required',
+        'train_type_string' => 'required',
+        'engine_type' => 'required',
+        'ownership' => 'required',
+        'facility_number' => 'required',
+        'service_start_date' => 'required',
+        'service_expired_date' => 'required',
+        'testing_number' => 'required',
+    ];
+
+    private $message = [
+        'area.required' => 'kolom wilayah wajib di isi',
+        'storehouse.required' => 'kolom depo wajib di isi',
+        'train_type_string.required' => 'kolom jenis kereta wajib di isi',
+        'engine_type.required' => 'kolom tipe kereta wajib di isi',
+        'ownership.required' => 'kolom kepemilikan wajib di isi',
+        'facility_number.required' => 'kolom nomor sarana wajib di isi',
+        'service_start_date.required' => 'kolom mulai dinas wajib di isi',
+        'service_expired_date.required' => 'kolom masa berlaku wajib di isi',
+        'testing_number.required' => 'kolom masa berlaku wajib di isi',
+    ];
+
     public function store()
     {
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
                     'train_type_id' => null,
+                    'train_type_string' => $this->postField('train_type_string'),
                     'engine_type' => $this->postField('engine_type'),
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
+                    'description' => $this->postField('description'),
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id(),
                 ];
                 FacilityTrain::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -123,16 +162,23 @@ class FacilityTrainController extends CustomController
         $data = FacilityTrain::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
                     'train_type_id' => null,
+                    'train_type_string' => $this->postField('train_type_string'),
                     'engine_type' => $this->postField('engine_type'),
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
+                    'description' => $this->postField('description'),
+                    'updated_by' => auth()->id(),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');

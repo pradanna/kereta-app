@@ -127,6 +127,15 @@
                         <p class="menu-text">PENGGUNA</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu {{ request()->is('akses-pengguna*') ? 'active' : '' }}"
+                        href="{{ route('user-access') }}">
+                        <span class="material-symbols-outlined menu-icon">
+                            person
+                        </span>
+                        <p class="menu-text">AKSES PENGGUNA</p>
+                    </a>
+                </li>
                 {{--                <li class="nav-item"> --}}
                 {{--                    <a class="nav-link menu {{ request()->is('dashboard') ? 'active' : '' }}" --}}
                 {{--                        href="{{ route('dashboard') }}"> --}}

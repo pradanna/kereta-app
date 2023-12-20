@@ -71,18 +71,18 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="role" class="form-label">Hak Akses</label>
-                            <select class="select2 form-control" name="role" id="role" style="width: 100%;">
+{{--                    <div class="col-6">--}}
+{{--                        <div class="form-group w-100">--}}
+{{--                            <label for="role" class="form-label">Hak Akses</label>--}}
+{{--                            <select class="select2 form-control" name="role" id="role" style="width: 100%;">--}}
 {{--                                <option value="admin-area" {{ ($data->role === 'admin-area') ? 'selected' : '' }}>Admin Daerah Operasi (DAOP)</option>--}}
 {{--                                <option value="chief-area" {{ ($data->role === 'chief-area') ? 'selected' : '' }}>Kepala Daerah Operasi (DAOP)</option>--}}
-                                <option value="admin-service-unit" {{ ($data->role === 'admin-service-unit') ? 'selected' : '' }}>Admin Satuan Pelayanan (SATPEL)</option>
-                                <option value="chief-service-unit" {{ ($data->role === 'chief-service-unit') ? 'selected' : '' }}>Kepala Satuan Pelayanan (SATPEL)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-6">
+{{--                                <option value="admin-service-unit" {{ ($data->role === 'admin-service-unit') ? 'selected' : '' }}>Admin Satuan Pelayanan (SATPEL)</option>--}}
+{{--                                <option value="chief-service-unit" {{ ($data->role === 'chief-service-unit') ? 'selected' : '' }}>Kepala Satuan Pelayanan (SATPEL)</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+                    <div class="col-12">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
                             <select class="select2 form-control" name="service_unit" id="service_unit" style="width: 100%;">

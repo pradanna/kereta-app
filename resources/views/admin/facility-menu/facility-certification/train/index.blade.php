@@ -64,10 +64,17 @@
                 </div>
                 <div class="col-3">
                     <div class="form-group w-100 mb-2">
-                        <label for="name" class="form-label d-none"></label>
-                        <input type="text" class="form-control" id="name" name="name"
-                               placeholder="Cari No. Sarana atau No. BA Pengujian">
+                        <label for="train_type_string" class="form-label d-none"></label>
+                        <input type="text" class="form-control" id="train_type_string" name="train_type_string"
+                               placeholder="Cari Jenis Kereta">
                     </div>
+                </div>
+            </div>
+            <div class="w-100">
+                <div class="form-group w-100 mb-2">
+                    <label for="name" class="form-label d-none"></label>
+                    <input type="text" class="form-control" id="name" name="name"
+                           placeholder="Cari No. Sarana atau No. BA Pengujian">
                 </div>
             </div>
             <div class="w-100">
@@ -80,7 +87,7 @@
         <div class="title">
             <p>Sertifikasi Sarana Kereta</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('facility-certification-train.create') }}">Tambah
+                <a class="btn-utama sml rnd me-2" href="{{ route('means.facility-certification.train.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd" href="#" id="btn-export"
@@ -98,6 +105,7 @@
                     {{--                            <th class="text-center middle-header" width="5%">Tipe Sarana</th> --}}
                     <th class="text-center middle-header" width="8%">Wilayah</th>
                     <th class="text-center middle-header" width="8%">Kepemilikan</th>
+                    <th class="text-center middle-header" width="8%">Jenis Kereta</th>
                     <th class="text-center middle-header" width="5%">Tipe</th>
                     <th class="text-center middle-header" width="10%">No. Sarana</th>
                     {{--                            <th class="text-center middle-header" width="5%">Tipe Depo</th> --}}
@@ -232,6 +240,7 @@
                     'data': function (d) {
                         d.area = $('#area-option').val();
                         d.name = $('#name').val();
+                        d.train_type_string = $('#train_type_string').val();
                         d.storehouse = $('#storehouse-option').val();
                         d.status = $('#status-option').val();
                         d.engine_type = $('#type-option').val();
@@ -255,6 +264,11 @@
                         className: 'text-center'
                     },
                     // {data: 'train_type.name', name: 'train_type.name', width: '120px', visible: false,},
+                    {
+                        data: 'train_type_string',
+                        name: 'train_type_string',
+                        className: 'text-center'
+                    },
                     {
                         data: 'engine_type',
                         name: 'engine_type',
@@ -413,7 +427,7 @@
                 let engineTypeVal = '';
                 switch (engineType) {
                     case 'train':
-                        engineTypeVal = 'Kereta Api';
+                        engineTypeVal = 'Kereta Non Penggerak';
                         break;
                     case 'electric-train':
                         engineTypeVal = 'KRL';
@@ -487,11 +501,11 @@
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let name = $('#name').val();
-                let storehouse = $('#storehouse-option').val();
                 let status = $('#status-option').val();
                 let engineType = $('#type-option').val();
-                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status + '&engine_type=' + engineType;
-                let exportPath = '{{ route('facility-certification-train.excel') }}' + queryParam;
+                let train_type_string = $('#train_type_string').val();
+                let queryParam = '?area=' + area + '&name=' + name + '&train_type_string=' + train_type_string + '&status=' + status + '&engine_type=' + engineType;
+                let exportPath = '{{ route('means.facility-certification.train.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });
         });

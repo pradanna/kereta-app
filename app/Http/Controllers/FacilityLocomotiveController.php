@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Helper\CustomController;
 use App\Helper\Formula;
+use App\Models\AccessMenu;
 use App\Models\Area;
 use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
@@ -13,10 +14,12 @@ use App\Models\LocomotiveType;
 use App\Models\ServiceUnit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class FacilityLocomotiveController extends CustomController
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -29,24 +32,21 @@ class FacilityLocomotiveController extends CustomController
         $storehouse = $this->request->query->get('storehouse');
         $name = $this->request->query->get('name');
         $status = $this->request->query->get('status');
-        $query = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type']);
+        $query = FacilityLocomotive::with(['area', 'storehouse.storehouse_type', 'locomotive_type', 'author_create', 'author_update']);
 
         if ($area !== '') {
             $query->where('area_id', '=', $area);
         }
 
-//        if ($storehouse !== '') {
-//            $query->where('storehouse_id', '=', $storehouse);
-//        }
-
         if ($name !== '') {
             $query->where(function ($q) use ($name) {
+                /** @var $q Builder */
                 $q->where('facility_number', 'LIKE', '%' . $name . '%')
                     ->orWhere('testing_number', 'LIKE', '%' . $name . '%');
             });
         }
 
-        $data = $query->orderBy('created_at', 'ASC')
+        $data = $query->orderBy('created_at', 'DESC')
             ->get()->append(['expired_in', 'status']);
 
         if ($status !== '') {
@@ -68,16 +68,45 @@ class FacilityLocomotiveController extends CustomController
             return $this->basicDataTables($data);
         }
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
+        $access = $this->getRoleAccess(Formula::APPMenuFacilityLocomotive);
         return view('admin.facility-menu.facility-certification.locomotive.index')
             ->with([
                 'areas' => $areas,
+                'access' => $access
             ]);
     }
 
+    private $rule = [
+        'area' => 'required',
+        'storehouse' => 'required',
+        'ownership' => 'required',
+        'facility_number' => 'required',
+        'service_start_date' => 'required',
+        'service_expired_date' => 'required',
+        'testing_number' => 'required',
+    ];
+
+    private $message = [
+        'area.required' => 'kolom wilayah wajib di isi',
+        'storehouse.required' => 'kolom depo wajib di isi',
+        'ownership.required' => 'kolom kepemilikan wajib di isi',
+        'facility_number.required' => 'kolom nomor sarana wajib di isi',
+        'service_start_date.required' => 'kolom mulai dinas wajib di isi',
+        'service_expired_date.required' => 'kolom masa berlaku wajib di isi',
+        'testing_number.required' => 'kolom masa berlaku wajib di isi',
+    ];
     public function store()
     {
+        $access = $this->getRoleAccess(Formula::APPMenuFacilityLocomotive);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
@@ -87,6 +116,9 @@ class FacilityLocomotiveController extends CustomController
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
+                    'description' => $this->postField('description'),
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id(),
                 ];
                 FacilityLocomotive::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -104,9 +136,17 @@ class FacilityLocomotiveController extends CustomController
 
     public function patch($id)
     {
+        $access = $this->getRoleAccess(Formula::APPMenuFacilityLocomotive);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $data = FacilityLocomotive::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
                     'area_id' => $this->postField('area'),
                     'storehouse_id' => $this->postField('storehouse'),
@@ -116,6 +156,8 @@ class FacilityLocomotiveController extends CustomController
                     'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
+                    'description' => $this->postField('description'),
+                    'updated_by' => auth()->id(),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -134,6 +176,10 @@ class FacilityLocomotiveController extends CustomController
 
     public function destroy($id)
     {
+        $access = $this->getRoleAccess(Formula::APPMenuFacilityLocomotive);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             FacilityLocomotive::destroy($id);
             return $this->jsonSuccessResponse('success');
