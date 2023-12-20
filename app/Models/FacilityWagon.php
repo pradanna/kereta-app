@@ -22,6 +22,9 @@ class FacilityWagon extends Model
         'service_start_date',
         'service_expired_date',
         'testing_number',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function area()

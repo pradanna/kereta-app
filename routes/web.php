@@ -50,6 +50,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityWagonController::class, 'patch'])->name('means.facility-certification.wagon.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\FacilityWagonController::class, 'destroy'])->name('means.facility-certification.wagon.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\FacilityWagonController::class, 'detail'])->name('means.facility-certification.wagon.detail');
+            Route::get('/excel', [\App\Http\Controllers\FacilityWagonController::class, 'export_to_excel'])->name('means.facility-certification.wagon.excel');
         });
 
         Route::group(['prefix' => 'peralatan-khusus'], function () {

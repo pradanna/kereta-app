@@ -10,6 +10,8 @@ class Formula
 {
     const ExpirationLimit = 30;
     const APPMenuFacilityLocomotive = 1;
+    const APPMenuFacilityTrain = 2;
+    const APPMenuFacilityWagon = 3;
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';
     const AreaExceptionName = 'DAOP 6';

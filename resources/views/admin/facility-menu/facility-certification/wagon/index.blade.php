@@ -433,7 +433,7 @@
                 let storehouse = $('#storehouse-option').val();
                 let status = $('#status-option').val();
                 let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status;
-                let exportPath = '{{ route('facility-certification-wagon.excel') }}' + queryParam;
+                let exportPath = '{{ route('means.facility-certification.wagon.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });
         });
