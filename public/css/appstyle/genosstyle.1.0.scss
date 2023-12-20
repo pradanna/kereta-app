@@ -562,6 +562,24 @@ input.form-control {
   }
 }
 
+.card-menu {
+  position: relative;
+  .spanmenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .icon-menu {
+      height: 70px;
+    }
+  }
+}
+
+.text-menu {
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: absolute;
+  bottom: 10px;
+}
 .btn-utama {
   all: unset;
   transition: all 0.5s;
