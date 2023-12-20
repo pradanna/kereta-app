@@ -1,6 +1,13 @@
 @extends('admin/base')
 
 @section('content')
+    <div class="lazy-backdrop" id="overlay-loading">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <div class="spinner-border text-light" role="status">
+            </div>
+            <p class="text-light">Sedang Mengunduh Data Role Akses...</p>
+        </div>
+    </div>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="page-title-container">
             <h1 class="h1">MANAJEMEN AKSES PENGGUNA APLIKASI</h1>
@@ -1045,17 +1052,22 @@
             try {
                 let user = $('#user-option').val();
                 let url = pathAccessMenu + '?user=' + user;
+                blockLoading(true)
                 let response = await $.get(url);
                 let data = response['data'];
                 matchAccessMenu(data);
+                blockLoading(false)
                 console.log(response)
             } catch (e) {
+                blockLoading(false)
                 let error_message = JSON.parse(e.responseText);
+                ErrorAlert('Error', error_message.message);
                 console.log(error_message.message)
             }
         }
 
         function matchAccessMenu(data = []) {
+            $('input:checkbox').prop('checked', false);
             $.each(data, function (k, v) {
                 let slug = v['app_menu']['slug'];
                 let create = v['is_granted_create'];
@@ -1070,7 +1082,35 @@
             });
         }
 
-        function submitHandler() {
+        async function submitHandler() {
+            try {
+                let roleAccess = generateRoleAccessData();
+                let user = $('#user-option').val();
+                let tmpData = {
+                    user: user,
+                    access: roleAccess
+                };
+                let data = JSON.stringify(tmpData);
+                blockLoading(true);
+                await $.post(path, {data});
+                blockLoading(false);
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Berhasil Menambahkan Data...',
+                    icon: 'success',
+                    timer: 1000
+                }).then(() => {
+                    window.location.reload();
+                });
+            }catch (e) {
+                blockLoading(false);
+                let error_message = JSON.parse(e.responseText);
+                ErrorAlert('Error', error_message.message);
+            }
+
+        }
+
+        function generateRoleAccessData() {
             let results = [];
             $.each(accessMenus, function (k, v) {
                 let granted = ['create', 'update', 'delete'];
@@ -1083,14 +1123,14 @@
                         val: val
                     };
                     resultGranted.push(obj)
-                })
+                });
                 let objParent = {
                     key: v,
                     value: resultGranted
-                }
+                };
                 results.push(objParent);
             });
-            console.log(results);
+            return results;
         }
 
         $(document).ready(function () {
@@ -1100,7 +1140,7 @@
             getAccessMenu();
             $('#user-option').on('change', function () {
                 getAccessMenu();
-            })
+            });
             $('#btn-save').on('click', function (e) {
                 e.preventDefault();
                 Swal.fire({

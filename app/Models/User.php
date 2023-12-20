@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(ServiceUnit::class, 'service_unit_id');
     }
+
+    public function role_access()
+    {
+        return $this->hasMany(AccessMenu::class, 'user_id');
+    }
 }

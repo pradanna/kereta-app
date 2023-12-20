@@ -28,7 +28,7 @@ async function AjaxPost(url, param = {}, onSuccess = function () {
     } catch (e) {
         let error_message = JSON.parse(e.responseText);
         console.log(error_message);
-        ErrorAlert('Error', error_message.msg);
+        ErrorAlert('Error', error_message.message);
     }
 }
 

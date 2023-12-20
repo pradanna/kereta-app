@@ -71,7 +71,7 @@ class UserController extends CustomController
 
     public function patch($id)
     {
-        $data = User::with(['area'])->findOrFail($id);
+        $data = User::with(['service_unit'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $data_request = [

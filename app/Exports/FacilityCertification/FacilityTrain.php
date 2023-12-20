@@ -41,7 +41,7 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:K' . $rowLength;
+        $cellRange = 'A1:M' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -86,13 +86,15 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
             'KEPEMILIKAN',
             'NO. SARANA',
             'WILAYAH',
+            'JENIS KERETA',
             'TIPE KERETA',
             'DEPO INDUK',
             'MULAI DINAS',
             'MASA BERLAKU SARANA',
             'NOMOR BA PENGUJIAN',
             'AKAN HABIS (HARI)',
-            'STATUS'
+            'STATUS',
+            'KETERANGAN'
         ];
     }
 
@@ -104,7 +106,7 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
             $engineType = '-';
             switch ($datum->engine_type) {
                 case 'train':
-                    $engineType = 'Kereta Api';
+                    $engineType = 'Kereta Non Penggerak';
                     break;
                 case 'electric-train':
                     $engineType = 'KRL';
@@ -120,6 +122,7 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
                 $datum->ownership,
                 $datum->facility_number,
                 $datum->area->name,
+                $datum->train_type_string,
                 $engineType,
                 $datum->storehouse->name . ' (' . $datum->storehouse->storehouse_type->name . ')',
                 Carbon::parse($datum->service_start_date)->format('d-m-Y'),
@@ -127,6 +130,7 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
                 $datum->testing_number,
                 $datum->expired_in,
                 ($datum->expired_in <= Formula::ExpirationLimit ? 'HABIS MASA BERLAKU' : 'BERLAKU'),
+                $datum->description,
             ];
             array_push($results, $result);
         }

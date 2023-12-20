@@ -16,7 +16,7 @@ class CreateAccessMenus extends Migration
         Schema::create('access_menus', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('user_id');
-            $table->bigInteger('app_menu_id')->unique()->unsigned();
+            $table->bigInteger('app_menu_id')->unsigned();
             $table->boolean('is_granted_create')->default(false);
             $table->boolean('is_granted_update')->default(false);
             $table->boolean('is_granted_delete')->default(false);

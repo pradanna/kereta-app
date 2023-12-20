@@ -32,7 +32,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityLocomotiveController::class, 'patch'])->name('means.facility-certification.locomotive.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\FacilityLocomotiveController::class, 'destroy'])->name('means.facility-certification.locomotive.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\FacilityLocomotiveController::class, 'detail'])->name('means.facility-certification.locomotive.detail');
-            Route::get('/{id}/excel', [\App\Http\Controllers\FacilityLocomotiveController::class, 'export_to_excel'])->name('means.facility-certification.locomotive.excel');
+            Route::get('/excel', [\App\Http\Controllers\FacilityLocomotiveController::class, 'export_to_excel'])->name('means.facility-certification.locomotive.excel');
         });
 
         Route::group(['prefix' => 'kereta'], function () {
@@ -41,6 +41,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityTrainController::class, 'patch'])->name('means.facility-certification.train.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\FacilityTrainController::class, 'destroy'])->name('means.facility-certification.train.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\FacilityTrainController::class, 'detail'])->name('means.facility-certification.train.detail');
+            Route::get('/excel', [\App\Http\Controllers\FacilityTrainController::class, 'export_to_excel'])->name('means.facility-certification.train.excel');
         });
 
         Route::group(['prefix' => 'gerbong'], function () {
@@ -381,13 +382,13 @@ Route::group(['prefix' => 'pengguna'], function () {
 });
 
 Route::group(['prefix' => 'akses-pengguna'], function () {
-    Route::get('/', [\App\Http\Controllers\UserAccessController::class, 'index'])->name('user-access');
+    Route::match(['post', 'get'],'/', [\App\Http\Controllers\UserAccessController::class, 'index'])->name('user-access');
     Route::get('/access-menu', [\App\Http\Controllers\UserAccessController::class, 'getAccessMenu'])->name('user-access.menu');
-//    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\UserController::class, 'store'])->name('user.create');
-//    Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\UserController::class, 'patch'])->name('user.patch');
-//    Route::post('/{id}/delete', [\App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 });
 
+Route::group(['prefix' => 'public-api'], function (){
+    Route::get('/storehouse-by-area', [\App\Http\Controllers\StoreHouseController::class, 'getDataByArea'])->name('public.storehouse.by.area');
+});
 //Route::group(['prefix' => 'satuan-pelayanan'], function () {
 //    Route::get('/', [\App\Http\Controllers\ServiceUnitController::class, 'index'])->name('service-unit');
 //    Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\ServiceUnitController::class, 'store'])->name('service-unit.create');

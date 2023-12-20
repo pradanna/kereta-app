@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 class Formula
 {
     const ExpirationLimit = 30;
+    const APPMenuFacilityLocomotive = 1;
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';
     const AreaExceptionName = 'DAOP 6';
