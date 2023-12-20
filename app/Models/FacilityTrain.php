@@ -58,4 +58,14 @@ class FacilityTrain extends Model
         }
         return 'valid';
     }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

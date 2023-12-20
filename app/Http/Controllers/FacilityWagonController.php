@@ -57,7 +57,7 @@ class FacilityWagonController extends CustomController
             });
         }
 
-        $data = $query->orderBy('created_at', 'ASC')
+        $data = $query->orderBy('created_at', 'DESC')
             ->get()->append(['expired_in', 'status']);
 
         if ($status !== '') {
@@ -79,9 +79,11 @@ class FacilityWagonController extends CustomController
         }
         $wagon_sub_types = WagonSubType::all();
         $areas = Area::with([])->orderBy('name', 'ASC')->get();
+        $access = $this->getRoleAccess(Formula::APPMenuFacilityWagon);
         return view('admin.facility-menu.facility-certification.wagon.index')->with([
             'wagon_sub_types' => $wagon_sub_types,
             'areas' => $areas,
+            'access' => $access
         ]);
     }
 

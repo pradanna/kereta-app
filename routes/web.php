@@ -59,6 +59,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'patch'])->name('means.facility-certification.special-equipment.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'destroy'])->name('means.facility-certification.special-equipment.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'detail'])->name('means.facility-certification.special-equipment.detail');
+            Route::get('/excel', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'export_to_excel'])->name('means.facility-certification.special-equipment.excel');
         });
     });
 
