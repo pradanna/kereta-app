@@ -39,10 +39,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-//    public function area()
-//    {
-//        return $this->belongsTo(Area::class, 'area_id');
-//    }
+    //    public function area()
+    //    {
+    //        return $this->belongsTo(Area::class, 'area_id');
+    //    }
 
     public function service_unit()
     {

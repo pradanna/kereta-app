@@ -446,6 +446,25 @@ input.form-control {
   box-shadow: 2px 2px 20px #ff6347;
 }
 
+.card-menu {
+  position: relative;
+}
+.card-menu .spanmenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-menu .spanmenu .icon-menu {
+  height: 70px;
+}
+
+.text-menu {
+  font-size: 0.8rem;
+  font-weight: bold;
+  position: absolute;
+  bottom: 10px;
+}
+
 .btn-utama {
   all: unset;
   transition: all 0.5s;

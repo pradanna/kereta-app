@@ -40,7 +40,7 @@ class TechnicalSpecificationTrainController extends CustomController
             try {
                 $data_request = [
                     'train_type_id' => $this->postField('train_type'),
-                    'empty_weight' => $this->postField('empty_weight') ,
+                    'empty_weight' => $this->postField('empty_weight'),
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
                     'air_conditioner' => $this->postField('air_conditioner'),
@@ -70,7 +70,7 @@ class TechnicalSpecificationTrainController extends CustomController
             try {
                 $data_request = [
                     'train_type_id' => $this->postField('train_type'),
-                    'empty_weight' => $this->postField('empty_weight') ,
+                    'empty_weight' => $this->postField('empty_weight'),
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
                     'air_conditioner' => $this->postField('air_conditioner'),
@@ -156,7 +156,6 @@ class TechnicalSpecificationTrainController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.technical-specification.train.document')->with([
             'data' => $data
@@ -192,7 +191,6 @@ class TechnicalSpecificationTrainController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.technical-specification.train.image')->with([
             'data' => $data

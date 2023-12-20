@@ -35,8 +35,7 @@ class Formula
         $facility_diesel_trains,
         $facility_wagons,
         $facility_special_equipment
-    )
-    {
+    ) {
         $total_facilities = [];
         if ($type === 'total') {
             foreach ($areas as $area) {

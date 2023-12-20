@@ -39,7 +39,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
             try {
                 $data_request = [
                     'special_equipment_type_id' => $this->postField('special_equipment_type'),
-                    'empty_weight' => $this->postField('empty_weight') ,
+                    'empty_weight' => $this->postField('empty_weight'),
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
                     'long' => $this->postField('long'),
@@ -69,7 +69,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
             try {
                 $data_request = [
                     'special_equipment_type_id' => $this->postField('special_equipment_type'),
-                    'empty_weight' => $this->postField('empty_weight') ,
+                    'empty_weight' => $this->postField('empty_weight'),
                     'maximum_speed' => $this->postField('maximum_speed'),
                     'passenger_capacity' => $this->postField('passenger_capacity'),
                     'long' => $this->postField('long'),
@@ -154,7 +154,6 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.technical-specification.special-equipment.document')->with([
             'data' => $data
@@ -190,7 +189,6 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.technical-specification.special-equipment.image')->with([
             'data' => $data

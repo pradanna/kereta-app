@@ -21,7 +21,7 @@
                         <div class="form-group w-100">
                             <label for="service-unit-option" class="form-label d-none">Satuan Pelayanan</label>
                             <select class="select2 form-control" name="service-unit-option" id="service-unit-option"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="">Semua Satuan Pelayanan</option>
                                 @foreach ($service_units as $service_unit)
                                     <option value="{{ $service_unit->id }}">{{ $service_unit->name }}</option>
@@ -33,7 +33,7 @@
                         <div class="form-group w-100">
                             <label for="resort-option" class="form-label d-none">Resort</label>
                             <select class="select2 form-control" name="resort-option" id="resort-option"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="">Semua Resort</option>
                             </select>
                         </div>
@@ -42,7 +42,7 @@
                         <div class="form-group w-100">
                             <label for="location-type-option" class="form-label d-none">Lokasi</label>
                             <select class="select2 form-control" name="location-type-option" id="location-type-option"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="">Semua Lokasi</option>
                                 <option value="0">Jalan Rel</option>
                                 <option value="1">Jembatan</option>
@@ -51,7 +51,8 @@
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -63,8 +64,7 @@
                 <a class="btn-utama sml rnd me-2" href="{{ route('disaster-area.add') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-success sml rnd" href="#" id="btn-export"
-                   target="_blank">Export
+                <a class="btn-success sml rnd" href="#" id="btn-export" target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -75,19 +75,18 @@
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active d-flex align-items-center" id="pills-table-tab"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
-                                    aria-selected="true">
-                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
+                                data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab"
+                                aria-controls="pills-table" aria-selected="true">
+                                <i class="material-symbols-outlined me-1"
+                                    style="font-size: 14px; color: inherit">view_list</i>
                                 Data
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link d-flex align-items-center" id="pills-map-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
-                                    aria-controls="pills-map" aria-selected="false">
-                                <i class="material-symbols-outlined me-1"
-                                   style="font-size: 14px; color: inherit">public</i>
+                            <button class="nav-link d-flex align-items-center" id="pills-map-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-map" type="button" role="tab" aria-controls="pills-map"
+                                aria-selected="false">
+                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">public</i>
                                 Peta
                             </button>
                         </li>
@@ -95,19 +94,18 @@
                 </div>
             </div>
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
-                     aria-labelledby="pills-table-tab">
+                <div class="tab-pane fade show active" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
                     <table id="table-data" class="display table table-striped w-100">
                         <thead>
-                        <tr>
-                            <th width="5%" class="text-center">#</th>
-                            <th width="15%" class="text-center">Satuan Pelayanan</th>
-                            <th width="10%" class="text-center">Lokasi</th>
-                            <th width="15%" class="text-center">Resort</th>
-                            <th width="10%" class="text-center">Petak</th>
-                            <th class="text-center">Jenis Rawan</th>
-                            <th width="15%" class="text-center">Aksi</th>
-                        </tr>
+                            <tr>
+                                <th width="5%" class="text-center">#</th>
+                                <th width="15%" class="text-center">Satuan Pelayanan</th>
+                                <th width="10%" class="text-center">Lokasi</th>
+                                <th width="15%" class="text-center">Resort</th>
+                                <th width="10%" class="text-center">Petak</th>
+                                <th class="text-center">Jenis Rawan</th>
+                                <th width="15%" class="text-center">Aksi</th>
+                            </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -119,7 +117,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
@@ -130,7 +128,8 @@
                         <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="service_unit" class="form-label">Satuan Pelayanan</label>
-                                <input type="text" class="form-control" name="service_unit" id="service_unit" disabled>
+                                <input type="text" class="form-control" name="service_unit" id="service_unit"
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -153,14 +152,14 @@
                             <div class="w-100">
                                 <label for="location_type" class="form-label">Lokasi</label>
                                 <input type="text" class="form-control" name="location_type" id="location_type"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="disaster_type" class="form-label">Jenis Rawan</label>
                                 <input type="text" class="form-control" name="disaster_type" id="disaster_type"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -168,17 +167,15 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="block" class="form-label">KM</label>
-                                <input type="text" step="any" class="form-control" id="block"
-                                       name="block"
-                                       placeholder="KM" disabled>
+                                <input type="text" step="any" class="form-control" id="block" name="block"
+                                    placeholder="KM" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="lane" class="form-label">Jalur</label>
-                                <input type="text" step="any" class="form-control" id="lane"
-                                       name="lane"
-                                       placeholder="Jalur" disabled>
+                                <input type="text" step="any" class="form-control" id="lane" name="lane"
+                                    placeholder="Jalur" disabled>
                             </div>
                         </div>
                     </div>
@@ -186,15 +183,15 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="latitude" class="form-label">Latitude</label>
-                                <input type="number" step="any" class="form-control" id="latitude" name="latitude"
-                                       placeholder="Contoh: 7.1129489" disabled>
+                                <input type="number" step="any" class="form-control" id="latitude"
+                                    name="latitude" placeholder="Contoh: 7.1129489" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="longitude" class="form-label">Longitude</label>
-                                <input type="number" step="any" class="form-control" id="longitude" name="longitude"
-                                       placeholder="Contoh: 110.1129489" disabled>
+                                <input type="number" step="any" class="form-control" id="longitude"
+                                    name="longitude" placeholder="Contoh: 110.1129489" disabled>
                             </div>
                         </div>
                     </div>
@@ -202,15 +199,13 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="handling" class="form-label">Penanganan</label>
-                                <textarea rows="3" class="form-control" id="handling" name="handling"
-                                          disabled></textarea>
+                                <textarea rows="3" class="form-control" id="handling" name="handling" disabled></textarea>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" id="description" name="description"
-                                          disabled></textarea>
+                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -221,9 +216,9 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="{{ asset('js/map-control.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
@@ -239,7 +234,7 @@
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
 
         function changeTabEvent() {
-            $("#pills-tab").on("shown.bs.tab", function (e) {
+            $("#pills-tab").on("shown.bs.tab", function(e) {
                 if (e.target.id === "pills-table-tab") {
                     table.columns.adjust();
                 }
@@ -253,7 +248,8 @@
             let service_unit = $('#service-unit-option').val();
             let resort = $('#resort-option').val();
             let location_type = $('#location-type-option').val();
-            let url = path + '?type=map&service_unit=' + service_unit + '&resort=' + resort + '&location_type=' + location_type;
+            let url = path + '?type=map&service_unit=' + service_unit + '&resort=' + resort + '&location_type=' +
+                location_type;
             return $.get(url)
         }
 
@@ -271,7 +267,7 @@
         }
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function (e) {
+            $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -294,7 +290,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                     generateMapDisasterArea();
@@ -303,7 +299,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function (e) {
+            $('.btn-detail').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -367,7 +363,7 @@
             let elOption = '<option value="">Semua Resort</option>';
             getDataResort().then((response) => {
                 const data = response['data'];
-                $.each(data, function (k, v) {
+                $.each(data, function(k, v) {
                     elOption += '<option value="' + v['id'] + '">' + v['name'] + '</option>';
                 });
             }).catch((e) => {
@@ -380,14 +376,14 @@
             })
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             changeTabEvent();
             $('.select2').select2({
                 width: 'resolve',
             });
 
             generateResortOption();
-            $('#service-unit-option').on('change', function () {
+            $('#service-unit-option').on('change', function() {
                 generateResortOption();
             });
             table = $('#table-data').DataTable({
@@ -399,7 +395,7 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.service_unit = $('#service-unit-option').val();
                         d.resort = $('#resort-option').val();
                         d.location_type = $('#location-type-option').val();
@@ -407,12 +403,12 @@
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false,
-                    className: 'text-center middle-header',
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false,
+                        className: 'text-center middle-header',
+                    },
                     {
                         data: 'resort.service_unit.name',
                         name: 'resort.service_unit.name',
@@ -422,7 +418,7 @@
                         data: 'location_type',
                         name: 'location_type',
                         className: 'text-center middle-header',
-                        render: function (data) {
+                        render: function(data) {
                             let value = '-';
                             switch (data) {
                                 case 0:
@@ -454,14 +450,16 @@
                     },
                     {
                         data: null,
-                        render: function (data) {
+                        render: function(data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data[
                                     'id'] + '">Detail</a>' +
                                 '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                    'id'] +
                                 '">Delete</a>';
                         },
                         orderable: false,
@@ -470,24 +468,25 @@
                 ],
                 columnDefs: [],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     eventOpenDetail();
                     deleteEvent();
                 },
                 dom: 'ltrip'
             });
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
 
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let serviceUnit = $('#service-unit-option').val();
                 let resort = $('#resort-option').val();
                 let locationType = $('#location-type-option').val();
-                let queryParam = '?service_unit=' + serviceUnit + '&resort=' + resort + '&location_type=' + locationType;
+                let queryParam = '?service_unit=' + serviceUnit + '&resort=' + resort + '&location_type=' +
+                    locationType;
                 let exportPath = '{{ route('disaster-area.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });

@@ -152,7 +152,6 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.technical-specification.locomotive.document')->with([
             'data' => $data
@@ -188,7 +187,6 @@ class TechnicalSpecificationLocomotiveController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.technical-specification.locomotive.image')->with([
             'data' => $data

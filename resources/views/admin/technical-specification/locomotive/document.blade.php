@@ -29,8 +29,10 @@
         <div class="isi">
             <div class="d-flex flex-wrap justify-content-center gx-3">
                 @forelse($data->tech_documents as $document)
-                    <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3" style="width: 250px;">
-                        <img src="{{ asset('/images/local/logo-google.png') }}" alt="document-image" height="200" width="200" style="object-fit: cover;">
+                    <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3"
+                        style="width: 250px;">
+                        <img src="{{ asset('/images/local/logo-google.png') }}" alt="document-image" height="200"
+                            width="200" style="object-fit: cover;">
                         <p class="fw-bold text-truncate" style="max-width: 200px;">{{ $document->name }}</p>
                         <a href="#" class="btn-drop-document btn-table-action" data-id="{{ $document->id }}">Hapus</a>
                     </div>
@@ -41,9 +43,7 @@
                 @endforelse
             </div>
             <hr>
-            <form method="post"
-                  enctype="multipart/form-data"
-                  id="form-data">
+            <form method="post" enctype="multipart/form-data" id="form-data">
                 @csrf
                 <div class="w-100 needsclick dropzone" id="document-dropzone"></div>
             </form>
@@ -59,14 +59,13 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet" />
     <style>
         .dz-error-message {
             display: none !important;
         }
     </style>
-
 @endsection
 
 @section('js')
@@ -80,7 +79,7 @@
         Dropzone.autoDiscover = false;
         Dropzone.options.documentDropzone = {
 
-            success: function (file, response) {
+            success: function(file, response) {
                 $('form').append('<input type="hidden" name="files[]" value="' + file.name + '">');
                 console.log(response);
                 uploadedDocumentMap[file.name] = response.name
@@ -88,7 +87,7 @@
         };
 
         function deleteEvent() {
-            $('.btn-drop-document').on('click', function (e) {
+            $('.btn-drop-document').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -111,14 +110,14 @@
 
         function destroy(id) {
             let url = '{{ route('technical-specification.locomotive') }}' + '/' + id + '/delete-document';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     window.location.reload();
                 });
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#document-dropzone").dropzone({
                 url: path,
                 maxFilesize: 2,
@@ -130,9 +129,9 @@
                 uploadMultiple: true,
                 paramName: "files",
 
-                init: function () {
+                init: function() {
                     myDropzone = this;
-                    $('#btn-save').on('click', function (e) {
+                    $('#btn-save').on('click', function(e) {
                         e.preventDefault();
                         Swal.fire({
                             title: "Konfirmasi!",
@@ -150,19 +149,21 @@
                                     myDropzone.processQueue();
                                 } else {
                                     blockLoading(false);
-                                    ErrorAlert('Error', 'Harap Menambahkan Data Dokumen...')
+                                    ErrorAlert('Error',
+                                        'Harap Menambahkan Data Dokumen...')
                                 }
                             }
                         });
                     });
-                    this.on('successmultiple', function (file, response) {
+                    this.on('successmultiple', function(file, response) {
                         blockLoading(false);
-                        SuccessAlert('Berhasil', 'Berhasil Menambahkan Data Dokumen...').then((r) => {
+                        SuccessAlert('Berhasil', 'Berhasil Menambahkan Data Dokumen...').then((
+                            r) => {
                             window.location.reload();
                         })
                     });
 
-                    this.on('errormultiple', function (file, response) {
+                    this.on('errormultiple', function(file, response) {
                         blockLoading(false);
                         ErrorAlert('Error', 'Terjadi Kesalahan Server...');
                         console.log(response);
@@ -186,4 +187,3 @@
         });
     </script>
 @endsection
-

@@ -180,7 +180,7 @@ class AreaController extends CustomController
     public function facility_certification_page_by_slug($id, $slug)
     {
         $data = Area::with([])->findOrFail($id);
-//        $areas = Area::with([])->where('id', '=', $id)->get();
+        //        $areas = Area::with([])->where('id', '=', $id)->get();
         $storehouses = Storehouse::with(['storehouse_type'])->where('area_id', '=', $id)->get();
         switch ($slug) {
             case 'lokomotif':
@@ -217,7 +217,8 @@ class AreaController extends CustomController
         ]);
     }
 
-    public function illegal_building_page($id) {
+    public function illegal_building_page($id)
+    {
         $data = Area::with([])->findOrFail($id);
         $tracks = Track::with(['area'])->where('area_id', '=', $id)->get();
         return view('admin.master.area.illegal-building.index')->with([

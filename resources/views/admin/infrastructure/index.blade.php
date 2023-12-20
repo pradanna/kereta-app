@@ -14,46 +14,49 @@
         </nav>
     </div>
     <section class="pt-3">
-        <div class="row gx-3 justify-content-center">
+        <div class="row gx-3 justify-content-start ">
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="safety-assessment">
-                    <span class="material-symbols-outlined">health_and_safety</span>
-                    <span class="text-center">Safety Assessment</span>
+                    <span class="spanmenu"><img class="icon-menu"
+                            src="{{ asset('images/local/prasarana/health.png') }}" /></span>
+                    <span class="text-center text-menu">Safety Assessment</span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="jembatan-penyebrangan">
-                    <span class="material-symbols-outlined">fort</span>
-                    <span class="text-center">Jembatan Penyebrangan (JPOM, Underpass, Flyover)</span>
+                    <span class="spanmenu"><img class="icon-menu"
+                            src="{{ asset('images/local/prasarana/overpass.png') }}" /></span>
+                    <span class="text-center text-menu">Jembatan Penyebrangan (JPOM, Underpass, Flyover)</span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="permohonan-izin-melintas-rel">
-                    <span class="material-symbols-outlined">vpn_key</span>
-                    <span class="text-center">Permohonan Izin Melintas Rel (Crossing)</span>
+                    <span class="spanmenu"><img class="icon-menu"
+                            src="{{ asset('images/local/prasarana/approval.png') }}" /></span>
+                    <span class="text-center text-menu">Permohonan Izin Melintas Rel (Crossing)</span>
                 </div>
             </div>
             <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
                 <div class="card-menu" data-slug="jembatan-kereta-api">
-                    <span class="material-symbols-outlined">timeline</span>
-                    <span class="text-center">Jembatan Kereta Api (BH)</span>
+                    <span class="spanmenu"><img class="icon-menu"
+                            src="{{ asset('images/local/prasarana/railway.png') }}" /></span>
+                    <span class="text-center text-menu">Jembatan Kereta Api (BH)</span>
                 </div>
             </div>
         </div>
     </section>
-
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '{{ route('infrastructure') }}';
-        $(document).ready(function () {
-            $('.card-menu').on('click', function () {
+        $(document).ready(function() {
+            $('.card-menu').on('click', function() {
                 let slug = this.dataset.slug;
                 window.location.href = path + '/' + slug;
             });

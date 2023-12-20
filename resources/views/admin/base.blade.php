@@ -84,7 +84,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('sarana-dan-keselamatan*') ? 'active' : '' }}"
-                        href="{{ route('means') }}" >
+                        href="{{ route('means') }}">
                         <span class="material-symbols-outlined menu-icon">
                             train
                         </span>
@@ -120,7 +120,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('pengguna*') ? 'active' : '' }}"
-                       href="{{ route('user') }}">
+                        href="{{ route('user') }}">
                         <span class="material-symbols-outlined menu-icon">
                             person
                         </span>
@@ -129,22 +129,22 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu {{ request()->is('akses-pengguna*') ? 'active' : '' }}"
-                       href="{{ route('user-access') }}">
+                        href="{{ route('user-access') }}">
                         <span class="material-symbols-outlined menu-icon">
                             person
                         </span>
                         <p class="menu-text">AKSES PENGGUNA</p>
                     </a>
                 </li>
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu {{ request()->is('dashboard') ? 'active' : '' }}"--}}
-{{--                        href="{{ route('dashboard') }}">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            home--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text">Sarana Dan Keselamatan Perkeretaapian</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu {{ request()->is('dashboard') ? 'active' : '' }}" --}}
+                {{--                        href="{{ route('dashboard') }}"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            home --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text">Sarana Dan Keselamatan Perkeretaapian</p> --}}
+                {{--                    </a> --}}
+                {{--                </li> --}}
 
                 @php
                     $master = ['satuan-pelayanan', 'daerah-operasi', 'depo-dan-balai-yasa', 'kecamatan'];
@@ -157,43 +157,43 @@
                     }
                 @endphp
 
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            linked_services--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text {{ in_array(request()->path(), $master) || $openMaster ? 'fw-bold' : '' }}">--}}
-{{--                            Master Data Operasional--}}
-{{--                        </p>--}}
-{{--                    </a>--}}
-{{--                    <ul class="{{ in_array(request()->path(), $master) || $openMaster ? '' : 'collapse' }}">--}}
-{{--                        <li class="nav-item ">--}}
-{{--                            <a class="nav-link menu {{ request()->is('satuan-pelayanan*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('service-unit') }}">--}}
-{{--                                <p class="menu-text">Satuan Pelayanan (SATPEL)</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item ">--}}
-{{--                            <a class="nav-link menu {{ request()->is('daerah-operasi*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('area') }}">--}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            linked_services --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text {{ in_array(request()->path(), $master) || $openMaster ? 'fw-bold' : '' }}"> --}}
+                {{--                            Master Data Operasional --}}
+                {{--                        </p> --}}
+                {{--                    </a> --}}
+                {{--                    <ul class="{{ in_array(request()->path(), $master) || $openMaster ? '' : 'collapse' }}"> --}}
+                {{--                        <li class="nav-item "> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('satuan-pelayanan*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('service-unit') }}"> --}}
+                {{--                                <p class="menu-text">Satuan Pelayanan (SATPEL)</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item "> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('daerah-operasi*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('area') }}"> --}}
 
-{{--                                <p class="menu-text">Daerah Operasi (DAOP)</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item ">--}}
-{{--                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('storehouse') }}">--}}
-{{--                                <p class="menu-text">Depo dan Balai Yasa</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item ">--}}
-{{--                            <a class="nav-link menu {{ request()->is('kecamatan*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('district') }}">--}}
-{{--                                <p class="menu-text">Kecamatan</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
+                {{--                                <p class="menu-text">Daerah Operasi (DAOP)</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item "> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('depo-dan-balai-yasa*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('storehouse') }}"> --}}
+                {{--                                <p class="menu-text">Depo dan Balai Yasa</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item "> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('kecamatan*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('district') }}"> --}}
+                {{--                                <p class="menu-text">Kecamatan</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                    </ul> --}}
+                {{--                </li> --}}
 
                 @php
                     $masterFacility = ['jenis-lokomotif', 'jenis-kereta', 'jenis-gerbong', 'sub-jenis-gerbong', 'jenis-peralatan-khusus'];
@@ -205,49 +205,49 @@
                         }
                     }
                 @endphp
-{{--                <li class="nav-item ">--}}
-{{--                    <a class="nav-link menu">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            label_important--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text {{ in_array(request()->path(), $masterFacility) || $openMasterFacility ? 'fw-bold' : '' }}">--}}
-{{--                            Master Data Jenis Sarana--}}
-{{--                        </p>--}}
-{{--                    </a>--}}
-{{--                    <ul class="{{ in_array(request()->path(), $masterFacility) || $openMasterFacility ? '' : 'collapse' }}">--}}
-{{--                        <li class="nav-item ">--}}
-{{--                            <a class="nav-link menu {{ request()->is('jenis-lokomotif*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('locomotive-type') }}">--}}
-{{--                                <p class="menu-text">Jenis Lokomotif</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item ">--}}
-{{--                            <a class="nav-link menu {{ request()->is('jenis-kereta*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('train-type') }}">--}}
-{{--                                <p class="menu-text">Jenis Kereta</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('jenis-gerbong*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('wagon-type') }}">--}}
-{{--                                <p class="menu-text">Jenis Gerbong</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('sub-jenis-gerbong*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('wagon-sub-type') }}">--}}
-{{--                                <p class="menu-text">Sub Jenis Gerbong</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('jenis-peralatan-khusus*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('special-equipment-type') }}">--}}
-{{--                                <p class="menu-text">Jenis Peralatan Khusus</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
+                {{--                <li class="nav-item "> --}}
+                {{--                    <a class="nav-link menu"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            label_important --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text {{ in_array(request()->path(), $masterFacility) || $openMasterFacility ? 'fw-bold' : '' }}"> --}}
+                {{--                            Master Data Jenis Sarana --}}
+                {{--                        </p> --}}
+                {{--                    </a> --}}
+                {{--                    <ul class="{{ in_array(request()->path(), $masterFacility) || $openMasterFacility ? '' : 'collapse' }}"> --}}
+                {{--                        <li class="nav-item "> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('jenis-lokomotif*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('locomotive-type') }}"> --}}
+                {{--                                <p class="menu-text">Jenis Lokomotif</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item "> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('jenis-kereta*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('train-type') }}"> --}}
+                {{--                                <p class="menu-text">Jenis Kereta</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('jenis-gerbong*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('wagon-type') }}"> --}}
+                {{--                                <p class="menu-text">Jenis Gerbong</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('sub-jenis-gerbong*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('wagon-sub-type') }}"> --}}
+                {{--                                <p class="menu-text">Sub Jenis Gerbong</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('jenis-peralatan-khusus*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('special-equipment-type') }}"> --}}
+                {{--                                <p class="menu-text">Jenis Peralatan Khusus</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
 
-{{--                    </ul>--}}
-{{--                </li>--}}
+                {{--                    </ul> --}}
+                {{--                </li> --}}
 
                 @php
                     $masterTrack = ['perlintasan', 'petak', 'jenis-rawan-bencana', 'resort'];
@@ -259,42 +259,42 @@
                         }
                     }
                 @endphp
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            data_exploration--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text {{ in_array(request()->path(), $masterTrack) || $openMasterTrack ? 'fw-bold' : '' }}">--}}
-{{--                            Master Data Perlintasan--}}
-{{--                        </p>--}}
-{{--                    </a>--}}
-{{--                    <ul class="{{ in_array(request()->path(), $masterTrack) || $openMasterTrack ? '' : 'collapse' }}">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('perlintasan*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('track') }}">--}}
-{{--                                <p class="menu-text">Perlintasan</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('petak*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('sub-track') }}">--}}
-{{--                                <p class="menu-text">Petak</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('jenis-rawan-bencana*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('disaster-type') }}">--}}
-{{--                                <p class="menu-text">Jenis Rawan Bencana</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('resort*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('resort') }}">--}}
-{{--                                <p class="menu-text">Resort</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            data_exploration --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text {{ in_array(request()->path(), $masterTrack) || $openMasterTrack ? 'fw-bold' : '' }}"> --}}
+                {{--                            Master Data Perlintasan --}}
+                {{--                        </p> --}}
+                {{--                    </a> --}}
+                {{--                    <ul class="{{ in_array(request()->path(), $masterTrack) || $openMasterTrack ? '' : 'collapse' }}"> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('perlintasan*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('track') }}"> --}}
+                {{--                                <p class="menu-text">Perlintasan</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('petak*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('sub-track') }}"> --}}
+                {{--                                <p class="menu-text">Petak</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('jenis-rawan-bencana*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('disaster-type') }}"> --}}
+                {{--                                <p class="menu-text">Jenis Rawan Bencana</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('resort*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('resort') }}"> --}}
+                {{--                                <p class="menu-text">Resort</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                    </ul> --}}
+                {{--                </li> --}}
 
                 @php
                     $masterHumanResource = ['sumber-daya-penjaga-jalur-lintasan'];
@@ -306,24 +306,24 @@
                         }
                     }
                 @endphp
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            person_apron--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text {{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? 'fw-bold' : '' }}">--}}
-{{--                            Master Data SDM--}}
-{{--                        </p>--}}
-{{--                    </a>--}}
-{{--                    <ul class="{{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? '' : 'collapse' }}">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('sumber-daya-penjaga-jalur-lintasan*') ? 'active' : '' }}"--}}
-{{--                               href="{{ route('direct-passage-human-resource') }}">--}}
-{{--                                <p class="menu-text">Penjaga Jalur Lintasan</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            person_apron --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text {{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? 'fw-bold' : '' }}"> --}}
+                {{--                            Master Data SDM --}}
+                {{--                        </p> --}}
+                {{--                    </a> --}}
+                {{--                    <ul class="{{ in_array(request()->path(), $masterHumanResource) || $openMasterHumanResource ? '' : 'collapse' }}"> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('sumber-daya-penjaga-jalur-lintasan*') ? 'active' : '' }}" --}}
+                {{--                               href="{{ route('direct-passage-human-resource') }}"> --}}
+                {{--                                <p class="menu-text">Penjaga Jalur Lintasan</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                    </ul> --}}
+                {{--                </li> --}}
                 @php
                     $certification = ['sertifikasi-sarana-lokomotif', 'sertifikasi-sarana-kereta', 'sertifikasi-sarana-kereta-diesel', 'sertifikasi-sarana-gerbong', 'sertifikasi-sarana-peralatan-khusus'];
                     $openCertification = false;
@@ -334,55 +334,55 @@
                         }
                     }
                 @endphp
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            card_membership--}}
-{{--                        </span>--}}
-{{--                        <p--}}
-{{--                            class="menu-text {{ in_array(request()->path(), $certification) || $openCertification ? 'fw-bold' : '' }}">--}}
-{{--                            Sertifikasi Sarana</p>--}}
-{{--                    </a>--}}
-{{--                    <ul--}}
-{{--                        class="{{ in_array(request()->path(), $certification) || $openCertification ? '' : 'collapse' }}">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-lokomotif*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('facility-certification-locomotive') }}">--}}
-{{--                                <p class="menu-text">Lokomotif</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta') || request()->is('sertifikasi-sarana-kereta/*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('facility-certification-train') }}">--}}
-{{--                                <p class="menu-text">Kereta</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta-diesel*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('facility-certification-train-diesel') }}">--}}
-{{--                                <p class="menu-text">KRD</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta-listrik*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('facility-certification-train-electric') }}">--}}
-{{--                                <p class="menu-text">KRL</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-gerbong*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('facility-certification-wagon') }}">--}}
-{{--                                <p class="menu-text">Gerbong</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-peralatan-khusus*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('facility-certification-special-equipment') }}">--}}
-{{--                                <p class="menu-text">Peralatan Khusus</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            card_membership --}}
+                {{--                        </span> --}}
+                {{--                        <p --}}
+                {{--                            class="menu-text {{ in_array(request()->path(), $certification) || $openCertification ? 'fw-bold' : '' }}"> --}}
+                {{--                            Sertifikasi Sarana</p> --}}
+                {{--                    </a> --}}
+                {{--                    <ul --}}
+                {{--                        class="{{ in_array(request()->path(), $certification) || $openCertification ? '' : 'collapse' }}"> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-lokomotif*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('facility-certification-locomotive') }}"> --}}
+                {{--                                <p class="menu-text">Lokomotif</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta') || request()->is('sertifikasi-sarana-kereta/*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('facility-certification-train') }}"> --}}
+                {{--                                <p class="menu-text">Kereta</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta-diesel*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('facility-certification-train-diesel') }}"> --}}
+                {{--                                <p class="menu-text">KRD</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-kereta-listrik*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('facility-certification-train-electric') }}"> --}}
+                {{--                                <p class="menu-text">KRL</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-gerbong*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('facility-certification-wagon') }}"> --}}
+                {{--                                <p class="menu-text">Gerbong</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('sertifikasi-sarana-peralatan-khusus*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('facility-certification-special-equipment') }}"> --}}
+                {{--                                <p class="menu-text">Peralatan Khusus</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                    </ul> --}}
+                {{--                </li> --}}
 
                 @php
                     $technicalSpec = ['spesifikasi-teknis-sarana-lokomotif', 'spesifikasi-teknis-sarana-kereta', 'spesifikasi-teknis-sarana-gerbong', 'spesifikasi-teknis-sarana-peralatan-khusus'];
@@ -394,81 +394,81 @@
                         }
                     }
                 @endphp
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu" href="#">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            train--}}
-{{--                        </span>--}}
-{{--                        <p--}}
-{{--                            class="menu-text {{ in_array(request()->path(), $technicalSpec) || $openTechnicalSpec ? 'fw-bold' : '' }}">--}}
-{{--                            Spesifikasi Teknis Sarana</p>--}}
-{{--                    </a>--}}
-{{--                    <ul--}}
-{{--                        class="{{ in_array(request()->path(), $technicalSpec) || $openTechnicalSpec ? '' : 'collapse' }}">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-lokomotif*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('technical-specification.locomotive') }}">--}}
-{{--                                <p class="menu-text">Lokomotif</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-kereta*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('technical-specification.train') }}">--}}
-{{--                                <p class="menu-text">Kereta</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-gerbong') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('technical-specification.wagon') }}">--}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu" href="#"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            train --}}
+                {{--                        </span> --}}
+                {{--                        <p --}}
+                {{--                            class="menu-text {{ in_array(request()->path(), $technicalSpec) || $openTechnicalSpec ? 'fw-bold' : '' }}"> --}}
+                {{--                            Spesifikasi Teknis Sarana</p> --}}
+                {{--                    </a> --}}
+                {{--                    <ul --}}
+                {{--                        class="{{ in_array(request()->path(), $technicalSpec) || $openTechnicalSpec ? '' : 'collapse' }}"> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-lokomotif*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('technical-specification.locomotive') }}"> --}}
+                {{--                                <p class="menu-text">Lokomotif</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-kereta*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('technical-specification.train') }}"> --}}
+                {{--                                <p class="menu-text">Kereta</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-gerbong') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('technical-specification.wagon') }}"> --}}
 
-{{--                                <p class="menu-text">Gerbong</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-peralatan-khusus') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('technical-specification.special-equipment') }}">--}}
+                {{--                                <p class="menu-text">Gerbong</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('spesifikasi-teknis-sarana-peralatan-khusus') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('technical-specification.special-equipment') }}"> --}}
 
-{{--                                <p class="menu-text">Peralatan Khusus</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu {{ request()->is('jalur-perlintasan-langsung*') ? 'active' : '' }}"--}}
-{{--                        href="{{ route('direct-passage') }}">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            timeline--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text">Jalur Perlintasan Langsung</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu {{ request()->is('daerah-rawan-bencana*') ? 'active' : '' }}"--}}
-{{--                        href="{{ route('disaster-area') }}">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            flood--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text">Daerah Rawan Bencana</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu {{ request()->is('bangunan-liar*') ? 'active' : '' }}"--}}
-{{--                        href="{{ route('illegal-building') }}">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            domain--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text">Bangunan Liar</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu {{ request()->is('penjaga-jalur-lintasan*') ? 'active' : '' }}"--}}
-{{--                        href="{{ route('direct-passage-guard') }}">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            engineering--}}
-{{--                        </span>--}}
-{{--                        <p class="menu-text">Penjaga Jalur Lintasan (PJL)</p>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                {{--                                <p class="menu-text">Peralatan Khusus</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                    </ul> --}}
+                {{--                </li> --}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu {{ request()->is('jalur-perlintasan-langsung*') ? 'active' : '' }}" --}}
+                {{--                        href="{{ route('direct-passage') }}"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            timeline --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text">Jalur Perlintasan Langsung</p> --}}
+                {{--                    </a> --}}
+                {{--                </li> --}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu {{ request()->is('daerah-rawan-bencana*') ? 'active' : '' }}" --}}
+                {{--                        href="{{ route('disaster-area') }}"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            flood --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text">Daerah Rawan Bencana</p> --}}
+                {{--                    </a> --}}
+                {{--                </li> --}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu {{ request()->is('bangunan-liar*') ? 'active' : '' }}" --}}
+                {{--                        href="{{ route('illegal-building') }}"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            domain --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text">Bangunan Liar</p> --}}
+                {{--                    </a> --}}
+                {{--                </li> --}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu {{ request()->is('penjaga-jalur-lintasan*') ? 'active' : '' }}" --}}
+                {{--                        href="{{ route('direct-passage-guard') }}"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            engineering --}}
+                {{--                        </span> --}}
+                {{--                        <p class="menu-text">Penjaga Jalur Lintasan (PJL)</p> --}}
+                {{--                    </a> --}}
+                {{--                </li> --}}
                 @php
                     $summary = ['rekapitulasi-sarana', 'rekapitulasi-jalur-perlintasan-langsung', 'rekapitulasi-daerah-rawan-bencana'];
                     $openSummary = false;
@@ -479,36 +479,36 @@
                         }
                     }
                 @endphp
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link menu" href="#">--}}
-{{--                        <span class="material-symbols-outlined menu-icon">--}}
-{{--                            summarize--}}
-{{--                        </span>--}}
-{{--                        <p--}}
-{{--                            class="menu-text {{ in_array(request()->path(), $summary) || $openSummary ? 'fw-bold' : '' }}">--}}
-{{--                            Rekapitulasi</p>--}}
-{{--                    </a>--}}
-{{--                    <ul class="{{ in_array(request()->path(), $summary) || $openSummary ? '' : 'collapse' }}">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('rekapitulasi-sarana*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('summary-facility') }}">--}}
-{{--                                <p class="menu-text">Sarana</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('rekapitulasi-jalur-perlintasan-langsung*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('summary-direct-passage') }}">--}}
-{{--                                <p class="menu-text">Jalur Perlintasan Langsung</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link menu {{ request()->is('rekapitulasi-daerah-rawan-bencana*') ? 'active' : '' }}"--}}
-{{--                                href="{{ route('summary-disaster-area') }}">--}}
-{{--                                <p class="menu-text">Daerah Rawan Bencana</p>--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </li>--}}
+                {{--                <li class="nav-item"> --}}
+                {{--                    <a class="nav-link menu" href="#"> --}}
+                {{--                        <span class="material-symbols-outlined menu-icon"> --}}
+                {{--                            summarize --}}
+                {{--                        </span> --}}
+                {{--                        <p --}}
+                {{--                            class="menu-text {{ in_array(request()->path(), $summary) || $openSummary ? 'fw-bold' : '' }}"> --}}
+                {{--                            Rekapitulasi</p> --}}
+                {{--                    </a> --}}
+                {{--                    <ul class="{{ in_array(request()->path(), $summary) || $openSummary ? '' : 'collapse' }}"> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('rekapitulasi-sarana*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('summary-facility') }}"> --}}
+                {{--                                <p class="menu-text">Sarana</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('rekapitulasi-jalur-perlintasan-langsung*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('summary-direct-passage') }}"> --}}
+                {{--                                <p class="menu-text">Jalur Perlintasan Langsung</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                        <li class="nav-item"> --}}
+                {{--                            <a class="nav-link menu {{ request()->is('rekapitulasi-daerah-rawan-bencana*') ? 'active' : '' }}" --}}
+                {{--                                href="{{ route('summary-disaster-area') }}"> --}}
+                {{--                                <p class="menu-text">Daerah Rawan Bencana</p> --}}
+                {{--                            </a> --}}
+                {{--                        </li> --}}
+                {{--                    </ul> --}}
+                {{--                </li> --}}
 
                 <li class="nav-item text-center mt-3 mb-3">
 

@@ -66,13 +66,13 @@ class DirectPassageController extends CustomController
             });
         }
 
-//        if ($track !== '') {
-//            $query->whereHas('sub_track', function ($qstt) use ($track) {
-//                /** @var $qstt Builder */
-//                return $qstt->where('track_id', '=', $track);
-//            });
-//
-//        }
+        //        if ($track !== '') {
+        //            $query->whereHas('sub_track', function ($qstt) use ($track) {
+        //                /** @var $qstt Builder */
+        //                return $qstt->where('track_id', '=', $track);
+        //            });
+        //
+        //        }
 
         return $query->orderBy('created_at', 'ASC')
             ->get()->append(['count_guard', 'count_accident']);
@@ -162,7 +162,7 @@ class DirectPassageController extends CustomController
         }
         $areaIDS = $areas->pluck('id')->toArray();
         $sub_tracks = SubTrack::with(['track.area'])
-            ->whereHas('track', function ($qt) use ($areaIDS){
+            ->whereHas('track', function ($qt) use ($areaIDS) {
                 /** @var $qt Builder */
                 return $qt->whereIn('area_id', $areaIDS);
             })
@@ -232,7 +232,7 @@ class DirectPassageController extends CustomController
         }
         $areaIDS = $areas->pluck('id')->toArray();
         $sub_tracks = SubTrack::with(['track.area'])
-            ->whereHas('track', function ($qt) use ($areaIDS){
+            ->whereHas('track', function ($qt) use ($areaIDS) {
                 /** @var $qt Builder */
                 return $qt->whereIn('area_id', $areaIDS);
             })
@@ -312,7 +312,6 @@ class DirectPassageController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.direct-passage.image')->with([
             'data' => $data,

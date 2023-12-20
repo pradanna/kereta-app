@@ -154,7 +154,6 @@ class TechnicalSpecificationWagonController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.technical-specification.wagon.document')->with([
             'data' => $data
@@ -190,7 +189,6 @@ class TechnicalSpecificationWagonController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.technical-specification.wagon.image')->with([
             'data' => $data

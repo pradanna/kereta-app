@@ -49,7 +49,6 @@ class DisasterAreaController extends CustomController
             $query->where('location_type', '=', $location_type);
         }
         return $query->orderBy('created_at', 'DESC')->get();
-
     }
 
 
