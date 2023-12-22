@@ -16,6 +16,7 @@ use App\Models\ServiceUnit;
 use App\Models\Storehouse;
 use App\Models\StorehouseImage;
 use App\Models\SubTrack;
+use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -166,9 +167,15 @@ class DirectPassageController extends CustomController
                 /** @var $qt Builder */
                 return $qt->whereIn('area_id', $areaIDS);
             })
-            ->orderBy('name')->get();
+            ->orderBy('name', 'ASC')->get();
+        $tracks = Track::with(['area'])
+            ->whereIn('area_id', $areaIDS)
+            ->orderBy('name', 'ASC')->get();
+
         $cities = City::with([])->orderBy('name', 'ASC')->get();
         return view('admin.facility-menu.direct-passage.add')->with([
+            'areas' => $areas,
+            'tracks' => $tracks,
             'sub_tracks' => $sub_tracks,
             'cities' => $cities,
             'service_unit' => $service_unit,

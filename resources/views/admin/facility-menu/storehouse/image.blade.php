@@ -10,27 +10,28 @@
     </div>
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">SPESIFIKASI TEKNIS SARANA GERBONG</h1>
-            <p class="mb-0">Manajemen Data Gambar Spesifikasi Teknis Sarana Gerbong</p>
+            <h1 class="h1">MASTER DEPO DAN BALAI YASA {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Master Depo Dan Balai Yasa {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification') }}">Spesifikasi Teknis
-                        Sarana</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification.wagon') }}">Gerbong</a>
-                </li>
+                <li class="breadcrumb-item"><a
+                        href="{{ route('means.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}">Depo
+                        Dan Balai
+                        Yasa {{ $service_unit->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Gambar</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Gambar Spesifikasi Teknis Sarana Gerbong {{ $data->wagon_sub_type->code }}</p>
+            <p>Gambar Depo Dan Balai Yasa {{ $data->name }} ({{ $data->storehouse_type->name }})</p>
         </div>
         <div class="isi">
+
             <div class="d-flex flex-wrap justify-content-center gx-3">
-                @forelse($data->tech_images as $image)
+                @forelse($data->images as $image)
                     <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3">
                         <img src="{{ asset($image->image) }}" alt="storehouse-image" height="200" width="200"
                              style="object-fit: cover;">
@@ -116,7 +117,7 @@
         }
 
         function destroy(id) {
-            let url = '{{ route('means.technical-specification.wagon') }}' + '/' + id + '/delete-image';
+            let url = '/{{ request()->path() }}' + '/' + id + '/delete-image';
             AjaxPost(url, {}, function () {
                 Swal.fire({
                     title: 'Success',
@@ -187,7 +188,6 @@
             });
 
             deleteEvent();
-
         });
     </script>
 @endsection

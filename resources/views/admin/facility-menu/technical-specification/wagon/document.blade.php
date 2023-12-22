@@ -16,8 +16,10 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification') }}">Spesifikasi Teknis Sarana</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification.wagon') }}">Gerbong</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification') }}">Spesifikasi Teknis
+                        Sarana</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification.wagon') }}">Gerbong</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Dokumen</li>
             </ol>
         </nav>
@@ -29,11 +31,16 @@
         <div class="isi">
             <div class="d-flex flex-wrap justify-content-center gx-3">
                 @forelse($data->tech_documents as $document)
-                    <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3" style="width: 250px;">
+                    <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3"
+                         style="width: 250px;">
                         <span class="material-symbols-outlined" style="font-size: 8rem !important; color: #777777">description</span>
                         <p class="fw-bold text-truncate mb-0" style="max-width: 200px;">{{ $document->name }}</p>
-                        <a target="_blank" href="{{ $document->document }}" class="btn-table-action" data-id="{{ $document->id }}">Lihat</a>
-                        <a href="#" class="btn-drop-document btn-table-action" data-id="{{ $document->id }}">Hapus</a>
+                        <a target="_blank" href="{{ $document->document }}" class="btn-table-action"
+                           data-id="{{ $document->id }}">Lihat</a>
+                        @if($access['is_granted_delete'])
+                            <a href="#" class="btn-drop-document btn-table-action"
+                               data-id="{{ $document->id }}">Hapus</a>
+                        @endif
                     </div>
                 @empty
                     <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
@@ -41,20 +48,22 @@
                     </div>
                 @endforelse
             </div>
-            <hr>
-            <form method="post"
-                  enctype="multipart/form-data"
-                  id="form-data">
-                @csrf
-                <div class="w-100 needsclick dropzone" id="document-dropzone"></div>
-            </form>
-            <hr>
-            <div class="d-flex justify-content-end">
-                <a class="btn-utama rnd" id="btn-save" href="#">
-                    Upload
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_upload</i>
-                </a>
-            </div>
+            @if($access['is_granted_create'])
+                <hr>
+                <form method="post"
+                      enctype="multipart/form-data"
+                      id="form-data">
+                    @csrf
+                    <div class="w-100 needsclick dropzone" id="document-dropzone"></div>
+                </form>
+                <hr>
+                <div class="d-flex justify-content-end">
+                    <a class="btn-utama rnd" id="btn-save" href="#">
+                        Upload
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">file_upload</i>
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
@@ -113,9 +122,14 @@
         function destroy(id) {
             let url = '{{ route('means.technical-specification.wagon') }}' + '/' + id + '/delete-document';
             AjaxPost(url, {}, function () {
-                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Berhasil Menghapus Dokumen...',
+                    icon: 'success',
+                    timer: 700
+                }).then((r) => {
                     window.location.reload();
-                });
+                })
             });
         }
 
@@ -158,7 +172,12 @@
                     });
                     this.on('successmultiple', function (file, response) {
                         blockLoading(false);
-                        SuccessAlert('Berhasil', 'Berhasil Menambahkan Data Dokumen...').then((r) => {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Berhasil Menambahkan Dokumen...',
+                            icon: 'success',
+                            timer: 700
+                        }).then((r) => {
                             window.location.reload();
                         })
                     });

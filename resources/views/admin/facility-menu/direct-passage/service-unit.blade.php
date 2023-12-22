@@ -4,13 +4,12 @@
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
             <h1 class="h1">PERLINTASAN KERETA API (JPL)</h1>
-            <p class="mb-0">Manajemen Data Jalur Perlintasan Langsung</p>
+            <p class="mb-0">Manajemen Data Perlintasan Kereta Api (JPL)</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Jalur Perlintasan Langsung</li>
+                <li class="breadcrumb-item active" aria-current="page">Perlintasan Kereta Api (JPL)</li>
             </ol>
         </nav>
     </div>
@@ -37,10 +36,25 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '{{ route('means.direct-passage') }}';
+        let authServiceUnit = '{{ auth()->user()->service_unit_id }}';
+        let authRole = '{{ auth()->user()->role }}';
         $(document).ready(function () {
             $('.card-service-unit').on('click', function () {
                 let id = this.dataset.id;
-                window.location.href = path + '/' + id;
+                if (authRole !== 'superadmin') {
+                    if (authServiceUnit === id) {
+                        window.location.href = path + '/' + id;
+                    } else {
+                        Swal.fire({
+                            title: 'Forbidden',
+                            text: 'Anda tidak memiliki akses untuk mengakses satuan pelayanan ini...',
+                            icon: 'error',
+                            timer: 2000
+                        })
+                    }
+                } else {
+                    window.location.href = path + '/' + id;
+                }
             });
         });
     </script>

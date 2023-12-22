@@ -9,7 +9,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification') }}">Spesifikasi Teknis Sarana</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification') }}">Spesifikasi Teknis
+                        Sarana</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Peralatan Khusus</li>
             </ol>
         </nav>
@@ -17,9 +18,11 @@
     <div class="panel">
         <div class="title">
             <p>Data Spesifikasi Teknis Sarana Peralatan Khusus</p>
-            <a class="btn-utama sml rnd " href="{{ route('means.technical-specification.special-equipment.add') }}">Tambah
-                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-            </a>
+            @if($access['is_granted_create'])
+                <a class="btn-utama sml rnd " href="{{ route('means.technical-specification.special-equipment.add') }}">Tambah
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+            @endif
         </div>
         <div class="isi">
             <table id="table-data" class="display table w-100">
@@ -118,6 +121,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <label for="description" class="form-label">Keterangan</label>
+                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
+                                          name="description"
+                                          placeholder="Keterangan" disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,8 +152,9 @@
     <script>
         let table;
         let path = '/{{ request()->path() }}';
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function eventOpenDetail() {
             $('.btn-detail').on('click', function (e) {
@@ -163,6 +177,7 @@
                 let width = data['width'];
                 let height = data['height'];
                 let spoorWidth = data['spoor_width'];
+                let description = data['description'];
                 $('#special_equipment_type').val(specialEquipmentType);
                 $('#empty_weight').val(emptyWeight);
                 $('#maximum_speed').val(maximumSpeed);
@@ -171,11 +186,13 @@
                 $('#width').val(width);
                 $('#height').val(height);
                 $('#spoor_width').val(spoorWidth);
+                $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
             }
         }
+
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
                 e.preventDefault();
@@ -265,10 +282,15 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '">Delete</a>' : '';
+                            if (grantedUpdate !== '1' && grantedDelete !== '1') {
+                                return '<span>-</span>';
+                            }
+                            return elEdit + elDelete;
                         },
                         orderable: false,
                         className: 'text-center'

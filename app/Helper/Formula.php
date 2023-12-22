@@ -13,6 +13,11 @@ class Formula
     const APPMenuFacilityTrain = 2;
     const APPMenuFacilityWagon = 3;
     const APPMenuFacilitySpecialEquipment = 4;
+    const APPMenuStorehouse = 5;
+    const APPTechSpecLocomotive = 6;
+    const APPTechSpecTrain = 7;
+    const APPTechSpecWagon = 8;
+    const APPTechSpecSpecialEquipment = 9;
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';
     const AreaExceptionName = 'DAOP 6';

@@ -58,11 +58,35 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="form-group w-100">
+                                        <label for="area" class="form-label">Wilayah</label>
+                                        <select class="select2 form-control" name="area" id="area"
+                                                style="width: 100%;">
+                                            @foreach ($areas as $area)
+                                                <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group w-100">
+                                        <label for="track" class="form-label">Lintas</label>
+                                        <select class="select2 form-control" name="track" id="track"
+                                                style="width: 100%;">
+                                            @foreach ($tracks as $track)
+                                                <option value="{{ $track->id }}">{{ $track->code }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="form-group w-100">
                                         <label for="sub_track" class="form-label">Petak</label>
                                         <select class="select2 form-control" name="sub_track" id="sub_track"
                                                 style="width: 100%;">
                                             @foreach ($sub_tracks as $sub_track)
-                                                <option value="{{ $sub_track->id }}">{{ $sub_track->code }} ({{ $sub_track->track->code }} - {{ $sub_track->track->area->name }})</option>
+                                                <option value="{{ $sub_track->id }}">{{ $sub_track->code }}</option>
                                             @endforeach
                                         </select>
                                     </div>

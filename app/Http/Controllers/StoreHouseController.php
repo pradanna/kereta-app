@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\ServiceUnit;
@@ -36,6 +37,13 @@ class StoreHouseController extends CustomController
 
     public function index($service_unit_id)
     {
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::APPMenuStorehouse);
+
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $storehouse_types = StorehouseType::with([])->orderBy('name', 'ASC')->get();
         $areas = Area::with(['service_units'])
@@ -67,7 +75,7 @@ class StoreHouseController extends CustomController
                     return $this->jsonSuccessResponse('success', $data);
                 case 'table':
                     $data = $query
-                        ->orderBy('created_at', 'ASC')
+                        ->orderBy('created_at', 'DESC')
                         ->get();
                     return $this->basicDataTables($data);
                 default:
@@ -79,7 +87,8 @@ class StoreHouseController extends CustomController
         return view('admin.facility-menu.storehouse.index')->with([
             'storehouse_types' => $storehouse_types,
             'areas' => $areas,
-            'service_unit' => $service_unit
+            'service_unit' => $service_unit,
+            'access' => $access
         ]);
     }
 
@@ -103,12 +112,23 @@ class StoreHouseController extends CustomController
 
     public function store($service_unit_id)
     {
+        //filtering access
+        $access = $this->getRoleAccess(Formula::APPMenuStorehouse);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
+
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         if ($this->request->method() === 'POST') {
             try {
                 $validator = Validator::make($this->request->all(), $this->rule, $this->message);
                 if ($validator->fails()) {
-                    return redirect()->back()->withErrors($validator);
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
                 }
                 $data_request = [
                     'storehouse_type_id' => $this->postField('storehouse_type'),
@@ -117,6 +137,9 @@ class StoreHouseController extends CustomController
                     'area_id' => $this->postField('area'),
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
+                    'description' => $this->postField('description'),
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id(),
                 ];
                 Storehouse::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -142,13 +165,25 @@ class StoreHouseController extends CustomController
 
     public function patch($service_unit_id, $id)
     {
+        //filtering access
+        $access = $this->getRoleAccess(Formula::APPMenuStorehouse);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
+
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $data = Storehouse::with(['storehouse_type', 'area', 'city.province'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
                 $validator = Validator::make($this->request->all(), $this->rule, $this->message);
                 if ($validator->fails()) {
-                    return redirect()->back()->withErrors($validator);
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
                 }
                 $data_request = [
                     'storehouse_type_id' => $this->postField('storehouse_type'),
@@ -157,6 +192,8 @@ class StoreHouseController extends CustomController
                     'area_id' => $this->postField('area'),
                     'latitude' => $this->postField('latitude'),
                     'longitude' => $this->postField('longitude'),
+                    'description' => $this->postField('description'),
+                    'updated_by' => auth()->id(),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -181,8 +218,18 @@ class StoreHouseController extends CustomController
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($service_unit_id, $id)
     {
+        $access = $this->getRoleAccess(Formula::APPMenuStorehouse);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
+
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             Storehouse::destroy($id);
             return $this->jsonSuccessResponse('success');
@@ -193,6 +240,12 @@ class StoreHouseController extends CustomController
 
     public function image_page($service_unit_id, $id)
     {
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+        $access = $this->getRoleAccess(Formula::APPMenuStorehouse);
+        $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $data = Storehouse::with(['area', 'storehouse_type', 'images'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             DB::beginTransaction();
@@ -222,15 +275,27 @@ class StoreHouseController extends CustomController
             }
 
         }
-        return view('admin.master.storehouse.image')->with([
-            'data' => $data
+        return view('admin.facility-menu.storehouse.image')->with([
+            'data' => $data,
+            'service_unit' => $service_unit,
+            'access' => $access
         ]);
     }
 
-    public function destroy_image($service_unit_id, $id, $idgambar)
+    public function destroy_image($service_unit_id, $id, $image_id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
+
+        $access = $this->getRoleAccess(Formula::APPMenuStorehouse);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
-            StorehouseImage::destroy($idgambar);
+            StorehouseImage::destroy($image_id);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());

@@ -9,7 +9,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification') }}">Spesifikasi Teknis Sarana</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification') }}">Spesifikasi Teknis
+                        Sarana</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Gerbong</li>
             </ol>
         </nav>
@@ -17,9 +18,11 @@
     <div class="panel">
         <div class="title">
             <p>Data Spesifikasi Teknis Sarana Gerbong</p>
-            <a class="btn-utama sml rnd " href="{{ route('means.technical-specification.wagon.add') }}">Tambah
-                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-            </a>
+            @if($access['is_granted_create'])
+                <a class="btn-utama sml rnd " href="{{ route('means.technical-specification.wagon.add') }}">Tambah
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+            @endif
         </div>
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
@@ -30,12 +33,12 @@
                     <th class="text-center middle-header" width="12%">Spesifikasi Umum</th>
                     <th class="text-center middle-header" width="12%">Dokumen</th>
                     <th class="text-center middle-header" width="12%">Gambar</th>
-{{--                    <th class="text-center middle-header" width="10%">Jenis Sarana</th>--}}
-{{--                    <th class="middle-header">Identitas Sarana</th>--}}
-{{--                    <th class="text-center middle-header" width="12%">Berat Muat (Ton)</th>--}}
-{{--                    <th class="text-center middle-header" width="12%">Berat Kosong (Ton)</th>--}}
-{{--                    <th class="text-center middle-header" width="12%">Kecepatan Maksimum (Km/jam)</th>--}}
-{{--                    <th class="text-center middle-header" width="15%">Kegunaan</th>--}}
+                    {{--                    <th class="text-center middle-header" width="10%">Jenis Sarana</th>--}}
+                    {{--                    <th class="middle-header">Identitas Sarana</th>--}}
+                    {{--                    <th class="text-center middle-header" width="12%">Berat Muat (Ton)</th>--}}
+                    {{--                    <th class="text-center middle-header" width="12%">Berat Kosong (Ton)</th>--}}
+                    {{--                    <th class="text-center middle-header" width="12%">Kecepatan Maksimum (Km/jam)</th>--}}
+                    {{--                    <th class="text-center middle-header" width="15%">Kegunaan</th>--}}
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -66,14 +69,16 @@
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="loading_weight" class="form-label">Berat Muat (Ton)</label>
-                                <input type="number" step="any" class="form-control" id="loading_weight" name="loading_weight"
+                                <input type="number" step="any" class="form-control" id="loading_weight"
+                                       name="loading_weight"
                                        placeholder="Berat Muat" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
-                                <input type="number" step="any" class="form-control" id="empty_weight" name="empty_weight"
+                                <input type="number" step="any" class="form-control" id="empty_weight"
+                                       name="empty_weight"
                                        placeholder="Berat Kosong" disabled>
                             </div>
                         </div>
@@ -83,7 +88,8 @@
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
-                                <input type="number" step="any" class="form-control" id="maximum_speed" name="maximum_speed"
+                                <input type="number" step="any" class="form-control" id="maximum_speed"
+                                       name="maximum_speed"
                                        placeholder="Kecepatan Maksimum (VMax)" disabled>
                             </div>
                         </div>
@@ -118,7 +124,8 @@
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="height_from_rail" class="form-label">Tinggi Lantai Dari Rel (mm)</label>
-                                <input type="number" step="any" class="form-control" id="height_from_rail" name="height_from_rail"
+                                <input type="number" step="any" class="form-control" id="height_from_rail"
+                                       name="height_from_rail"
                                        placeholder="Tinggi Lantai Dari Rel" disabled>
                             </div>
                         </div>
@@ -134,11 +141,21 @@
                         <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="bogie_distance" class="form-label">Jarak Antar Pusat Bogie (mm)</label>
-                                <input type="number" step="any" class="form-control" id="bogie_distance" name="bogie_distance"
+                                <input type="number" step="any" class="form-control" id="bogie_distance"
+                                       name="bogie_distance"
                                        placeholder="Jarak Antar Pusat Bogie" disabled>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <label for="description" class="form-label">Keterangan</label>
+                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
+                                          name="description"
+                                          placeholder="Keterangan" disabled></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -161,8 +178,9 @@
     <script>
         let table;
         let path = '/{{ request()->path() }}';
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function eventOpenDetail() {
             $('.btn-detail').on('click', function (e) {
@@ -177,7 +195,7 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let wagonType = data['wagon_sub_type']['code'] + ' ('+data['wagon_sub_type']['wagon_type']['code']+')';
+                let wagonType = data['wagon_sub_type']['code'] + ' (' + data['wagon_sub_type']['wagon_type']['code'] + ')';
                 let emptyWeight = data['empty_weight'];
                 let loadingWeight = data['loading_weight'];
                 let maximumSpeed = data['maximum_speed'];
@@ -187,6 +205,7 @@
                 let axleLoad = data['axle_load'];
                 let bogieDistance = data['boogie_distance'];
                 let usability = data['usability'];
+                let description = data['description'];
                 $('#wagon_sub_type').val(wagonType);
                 $('#empty_weight').val(emptyWeight);
                 $('#loading_weight').val(loadingWeight);
@@ -197,6 +216,7 @@
                 $('#axle_load').val(axleLoad);
                 $('#bogie_distance').val(bogieDistance);
                 $('#usability').val(usability);
+                $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
@@ -262,42 +282,6 @@
                             return data['name'] + ' (' + data['wagon_type']['code'] + ')';
                         }
                     },
-                    // {
-                    //     data: 'facility_wagon.facility_number',
-                    //     name: 'facility_wagon.facility_number',
-                    // },
-                    // {
-                    //     data: 'empty_weight',
-                    //     name: 'empty_weight',
-                    //     className: 'text-center',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'loading_weight',
-                    //     name: 'loading_weight',
-                    //     className: 'text-center',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'maximum_speed',
-                    //     name: 'maximum_speed',
-                    //     className: 'text-center',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
-                    // {
-                    //     data: 'usability',
-                    //     name: 'usability',
-                    //     className: 'text-center',
-                    //     render: function (data) {
-                    //         return data.toLocaleString('id-ID');
-                    //     }
-                    // },
                     {
                         data: null,
                         orderable: false,
@@ -328,10 +312,15 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '">Delete</a>' : '';
+                            if (grantedUpdate !== '1' && grantedDelete !== '1') {
+                                return '<span>-</span>';
+                            }
+                            return elEdit + elDelete;
                         },
                         orderable: false,
                         className: 'text-center',
