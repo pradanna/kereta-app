@@ -24,6 +24,9 @@ class TechnicalSpecSpecialEquipment extends Model
         'coupler_height',
         'axle_load',
         'spoor_width',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function special_equipment_type()
@@ -39,5 +42,15 @@ class TechnicalSpecSpecialEquipment extends Model
     public function tech_images()
     {
         return $this->hasMany(TechnicalSpecSpecialEquipmentImage::class, 'ts_special_equipment_id');
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

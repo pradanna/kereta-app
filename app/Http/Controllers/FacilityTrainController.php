@@ -122,6 +122,10 @@ class FacilityTrainController extends CustomController
 
     public function store()
     {
+        $access = $this->getRoleAccess(Formula::APPMenuFacilityTrain);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
         if ($this->request->method() === 'POST') {
             try {
                 $validator = Validator::make($this->request->all(), $this->rule, $this->message);
@@ -159,6 +163,10 @@ class FacilityTrainController extends CustomController
 
     public function patch($id)
     {
+        $access = $this->getRoleAccess(Formula::APPMenuFacilityTrain);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $data = FacilityTrain::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
@@ -197,6 +205,10 @@ class FacilityTrainController extends CustomController
 
     public function destroy($id)
     {
+        $access = $this->getRoleAccess(Formula::APPMenuFacilityTrain);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             FacilityTrain::destroy($id);
             return $this->jsonSuccessResponse('success');

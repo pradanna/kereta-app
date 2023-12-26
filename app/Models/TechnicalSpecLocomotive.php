@@ -23,6 +23,9 @@ class TechnicalSpecLocomotive extends Model
         'height',
         'coupler_height',
         'wheel_diameter',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function locomotive_type()
@@ -38,5 +41,15 @@ class TechnicalSpecLocomotive extends Model
     public function tech_images()
     {
         return $this->hasMany(TechnicalSpecLocomotiveImage::class, 'ts_locomotive_id');
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

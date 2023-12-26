@@ -48,7 +48,7 @@ class FacilitySpecialEquipment extends DefaultValueBinder implements FromCollect
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 2;
-        $cellRange = 'A1:I' . $rowLength;
+        $cellRange = 'A1:J' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -83,6 +83,7 @@ class FacilitySpecialEquipment extends DefaultValueBinder implements FromCollect
         $sheet->mergeCells('G1:G2');
         $sheet->mergeCells('H1:H2');
         $sheet->mergeCells('I1:I2');
+        $sheet->mergeCells('J1:J2');
 
     }
 
@@ -107,7 +108,8 @@ class FacilitySpecialEquipment extends DefaultValueBinder implements FromCollect
                 'MASA BERLAKU SARANA',
                 'NOMOR BA PENGUJIAN',
                 'AKAN HABIS (HARI)',
-                'STATUS'
+                'STATUS',
+                'KETERANGAN',
             ],
             [
                 '',
@@ -139,6 +141,7 @@ class FacilitySpecialEquipment extends DefaultValueBinder implements FromCollect
                 $datum->testing_number,
                 $datum->expired_in,
                 ($datum->expired_in <= Formula::ExpirationLimit ? 'HABIS MASA BERLAKU' : 'BERLAKU'),
+                $datum->description,
             ];
             array_push($results, $result);
         }

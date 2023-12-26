@@ -52,9 +52,12 @@
     <div class="panel w-100 shadow-sm">
         <div class="title">
             <p>Data Depo dan Balai Yasa</p>
-            <a class="btn-utama sml rnd" href="{{ route('means.storehouse.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
-                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-            </a>
+            @if($access['is_granted_create'])
+                <a class="btn-utama sml rnd"
+                   href="{{ route('means.storehouse.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+            @endif
         </div>
         <div class="isi">
             <div class="d-flex align-items-center mb-3">
@@ -90,7 +93,7 @@
                         <thead>
                         <tr>
                             <th width="5%" class="text-center">#</th>
-                            <th width="15%" class="text-center">Daerah Operasi</th>
+                            <th width="12%" class="text-center">Wilayah</th>
                             <th width="15%" class="text-center">Kabupaten/Kota</th>
                             <th width="15%">Tipe</th>
                             <th>Depo / Balai Yasa</th>
@@ -137,6 +140,8 @@
     <script>
         let table;
         let path = '/{{ request()->path() }}';
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -161,8 +166,7 @@
         }
 
         function destroy(id) {
-            let storehousePath = '{{ route('means.storehouse') }}';
-            let url = storehousePath + '/' + id + '/delete';
+            let url = path + '/' + id + '/delete';
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     generateMapStorehouse();
@@ -254,9 +258,15 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] + '">Delete</a>'
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '">Delete</a>' : '';
+                            if (grantedUpdate !== '1' && grantedDelete !== '1') {
+                                return '<span>-</span>';
+                            }
+                            return elEdit + elDelete;
                         },
                         orderable: false
                     }

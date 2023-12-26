@@ -50,6 +50,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilityWagonController::class, 'patch'])->name('means.facility-certification.wagon.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\FacilityWagonController::class, 'destroy'])->name('means.facility-certification.wagon.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\FacilityWagonController::class, 'detail'])->name('means.facility-certification.wagon.detail');
+            Route::get('/excel', [\App\Http\Controllers\FacilityWagonController::class, 'export_to_excel'])->name('means.facility-certification.wagon.excel');
         });
 
         Route::group(['prefix' => 'peralatan-khusus'], function () {
@@ -58,21 +59,21 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'patch'])->name('means.facility-certification.special-equipment.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'destroy'])->name('means.facility-certification.special-equipment.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'detail'])->name('means.facility-certification.special-equipment.detail');
+            Route::get('/excel', [\App\Http\Controllers\FacilitySpecialEquipmentController::class, 'export_to_excel'])->name('means.facility-certification.special-equipment.excel');
         });
     });
 
     //depo dan balai yasa
     Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
         Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'service_unit_page'])->name('means.storehouse');
-        Route::get('/{service_unit_id}', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('means.storehouse.service-unit');
-        Route::match(['post', 'get'], '/{service_unit_id}/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('means.storehouse.service-unit.add');
-        Route::match(['post', 'get'], '/{service_unit_id}/{id}/edit', [\App\Http\Controllers\StoreHouseController::class, 'patch'])->name('means.storehouse.service-unit.patch');
-        Route::post('/{id}/delete', [\App\Http\Controllers\StoreHouseController::class, 'destroy'])->name('means.storehouse.service-unit.destroy');
-        Route::match(['post', 'get'], '/{service_unit_id}/{id}/gambar', [\App\Http\Controllers\StoreHouseController::class, 'image_page'])->name('storehouse.image');
-        Route::post('/{service_unit_id}/{id}/gambar/{idgambar}/delete-image', [\App\Http\Controllers\StoreHouseController::class, 'destroy_image'])->name('storehouse.image.destroy');
-        //    Route::get('/{id}/sertifikasi-sarana-lokomotif', [\App\Http\Controllers\StoreHouseController::class, 'facility_locomotive_page'])->name('storehouse.facility.locomotive');
-        //    Route::get('/{id}/sertifikasi-sarana-kereta', [\App\Http\Controllers\StoreHouseController::class, 'facility_train_page'])->name('storehouse.facility.train');
-        //    Route::get('/{id}/sertifikasi-sarana-gerbong', [\App\Http\Controllers\StoreHouseController::class, 'facility_wagon_page'])->name('storehouse.facility.wagon');
+        Route::group(['prefix' => '{service_unit_id}'], function (){
+            Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('means.storehouse.service-unit');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('means.storehouse.service-unit.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\StoreHouseController::class, 'patch'])->name('means.storehouse.service-unit.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\StoreHouseController::class, 'destroy'])->name('means.storehouse.service-unit.destroy');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\StoreHouseController::class, 'image_page'])->name('storehouse.image');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\StoreHouseController::class, 'destroy_image'])->name('storehouse.image.destroy');
+        });
     });
 
     //spesifikasi teknis

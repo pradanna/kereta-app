@@ -22,6 +22,9 @@ class TechnicalSpecWagon extends Model
         'axle_load',
         'boogie_distance',
         'usability',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function facility_wagon()
@@ -44,4 +47,13 @@ class TechnicalSpecWagon extends Model
         return $this->hasMany(TechnicalSpecWagonImage::class, 'ts_wagon_id');
     }
 
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

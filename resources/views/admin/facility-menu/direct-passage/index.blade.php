@@ -535,7 +535,7 @@
                 let area = $('#area-option').val();
                 let track = $('#track-option').val();
                 let queryParam = '?area=' + area + '&track=' + track;
-                let exportPath = '{{ route('direct-passage.excel') }}' + queryParam;
+                let exportPath = path + '/excel' + queryParam;
                 window.open(exportPath, '_blank');
             });
         })

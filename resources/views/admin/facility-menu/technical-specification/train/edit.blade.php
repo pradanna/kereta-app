@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -42,7 +47,7 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
-                            <label for="train_type" class="form-label">Jenis Kereta</label>
+                            <label for="train_type" class="form-label">Jenis Kereta <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="train_type"
                                     id="train_type" style="width: 100%;">
                                 @foreach ($train_types as $train_type)
@@ -50,22 +55,37 @@
                                         value="{{ $train_type->id }}" {{ ($train_type->id === $data->train_type_id) ? 'selected' :'' }}>{{ $train_type->code }} ({{ $train_type->name }})</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('train_type'))
+                                <div class="text-danger">
+                                    {{ $errors->first('train_type') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
+                            <label for="empty_weight" class="form-label">Berat Kosong (Ton) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="empty_weight" name="empty_weight"
                                    placeholder="Berat Kosong" value="{{ $data->empty_weight }}">
+                            @if($errors->has('empty_weight'))
+                                <div class="text-danger">
+                                    {{ $errors->first('empty_weight') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="passenger_capacity" class="form-label">Kapasitas Penumpang</label>
+                            <label for="passenger_capacity" class="form-label">Kapasitas Penumpang <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="passenger_capacity" name="passenger_capacity"
                                    placeholder="Kapasitas Penumpang" value="{{ $data->passenger_capacity }}">
+                            @if($errors->has('passenger_capacity'))
+                                <div class="text-danger">
+                                    {{ $errors->first('passenger_capacity') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -73,17 +93,27 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
+                            <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="maximum_speed" name="maximum_speed"
                                    placeholder="Kecepatan Maksimum (VMax)" value="{{ $data->maximum_speed }}">
+                            @if($errors->has('maximum_speed'))
+                                <div class="text-danger">
+                                    {{ $errors->first('maximum_speed') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="air_conditioner" class="form-label">Jenis AC</label>
+                            <label for="air_conditioner" class="form-label">Jenis AC <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="air_conditioner"
                                    name="air_conditioner"
                                    placeholder="Jenis AC" value="{{ $data->air_conditioner }}">
+                            @if($errors->has('air_conditioner'))
+                                <div class="text-danger">
+                                    {{ $errors->first('air_conditioner') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -92,48 +122,87 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="long" class="form-label">Panjang Kereta (mm)</label>
+                            <label for="long" class="form-label">Panjang Kereta (mm) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="long" name="long"
                                    placeholder="Panjang Kereta" value="{{ $data->long }}">
+                            @if($errors->has('long'))
+                                <div class="text-danger">
+                                    {{ $errors->first('long') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="width" class="form-label">Lebar Kereta (mm)</label>
+                            <label for="width" class="form-label">Lebar Kereta (mm) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="width" name="width"
                                    placeholder="Lebar Kereta" value="{{ $data->width }}">
+                            @if($errors->has('width'))
+                                <div class="text-danger">
+                                    {{ $errors->first('width') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="height" class="form-label">Tinggi Kereta (mm)</label>
+                            <label for="height" class="form-label">Tinggi Kereta (mm) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="height" name="height"
                                    placeholder="Tinggi Kereta" value="{{ $data->height }}">
+                            @if($errors->has('height'))
+                                <div class="text-danger">
+                                    {{ $errors->first('height') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="coupler_height" class="form-label">Tinggi Alat Perangkai (mm)</label>
+                            <label for="coupler_height" class="form-label">Tinggi Alat Perangkai (mm) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="coupler_height" name="coupler_height"
                                    placeholder="Tinggi Alat Perangkai" value="{{ $data->coupler_height }}">
+                            @if($errors->has('coupler_height'))
+                                <div class="text-danger">
+                                    {{ $errors->first('coupler_height') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="axle_load" class="form-label">Beban Gandar (Ton)</label>
+                            <label for="axle_load" class="form-label">Beban Gandar (Ton) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="axle_load" name="axle_load"
                                    placeholder="Beban Gandar" value="{{ $data->axle_load }}">
+                            @if($errors->has('axle_load'))
+                                <div class="text-danger">
+                                    {{ $errors->first('axle_load') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="spoor_width" class="form-label">Lebar Spoor (mm)</label>
+                            <label for="spoor_width" class="form-label">Lebar Spoor (mm) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="spoor_width" name="spoor_width"
                                    placeholder="Lebar Spoor" value="{{ $data->spoor_width }}">
+                            @if($errors->has('spoor_width'))
+                                <div class="text-danger">
+                                    {{ $errors->first('spoor_width') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="w-100">
+                            <label for="description" class="form-label">Keterangan</label>
+                            <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
+                                      placeholder="Keterangan">{{ $data->description }}</textarea>
                         </div>
                     </div>
                 </div>

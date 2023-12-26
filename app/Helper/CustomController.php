@@ -228,4 +228,15 @@ class CustomController extends Controller
         }
         return $access;
     }
+
+    public function hasServiceUnitAccess($service_unit_id)
+    {
+        $userServiceUnitID = auth()->user()->service_unit_id;
+        if (auth()->user()->role !== 'superadmin') {
+            if ($userServiceUnitID !== $service_unit_id) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -42,12 +47,17 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah</label>
+                            <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('area'))
+                                <div class="text-danger">
+                                    {{ $errors->first('area') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
 {{--                    <div class="col-6">--}}
@@ -64,48 +74,80 @@
 {{--                    </div>--}}
 
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="new_facility_number" class="form-label">No. Sarana Baru</label>
+                            <label for="new_facility_number" class="form-label">No. Sarana Baru <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="new_facility_number" name="new_facility_number"
                                 placeholder="Nomor Sarana Baru" value="{{ $data->new_facility_number }}">
+                            @if($errors->has('new_facility_number'))
+                                <div class="text-danger">
+                                    {{ $errors->first('new_facility_number') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="old_facility_number" class="form-label">No. Sarana Lama</label>
+                            <label for="old_facility_number" class="form-label">No. Sarana Lama <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="old_facility_number" name="old_facility_number"
                                 placeholder="Nomor Sarana Lama" value="{{ $data->old_facility_number }}">
+                            @if($errors->has('old_facility_number'))
+                                <div class="text-danger">
+                                    {{ $errors->first('old_facility_number') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-                <div class="row mb-1">
+                <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="testing_number" class="form-label">No. BA Pengujian</label>
+                            <label for="testing_number" class="form-label">No. BA Pengujian <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
                                 placeholder="Nomor BA Pengujian" value="{{ $data->testing_number }}">
+                            @if($errors->has('testing_number'))
+                                <div class="text-danger">
+                                    {{ $errors->first('testing_number') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="ownership" class="form-label">Kepemilikan</label>
+                            <label for="ownership" class="form-label">Kepemilikan <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="ownership" id="ownership"
                                     style="width: 100%;">
                                 <option value="PT. KAI" {{ ($data->ownership === 'PT. KAI') ? 'selected' : '' }}>PT. KAI</option>
                                 <option value="DJKA" {{ ($data->ownership === 'DJKA') ? 'selected' : '' }}>DJKA</option>
                             </select>
+                            @if($errors->has('ownership'))
+                                <div class="text-danger">
+                                    {{ $errors->first('ownership') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
 
-                <div class="row mb-1">
-                    <div class="col-12">
+                <div class="row mb-3">
+                    <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="service_expired_date" class="form-label">Masa Berlaku</label>
+                            <label for="service_expired_date" class="form-label">Masa Berlaku <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="service_expired_date"
                                 name="service_expired_date" placeholder="dd-mm-yyyy">
+                            @if($errors->has('service_expired_date'))
+                                <div class="text-danger">
+                                    {{ $errors->first('service_expired_date') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="description" class="form-label">Keterangan</label>
+                            <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
+                                      placeholder="Keterangan">{{ $data->description }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -134,8 +176,6 @@
         integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        let areaPath = '{{ route('area') }}';
-
         function initializeDate() {
             let expDateValue = '{{ $data->service_expired_date }}';
             let expDate = new Date(expDateValue);
