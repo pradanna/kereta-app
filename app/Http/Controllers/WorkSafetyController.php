@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Helper\CustomController;
 use App\Models\NewWorkSafety;
 use App\Models\NewWorkSafetyDocument;
+use App\Models\NewWorkSafetyReport;
 use App\Models\ServiceUnit;
 use App\Models\User;
 use App\Models\WorkSafety;
@@ -193,6 +194,50 @@ class WorkSafetyController extends CustomController
         }
     }
 
+
+    private function generateDataReport()
+    {
+        $name = $this->request->query->get('name');
+        $date = $this->request->query->get('date');
+        $query = NewWorkSafetyReport::with([]);
+        if ($name !== '') {
+            $query->where('name', 'LIKE', '%' . $name . '%');
+        }
+        return $query->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
+    public function report_page()
+    {
+        if ($this->request->ajax()) {
+            $data = $this->generateDataReport();
+            return $this->basicDataTables($data);
+        }
+        return view('admin.facility-menu.new-work-safety.report.index');
+    }
+
+    public function report_add()
+    {
+        if ($this->request->method() === 'POST') {
+//            try {
+//                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+//                if ($validator->fails()) {
+//                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+//                }
+//                $data_request = [
+//                    'project_name' => $this->postField('project_name'),
+//                    'consultant' => $this->postField('consultant'),
+//                    'location' => $this->postField('location'),
+//                    'description' => $this->postField('description'),
+//                ];
+//                NewWorkSafety::create($data_request);
+//                return redirect()->back()->with('success', 'success');
+//            } catch (\Exception $e) {
+//                return redirect()->back()->with('failed', 'internal server error');
+//            }
+        }
+        return view('admin.facility-menu.new-work-safety.report.add');
+    }
     //old work safety method
     public function store()
     {
