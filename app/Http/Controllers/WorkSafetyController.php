@@ -11,6 +11,7 @@ use App\Models\NewWorkSafetyReport;
 use App\Models\ServiceUnit;
 use App\Models\User;
 use App\Models\WorkSafety;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -50,6 +51,7 @@ class WorkSafetyController extends CustomController
         return $query->orderBy('created_at', 'DESC')
             ->get();
     }
+
     public function project_monitoring_page()
     {
         if ($this->request->ajax()) {
@@ -207,6 +209,7 @@ class WorkSafetyController extends CustomController
             ->get();
     }
 
+
     public function report_page()
     {
         if ($this->request->ajax()) {
@@ -216,28 +219,54 @@ class WorkSafetyController extends CustomController
         return view('admin.facility-menu.new-work-safety.report.index');
     }
 
+    private $rule_report = [
+        'date' => 'required',
+        'name' => 'required',
+    ];
+
+    private $message_report = [
+        'date.required' => 'kolom bulan wajib di isi',
+        'name.required' => 'kolom nama laporan wajib di isi',
+    ];
+
     public function report_add()
     {
         if ($this->request->method() === 'POST') {
-//            try {
-//                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
-//                if ($validator->fails()) {
-//                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
-//                }
-//                $data_request = [
-//                    'project_name' => $this->postField('project_name'),
-//                    'consultant' => $this->postField('consultant'),
-//                    'location' => $this->postField('location'),
-//                    'description' => $this->postField('description'),
-//                ];
-//                NewWorkSafety::create($data_request);
-//                return redirect()->back()->with('success', 'success');
-//            } catch (\Exception $e) {
-//                return redirect()->back()->with('failed', 'internal server error');
-//            }
+            try {
+                $validator = Validator::make($this->request->all(), $this->rule_report, $this->message_report);
+                if ($validator->fails()) {
+                    $errors = $validator->errors()->getMessages();
+                    return response()->json([
+                        'status' => 422,
+                        'message' => 'Harap Mengisi Kolom Dengan Benar...',
+                        'data' => $errors
+                    ], 422);
+                }
+                $date = Carbon::createFromFormat('F Y', $this->postField('date'));
+                $dateValue = $date->format('Y-m-d');
+                $data_request = [
+                    'date' => $dateValue,
+                    'name' => $this->postField('name'),
+                    'description' => $this->postField('description'),
+                ];
+                if ($this->request->hasFile('file')) {
+                    $file = $this->request->file('file');
+                    $extension = $file->getClientOriginalExtension();
+                    $document = Uuid::uuid4()->toString() . '.' . $extension;
+                    $storage_path = public_path('work-safety-reports');
+                    $documentName = $storage_path . '/' . $document;
+                    $data_request['document'] = '/work-safety-reports/' . $document;
+                    $file->move($storage_path, $documentName);
+                }
+                NewWorkSafetyReport::create($data_request);
+                return $this->jsonSuccessResponse('success');
+            } catch (\Exception $e) {
+                return $this->jsonErrorResponse('');
+            }
         }
         return view('admin.facility-menu.new-work-safety.report.add');
     }
+
     //old work safety method
     public function store()
     {

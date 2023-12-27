@@ -1,28 +1,13 @@
 @extends('admin.base')
 
 @section('content')
-    @if (\Illuminate\Support\Facades\Session::has('failed'))
-        <script>
-            Swal.fire("Ooops", 'internal server error...', "error")
-        </script>
-    @endif
-    @if (\Illuminate\Support\Facades\Session::has('validator'))
-        <script>
-            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
-        </script>
-    @endif
-    @if (\Illuminate\Support\Facades\Session::has('success'))
-        <script>
-            Swal.fire({
-                title: 'Success',
-                text: 'Berhasil Menambahkan Data...',
-                icon: 'success',
-                timer: 1000
-            }).then(() => {
-                window.location.href = '{{ route('means.work-safety.project-monitoring') }}';
-            })
-        </script>
-    @endif
+    <div class="lazy-backdrop" id="overlay-loading">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <div class="spinner-border text-light" role="status">
+            </div>
+            <p class="text-light">Sedang Mengunggah Data Dokumen....</p>
+        </div>
+    </div>
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
             <h1 class="h1">LAPORAN BULANAN K3L</h1>
@@ -30,8 +15,10 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('means.work-safety') }}">Keselamatan dan Kesehatan Kerja (K3)</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.work-safety.report') }}">Laporan Bulanan K3L</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.work-safety') }}">Keselamatan dan Kesehatan Kerja
+                        (K3)</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.work-safety.report') }}">Laporan Bulanan K3L</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
@@ -49,24 +36,18 @@
                             <label for="date" class="form-label">Bulan <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="date"
                                    name="date" placeholder="mm-yyyy" value="{{ \Carbon\Carbon::now()->format('F Y') }}">
-                            @if($errors->has('date'))
-                                <div class="text-danger">
-                                    {{ $errors->first('date') }}
-                                </div>
-                            @endif
+                            <div class="text-danger d-none" id="error-date">
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama Laporan <span class="text-danger ms-1">*</span></label>
+                            <label for="name" class="form-label">Nama Laporan <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name"
                                    name="name"
                                    placeholder="Nama Laporan">
-                            @if($errors->has('name'))
-                                <div class="text-danger">
-                                    {{ $errors->first('name') }}
-                                </div>
-                            @endif
+                                <div class="text-danger" id="error-name"></div>
                         </div>
                     </div>
                 </div>
@@ -74,14 +55,16 @@
                     <div class="col-12">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>
-                            <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
+                            <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
+                                      name="description"
                                       placeholder="Keterangan"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-12">
-                        <label for="document-dropzone" class="form-label">Dokumen <span class="text-danger ms-1">*</span></label>
+                        <label for="document-dropzone" class="form-label">Dokumen <span
+                                class="text-danger ms-1">*</span></label>
                         <div class="w-100 needsclick dropzone" id="document-dropzone"></div>
                     </div>
                 </div>
@@ -117,6 +100,7 @@
     <script src="{{ asset('/js/dropzone.min.js') }}"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
+        var reportPath = '{{ route('means.work-safety.report') }}';
         var path = '/{{ request()->path() }}';
         let table;
         var uploadedDocumentMap = {};
@@ -176,18 +160,39 @@
                             icon: 'success',
                             timer: 700
                         }).then(() => {
-                            window.location.reload();
+                            window.location.href = reportPath;
                         });
                     });
 
                     this.on('error', function (file, response) {
                         blockLoading(false);
-                        Swal.fire({
-                            title: 'Ooops',
-                            text: 'Gagal Menambahkan Data...',
-                            icon: 'error',
-                            timer: 700
-                        });
+                        if (response['status'] === 422) {
+                            let data = response['data'];
+                            if (data['name'] !== undefined) {
+                                let elName = $('#error-name');
+                                elName.removeClass('d-none');
+                                elName.html(data['name'][0]);
+                            }
+
+                            if (data['date'] !== undefined) {
+                                let elDate = $('#error-date');
+                                elDate.removeClass('d-none');
+                                elDate.html(data['date'][0]);
+                            }
+                            Swal.fire({
+                                title: 'Ooops',
+                                text: 'Harap Mengisi Kolom Dengan Benar...',
+                                icon: 'error',
+                                timer: 700
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Ooops',
+                                text: 'Gagal Menambahkan Data...',
+                                icon: 'error',
+                                timer: 700
+                            });
+                        }
                         console.log(response);
                     });
 
