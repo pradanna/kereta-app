@@ -194,10 +194,20 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
 
     Route::group(['prefix' => 'keselamatan-dan-kesehatan-kerja'], function () {
         Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'index'])->name('means.work-safety');
-        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'store'])->name('means.work-safety.add');
-        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'patch'])->name('means.work-safety.patch');
-        Route::post('/{id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'destroy'])->name('means.work-safety.destroy');
-        Route::get('/{id}/detail', [\App\Http\Controllers\WorkSafetyController::class, 'detail'])->name('means.work-safety.detail');
+
+        Route::group(['prefix' => 'monitoring-implementasi-k3'], function (){
+            Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_page'])->name('means.work-safety.project-monitoring');
+            Route::match(['post', 'get'],'/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_add'])->name('means.work-safety.project-monitoring.add');
+            Route::match(['post', 'get'],'/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_patch'])->name('means.work-safety.project-monitoring.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_destroy'])->name('means.work-safety.project-monitoring.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_detail'])->name('means.work-safety.project-monitoring.detail');
+            Route::match(['post', 'get'],'/{id}/dokumen', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_document'])->name('means.work-safety.project-monitoring.document');
+            Route::post('/{id}/dokumen/{document_id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_document_destroy'])->name('means.work-safety.project-monitoring.document.destroy');
+        });
+//        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'store'])->name('means.work-safety.add');
+//        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'patch'])->name('means.work-safety.patch');
+//        Route::post('/{id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'destroy'])->name('means.work-safety.destroy');
+//        Route::get('/{id}/detail', [\App\Http\Controllers\WorkSafetyController::class, 'detail'])->name('means.work-safety.detail');
     });
 
     Route::group(['prefix' => 'sumber-daya-manusia'], function () {
