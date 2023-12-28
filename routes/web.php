@@ -208,6 +208,8 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
         Route::group(['prefix' => 'laporan-bulanan-k3l'], function () {
             Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'report_page'])->name('means.work-safety.report');
             Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'report_add'])->name('means.work-safety.report.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'report_patch'])->name('means.work-safety.report.patch');
+            Route::post( '/{id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'report_destroy'])->name('means.work-safety.report.destroy');
         });
 //        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'store'])->name('means.work-safety.add');
 //        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'patch'])->name('means.work-safety.patch');

@@ -35,7 +35,7 @@
                         <div class="form-group w-100">
                             <label for="date" class="form-label">Bulan <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="date"
-                                   name="date" placeholder="Bulan" value="{{ \Carbon\Carbon::now()->format('F Y') }}">
+                                   name="date" placeholder="Bulan" value="{{ \Carbon\Carbon::parse($data->date)->format('F Y') }}">
                             <div class="text-danger d-none" id="error-date">
                             </div>
                         </div>
@@ -46,8 +46,8 @@
                                     class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name"
                                    name="name"
-                                   placeholder="Nama Laporan">
-                                <div class="text-danger" id="error-name"></div>
+                                   placeholder="Nama Laporan" value="{{ $data->name }}">
+                            <div class="text-danger" id="error-name"></div>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                             <label for="description" class="form-label">Keterangan</label>
                             <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
                                       name="description"
-                                      placeholder="Keterangan"></textarea>
+                                      placeholder="Keterangan">{{ $data->description }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                         e.preventDefault();
                         Swal.fire({
                             title: "Konfirmasi!",
-                            text: "Apakah anda yakin menyimpan data?",
+                            text: "Apakah anda yakin merubah data?",
                             icon: 'question',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -142,12 +142,64 @@
                             cancelButtonText: 'Batal',
                         }).then((result) => {
                             if (result.value) {
-                                blockLoading(true)
+                                blockLoading(true);
                                 if (myDropzone.files.length > 0) {
                                     myDropzone.processQueue();
                                 } else {
-                                    blockLoading(false);
-                                    ErrorAlert('Error', 'Harap Menambahkan Data Dokumen...')
+                                    let frm = $('#form-data')[0];
+                                    let f_data = new FormData(frm);
+                                    $.ajax({
+                                        type: "POST",
+                                        enctype: 'multipart/form-data',
+                                        url: path,
+                                        data: f_data,
+                                        processData: false,
+                                        contentType: false,
+                                        cache: false,
+                                        timeout: 600000,
+                                        success: function (data) {
+                                            blockLoading(false);
+                                            Swal.fire({
+                                                title: 'Berhasil',
+                                                text: 'Berhasil Menyimpan data...',
+                                                icon: 'success',
+                                                timer: 700
+                                            }).then(() => {
+                                                window.location.href = reportPath;
+                                            });
+                                        },
+                                        error: function (r) {
+                                            let response = r.responseJSON;
+                                            blockLoading(false);
+                                            if (response['status'] === 422) {
+                                                let data = response['data'];
+                                                if (data['name'] !== undefined) {
+                                                    let elName = $('#error-name');
+                                                    elName.removeClass('d-none');
+                                                    elName.html(data['name'][0]);
+                                                }
+
+                                                if (data['date'] !== undefined) {
+                                                    let elDate = $('#error-date');
+                                                    elDate.removeClass('d-none');
+                                                    elDate.html(data['date'][0]);
+                                                }
+                                                Swal.fire({
+                                                    title: 'Ooops',
+                                                    text: 'Harap Mengisi Kolom Dengan Benar...',
+                                                    icon: 'error',
+                                                    timer: 700
+                                                });
+                                            } else {
+                                                Swal.fire({
+                                                    title: 'Ooops',
+                                                    text: 'Gagal Menambahkan Data...',
+                                                    icon: 'error',
+                                                    timer: 700
+                                                });
+                                            }
+                                        }
+                                    })
                                 }
                             }
                         });
@@ -220,7 +272,6 @@
                 minViewMode: 'months',
                 locale: 'id',
                 autoclose: true,
-                // startDate: new Date(),
             });
             setupDropzone();
         });
