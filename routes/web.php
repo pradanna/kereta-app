@@ -66,7 +66,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
     //depo dan balai yasa
     Route::group(['prefix' => 'depo-dan-balai-yasa'], function () {
         Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'service_unit_page'])->name('means.storehouse');
-        Route::group(['prefix' => '{service_unit_id}'], function (){
+        Route::group(['prefix' => '{service_unit_id}'], function () {
             Route::get('/', [\App\Http\Controllers\StoreHouseController::class, 'index'])->name('means.storehouse.service-unit');
             Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\StoreHouseController::class, 'store'])->name('means.storehouse.service-unit.add');
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\StoreHouseController::class, 'patch'])->name('means.storehouse.service-unit.patch');
@@ -194,10 +194,25 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
 
     Route::group(['prefix' => 'keselamatan-dan-kesehatan-kerja'], function () {
         Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'index'])->name('means.work-safety');
-        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'store'])->name('means.work-safety.add');
-        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'patch'])->name('means.work-safety.patch');
-        Route::post('/{id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'destroy'])->name('means.work-safety.destroy');
-        Route::get('/{id}/detail', [\App\Http\Controllers\WorkSafetyController::class, 'detail'])->name('means.work-safety.detail');
+
+        Route::group(['prefix' => 'monitoring-implementasi-k3'], function () {
+            Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_page'])->name('means.work-safety.project-monitoring');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_add'])->name('means.work-safety.project-monitoring.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_patch'])->name('means.work-safety.project-monitoring.patch');
+            Route::post('/{id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_destroy'])->name('means.work-safety.project-monitoring.destroy');
+            Route::get('/{id}/detail', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_detail'])->name('means.work-safety.project-monitoring.detail');
+            Route::match(['post', 'get'], '/{id}/dokumen', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_document'])->name('means.work-safety.project-monitoring.document');
+            Route::post('/{id}/dokumen/{document_id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_document_destroy'])->name('means.work-safety.project-monitoring.document.destroy');
+        });
+
+        Route::group(['prefix' => 'laporan-bulanan-k3l'], function () {
+            Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'report_page'])->name('means.work-safety.report');
+            Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'report_add'])->name('means.work-safety.report.add');
+        });
+//        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'store'])->name('means.work-safety.add');
+//        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'patch'])->name('means.work-safety.patch');
+//        Route::post('/{id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'destroy'])->name('means.work-safety.destroy');
+//        Route::get('/{id}/detail', [\App\Http\Controllers\WorkSafetyController::class, 'detail'])->name('means.work-safety.detail');
     });
 
     Route::group(['prefix' => 'sumber-daya-manusia'], function () {
