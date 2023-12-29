@@ -19,6 +19,7 @@ use App\Models\SubTrack;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Ramsey\Uuid\Uuid;
 
@@ -106,6 +107,42 @@ class DirectPassageController extends CustomController
         ]);
     }
 
+    private $rule = [
+        'area' => 'required',
+        'track' => 'required',
+        'sub_track' => 'required',
+        'city' => 'required',
+        'name' => 'required',
+        'stakes' => 'required',
+        'width' => 'required',
+        'road_name' => 'required',
+        'guarded_by' => 'required',
+        'latitude' => 'required',
+        'longitude' => 'required',
+        'technical_documentation' => 'required',
+        'elevation' => 'required',
+        'road_class' => 'required',
+        'is_closed' => 'required',
+    ];
+
+    private $message = [
+        'area.required' => 'kolom wilayah wajib di isi',
+        'track.required' => 'kolom lintas wajib di isi',
+        'sub_track.required' => 'kolom petak wajib di isi',
+        'city.required' => 'kolom kota wajib di isi',
+        'name.required' => 'kolom nomor jpl wajib di isi',
+        'stakes.required' => 'kolom km/hm wajib di isi',
+        'width.required' => 'kolom lebar jalan wajib di isi',
+        'road_name.required' => 'kolom nama jalan wajib di isi',
+        'guarded_by.required' => 'kolom status penjagaan wajib di isi',
+        'latitude.required' => 'kolom latitude wajib di isi',
+        'longitude.required' => 'kolom longitude wajib di isi',
+        'technical_documentation.required' => 'kolom nomor surat rekomendasi teknis wajib di isi',
+        'elevation.required' => 'kolom sudut elevasi wajib di isi',
+        'road_class.required' => 'kolom kelas jalan wajib di isi',
+        'is_closed.required' => 'kolom status jpl wajib di isi',
+    ];
+
     public function store($service_unit_id)
     {
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
@@ -118,7 +155,13 @@ class DirectPassageController extends CustomController
         if ($this->request->method() === 'POST') {
             DB::beginTransaction();
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request_direct_passage = [
+                    'area_id' => $this->postField('area'),
+                    'track_id' => $this->postField('track'),
                     'sub_track_id' => $this->postField('sub_track'),
                     'city_id' => $this->postField('city'),
                     'name' => $this->postField('name'),
@@ -137,6 +180,8 @@ class DirectPassageController extends CustomController
                     'technical_documentation' => $this->postField('technical_documentation'),
                     'road_class' => $this->postField('road_class'),
                     'elevation' => $this->postField('elevation'),
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id(),
                 ];
                 $direct_passage = DirectPassage::create($data_request_direct_passage);
 
