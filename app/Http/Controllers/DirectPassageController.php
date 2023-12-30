@@ -188,15 +188,15 @@ class DirectPassageController extends CustomController
                 $data_request_direct_passage_equipment = [
                     'direct_passage_id' => $direct_passage->id,
                     'locomotive_flute' => $this->postField('locomotive_flute'),
-                    'crossing_gate' => $this->postField('crossing_gate'),
-                    'non_crossing_gate' => $this->postField('non_crossing_gate'),
-                    'warning' => $this->postField('warning'),
                     'critical_distance_450' => $this->postField('critical_distance_450'),
                     'critical_distance_300' => $this->postField('critical_distance_300'),
                     'critical_distance_100' => $this->postField('critical_distance_100'),
                     'stop_sign' => $this->postField('stop_sign'),
-                    'vehicle_entry_ban' => $this->postField('vehicle_entry_ban'),
-                    'shock_line' => $this->postField('shock_line'),
+                    'crossing_exists' => $this->postField('crossing_exists'),
+                    'obstacles' => $this->postField('obstacles'),
+                    'noise_band' => $this->postField('noise_band'),
+                    'approach' => $this->postField('approach'),
+                    'look_around' => $this->postField('look_around'),
                 ];
                 DirectPassageSignEquipment::create($data_request_direct_passage_equipment);
                 DB::commit();

@@ -438,47 +438,17 @@
                                 </div>
                             </div>
                             <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Pintu Perlintasan Sebidang</label>
+                                <label class="form-label">Peringatan Ada Perlintasan Kereta Api</label>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="crossing_gate"
-                                               id="crossing_gate_yes" value="1">
-                                        <label class="form-check-label" for="crossing_gate_yes">ADA</label>
+                                        <input class="form-check-input" type="radio" name="crossing_exists"
+                                               id="crossing_exists_yes" value="1">
+                                        <label class="form-check-label" for="crossing_exists_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="crossing_gate"
-                                               id="crossing_gate_no" value="0" checked>
-                                        <label class="form-check-label" for="crossing_gate_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Tanpa Pintu Perlintasan Sebidang</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="non_crossing_gate"
-                                               id="non_crossing_gate_yes" value="1">
-                                        <label class="form-check-label" for="non_crossing_gate_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="non_crossing_gate"
-                                               id="non_crossing_gate_no" value="0" checked>
-                                        <label class="form-check-label" for="non_crossing_gate_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="warning"
-                                               id="warning_yes" value="1">
-                                        <label class="form-check-label" for="warning_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="warning"
-                                               id="warning_no" value="0" checked>
-                                        <label class="form-check-label" for="warning_no">TIDAK ADA</label>
+                                        <input class="form-check-input" type="radio" name="crossing_exists"
+                                               id="crossing_exists_no" value="0" checked>
+                                        <label class="form-check-label" for="crossing_exists_no">TIDAK ADA</label>
                                     </div>
                                 </div>
                             </div>
@@ -528,7 +498,7 @@
                                 </div>
                             </div>
                             <div class="w-100 mb-3">
-                                <label class="form-label">Rambu STOP</label>
+                                <label class="form-label">1A (Rambu STOP)</label>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="stop_sign"
@@ -543,7 +513,7 @@
                                 </div>
                             </div>
                             <div class="w-100 mb-3">
-                                <label class="form-label">Larangan Berjalan</label>
+                                <label class="form-label">Larangan Berjalan (Silang Andreas)</label>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="walking_ban"
@@ -552,38 +522,68 @@
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="walking_ban"
-                                               id="walking_ban_no" value="0" checked>
+                                               id="walking_ban_no" value="0">
                                         <label class="form-check-label" for="walking_ban_no">TIDAK ADA</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="w-100 mb-3">
-                                <label class="form-label">Larangan Masuk Kendaraan</label>
+                                <label class="form-label">Peringatan Rintangan Object Berbahaya</label>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="vehicle_entry_ban"
-                                               id="vehicle_entry_ban_yes" value="1">
-                                        <label class="form-check-label" for="vehicle_entry_ban_yes">ADA</label>
+                                        <input class="form-check-input" type="radio" name="obstacles"
+                                               id="obstacles_yes" value="1">
+                                        <label class="form-check-label" for="obstacles_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="vehicle_entry_ban"
-                                               id="vehicle_entry_ban_no" value="0" checked>
-                                        <label class="form-check-label" for="vehicle_entry_ban_no">TIDAK ADA</label>
+                                        <input class="form-check-input" type="radio" name="obstacles"
+                                               id="obstacles_no" value="0">
+                                        <label class="form-check-label" for="obstacles_no">TIDAK ADA</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="w-100 mb-3">
-                                <label class="form-label">Garis Kejut</label>
+                                <label class="form-label">Pita Penggaduh</label>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shock_line"
-                                               id="shock_line_yes" value="1">
-                                        <label class="form-check-label" for="shock_line_yes">ADA</label>
+                                        <input class="form-check-input" type="radio" name="noise_band"
+                                               id="noise_band_yes" value="1">
+                                        <label class="form-check-label" for="noise_band_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="shock_line"
-                                               id="shock_line_no" value="0" checked>
-                                        <label class="form-check-label" for="shock_line_no">TIDAK ADA</label>
+                                        <input class="form-check-input" type="radio" name="noise_band"
+                                               id="noise_band_no" value="0">
+                                        <label class="form-check-label" for="noise_band_no">TIDAK ADA</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100 mb-3">
+                                <label class="form-label">Hati Hati Mendekati Perlintasan</label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="approach"
+                                               id="approach_yes" value="1">
+                                        <label class="form-check-label" for="approach_yes">ADA</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="approach"
+                                               id="approach_no" value="0">
+                                        <label class="form-check-label" for="approach_no">TIDAK ADA</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100 mb-3">
+                                <label class="form-label">Hati Hati Mendekati Perlintasan</label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="approach"
+                                               id="approach_yes" value="1">
+                                        <label class="form-check-label" for="approach_yes">ADA</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="approach"
+                                               id="approach_no" value="0">
+                                        <label class="form-check-label" for="approach_no">TIDAK ADA</label>
                                     </div>
                                 </div>
                             </div>
@@ -622,7 +622,7 @@
     <script>
         $(document).ready(function () {
             var stepper = new Stepper($('.bs-stepper')[0], {
-                linear: true
+                linear: false
             });
             $('.select2').select2({
                 width: 'resolve',

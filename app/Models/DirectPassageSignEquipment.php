@@ -22,6 +22,11 @@ class DirectPassageSignEquipment extends Model
         'stop_sign',
         'vehicle_entry_ban',
         'shock_line',
+        'crossing_exists',
+        'obstacles',
+        'noise_band',
+        'approach',
+        'look_around',
     ];
 
     public function direct_passage()
