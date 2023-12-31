@@ -240,9 +240,9 @@ function windowContentDirectPassageMarker(data) {
         data["sub_track"]["code"] +
         ")</p>" +
         '<p class="mb-3 text-center" style="color: #777777; font-size: 12px;">' +
-        data["sub_track"]["track"]["code"] +
+        data["track"]["code"] +
         " (" +
-        data["sub_track"]["track"]["area"]["name"] +
+        data["area"]["name"] +
         ")</p>" +
         '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
         '<div class="d-flex align-items-center btn-facility" data-id="' +
@@ -254,16 +254,16 @@ function windowContentDirectPassageMarker(data) {
         ")</span>" +
         "</div>" +
         "</div>" +
-        '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
-        '<div class="d-flex align-items-center btn-facility" data-id="' +
-        data["id"] +
-        '" style="text-decoration: none;">' +
-        '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">engineering</span>' +
-        '<span style="color: #777777; font-size: 12px;">Penjaga Jalur Lintasan (' +
-        data["count_guard"] +
-        ")</span>" +
-        "</div>" +
-        "</div>" +
+        // '<div class="w-100 d-flex align-items-center justify-content-center mb-1">' +
+        // '<div class="d-flex align-items-center btn-facility" data-id="' +
+        // data["id"] +
+        // '" style="text-decoration: none;">' +
+        // '<span class="material-symbols-outlined menu-icon me-1" style="color: #777777; font-size: 10px;">engineering</span>' +
+        // '<span style="color: #777777; font-size: 12px;">Penjaga Jalur Lintasan (' +
+        // data["count_guard"] +
+        // ")</span>" +
+        // "</div>" +
+        // "</div>" +
         "</div>"
     );
 }

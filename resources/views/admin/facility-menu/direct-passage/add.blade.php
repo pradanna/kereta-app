@@ -25,13 +25,13 @@
     @endif
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">JALUR PERLINTASAN LANGSUNG {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Tambah Data Jalur Perlintasan Langsung {{ $service_unit->name }}</p>
+            <h1 class="h1">PERLINTASAN KERETA API (JPL) {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.direct-passage.service-unit', ['service_unit_id' => $service_unit->id]) }}">Jalur Perlintasan Langsung (JPL) {{ $service_unit->name }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.direct-passage.service-unit', ['service_unit_id' => $service_unit->id]) }}">Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
@@ -318,107 +318,6 @@
                         </div>
                     </div>
                 </div>
-{{--                <div id="guard-part" class="content" role="tabpanel" aria-labelledby="guard-part-trigger">--}}
-{{--                    <div class="panel ">--}}
-{{--                        <div class="isi">--}}
-{{--                            <p class="mb-0 fw-bold">PT. KAI</p>--}}
-{{--                            <hr>--}}
-{{--                            <div class="w-100 mb-3">--}}
-{{--                                <label class="form-label">Resmi Di Jaga OP</label>--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_operator"--}}
-{{--                                               id="is_verified_by_operator_yes" value="1">--}}
-{{--                                        <label class="form-check-label" for="is_verified_by_operator_yes">YA</label>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_operator"--}}
-{{--                                               id="is_verified_by_operator_no" value="0" checked>--}}
-{{--                                        <label class="form-check-label" for="is_verified_by_operator_no">TIDAK</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="w-100 mb-3">--}}
-{{--                                <label class="form-label">Resmi Di Jaga JJ</label>--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_unit_track_and_bridge"--}}
-{{--                                               id="is_verified_by_unit_track_and_bridge_yes" value="1">--}}
-{{--                                        <label class="form-check-label" for="is_verified_by_unit_track_and_bridge_yes">YA</label>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_unit_track_and_bridge"--}}
-{{--                                               id="is_verified_by_unit_track_and_bridge_no" value="0" checked>--}}
-{{--                                        <label class="form-check-label" for="is_verified_by_unit_track_and_bridge_no">TIDAK</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <hr>--}}
-{{--                            <p class="mb-0 fw-bold">Pemda</p>--}}
-{{--                            <hr>--}}
-{{--                            <div class="w-100 mb-3">--}}
-{{--                                <label class="form-label">Resmi Di Jaga Instansi Lain</label>--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_institution"--}}
-{{--                                               id="is_verified_by_institution_yes" value="1">--}}
-{{--                                        <label class="form-check-label" for="is_verified_by_institution_yes">YA</label>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_institution"--}}
-{{--                                               id="is_verified_by_institution_no" value="0" checked>--}}
-{{--                                        <label class="form-check-label" for="is_verified_by_institution_no">TIDAK</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <hr>--}}
-{{--                            <p class="mb-0 fw-bold">Lainnya</p>--}}
-{{--                            <hr>--}}
-{{--                            <div class="w-100 mb-3">--}}
-{{--                                <label class="form-label">Resmi Tidak Di Jaga</label>--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_unguarded"--}}
-{{--                                               id="is_verified_by_unguarded_yes" value="1">--}}
-{{--                                        <label class="form-check-label" for="is_verified_by_unguarded_yes">YA</label>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_verified_by_unguarded"--}}
-{{--                                               id="is_verified_by_unguarded_no" value="0" checked>--}}
-{{--                                        <label class="form-check-label" for="is_verified_by_unguarded_no">TIDAK</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="w-100 mb-3">--}}
-{{--                                <label class="form-label">Liar</label>--}}
-{{--                                <div class="form-group">--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_illegal"--}}
-{{--                                               id="is_illegal_yes" value="1">--}}
-{{--                                        <label class="form-check-label" for="is_illegal_yes">YA</label>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="form-check form-check-inline">--}}
-{{--                                        <input class="form-check-input" type="radio" name="is_illegal"--}}
-{{--                                               id="is_illegal_no" value="0" checked>--}}
-{{--                                        <label class="form-check-label" for="is_illegal_no">TIDAK</label>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <hr>--}}
-{{--                            <div class="d-flex justify-content-end">--}}
-{{--                                <div class="d-flex align-items-center">--}}
-{{--                                    <a class="btn-utama rnd me-3" id="btn-prev-step-2" href="#">--}}
-{{--                                        <i class="material-symbols-outlined menu-icon me-1 text-white">chevron_left</i>--}}
-{{--                                        Sebelumnya--}}
-{{--                                    </a>--}}
-{{--                                    <a class="btn-utama rnd" id="btn-next-step-2" href="#">Selanjutnya--}}
-{{--                                        <i class="material-symbols-outlined menu-icon ms-1 text-white">chevron_right</i>--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
                 <div id="sign-part" class="content" role="tabpanel" aria-labelledby="sign-part-trigger">
                     <div class="panel ">
                         <div class="isi">
@@ -522,13 +421,13 @@
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="walking_ban"
-                                               id="walking_ban_no" value="0">
+                                               id="walking_ban_no" value="0" checked>
                                         <label class="form-check-label" for="walking_ban_no">TIDAK ADA</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Rintangan Object Berbahaya</label>
+                                <label class="form-label">Peringatan Rintangan Obyek Berbahaya</label>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="obstacles"
@@ -537,7 +436,7 @@
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="obstacles"
-                                               id="obstacles_no" value="0">
+                                               id="obstacles_no" value="0" checked>
                                         <label class="form-check-label" for="obstacles_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -552,7 +451,7 @@
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="noise_band"
-                                               id="noise_band_no" value="0">
+                                               id="noise_band_no" value="0" checked>
                                         <label class="form-check-label" for="noise_band_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -567,7 +466,7 @@
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="approach"
-                                               id="approach_no" value="0">
+                                               id="approach_no" value="0" checked>
                                         <label class="form-check-label" for="approach_no">TIDAK ADA</label>
                                     </div>
                                 </div>
@@ -576,14 +475,14 @@
                                 <label class="form-label">Hati Hati Mendekati Perlintasan</label>
                                 <div class="form-group">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="approach"
-                                               id="approach_yes" value="1">
-                                        <label class="form-check-label" for="approach_yes">ADA</label>
+                                        <input class="form-check-input" type="radio" name="look_around"
+                                               id="look_around_yes" value="1">
+                                        <label class="form-check-label" for="look_around_yes">ADA</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="approach"
-                                               id="approach_no" value="0">
-                                        <label class="form-check-label" for="approach_no">TIDAK ADA</label>
+                                        <input class="form-check-input" type="radio" name="look_around"
+                                               id="look_around_no" value="0" checked>
+                                        <label class="form-check-label" for="look_around_no">TIDAK ADA</label>
                                     </div>
                                 </div>
                             </div>

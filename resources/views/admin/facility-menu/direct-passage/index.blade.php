@@ -3,13 +3,13 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">JALUR PERLINTASAN LANGSUNG {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Jalur Perlintasan Langsung {{ $service_unit->name }}</p>
+            <h1 class="h1">PERLINTASAN KERETA API (JPL) {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Jalur Perlintasan Langsung (JPL) {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -82,11 +82,11 @@
                             <th class="text-center middle-header" width="5%">#</th>
                             <th class="text-center middle-header" width="10%">Wilayah</th>
                             <th class="text-center middle-header" width="10%">Lintas</th>
-                            <th class="text-center middle-header">Petak</th>
-                            <th class="text-center middle-header" width="7%">JPL</th>
+                            <th class="text-center middle-header" width="10%">Petak</th>
                             <th class="text-center middle-header" width="8%">KM/HM</th>
+                            <th class="text-center middle-header">No. JPL</th>
                             <th class="text-center middle-header" width="8%">Jumlah PLH</th>
-                            <th class="text-center middle-header" width="8%">Jumlah PJL</th>
+                            <th class="text-center middle-header" width="8%">Status</th>
                             <th class="text-center middle-header" width="8%">Gambar</th>
                             <th class="text-center middle-header" width="15%">Aksi</th>
                         </tr>
@@ -108,119 +108,170 @@
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Jalur Perlintasan
                         Langsung</p>
                     <hr>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="sub_track" class="form-label">Lintas Antara</label>
-                                <input type="text" class="form-control" id="sub_track" name="sub_track"
-                                       placeholder="JPL"
-                                       disabled>
+                    <ul class="nav nav-pills" id="pills-tab-detail" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active d-flex align-items-center" id="pills-information-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-information" type="button" role="tab" aria-controls="pills-information"
+                                    aria-selected="true">
+                                Informasi utama
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link d-flex align-items-center" id="pills-equipment-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-equipment" type="button" role="tab"
+                                    aria-controls="pills-equipment" aria-selected="false">
+                                Perlengkapan Rambu
+                            </button>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="pills-information" role="tabpanel"
+                             aria-labelledby="pills-information-tab">
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="form-group w-100">
+                                        <label for="area" class="form-label">Area</label>
+                                        <input type="text" class="form-control" id="area" name="area"
+                                               disabled>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="track" class="form-label">Lintas</label>
+                                        <input type="text" class="form-control" id="track" name="track"
+                                               disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="form-group w-100">
+                                        <label for="sub_track" class="form-label">Petak</label>
+                                        <input type="text" class="form-control" id="sub_track" name="sub_track"
+                                               placeholder="JPL"
+                                               disabled>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="stakes" class="form-label">KM/HM</label>
+                                        <input type="text" class="form-control" id="stakes" name="stakes" placeholder="KM/HM"
+                                               disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="name" class="form-label">No. JPL</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="JPL"
+                                               disabled>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="width" class="form-label">Lebar Jalan (m)</label>
+                                        <input type="number" step="any" class="form-control" id="width" name="width"
+                                               placeholder="0" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="road_class" class="form-label">Kelas Jalan</label>
+                                        <input type="text" class="form-control" id="road_class" name="road_class" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="elevation" class="form-label">Elevasi (derajat)</label>
+                                        <input type="text" step="any" class="form-control" id="elevation" name="elevation"
+                                               placeholder="0" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="road_construction" class="form-label">Konstruksi Jalan</label>
+                                        <input type="text" class="form-control" id="road_construction"
+                                               name="road_construction" placeholder="Konstruksi Jalan" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group w-100">
+                                        <label for="city" class="form-label">Kota</label>
+                                        <input type="text" class="form-control" id="city" name="city" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="latitude" class="form-label">Latitude</label>
+                                        <input type="number" step="any" class="form-control" id="latitude"
+                                               name="latitude" placeholder="Contoh: 7.1129489" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="longitude" class="form-label">Longitude</label>
+                                        <input type="number" step="any" class="form-control" id="longitude"
+                                               name="longitude" placeholder="Contoh: 110.1129489" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="form-group w-100">
+                                        <label for="guarded_by" class="form-label">Status Penjagaan</label>
+                                        <input type="text" class="form-control" id="guarded_by" name="guarded_by" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="technical_documentation" class="form-label">No. Surat Rekomendasi
+                                            Teknis</label>
+                                        <input type="text" class="form-control" id="technical_documentation"
+                                               name="technical_documentation" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <div class="form-group w-100">
+                                        <label for="is_closed" class="form-label">Status JPL</label>
+                                        <input type="text" class="form-control" id="is_closed" name="is_closed" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="road_name" class="form-label">Nama Jalan / Daerah</label>
+                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name"
+                                                  name="road_name"
+                                                  placeholder="Konstruksi Jalan" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="w-100">
+                                        <label for="description" class="form-label">Keterangan</label>
+                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
+                                                  name="description"
+                                                  placeholder="Keterangan" disabled></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="name" class="form-label">JPL</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="JPL"
-                                       disabled>
-                            </div>
+                        <div class="tab-pane fade" id="pills-equipment" role="tabpanel"
+                             aria-labelledby="pills-equipment-tab">
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="stakes" class="form-label">KM/HM</label>
-                                <input type="text" class="form-control" id="stakes" name="stakes" placeholder="KM/HM"
-                                       disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="width" class="form-label">Lebar Jalan (m)</label>
-                                <input type="number" step="any" class="form-control" id="width" name="width"
-                                       placeholder="0" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="road_class" class="form-label">Kelas Jalan</label>
-                                <input type="text" class="form-control" id="road_class" name="road_class" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="elevation" class="form-label">Elevasi (derajat)</label>
-                                <input type="text" step="any" class="form-control" id="elevation" name="elevation"
-                                       placeholder="0" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="road_construction" class="form-label">Konstruksi Jalan</label>
-                                <input type="text" class="form-control" id="road_construction"
-                                       name="road_construction" placeholder="Konstruksi Jalan" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="city" class="form-label">Kota</label>
-                                <input type="text" class="form-control" id="city" name="city" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="latitude" class="form-label">Latitude</label>
-                                <input type="number" step="any" class="form-control" id="latitude"
-                                       name="latitude" placeholder="Contoh: 7.1129489" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="longitude" class="form-label">Longitude</label>
-                                <input type="number" step="any" class="form-control" id="longitude"
-                                       name="longitude" placeholder="Contoh: 110.1129489" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="guarded_by" class="form-label">Status Penjagaan</label>
-                                <input type="text" class="form-control" id="guarded_by" name="guarded_by" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="technical_documentation" class="form-label">No. Surat Rekomendasi
-                                    Teknis</label>
-                                <input type="text" class="form-control" id="technical_documentation"
-                                       name="technical_documentation" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="road_name" class="form-label">Nama Jalan / Daerah</label>
-                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name"
-                                          name="road_name"
-                                          placeholder="Konstruksi Jalan" disabled></textarea>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="w-100">
-                                <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
-                                          name="description"
-                                          placeholder="Keterangan" disabled></textarea>
-                            </div>
-                        </div>
-                    </div>
+
                     <hr>
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Perlengkapan Rambu</p>
                     <hr>
@@ -376,6 +427,8 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
+                let area = data['area']['name'];
+                let track = data['track']['code'];
                 let subTrack = data['sub_track']['code'];
                 let name = data['name'];
                 let stakes = data['stakes'];
@@ -389,8 +442,10 @@
                 let city = data['city']['name'];
                 let latitude = data['latitude'];
                 let longitude = data['longitude'];
-                let accident_history = data['accident_history'];
                 let description = data['description'];
+                let is_closed = data['is_closed'] === 1 ? 'Tidak Aktif' : 'Aktif';
+                $('#area').val(area);
+                $('#track').val(track);
                 $('#sub_track').val(subTrack);
                 $('#name').val(name);
                 $('#stakes').val(stakes);
@@ -404,6 +459,7 @@
                 $('#city').val(city);
                 $('#latitude').val(latitude);
                 $('#longitude').val(longitude);
+                $('#is_closed').val(is_closed);
                 $('#description').val(description);
                 $.each(availableSignEquipment, function (k, v) {
                     let value = data['sign_equipment'][v] === 1 ? 'V' : '-';
@@ -445,13 +501,13 @@
                     className: 'text-center',
                 },
                     {
-                        data: 'sub_track.track.area.name',
-                        name: 'sub_track.track.area.name',
+                        data: 'area.name',
+                        name: 'area.name',
                         className: 'text-center',
                     },
                     {
-                        data: 'sub_track.track.code',
-                        name: 'sub_track.track.code',
+                        data: 'track.code',
+                        name: 'track.code',
                         className: 'text-center',
                     },
                     {
@@ -460,13 +516,13 @@
                         className: 'text-center',
                     },
                     {
-                        data: 'name',
-                        name: 'name',
+                        data: 'stakes',
+                        name: 'stakes',
                         className: 'text-center',
                     },
                     {
-                        data: 'stakes',
-                        name: 'stakes',
+                        data: 'name',
+                        name: 'name',
                         className: 'text-center',
                     },
                     {
@@ -479,14 +535,22 @@
                                 data['id'] + '">' + data['count_accident'] + '</a>';
                         }
                     },
+                    // {
+                    //     data: null,
+                    //     name: null,
+                    //     className: 'text-center',
+                    //     render: function (data) {
+                    //         let url = path + '/' + data['id'] + '/penjaga-jalur-lintasan';
+                    //         return '<a href="' + url + '" class="btn-guard me-2 btn-table-action" data-id="' +
+                    //             data['id'] + '">' + data['count_guard'] + '</a>';
+                    //     }
+                    // },
                     {
                         data: null,
                         name: null,
                         className: 'text-center',
                         render: function (data) {
-                            let url = path + '/' + data['id'] + '/penjaga-jalur-lintasan';
-                            return '<a href="' + url + '" class="btn-guard me-2 btn-table-action" data-id="' +
-                                data['id'] + '">' + data['count_guard'] + '</a>';
+                            return data['is_closed'] === 1 ? 'Tidak Aktif' : 'Aktif'
                         }
                     },
                     {

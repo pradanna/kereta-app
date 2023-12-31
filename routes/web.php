@@ -141,7 +141,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::get('/{id}/peristiwa-luar-biasa-hebat', [\App\Http\Controllers\DirectPassageController::class, 'direct_passage_accident_page'])->name('means.direct-passage.accident');
             Route::get('/excel', [\App\Http\Controllers\DirectPassageController::class, 'export_to_excel'])->name('means.direct-passage.excel');
             Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\DirectPassageController::class, 'image_page'])->name('means.direct-passage.image');
-            Route::post('/{id}/delete-image', [\App\Http\Controllers\DirectPassageController::class, 'destroy_image'])->name('means.direct-passage.image.destroy');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\DirectPassageController::class, 'destroy_image'])->name('means.direct-passage.image.destroy');
         });
     });
 

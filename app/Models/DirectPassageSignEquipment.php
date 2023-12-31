@@ -20,6 +20,7 @@ class DirectPassageSignEquipment extends Model
         'critical_distance_300',
         'critical_distance_100',
         'stop_sign',
+        'walking_ban',
         'vehicle_entry_ban',
         'shock_line',
         'crossing_exists',

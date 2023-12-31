@@ -38,12 +38,13 @@ class DirectPassageController extends CustomController
                 'service_units' => $service_units
             ]);
     }
+
     private function generateData()
     {
         $service_unit = $this->request->query->get('service_unit');
         $area = $this->request->query->get('area');
         $track = $this->request->query->get('track');
-        $query = DirectPassage::with(['sub_track.track.area', 'city', 'sign_equipment']);
+        $query = DirectPassage::with(['sub_track', 'track', 'area', 'city', 'sign_equipment']);
 
         if ($service_unit !== '' && $service_unit !== null) {
             $query->whereHas('sub_track', function ($qst) use ($service_unit) {
@@ -76,7 +77,7 @@ class DirectPassageController extends CustomController
         //
         //        }
 
-        return $query->orderBy('created_at', 'ASC')
+        return $query->orderBy('created_at', 'DESC')
             ->get()->append(['count_guard', 'count_accident']);
     }
 
@@ -170,7 +171,7 @@ class DirectPassageController extends CustomController
                     'road_construction' => $this->postField('road_construction'),
                     'road_name' => $this->postField('road_name'),
                     'guarded_by' => $this->postField('guarded_by'),
-                    'is_closed' => false,
+                    'is_closed' => $this->postField('is_closed'),
                     'is_not_found' => false,
                     'arrangement_proposal' => false,
                     'accident_history' => 0,
@@ -192,6 +193,7 @@ class DirectPassageController extends CustomController
                     'critical_distance_300' => $this->postField('critical_distance_300'),
                     'critical_distance_100' => $this->postField('critical_distance_100'),
                     'stop_sign' => $this->postField('stop_sign'),
+                    'walking_ban' => $this->postField('walking_ban'),
                     'crossing_exists' => $this->postField('crossing_exists'),
                     'obstacles' => $this->postField('obstacles'),
                     'noise_band' => $this->postField('noise_band'),
@@ -208,13 +210,13 @@ class DirectPassageController extends CustomController
         }
         $areaIDS = $areas->pluck('id')->toArray();
         $sub_tracks = SubTrack::with(['track.area'])
-            ->whereHas('track', function ($qt) use ($areaIDS) {
-                /** @var $qt Builder */
-                return $qt->whereIn('area_id', $areaIDS);
-            })
+//            ->whereHas('track', function ($qt) use ($areaIDS) {
+//                /** @var $qt Builder */
+//                return $qt->whereIn('area_id', $areaIDS);
+//            })
             ->orderBy('name', 'ASC')->get();
         $tracks = Track::with(['area'])
-            ->whereIn('area_id', $areaIDS)
+//            ->whereIn('area_id', $areaIDS)
             ->orderBy('name', 'ASC')->get();
 
         $cities = City::with([])->orderBy('name', 'ASC')->get();
@@ -240,7 +242,13 @@ class DirectPassageController extends CustomController
         if ($this->request->method() === 'POST') {
             DB::beginTransaction();
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request_direct_passage = [
+                    'area_id' => $this->postField('area'),
+                    'track_id' => $this->postField('track'),
                     'sub_track_id' => $this->postField('sub_track'),
                     'city_id' => $this->postField('city'),
                     'name' => $this->postField('name'),
@@ -249,7 +257,7 @@ class DirectPassageController extends CustomController
                     'road_construction' => $this->postField('road_construction'),
                     'road_name' => $this->postField('road_name'),
                     'guarded_by' => $this->postField('guarded_by'),
-                    'is_closed' => false,
+                    'is_closed' => $this->postField('is_closed'),
                     'is_not_found' => false,
                     'arrangement_proposal' => false,
                     'accident_history' => 0,
@@ -259,20 +267,22 @@ class DirectPassageController extends CustomController
                     'technical_documentation' => $this->postField('technical_documentation'),
                     'road_class' => $this->postField('road_class'),
                     'elevation' => $this->postField('elevation'),
+                    'updated_by' => auth()->id(),
                 ];
                 $data->update($data_request_direct_passage);
                 $data_request_direct_passage_equipment = [
                     'direct_passage_id' => $data->id,
                     'locomotive_flute' => $this->postField('locomotive_flute'),
-                    'crossing_gate' => $this->postField('crossing_gate'),
-                    'non_crossing_gate' => $this->postField('non_crossing_gate'),
-                    'warning' => $this->postField('warning'),
                     'critical_distance_450' => $this->postField('critical_distance_450'),
                     'critical_distance_300' => $this->postField('critical_distance_300'),
                     'critical_distance_100' => $this->postField('critical_distance_100'),
                     'stop_sign' => $this->postField('stop_sign'),
-                    'vehicle_entry_ban' => $this->postField('vehicle_entry_ban'),
-                    'shock_line' => $this->postField('shock_line'),
+                    'walking_ban' => $this->postField('walking_ban'),
+                    'crossing_exists' => $this->postField('crossing_exists'),
+                    'obstacles' => $this->postField('obstacles'),
+                    'noise_band' => $this->postField('noise_band'),
+                    'approach' => $this->postField('approach'),
+                    'look_around' => $this->postField('look_around'),
                 ];
                 $data->sign_equipment->update($data_request_direct_passage_equipment);
                 DB::commit();
@@ -289,9 +299,14 @@ class DirectPassageController extends CustomController
                 return $qt->whereIn('area_id', $areaIDS);
             })
             ->orderBy('name')->get();
+        $tracks = Track::with(['area'])
+            ->whereIn('area_id', $areaIDS)
+            ->orderBy('name', 'ASC')->get();
         $cities = City::all();
         return view('admin.facility-menu.direct-passage.edit')->with([
             'data' => $data,
+            'areas' => $areas,
+            'tracks' => $tracks,
             'sub_tracks' => $sub_tracks,
             'cities' => $cities,
             'service_unit' => $service_unit,
@@ -315,7 +330,7 @@ class DirectPassageController extends CustomController
     public function detail($service_unit_id, $id)
     {
         try {
-            $data = DirectPassage::with(['sign_equipment', 'sub_track.track.area', 'city'])
+            $data = DirectPassage::with(['sign_equipment', 'sub_track', 'track', 'area', 'city'])
                 ->where('id', '=', $id)
                 ->first();
             return $this->jsonSuccessResponse('success', $data);
@@ -371,10 +386,10 @@ class DirectPassageController extends CustomController
         ]);
     }
 
-    public function destroy_image($service_unit_id, $id)
+    public function destroy_image($service_unit_id, $id, $image_id)
     {
         try {
-            DirectPassageImage::destroy($id);
+            DirectPassageImage::destroy($image_id);
             return $this->jsonSuccessResponse('success');
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());

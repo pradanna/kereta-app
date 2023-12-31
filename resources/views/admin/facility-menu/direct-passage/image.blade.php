@@ -10,20 +10,20 @@
     </div>
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">JALUR PERLINTASAN LANGSUNG {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Jalur Perlintasan Langsung {{ $service_unit->name }}</p>
+            <h1 class="h1">PERLINTASAN KERETA API (JPL) {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.direct-passage.service-unit', ['service_unit_id' => $service_unit->id]) }}">Jalur Perlintasan Langsung (JPL) {{ $service_unit->name }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah</li>
+                <li class="breadcrumb-item"><a href="{{ route('means.direct-passage.service-unit', ['service_unit_id' => $service_unit->id]) }}">Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Gambar</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Gambar Jalur Perlintasan Langsung {{ $data->sub_track->code }}</p>
+            <p>Gambar Perlintasan Kereta Api (JPL) No. {{ $data->name }}</p>
         </div>
         <div class="isi">
 
@@ -109,11 +109,16 @@
         }
 
         function destroy(id) {
-            let url = '{{ route('direct-passage') }}' + '/' + id + '/delete-image';
+            let url = path + '/' + id + '/delete-image';
             AjaxPost(url, {}, function () {
-                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Berhasil Menghapus Gambar...',
+                    icon: 'success',
+                    timer: 700
+                }).then((r) => {
                     window.location.reload();
-                });
+                })
             });
         }
 
@@ -156,7 +161,12 @@
                     });
                     this.on('successmultiple', function (file, response) {
                         blockLoading(false);
-                        SuccessAlert('Berhasil', 'Berhasil Menambahkan Data Gambar...').then((r) => {
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Berhasil Menambahkan Gambar...',
+                            icon: 'success',
+                            timer: 700
+                        }).then((r) => {
                             window.location.reload();
                         })
                     });
