@@ -9,7 +9,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Perlintasan Kereta Api
+                    (JPL) {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -17,7 +18,7 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-12">
+                    <div class="col-4">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
                             <select class="select2 form-control" name="area-option" id="area-option"
@@ -27,6 +28,24 @@
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group w-100">
+                            <label for="status-option" class="form-label d-none">Status JPL</label>
+                            <select class="select2 form-control" name="status-option" id="status-option"
+                                    style="width: 100%;">
+                                <option value="">Semua Status</option>
+                                <option value="0">Aktif</option>
+                                <option value="1">Tidak Aktif</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group w-100">
+                            <label for="param" class="form-label d-none"></label>
+                            <input type="text" class="form-control" id="param" name="param"
+                                   placeholder="Cari No. JPL">
                         </div>
                     </div>
                 </div>
@@ -40,9 +59,12 @@
         <div class="title">
             <p>Data Jalur Perlintasan Langsung (JPL)</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('means.direct-passage.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('means.direct-passage.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
                 <a class="btn-success sml rnd" href="#" id="btn-export">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
@@ -112,7 +134,8 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active d-flex align-items-center" id="pills-information-tab"
                                     data-bs-toggle="pill"
-                                    data-bs-target="#pills-information" type="button" role="tab" aria-controls="pills-information"
+                                    data-bs-target="#pills-information" type="button" role="tab"
+                                    aria-controls="pills-information"
                                     aria-selected="true">
                                 Informasi utama
                             </button>
@@ -157,7 +180,8 @@
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="stakes" class="form-label">KM/HM</label>
-                                        <input type="text" class="form-control" id="stakes" name="stakes" placeholder="KM/HM"
+                                        <input type="text" class="form-control" id="stakes" name="stakes"
+                                               placeholder="KM/HM"
                                                disabled>
                                     </div>
                                 </div>
@@ -182,13 +206,15 @@
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="road_class" class="form-label">Kelas Jalan</label>
-                                        <input type="text" class="form-control" id="road_class" name="road_class" disabled>
+                                        <input type="text" class="form-control" id="road_class" name="road_class"
+                                               disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="elevation" class="form-label">Elevasi (derajat)</label>
-                                        <input type="text" step="any" class="form-control" id="elevation" name="elevation"
+                                        <input type="text" step="any" class="form-control" id="elevation"
+                                               name="elevation"
                                                placeholder="0" disabled>
                                     </div>
                                 </div>
@@ -228,7 +254,8 @@
                                 <div class="col-6">
                                     <div class="form-group w-100">
                                         <label for="guarded_by" class="form-label">Status Penjagaan</label>
-                                        <input type="text" class="form-control" id="guarded_by" name="guarded_by" disabled>
+                                        <input type="text" class="form-control" id="guarded_by" name="guarded_by"
+                                               disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -244,7 +271,8 @@
                                 <div class="col-12">
                                     <div class="form-group w-100">
                                         <label for="is_closed" class="form-label">Status JPL</label>
-                                        <input type="text" class="form-control" id="is_closed" name="is_closed" disabled>
+                                        <input type="text" class="form-control" id="is_closed" name="is_closed"
+                                               disabled>
                                     </div>
                                 </div>
                             </div>
@@ -260,7 +288,8 @@
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="description" class="form-label">Keterangan</label>
-                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
+                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem"
+                                                  id="description"
                                                   name="description"
                                                   placeholder="Keterangan" disabled></textarea>
                                     </div>
@@ -269,58 +298,142 @@
                         </div>
                         <div class="tab-pane fade" id="pills-equipment" role="tabpanel"
                              aria-labelledby="pills-equipment-tab">
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Peringatan Membunyikan Suling Lokomotif</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_locomotive_flute">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Peringatan Ada Perlintasan Kereta Api</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_crossing_exists">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Jarak Lokasi Kritis 450 m</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_critical_distance_450">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Jarak Lokasi Kritis 300 m</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_critical_distance_300">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Jarak Lokasi Kritis 100 m</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_critical_distance_100">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">1A (Rambu STOP)</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_stop_sign">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Larangan Berjalan (Silang Andreas)</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_walking_ban">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Peringatan Rintangan Obyek Berbahaya</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_obstacles">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Pita Penggaduh</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_noise_band">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Hati-Hati Mendekati Perlintasan</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_approach">
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-4 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">Berhenti Tengok Kiri Kanan</span>
+                                    <span class="fw-bold">:</span>
+                                </div>
+                                <div class="col-8 d-flex align-items-center" id="lbl_look_around">
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                     <hr>
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Perlengkapan Rambu</p>
-                    <hr>
-                    <table id="table-guard" class="display table table-striped w-100">
-                        <thead>
-                        <tr>
-                            <th class="text-center middle-header">Peringatan Membunyikan Suling Lokomotif</th>
-                            <th class="text-center middle-header" width="8%">Peringatan Pintu Perlintasan Sebidang
-                            </th>
-                            <th class="text-center middle-header" width="8%">Peringatan Tanpa Pintu Perlintasan
-                                Sebidang
-                            </th>
-                            <th class="text-center middle-header" width="8%">Peringatan</th>
-                            <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 400m</th>
-                            <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 350m</th>
-                            <th class="text-center middle-header" width="8%">Jarak Lokasi Kritis 100m</th>
-                            <th class="text-center middle-header" width="8%">Rambu STOP</th>
-                            <th class="text-center middle-header" width="8%">Larangan Berjalan</th>
-                            <th class="text-center middle-header" width="8%">Larangan Masuk Kendaraan</th>
-                            <th class="text-center middle-header" width="8%">Garis Kejut</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td id="locomotive_flute" class="text-center">-</td>
-                            <td id="crossing_gate" class="text-center">-</td>
-                            <td id="non_crossing_gate" class="text-center">-</td>
-                            <td id="warning" class="text-center">-</td>
-                            <td id="critical_distance_450" class="text-center">-</td>
-                            <td id="critical_distance_300" class="text-center">-</td>
-                            <td id="critical_distance_100" class="text-center">-</td>
-                            <td id="stop_sign" class="text-center">-</td>
-                            <td id="walking_ban" class="text-center">-</td>
-                            <td id="vehicle_entry_ban" class="text-center">-</td>
-                            <td id="shock_line" class="text-center">-</td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
+
+
 @endsection
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="{{ asset('js/map-control.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <style>
+        .equipment-exists {
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            background-color: #1fa552;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        .equipment-exists .material-symbols-outlined {
+            font-size: 9px !important;
+            color: white;
+            margin-bottom: 0 !important;
+        }
+
+        .equipment-not-exists {
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            background-color: #dc3545;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .equipment-not-exists .material-symbols-outlined {
+            font-size: 9px !important;
+            color: white;
+            margin-bottom: 0 !important;
+        }
+    </style>
 @endsection
 
 @section('js')
@@ -333,8 +446,9 @@
     <script>
         let table;
         let path = '/{{ request()->path() }}';
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function changeTabEvent() {
             $("#pills-tab").on("shown.bs.tab", function (e) {
@@ -408,19 +522,19 @@
         }
 
         async function detailHandler(id) {
-            let availableGuards = ['OP (PT. KAI)', 'JJ (PT. KAI)', 'Instansi Lain', 'Resmi Tidak Dijaga', 'Liar'];
+            let availableGuards = ['OP (PT. KAI)', 'JJ (PT. KAI)', 'Instansi Lain', 'Resmi Tidak Dijaga', 'Liar', 'Swadaya'];
             let availableSignEquipment = [
                 'locomotive_flute',
-                'crossing_gate',
-                'non_crossing_gate',
-                'warning',
+                'crossing_exists',
                 'critical_distance_450',
                 'critical_distance_300',
                 'critical_distance_100',
                 'stop_sign',
                 'walking_ban',
-                'vehicle_entry_ban',
-                'shock_line',
+                'obstacles',
+                'noise_band',
+                'approach',
+                'look_around',
             ];
 
             try {
@@ -462,8 +576,21 @@
                 $('#is_closed').val(is_closed);
                 $('#description').val(description);
                 $.each(availableSignEquipment, function (k, v) {
-                    let value = data['sign_equipment'][v] === 1 ? 'V' : '-';
-                    let el = '#' + v;
+                    let value = '-';
+                    if (data['sign_equipment'][v] === 1) {
+                        value = '<div class="equipment-exists">' +
+                            '<span class="material-symbols-outlined">check</span>' +
+                            '</div>' +
+                            '<span class="ms-2">Ada</span>'
+                    }
+
+                    if (data['sign_equipment'][v] === 0) {
+                        value = '<div class="equipment-not-exists">' +
+                            '<span class="material-symbols-outlined">close</span>' +
+                            '</div>' +
+                            '<span class="ms-2">Tidak Ada</span>'
+                    }
+                    let el = '#lbl_' + v;
                     $(el).html(value);
                 });
                 modalDetail.show();
@@ -489,7 +616,8 @@
                     url: path,
                     'data': function (d) {
                         d.area = $('#area-option').val();
-                        // d.track = $('#track-option').val();
+                        d.status = $('#status-option').val();
+                        d.name = $('#param').val();
                         d.type = 'table';
                     }
                 },
@@ -566,14 +694,13 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
-                                data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                    'id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Detail</a>' + elEdit + elDelete
                         },
                         orderable: false,
                         className: 'text-center',
@@ -597,8 +724,9 @@
             $('#btn-export').on('click', function (e) {
                 e.preventDefault();
                 let area = $('#area-option').val();
-                let track = $('#track-option').val();
-                let queryParam = '?area=' + area + '&track=' + track;
+                let status = $('#status-option').val();
+                let name = $('#param').val();
+                let queryParam = '?area=' + area + '&status=' + status + '&name=' + name;
                 let exportPath = path + '/excel' + queryParam;
                 window.open(exportPath, '_blank');
             });

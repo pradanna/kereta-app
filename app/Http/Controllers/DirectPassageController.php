@@ -43,7 +43,8 @@ class DirectPassageController extends CustomController
     {
         $service_unit = $this->request->query->get('service_unit');
         $area = $this->request->query->get('area');
-        $track = $this->request->query->get('track');
+        $is_closed = $this->request->query->get('status');
+        $name = $this->request->query->get('name');
         $query = DirectPassage::with(['sub_track', 'track', 'area', 'city', 'sign_equipment']);
 
         if ($service_unit !== '' && $service_unit !== null) {
@@ -69,13 +70,15 @@ class DirectPassageController extends CustomController
             });
         }
 
-        //        if ($track !== '') {
-        //            $query->whereHas('sub_track', function ($qstt) use ($track) {
-        //                /** @var $qstt Builder */
-        //                return $qstt->where('track_id', '=', $track);
-        //            });
-        //
-        //        }
+        if ($is_closed !== '' && $is_closed !== null) {
+            $query->where('is_closed', '=', $is_closed);
+
+        }
+
+        if ($name !== '' && $name !== null) {
+            $query->where('name', 'LIKE', '%' . $name . '%');
+
+        }
 
         return $query->orderBy('created_at', 'DESC')
             ->get()->append(['count_guard', 'count_accident']);
@@ -83,7 +86,13 @@ class DirectPassageController extends CustomController
 
     public function index($service_unit_id)
     {
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
+        $access = $this->getRoleAccess(Formula::AppMenuDirectPassage);
         $areas = Area::with(['service_units'])
             ->whereHas('service_units', function ($qs) use ($service_unit_id) {
                 /** @var $qs Builder */
@@ -102,9 +111,11 @@ class DirectPassageController extends CustomController
                     return $this->jsonSuccessResponse('success', []);
             }
         }
+
         return view('admin.facility-menu.direct-passage.index')->with([
             'areas' => $areas,
-            'service_unit' => $service_unit
+            'service_unit' => $service_unit,
+            'access' => $access
         ]);
     }
 
@@ -146,6 +157,16 @@ class DirectPassageController extends CustomController
 
     public function store($service_unit_id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::AppMenuDirectPassage);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $areas = Area::with(['service_units'])
             ->whereHas('service_units', function ($qs) use ($service_unit_id) {
@@ -231,6 +252,16 @@ class DirectPassageController extends CustomController
 
     public function patch($service_unit_id, $id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::AppMenuDirectPassage);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $areas = Area::with(['service_units'])
             ->whereHas('service_units', function ($qs) use ($service_unit_id) {
@@ -315,6 +346,16 @@ class DirectPassageController extends CustomController
 
     public function destroy($service_unit_id, $id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::AppMenuDirectPassage);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         DB::beginTransaction();
         try {
             DirectPassageSignEquipment::with(['direct_passage'])->where('direct_passage_id', '=', $id)->delete();
@@ -329,6 +370,12 @@ class DirectPassageController extends CustomController
 
     public function detail($service_unit_id, $id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
         try {
             $data = DirectPassage::with(['sign_equipment', 'sub_track', 'track', 'area', 'city'])
                 ->where('id', '=', $id)
@@ -351,6 +398,13 @@ class DirectPassageController extends CustomController
 
     public function image_page($service_unit_id, $id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::AppMenuDirectPassage);
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $data = DirectPassage::with(['images'])->findOrFail($id);
         if ($this->request->method() === 'POST') {
@@ -383,11 +437,23 @@ class DirectPassageController extends CustomController
         return view('admin.facility-menu.direct-passage.image')->with([
             'data' => $data,
             'service_unit' => $service_unit,
+            'access' => $access,
         ]);
     }
 
     public function destroy_image($service_unit_id, $id, $image_id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::AppMenuDirectPassage);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
+
         try {
             DirectPassageImage::destroy($image_id);
             return $this->jsonSuccessResponse('success');

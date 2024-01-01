@@ -12,6 +12,7 @@ use App\Models\DirectPassageAccident;
 use App\Models\DirectPassageSignEquipment;
 use App\Models\ServiceUnit;
 use App\Models\SubTrack;
+use App\Models\Track;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -86,6 +87,38 @@ class DirectPassageAccidentsController extends CustomController
         ]);
     }
 
+    private $rule = [
+        'area' => 'required',
+        'track' => 'required',
+        'sub_track' => 'required',
+        'city' => 'required',
+        'stakes' => 'required',
+        'latitude' => 'required',
+        'longitude' => 'required',
+        'technical_documentation' => 'required',
+        'elevation' => 'required',
+        'road_class' => 'required',
+        'is_closed' => 'required',
+    ];
+
+    private $message = [
+        'area.required' => 'kolom wilayah wajib di isi',
+        'track.required' => 'kolom lintas wajib di isi',
+        'sub_track.required' => 'kolom petak wajib di isi',
+        'city.required' => 'kolom kota wajib di isi',
+        'name.required' => 'kolom nomor jpl wajib di isi',
+        'stakes.required' => 'kolom km/hm wajib di isi',
+        'width.required' => 'kolom lebar jalan wajib di isi',
+        'road_name.required' => 'kolom nama jalan wajib di isi',
+        'guarded_by.required' => 'kolom status penjagaan wajib di isi',
+        'latitude.required' => 'kolom latitude wajib di isi',
+        'longitude.required' => 'kolom longitude wajib di isi',
+        'technical_documentation.required' => 'kolom nomor surat rekomendasi teknis wajib di isi',
+        'elevation.required' => 'kolom sudut elevasi wajib di isi',
+        'road_class.required' => 'kolom kelas jalan wajib di isi',
+        'is_closed.required' => 'kolom status jpl wajib di isi',
+    ];
+
     public function store($service_unit_id)
     {
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
@@ -100,14 +133,22 @@ class DirectPassageAccidentsController extends CustomController
                 $date = Carbon::createFromFormat('d-m-Y', $this->postField('date'))->format('Y-m-d');
                 $time = $this->postField('time');
                 $data_request = [
-                    'direct_passage_id' => $this->postField('direct_passage'),
+                    'area_id' => $this->postField('area'),
+                    'track_id' => $this->postField('track'),
+                    'sub_track_id' => $this->postField('sub_track'),
+                    'city_id' => $this->postField('city'),
+                    'direct_passage_id' => $this->postField('direct_passage') !== '' ? $this->postField('direct_passage') : null,
+                    'stakes' => $this->postField('stakes'),
                     'date' => $date . ' ' . $time,
                     'train_name' => $this->postField('train_name'),
                     'accident_type' => $this->postField('accident_type'),
                     'injured' => $this->postField('injured'),
                     'died' => $this->postField('died'),
                     'damaged_description' => $this->postField('damaged_description'),
+                    'chronology' => $this->postField('chronology'),
                     'description' => $this->postField('description'),
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id(),
                 ];
 
                 DirectPassageAccident::create($data_request);
@@ -127,7 +168,19 @@ class DirectPassageAccidentsController extends CustomController
             })
             ->orderBy('name')->get();
         $cities = City::with([])->orderBy('name', 'ASC')->get();
+        $sub_tracks = SubTrack::with(['track.area'])
+//            ->whereHas('track', function ($qt) use ($areaIDS) {
+//                /** @var $qt Builder */
+//                return $qt->whereIn('area_id', $areaIDS);
+//            })
+            ->orderBy('name', 'ASC')->get();
+        $tracks = Track::with(['area'])
+//            ->whereIn('area_id', $areaIDS)
+            ->orderBy('name', 'ASC')->get();
         return view('admin.facility-menu.direct-passage-accidents.add')->with([
+            'areas' => $areas,
+            'tracks' => $tracks,
+            'sub_tracks' => $sub_tracks,
             'direct_passages' => $direct_passages,
             'cities' => $cities,
             'service_unit' => $service_unit,

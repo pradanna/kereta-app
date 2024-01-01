@@ -42,7 +42,7 @@ class DisasterArea implements FromCollection, WithHeadings, WithStyles, WithStri
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:J' . $rowLength;
+        $cellRange = 'A1:L' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -84,10 +84,12 @@ class DisasterArea implements FromCollection, WithHeadings, WithStyles, WithStri
     {
         return [
             'NO.',
+            'WILAYAH',
+            'LINTAS',
+            'PETAK',
+            'KM/HM',
             'RESORT',
             'TIPE LOKASI',
-            'KM',
-            'PETAK',
             'KOORDINAT',
             'JALUR',
             'JENIS RAWAN',
@@ -115,10 +117,12 @@ class DisasterArea implements FromCollection, WithHeadings, WithStyles, WithStri
 
             $result = [
                 $no,
+                $datum->area->name,
+                $datum->track->code,
+                $datum->sub_track->code,
+                $datum->block,
                 $datum->resort->name,
                 $locationTypeValue,
-                $datum->block,
-                $datum->sub_track->code,
                 strval($datum->latitude) .','. strval($datum->longitude),
                 $datum->lane,
                 $datum->disaster_type->name,

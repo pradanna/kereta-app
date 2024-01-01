@@ -52,10 +52,12 @@
         <div class="title">
             <p>Data Daerah Rawan Bencana</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2"
-                   href="{{ route('means.disaster-area.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('means.disaster-area.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
                 <a class="btn-success sml rnd" href="#" id="btn-export"
                    target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
@@ -94,11 +96,14 @@
                         <thead>
                         <tr>
                             <th width="5%" class="text-center">#</th>
-                            <th width="15%" class="text-center">Satuan Pelayanan</th>
-                            <th width="10%" class="text-center">Lokasi</th>
-                            <th width="15%" class="text-center">Resort</th>
+                            <th width="10%" class="text-center">Wilayah</th>
+                            <th width="10%" class="text-center">Lintas</th>
                             <th width="10%" class="text-center">Petak</th>
+                            <th width="15%" class="text-center">Resort</th>
+                            <th width="10%" class="text-center">Lokasi</th>
+                            <th width="10%" class="text-center">KM/HM</th>
                             <th class="text-center">Jenis Rawan</th>
+                            <th class="text-center middle-header" width="8%">Gambar</th>
                             <th width="15%" class="text-center">Aksi</th>
                         </tr>
                         </thead>
@@ -120,24 +125,30 @@
                         Bencana</p>
                     <hr>
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="service_unit" class="form-label">Satuan Pelayanan</label>
-                                <input type="text" class="form-control" name="service_unit" id="service_unit" disabled>
+                                <label for="area" class="form-label">Wilayah</label>
+                                <input type="text" class="form-control" name="area" id="area" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="track" class="form-label">Lintas</label>
+                                <input type="text" class="form-control" name="track" id="track" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <div class="form-group w-100">
-                                <label for="resort" class="form-label">Resort</label>
-                                <input type="text" class="form-control" name="resort" id="resort" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
                             <div class="w-100">
                                 <label for="sub_track" class="form-label">Petak</label>
                                 <input type="text" class="form-control" name="sub_track" id="sub_track" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="resort" class="form-label">Resort</label>
+                                <input type="text" class="form-control" name="resort" id="resort" disabled>
                             </div>
                         </div>
                     </div>
@@ -160,7 +171,7 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="block" class="form-label">KM</label>
+                                <label for="block" class="form-label">KM/HM</label>
                                 <input type="text" step="any" class="form-control" id="block"
                                        name="block"
                                        placeholder="KM" disabled>
@@ -228,8 +239,9 @@
     <script>
         let table;
         let path = '/{{ request()->path() }}';
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function changeTabEvent() {
             $("#pills-tab").on("shown.bs.tab", function (e) {
@@ -308,8 +320,9 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let serviceUnit = data['resort']['service_unit']['name'];
                 let resort = data['resort']['name'];
+                let area = data['area']['name'];
+                let track = data['track']['code'];
                 let subTrack = data['sub_track']['code'];
                 let locationType = data['location_type'];
                 let disasterType = data['disaster_type']['name'];
@@ -330,7 +343,8 @@
                     default:
                         break;
                 }
-                $('#service_unit').val(serviceUnit);
+                $('#area').val(area);
+                $('#track').val(track);
                 $('#resort').val(resort);
                 $('#sub_track').val(subTrack);
                 $('#location_type').val(locationTypeValue);
@@ -376,8 +390,23 @@
                     className: 'text-center middle-header',
                 },
                     {
-                        data: 'resort.service_unit.name',
-                        name: 'resort.service_unit.name',
+                        data: 'area.name',
+                        name: 'area.name',
+                        className: 'text-center middle-header',
+                    },
+                    {
+                        data: 'track.code',
+                        name: 'track.code',
+                        className: 'text-center middle-header',
+                    },
+                    {
+                        data: 'sub_track.code',
+                        name: 'sub_track.code',
+                        className: 'text-center middle-header',
+                    },
+                    {
+                        data: 'resort.name',
+                        name: 'resort.name',
                         className: 'text-center middle-header',
                     },
                     {
@@ -400,13 +429,8 @@
                         }
                     },
                     {
-                        data: 'resort.name',
-                        name: 'resort.name',
-                        className: 'text-center middle-header',
-                    },
-                    {
-                        data: 'sub_track.code',
-                        name: 'sub_track.code',
+                        data: 'block',
+                        name: 'block',
                         className: 'text-center middle-header',
                     },
                     {
@@ -416,15 +440,24 @@
                     },
                     {
                         data: null,
+                        orderable: false,
+                        className: 'text-center middle-header',
+                        render: function (data) {
+                            let url = path + '/' + data['id'] + '/gambar';
+                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
+                        }
+                    },
+                    {
+                        data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
-                                    'id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Detail</a>' + elEdit + elDelete
                         },
                         orderable: false,
                         className: 'text-center middle-header',
@@ -446,11 +479,11 @@
 
             $('#btn-export').on('click', function (e) {
                 e.preventDefault();
-                let serviceUnit = $('#service-unit-option').val();
                 let resort = $('#resort-option').val();
                 let locationType = $('#location-type-option').val();
-                let queryParam = '?service_unit=' + serviceUnit + '&resort=' + resort + '&location_type=' + locationType;
-                // window.open(exportPath, '_blank');
+                let queryParam = '?resort=' + resort + '&location_type=' + locationType;
+                let exportPath = path + '/excel' + queryParam;
+                window.open(exportPath, '_blank');
             });
         })
     </script>

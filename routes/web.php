@@ -154,6 +154,8 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::post('/{id}/delete', [\App\Http\Controllers\DisasterAreaController::class, 'destroy'])->name('means.disaster-area.service-unit.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\DisasterAreaController::class, 'detail'])->name('means.disaster-area.service-unit.detail');
             Route::get('/excel', [\App\Http\Controllers\DisasterAreaController::class, 'export_to_excel'])->name('means.disaster-area.service-unit.excel');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\DisasterAreaController::class, 'image_page'])->name('means.disaster-area.image');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\DisasterAreaController::class, 'destroy_image'])->name('means.disaster-area.image.destroy');
         });
     });
 

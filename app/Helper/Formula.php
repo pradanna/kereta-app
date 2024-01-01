@@ -18,6 +18,8 @@ class Formula
     const APPTechSpecTrain = 7;
     const APPTechSpecWagon = 8;
     const APPTechSpecSpecialEquipment = 9;
+    const AppMenuDirectPassage = 10;
+    const APPMenuDisasterArea = 11;
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';
     const AreaExceptionName = 'DAOP 6';

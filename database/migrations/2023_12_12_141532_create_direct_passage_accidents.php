@@ -15,7 +15,7 @@ class CreateDirectPassageAccidents extends Migration
     {
         Schema::create('direct_passage_accidents', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('direct_passage_id');
+            $table->foreignUuid('direct_passage_id')->nullable();
             $table->dateTime('date');
             $table->string('train_name');
             $table->string('accident_type');
