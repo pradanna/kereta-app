@@ -17,7 +17,7 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Wilayah (Daerah Operasi)</label>
                             <select class="select2 form-control" name="area-option" id="area-option"
@@ -27,6 +27,13 @@
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="date" class="form-label d-none">Tanggal Kejadian <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control datepicker" id="date"
+                                   name="date" placeholder="Periode" value="">
                         </div>
                     </div>
                 </div>
@@ -54,21 +61,24 @@
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
                 <tr>
-                    <th class="text-center middle-header" width="5%" rowspan="2">#</th>
-                    <th class="text-center middle-header" width="8%" rowspan="2">Wilayah</th>
-                    <th class="text-center middle-header" width="8%" rowspan="2">Kota</th>
-                    <th class="text-center middle-header" width="8%" rowspan="2">JPL</th>
-                    <th class="text-center middle-header" width="8%" rowspan="2">Waktu</th>
-                    <th class="middle-header" rowspan="2">Jenis Kereta Api</th>
-                    <th class="text-center middle-header" width="15%" rowspan="2">Jenis Laka</th>
-                    <th class="text-center middle-header" colspan="3">Korban Jiwa</th>
-                    <th class="text-center middle-header" width="15%" rowspan="2">Aksi</th>
+                    <th class="text-center middle-header" width="5%">#</th>
+                    <th class="text-center middle-header" width="10%">Kota/Kabupaten</th>
+                    <th class="text-center middle-header" width="8%">Wilayah</th>
+                    <th class="text-center middle-header" width="8%">Lintas</th>
+                    <th class="text-center middle-header" width="8%">Petak</th>
+                    <th class="text-center middle-header" width="8%">KM/HM</th>
+                    <th class="text-center middle-header">JPL</th>
+                    <th class="text-center middle-header" width="10%">Waktu</th>
+{{--                    <th class="middle-header">Jenis Kereta Api</th>--}}
+{{--                    <th class="text-center middle-header">Jenis Laka</th>--}}
+                    <th class="text-center middle-header" width="8%">Korban Jiwa</th>
+                    <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
-                <tr>
-                    <th class="text-center middle-header" width="8%">Luka-Luka</th>
-                    <th class="text-center middle-header" width="8%">Meninggal</th>
-                    <th class="text-center middle-header" width="8%">Total</th>
-                </tr>
+{{--                <tr>--}}
+{{--                    <th class="text-center middle-header" width="8%">Luka-Luka</th>--}}
+{{--                    <th class="text-center middle-header" width="8%">Meninggal</th>--}}
+{{--                    <th class="text-center middle-header" width="8%">Total</th>--}}
+{{--                </tr>--}}
                 </thead>
                 <tbody>
                 </tbody>
@@ -172,11 +182,18 @@
 
 @section('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
+          integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
 @endsection
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
+            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
@@ -230,11 +247,11 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
-                let area = data['direct_passage']['sub_track']['track']['area']['name'];
-                let track = data['direct_passage']['sub_track']['track']['code'];
-                let subTrack = data['direct_passage']['sub_track']['code'];
-                let name = data['direct_passage']['name'];
-                let stakes = data['direct_passage']['stakes'];
+                let area = data['area']['name'];
+                let track = data['track']['code'];
+                let subTrack = data['sub_track']['code'];
+                let name = data['direct_passage'] !== null ? data['direct_passage']['name'] : '-';
+                let stakes = data['stakes'];
                 let train_name = data['train_name'];
                 let accident_type = data['accident_type'];
                 let injured = data['injured'];
@@ -264,6 +281,14 @@
             $('.select2').select2({
                 width: 'resolve',
             });
+            $('.datepicker').datepicker({
+                format: 'yyyy',
+                viewMode: 'years',
+                minViewMode: 'years',
+                locale: 'id',
+                autoclose: true,
+                clearBtn: true
+            });
             table = $('#table-data').DataTable({
                 "aaSorting": [],
                 "order": [],
@@ -285,19 +310,41 @@
                     className: 'text-center middle-header',
                 },
                     {
-                        data: 'direct_passage.sub_track.track.area.name',
-                        name: 'direct_passage.sub_track.track.area.name',
+                        data: 'city.name',
+                        name: 'city.name',
                         className: 'text-center middle-header',
                     },
                     {
-                        data: 'direct_passage.city.name',
-                        name: 'direct_passage.city.name',
+                        data: 'area.name',
+                        name: 'area.name',
                         className: 'text-center middle-header',
                     },
                     {
-                        data: 'direct_passage.name',
-                        name: 'direct_passage.name',
+                        data: 'track.code',
+                        name: 'track.code',
                         className: 'text-center middle-header',
+                    },
+                    {
+                        data: 'sub_track.code',
+                        name: 'sub_track.code',
+                        className: 'text-center middle-header',
+                    },
+                    {
+                        data: 'stakes',
+                        name: 'stakes',
+                        className: 'text-center middle-header',
+                    },
+                    {
+                        data: 'direct_passage',
+                        name: 'direct_passage',
+                        className: 'text-center middle-header',
+                        render: function (data) {
+                            let value = '-';
+                            if (data !== null) {
+                                value = data['name'];
+                            }
+                            return value;
+                        }
                     },
                     {
                         data: null,
@@ -318,26 +365,26 @@
                             return result
                         }
                     },
-                    {
-                        data: 'train_name',
-                        name: 'train_name',
-                        className: 'text-center middle-header',
-                    },
-                    {
-                        data: 'accident_type',
-                        name: 'accident_type',
-                        className: 'text-center middle-header',
-                    },
-                    {
-                        data: 'injured',
-                        name: 'injured',
-                        className: 'text-center middle-header',
-                    },
-                    {
-                        data: 'died',
-                        name: 'died',
-                        className: 'text-center middle-header',
-                    },
+                    // {
+                    //     data: 'train_name',
+                    //     name: 'train_name',
+                    //     className: 'text-center middle-header',
+                    // },
+                    // {
+                    //     data: 'accident_type',
+                    //     name: 'accident_type',
+                    //     className: 'text-center middle-header',
+                    // },
+                    // {
+                    //     data: 'injured',
+                    //     name: 'injured',
+                    //     className: 'text-center middle-header',
+                    // },
+                    // {
+                    //     data: 'died',
+                    //     name: 'died',
+                    //     className: 'text-center middle-header',
+                    // },
                     {
                         data: null,
                         name: null,

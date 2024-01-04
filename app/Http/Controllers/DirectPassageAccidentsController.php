@@ -37,33 +37,35 @@ class DirectPassageAccidentsController extends CustomController
     {
         $area = $this->request->query->get('area');
         $track = $this->request->query->get('track');
-        $query = DirectPassageAccident::with(['direct_passage.sub_track.track.area', 'direct_passage.city']);
+        $query = DirectPassageAccident::with(['direct_passage', 'area', 'track', 'sub_track', 'city']);
 
         if ($area !== '') {
-            $query->whereHas('direct_passage', function ($qdp) use ($area) {
-                /** @var $qdp Builder */
-                return $qdp->whereHas('sub_track', function ($qsta) use ($area) {
-                    /** @var $qsta Builder */
-                    return $qsta->whereHas('track', function ($qta) use ($area) {
-                        /** @var $qta Builder */
-                        return $qta->where('area_id', '=', $area);
-                    });
-                });
-            });
-        } else {
-            $query->whereHas('direct_passage', function ($qdp) use ($areaIDS) {
-                /** @var $qdp Builder */
-                return $qdp->whereHas('sub_track', function ($qsta) use ($areaIDS) {
-                    /** @var $qsta Builder */
-                    return $qsta->whereHas('track', function ($qta) use ($areaIDS) {
-                        /** @var $qta Builder */
-                        return $qta->whereIn('area_id', $areaIDS);
-                    });
-                });
-            });
+//            $query->whereHas('direct_passage', function ($qdp) use ($area) {
+//                /** @var $qdp Builder */
+//                return $qdp->whereHas('sub_track', function ($qsta) use ($area) {
+//                    /** @var $qsta Builder */
+//                    return $qsta->whereHas('track', function ($qta) use ($area) {
+//                        /** @var $qta Builder */
+//                        return $qta->where('area_id', '=', $area);
+//                    });
+//                });
+//            });
+            $query->where('area_id', '=', $area);
         }
+//        else {
+//            $query->whereHas('direct_passage', function ($qdp) use ($areaIDS) {
+//                /** @var $qdp Builder */
+//                return $qdp->whereHas('sub_track', function ($qsta) use ($areaIDS) {
+//                    /** @var $qsta Builder */
+//                    return $qsta->whereHas('track', function ($qta) use ($areaIDS) {
+//                        /** @var $qta Builder */
+//                        return $qta->whereIn('area_id', $areaIDS);
+//                    });
+//                });
+//            });
+//        }
 
-        return $query->orderBy('created_at', 'ASC')
+        return $query->orderBy('created_at', 'DESC')
             ->get();
     }
 
@@ -144,6 +146,8 @@ class DirectPassageAccidentsController extends CustomController
                     'accident_type' => $this->postField('accident_type'),
                     'injured' => $this->postField('injured'),
                     'died' => $this->postField('died'),
+                    'latitude' => $this->postField('latitude'),
+                    'longitude' => $this->postField('longitude'),
                     'damaged_description' => $this->postField('damaged_description'),
                     'chronology' => $this->postField('chronology'),
                     'description' => $this->postField('description'),
@@ -154,6 +158,7 @@ class DirectPassageAccidentsController extends CustomController
                 DirectPassageAccident::create($data_request);
                 return redirect()->back()->with('success', 'success');
             } catch (\Exception $e) {
+                dd($e->getMessage());
                 return redirect()->back()->with('failed', 'internal server error...');
             }
         }
@@ -253,7 +258,7 @@ class DirectPassageAccidentsController extends CustomController
     public function detail($service_unit_id, $id)
     {
         try {
-            $data = DirectPassageAccident::with(['direct_passage.sub_track.track.area'])
+            $data = DirectPassageAccident::with(['direct_passage', 'area', 'track', 'sub_track', 'city'])
                 ->where('id', '=', $id)
                 ->first();
             return $this->jsonSuccessResponse('success', $data);

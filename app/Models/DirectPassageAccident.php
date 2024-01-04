@@ -14,6 +14,7 @@ class DirectPassageAccident extends Model
         'area_id',
         'track_id',
         'sub_track_id',
+        'city_id',
         'direct_passage_id',
         'stakes',
         'date',
@@ -48,6 +49,11 @@ class DirectPassageAccident extends Model
     public function sub_track()
     {
         return $this->belongsTo(SubTrack::class, 'sub_track_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
     }
 
     public function direct_passage()
