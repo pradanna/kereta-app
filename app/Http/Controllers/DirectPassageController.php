@@ -475,9 +475,9 @@ class DirectPassageController extends CustomController
     public function direct_passage_accident_page($service_unit_id, $id)
     {
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $data = DirectPassage::with([])
+        $data = DirectPassage::with(['accidents'])
             ->findOrFail($id);
-        return view('admin.facility-menu.direct-passage.dirrect-passage-accident')->with([
+        return view('admin.facility-menu.direct-passage.accidents')->with([
             'data' => $data,
             'service_unit' => $service_unit,
         ]);
