@@ -146,13 +146,23 @@
                             <label for="date" class="form-label">Tanggal Kejadian <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="date"
                                    name="date" placeholder="dd-mm-yyyy" value="{{ \Carbon\Carbon::now()->format('d-m-Y') }}">
+                            @if($errors->has('date'))
+                                <div class="text-danger">
+                                    {{ $errors->first('date') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="time" class="form-label">Waktu Kejadian <span class="text-danger ms-1">*</span></label>
                             <input type="time" class="form-control" id="time"
-                                   name="time">
+                                   name="time" value="{{ \Carbon\Carbon::now('Asia/Jakarta')->format('H:i') }}">
+                            @if($errors->has('time'))
+                                <div class="text-danger">
+                                    {{ $errors->first('time') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -188,6 +198,11 @@
                             <label for="train_name" class="form-label">Jenis Kereta Api <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="train_name"
                                    name="train_name" placeholder="Jenis Kereta Api">
+                            @if($errors->has('train_name'))
+                                <div class="text-danger">
+                                    {{ $errors->first('train_name') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
@@ -195,6 +210,11 @@
                             <label for="accident_type" class="form-label">Jenis Laka <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="accident_type"
                                    name="accident_type" placeholder="Jenis Laka">
+                            @if($errors->has('accident_type'))
+                                <div class="text-danger">
+                                    {{ $errors->first('accident_type') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -203,12 +223,22 @@
                         <div class="w-100">
                             <label for="injured" class="form-label">Korban Luka-Luka <span class="text-danger ms-1">*</span></label>
                             <input type="number" class="form-control" id="injured" name="injured" value="0">
+                            @if($errors->has('injured'))
+                                <div class="text-danger">
+                                    {{ $errors->first('injured') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="died" class="form-label">Korban Meninggal Dunia <span class="text-danger ms-1">*</span></label>
                             <input type="number" class="form-control" id="died" name="died" value="0">
+                            @if($errors->has('died'))
+                                <div class="text-danger">
+                                    {{ $errors->first('died') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

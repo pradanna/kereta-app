@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -35,33 +40,115 @@
         @csrf
         <div class="panel ">
             <div class="title">
-                <p>Tambah Data Peristiwa Luar Biasa Hebat (PLH)</p>
+                <p>Edit Data Peristiwa Luar Biasa Hebat (PLH)</p>
             </div>
             <div class="isi">
                 <div class="row mb-3">
-                    <div class="col-12">
+                    <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="direct_passage" class="form-label">Jalur Perlintasan Langsung</label>
-                            <select class="select2 form-control" name="direct_passage" id="direct_passage"
+                            <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="area" id="area"
                                     style="width: 100%;">
-                                @foreach ($direct_passages as $direct_passage)
-                                    <option value="{{ $direct_passage->id }}" {{ ($direct_passage->id === $data->direct_passage_id) ? 'selected' : '' }}>{{ $direct_passage->name }} ({{ $direct_passage->stakes }}) ({{ $direct_passage->sub_track->code }}) ({{ $direct_passage->sub_track->track->code }}) ({{ $direct_passage->sub_track->track->area->name }})</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}" {{ ($data->area_id === $area->id) ? 'selected' : '' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('area'))
+                                <div class="text-danger">
+                                    {{ $errors->first('area') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="track" class="form-label">Lintas <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="track" id="track"
+                                    style="width: 100%;">
+                                @foreach ($tracks as $track)
+                                    <option value="{{ $track->id }}" {{ ($data->track_id === $track->id) ? 'selected' : '' }}>{{ $track->code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('track'))
+                                <div class="text-danger">
+                                    {{ $errors->first('track') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="date" class="form-label">Tanggal Kejadian</label>
+                            <label for="sub_track" class="form-label">Petak <span
+                                    class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="sub_track" id="sub_track"
+                                    style="width: 100%;">
+                                @foreach ($sub_tracks as $sub_track)
+                                    <option value="{{ $sub_track->id }}" {{ ($data->sub_track_id === $sub_track->id) ? 'selected' : '' }}>{{ $sub_track->code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('sub_track'))
+                                <div class="text-danger">
+                                    {{ $errors->first('sub_track') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="stakes" name="stakes"
+                                   placeholder="KM/HM" value="{{ $data->stakes }}">
+                            @if($errors->has('stakes'))
+                                <div class="text-danger">
+                                    {{ $errors->first('stakes') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="direct_passage" class="form-label">No. JPL</label>
+                            <select class="select2 form-control" name="direct_passage" id="direct_passage"
+                                    style="width: 100%;">
+                                <option value="">Tidak Berada Pada Jalur Perlintasan Langsung</option>
+                                @foreach ($direct_passages as $direct_passage)
+                                    <option value="{{ $direct_passage->id }}" {{ ($data->direct_passage_id === $direct_passage->id) ? 'selected' : '' }}>{{ $direct_passage->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="city" class="form-label">Kabupaten / Kota <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="city" id="city"
+                                    style="width: 100%;">
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}" {{ ($data->city_id === $city->id) ? 'selected' : '' }}>{{ $city->name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('city'))
+                                <div class="text-danger">
+                                    {{ $errors->first('city') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="date" class="form-label">Tanggal Kejadian <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="date"
                                    name="date" placeholder="dd-mm-yyyy">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="time" class="form-label">Waktu Kejadian</label>
+                            <label for="time" class="form-label">Waktu Kejadian <span class="text-danger ms-1">*</span></label>
                             <input type="time" class="form-control" id="time"
                                    name="time" value="{{ \Carbon\Carbon::parse($data->date)->format('H:i') }}">
                         </div>
@@ -70,35 +157,65 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="train_name" class="form-label">Jenis Kereta Api</label>
-                            <input type="text" step="any" class="form-control" id="train_name"
-                                   name="train_name" value="{{ $data->train_name }}">
+                            <label for="latitude" class="form-label">Latitude <span class="text-danger ms-1">*</span></label>
+                            <input type="number" step="any" class="form-control" id="latitude" name="latitude"
+                                   placeholder="Contoh: 7.1129489" value="{{ $data->latitude }}">
+                            @if($errors->has('latitude'))
+                                <div class="text-danger">
+                                    {{ $errors->first('latitude') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="accident_type" class="form-label">Jenis Laka</label>
-                            <select class="select2 form-control" name="accident_type" id="accident_type"
-                                    style="width: 100%;">
-                                <option value="KA Tertemper Kendaraan" {{ ($data->accident_type === 'KA Tertemper Kendaraan') ? 'selected' : '' }}>KA Tertemper Kendaraan</option>
-                                <option value="KA Tertemper Orang" {{ ($data->accident_type === 'KA Tertemper Orang') ? 'selected' : '' }}>KA Tertemper Orang</option>
-                                <option value="KA Dengan KA" {{ ($data->accident_type === 'KA Dengan KA') ? 'selected' : '' }}>KA Dengan KA</option>
-                                <option value="KA Terguling" {{ ($data->accident_type === 'KA Terguling') ? 'selected' : '' }}>KA Terguling</option>
-                                <option value="Bencana Lain" {{ ($data->accident_type === 'Bencana Lain') ? 'selected' : '' }}>Bencana Lain</option>
-                            </select>
+                            <label for="longitude" class="form-label">Longitude <span class="text-danger ms-1">*</span></label>
+                            <input type="number" step="any" class="form-control" id="longitude" name="longitude"
+                                   placeholder="Contoh: 110.1129489" value="{{ $data->longitude }}">
+                            @if($errors->has('longitude'))
+                                <div class="text-danger">
+                                    {{ $errors->first('longitude') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="injured" class="form-label">Korban Luka-Luka</label>
+                            <label for="train_name" class="form-label">Jenis Kereta Api <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="train_name"
+                                   name="train_name" placeholder="Jenis Kereta Api" value="{{ $data->train_name }}">
+                            @if($errors->has('train_name'))
+                                <div class="text-danger">
+                                    {{ $errors->first('train_name') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="accident_type" class="form-label">Jenis Laka <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="accident_type"
+                                   name="accident_type" placeholder="Jenis Laka" value="{{ $data->accident_type }}">
+                            @if($errors->has('accident_type'))
+                                <div class="text-danger">
+                                    {{ $errors->first('accident_type') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="injured" class="form-label">Korban Luka-Luka <span class="text-danger ms-1">*</span></label>
                             <input type="number" class="form-control" id="injured" name="injured" value="{{ $data->injured }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="died" class="form-label">Korban Meninggal</label>
+                            <label for="died" class="form-label">Korban Meninggal <span class="text-danger ms-1">*</span></label>
                             <input type="number" class="form-control" id="died" name="died" value="{{ $data->died }}">
                         </div>
                     </div>
@@ -114,6 +231,15 @@
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan/Tindak Lanjut</label>
                             <textarea rows="3" class="form-control" id="description" name="description">{{ $data->description }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="w-100">
+                            <label for="chronology" class="form-label">Kronologi</label>
+                            <textarea rows="3" class="form-control" id="chronology"
+                                      name="chronology">{{ $data->chronology }}</textarea>
                         </div>
                     </div>
                 </div>

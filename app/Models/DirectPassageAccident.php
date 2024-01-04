@@ -63,7 +63,7 @@ class DirectPassageAccident extends Model
 
     public function images()
     {
-        return $this->hasMany(DirectPassageImage::class, 'accident_id');
+        return $this->hasMany(DirectPassageAccidentImage::class, 'accident_id');
     }
 
     public function author_create()

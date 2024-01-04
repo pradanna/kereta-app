@@ -9,7 +9,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Peristiwa Luar Biasa Hebat (PLH) {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Peristiwa Luar Biasa Hebat
+                    (PLH) {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -33,7 +34,7 @@
                         <div class="form-group w-100">
                             <label for="date" class="form-label d-none">Tanggal Kejadian <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="date"
-                                   name="date" placeholder="Periode" value="">
+                                   name="date" placeholder="Periode Tahun" value="">
                         </div>
                     </div>
                 </div>
@@ -47,10 +48,12 @@
         <div class="title">
             <p>Data Peristiwa Luar Biasa Hebat (PLH) {{ $service_unit->name }}</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2"
-                   href="{{ route('means.direct-passage-accident.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('means.direct-passage-accident.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
                 <a class="btn-success sml rnd" href="#" id="btn-export"
                    target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
@@ -67,18 +70,19 @@
                     <th class="text-center middle-header" width="8%">Lintas</th>
                     <th class="text-center middle-header" width="8%">Petak</th>
                     <th class="text-center middle-header" width="8%">KM/HM</th>
-                    <th class="text-center middle-header">JPL</th>
-                    <th class="text-center middle-header" width="10%">Waktu</th>
-{{--                    <th class="middle-header">Jenis Kereta Api</th>--}}
-{{--                    <th class="text-center middle-header">Jenis Laka</th>--}}
+                    <th class="text-center middle-header">Waktu</th>
+                    <th class="text-center middle-header" width="10%">JPL</th>
+                    {{--                    <th class="middle-header">Jenis Kereta Api</th>--}}
+                    {{--                    <th class="text-center middle-header">Jenis Laka</th>--}}
                     <th class="text-center middle-header" width="8%">Korban Jiwa</th>
+                    <th class="text-center middle-header" width="8%">Gambar</th>
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
-{{--                <tr>--}}
-{{--                    <th class="text-center middle-header" width="8%">Luka-Luka</th>--}}
-{{--                    <th class="text-center middle-header" width="8%">Meninggal</th>--}}
-{{--                    <th class="text-center middle-header" width="8%">Total</th>--}}
-{{--                </tr>--}}
+                {{--                <tr>--}}
+                {{--                    <th class="text-center middle-header" width="8%">Luka-Luka</th>--}}
+                {{--                    <th class="text-center middle-header" width="8%">Meninggal</th>--}}
+                {{--                    <th class="text-center middle-header" width="8%">Total</th>--}}
+                {{--                </tr>--}}
                 </thead>
                 <tbody>
                 </tbody>
@@ -90,7 +94,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Peristiwa Luar Biasa Hebat (PLH)
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Peristiwa Luar Biasa
+                        Hebat (PLH)
                         Bencana</p>
                     <hr>
                     <div class="row mb-3">
@@ -102,7 +107,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="track" class="form-label">Perlintasan</label>
+                                <label for="track" class="form-label">Lintas</label>
                                 <input type="text" class="form-control" name="track" id="track" disabled>
                             </div>
                         </div>
@@ -115,19 +120,34 @@
                             </div>
                         </div>
                         <div class="col-6">
+                            <div class="w-100">
+                                <label for="stakes" class="form-label">KM/HM</label>
+                                <input type="text" class="form-control" id="stakes"
+                                       name="stakes"
+                                       placeholder="KM" disabled>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="name" class="form-label">JPL</label>
+                                <label for="name" class="form-label">No. JPL</label>
                                 <input type="text" class="form-control" name="name" id="name" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="city" class="form-label">Kota/Kabupaten</label>
+                                <input type="text" class="form-control" name="city" id="city" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="stakes" class="form-label">KM</label>
-                                <input type="text" class="form-control" id="stakes"
-                                       name="stakes"
-                                       placeholder="KM" disabled>
+                                <label for="time" class="form-label">Waktu Kejadian</label>
+                                <input type="text" class="form-control" name="time" id="time" disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -149,8 +169,23 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
+                                <label for="latitude" class="form-label">Latitude</label>
+                                <input type="text" class="form-control" name="latitude" id="latitude" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="longitude" class="form-label">Longitude</label>
+                                <input type="text" class="form-control" name="longitude" id="longitude" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="w-100">
                                 <label for="injured" class="form-label">Korban Luka-Luka</label>
-                                <input type="number" class="form-control" id="injured" name="injured" value="0" disabled>
+                                <input type="number" class="form-control" id="injured" name="injured" value="0"
+                                       disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -164,13 +199,24 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="damaged_description" class="form-label">Kerugian</label>
-                                <textarea rows="3" class="form-control" id="damaged_description" name="damaged_description" disabled></textarea>
+                                <textarea rows="3" class="form-control" id="damaged_description"
+                                          name="damaged_description" disabled></textarea>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan/Tindak Lanjut</label>
-                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
+                                <textarea rows="3" class="form-control" id="description" name="description"
+                                          disabled></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <label for="chronology" class="form-label">Kronologi</label>
+                                <textarea rows="3" class="form-control" id="chronology" name="chronology"
+                                          disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -198,9 +244,9 @@
     <script>
         let table;
         let path = '/{{ request()->path() }}';
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
-
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -258,6 +304,11 @@
                 let died = data['died'];
                 let damaged_description = data['damaged_description'];
                 let description = data['description'];
+                let chronology = data['chronology'];
+                let latitude = data['latitude'];
+                let longitude = data['longitude'];
+                let date = data['date'];
+                let city = data['city']['name'];
 
                 $('#area').val(area);
                 $('#track').val(track);
@@ -270,6 +321,11 @@
                 $('#died').val(died);
                 $('#damaged_description').val(damaged_description);
                 $('#description').val(description);
+                $('#chronology').val(chronology);
+                $('#time').val(date);
+                $('#latitude').val(latitude);
+                $('#longitude').val(longitude);
+                $('#city').val(city);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
@@ -300,6 +356,7 @@
                     url: path,
                     'data': function (d) {
                         d.area = $('#area-option').val();
+                        d.date = $('#date').val();
                     }
                 },
                 columns: [{
@@ -335,18 +392,6 @@
                         className: 'text-center middle-header',
                     },
                     {
-                        data: 'direct_passage',
-                        name: 'direct_passage',
-                        className: 'text-center middle-header',
-                        render: function (data) {
-                            let value = '-';
-                            if (data !== null) {
-                                value = data['name'];
-                            }
-                            return value;
-                        }
-                    },
-                    {
                         data: null,
                         name: null,
                         className: 'text-center middle-header',
@@ -359,10 +404,22 @@
                                     year: 'numeric',
                                     day: '2-digit',
                                     hour: '2-digit',
-                                    minute:'2-digit'
+                                    minute: '2-digit'
                                 }).split('/').join('-')
                             }
                             return result
+                        }
+                    },
+                    {
+                        data: 'direct_passage',
+                        name: 'direct_passage',
+                        className: 'text-center middle-header',
+                        render: function (data) {
+                            let value = '-';
+                            if (data !== null) {
+                                value = data['name'];
+                            }
+                            return value;
                         }
                     },
                     // {
@@ -393,18 +450,26 @@
                             return parseInt(data['injured']) + parseInt(data['died'])
                         }
                     },
-
+                    {
+                        data: null,
+                        orderable: false,
+                        className: 'text-center middle-header',
+                        render: function (data) {
+                            let url = path + '/' + data['id'] + '/gambar';
+                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
+                        }
+                    },
                     {
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
-                                    'id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Detail</a>' + elEdit + elDelete
                         },
                         orderable: false,
                         className: 'text-center middle-header',
@@ -426,11 +491,11 @@
 
             $('#btn-export').on('click', function (e) {
                 e.preventDefault();
-                let serviceUnit = $('#service-unit-option').val();
-                let resort = $('#resort-option').val();
-                let locationType = $('#location-type-option').val();
-                let queryParam = '?service_unit=' + serviceUnit + '&resort=' + resort + '&location_type=' + locationType;
-                // window.open(exportPath, '_blank');
+                let area = $('#area-option').val();
+                let date = $('#date').val();
+                let queryParam = '?area=' + area + '&date=' + date;
+                let exportPath = path + '/excel' + queryParam;
+                window.open(exportPath, '_blank');
             });
         })
     </script>

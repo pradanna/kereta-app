@@ -168,6 +168,8 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'destroy'])->name('means.direct-passage-accident.service-unit.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'detail'])->name('means.direct-passage-accident.service-unit.detail');
             Route::get('/excel', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'export_to_excel'])->name('means.direct-passage-accident.service-unit.excel');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'image_page'])->name('means.direct-passage-accident.image');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'destroy_image'])->name('means.direct-passage-accident.image.destroy');
         });
     });
 
