@@ -18,7 +18,7 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-6">
+                    <div class="col-4">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Wilayah (Daerah Operasi)</label>
                             <select class="select2 form-control" name="area-option" id="area-option"
@@ -30,11 +30,24 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <div class="form-group w-100">
                             <label for="date" class="form-label d-none">Tanggal Kejadian <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="date"
                                    name="date" placeholder="Periode Tahun" value="">
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group w-100">
+                            <label for="direct-passage-option" class="form-label d-none">No. JPL</label>
+                            <select class="select2 form-control" name="direct-passage-option" id="direct-passage-option"
+                                    style="width: 100%;">
+                                <option value="none">Semua JPL dan Semua yang tidak berada pada JPL</option>
+                                <option value="">Tidak Berada Pada Jalur Perlintasan Langsung</option>
+                                @foreach ($direct_passages as $direct_passage)
+                                    <option value="{{ $direct_passage->id }}">{{ $direct_passage->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -357,6 +370,7 @@
                     'data': function (d) {
                         d.area = $('#area-option').val();
                         d.date = $('#date').val();
+                        d.direct_passage = $('#direct-passage-option').val();
                     }
                 },
                 columns: [{
@@ -493,7 +507,8 @@
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let date = $('#date').val();
-                let queryParam = '?area=' + area + '&date=' + date;
+                let direct_passage = $('#direct-passage-option').val();
+                let queryParam = '?area=' + area + '&date=' + date + '&direct_passage=' + direct_passage;
                 let exportPath = path + '/excel' + queryParam;
                 window.open(exportPath, '_blank');
             });

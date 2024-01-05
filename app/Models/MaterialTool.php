@@ -20,6 +20,8 @@ class MaterialTool extends Model
         'latitude',
         'longitude',
         'stakes',
+        'created_by',
+        'updated_by',
     ];
 
     protected $casts = [
@@ -35,5 +37,20 @@ class MaterialTool extends Model
     public function resort()
     {
         return $this->belongsTo(Resort::class, 'resort_id');
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(MaterialToolImage::class, 'material_tool_id');
     }
 }

@@ -181,6 +181,9 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\MaterialToolController::class, 'patch'])->name('means.material-tool.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\MaterialToolController::class, 'destroy'])->name('means.material-tool.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\MaterialToolController::class, 'detail'])->name('means.material-tool.detail');
+            Route::get('/excel', [\App\Http\Controllers\MaterialToolController::class, 'export_to_excel'])->name('means.material-tool.service-unit.excel');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\MaterialToolController::class, 'image_page'])->name('means.material-tool.image');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\MaterialToolController::class, 'destroy_image'])->name('means.material-tool.image.destroy');
         });
     });
 
@@ -193,6 +196,9 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::post('/{id}/delete', [\App\Http\Controllers\IllegalBuildingController::class, 'destroy'])->name('means.illegal-building.service-unit.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\IllegalBuildingController::class, 'detail'])->name('means.illegal-building.service-unit.detail');
             Route::get('/excel', [\App\Http\Controllers\IllegalBuildingController::class, 'export_to_excel'])->name('means.illegal-building.service-unit.excel');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\IllegalBuildingController::class, 'image_page'])->name('means.illegal-building.image');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\IllegalBuildingController::class, 'destroy_image'])->name('means.illegal-building.image.destroy');
+
         });
     });
 

@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -15,20 +14,21 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
+class MaterialTool implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
 {
+
     private $data;
 
     public function __construct($data)
     {
         $this->data = $data;
     }
-
     /**
-     * @return \Illuminate\Support\Collection
-     */
+    * @return \Illuminate\Support\Collection
+    */
     public function collection()
     {
+        //
         return new Collection($this->rowValues());
     }
 
@@ -38,8 +38,8 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
     public function registerEvents(): array
     {
         // TODO: Implement registerEvents() method.
-        $rowLength = count($this->rowValues()) + 2;
-        $cellRange = 'A1:L' . $rowLength;
+        $rowLength = count($this->rowValues()) + 1;
+        $cellRange = 'A1:I' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -66,17 +66,6 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
-        $sheet->mergeCells('A1:A2');
-        $sheet->mergeCells('B1:B2');
-        $sheet->mergeCells('C1:C2');
-        $sheet->mergeCells('D1:D2');
-        $sheet->mergeCells('E1:E2');
-        $sheet->mergeCells('F1:F2');
-        $sheet->mergeCells('G1:G2');
-        $sheet->mergeCells('H1:I1');
-        $sheet->mergeCells('J1:J2');
-        $sheet->mergeCells('K1:K2');
-        $sheet->mergeCells('L1:L2');
     }
 
     /**
@@ -85,41 +74,21 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
     public function title(): string
     {
         // TODO: Implement title() method.
-        return 'BANGUNAN LIAR';
+        return  'AMUS';
     }
 
     private function headingValues()
     {
         return [
-            [
-                'NO.',
-                'WILAYAH',
-                'LINTAS',
-                'ANTARA',
-                'KM/HM',
-                'KECAMATAN',
-                'KOTA/KABUPATEN',
-                'LUAS',
-                '',
-                'JARAK DARI AS REL',
-                'JUMLAH BANGUNAN LIAR',
-                'KETERANGAN'
-            ],
-            [
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                'TANAH (m2)',
-                'BANGUNAN (m2)',
-                '',
-                '',
-                ''
-            ]
-
+            'NO.',
+            'WILAYAH',
+            'KM/HM',
+            'RESORT',
+            'JENIS AMUS',
+            'JUMLAH',
+            'SATUAN',
+            'LOKASI',
+            'KETERANGAN',
         ];
     }
 
@@ -131,15 +100,12 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
             $result = [
                 $no,
                 $datum->area->name,
-                $datum->track->code,
-                $datum->sub_track->code,
                 $datum->stakes,
-                $datum->district->name,
-                $datum->district->city->name,
-                $datum->surface_area,
-                $datum->building_area,
-                $datum->distance_from_rail,
-                $datum->illegal_building,
+                $datum->resort->name,
+                $datum->type,
+                $datum->qty,
+                $datum->unit,
+                $datum->latitude . ', '.$datum->longitude,
                 $datum->description,
             ];
             array_push($results, $result);
