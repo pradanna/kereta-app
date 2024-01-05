@@ -39,7 +39,7 @@ class DirectPassageController extends CustomController
             ]);
     }
 
-    private function generateData()
+    private function generateData($areaIDS)
     {
         $service_unit = $this->request->query->get('service_unit');
         $area = $this->request->query->get('area');
@@ -47,27 +47,23 @@ class DirectPassageController extends CustomController
         $name = $this->request->query->get('name');
         $query = DirectPassage::with(['sub_track', 'track', 'area', 'city', 'sign_equipment']);
 
-        if ($service_unit !== '' && $service_unit !== null) {
-            $query->whereHas('sub_track', function ($qst) use ($service_unit) {
-                /** @var $qst Builder */
-                return $qst->whereHas('track', function ($qt) use ($service_unit) {
-                    /** @var $qt Builder */
-                    return $qt->whereHas('area', function ($qa) use ($service_unit) {
-                        /** @var $qa Builder */
-                        return $qa->where('service_unit_id', '=', $service_unit);
-                    });
-                });
-            });
-        }
+//        if ($service_unit !== '' && $service_unit !== null) {
+//            $query->whereHas('sub_track', function ($qst) use ($service_unit) {
+//                /** @var $qst Builder */
+//                return $qst->whereHas('track', function ($qt) use ($service_unit) {
+//                    /** @var $qt Builder */
+//                    return $qt->whereHas('area', function ($qa) use ($service_unit) {
+//                        /** @var $qa Builder */
+//                        return $qa->where('service_unit_id', '=', $service_unit);
+//                    });
+//                });
+//            });
+//        }
 
         if ($area !== '') {
-            $query->whereHas('sub_track', function ($qsta) use ($area) {
-                /** @var $qsta Builder */
-                return $qsta->whereHas('track', function ($qta) use ($area) {
-                    /** @var $qta Builder */
-                    return $qta->where('area_id', '=', $area);
-                });
-            });
+            $query->where('area_id', '=', $area);
+        }else {
+            $query->whereIn('area_id', $areaIDS);
         }
 
         if ($is_closed !== '' && $is_closed !== null) {
@@ -99,9 +95,10 @@ class DirectPassageController extends CustomController
                 return $qs->where('service_unit_id', '=', $service_unit_id);
             })
             ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
         if ($this->request->ajax()) {
             $type = $this->request->query->get('type');
-            $data = $this->generateData();
+            $data = $this->generateData($areaIDS);
             switch ($type) {
                 case 'map':
                     return $this->jsonSuccessResponse('success', $data);
@@ -386,10 +383,17 @@ class DirectPassageController extends CustomController
         }
     }
 
-    public function export_to_excel()
+    public function export_to_excel($service_unit_id)
     {
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
         $fileName = 'jalur_perlintasan_langsung_' . date('YmdHis') . '.xlsx';
-        $data = $this->generateData();
+        $data = $this->generateData($areaIDS);
         return Excel::download(
             new \App\Exports\DirectPassage($data),
             $fileName

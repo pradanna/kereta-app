@@ -21,6 +21,8 @@ class Formula
     const AppMenuDirectPassage = 10;
     const APPMenuDisasterArea = 11;
     const APPMenuDirectPassageAccident = 12;
+    const APPMenuMaterialTool = 13;
+    const APPMenuIllegalBuilding = 14;
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';
     const AreaExceptionName = 'DAOP 6';

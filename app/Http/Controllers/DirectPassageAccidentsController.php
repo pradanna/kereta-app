@@ -38,18 +38,28 @@ class DirectPassageAccidentsController extends CustomController
             ]);
     }
 
-    private function generateData()
+    private function generateData($areaIDS)
     {
         $area = $this->request->query->get('area');
         $date = $this->request->query->get('date');
-        $track = $this->request->query->get('track');
+        $direct_passage = $this->request->query->get('direct_passage');
         $query = DirectPassageAccident::with(['direct_passage', 'area', 'track', 'sub_track', 'city']);
 
         if ($area !== '') {
             $query->where('area_id', '=', $area);
+        } else {
+            $query->whereIn('area_id', $areaIDS);
         }
         if ($date !== '') {
             $query->whereYear('date', $date);
+        }
+
+        if ($direct_passage === '') {
+            $query->whereNull('direct_passage_id');
+        } else {
+            if ($direct_passage !== 'none') {
+                $query->where('direct_passage_id', '=', $direct_passage);
+            }
         }
         return $query->orderBy('created_at', 'DESC')
             ->get();
@@ -69,15 +79,20 @@ class DirectPassageAccidentsController extends CustomController
                 return $qs->where('service_unit_id', '=', $service_unit_id);
             })
             ->orderBy('name', 'ASC')->get();
-//        $areaIDS = $areas->pluck('id')->toArray();
+        $areaIDS = $areas->pluck('id')->toArray();
         if ($this->request->ajax()) {
-            $data = $this->generateData();
+            $data = $this->generateData($areaIDS);
             return $this->basicDataTables($data);
         }
+
+        $direct_passages = DirectPassage::with(['area'])
+            ->whereIn('area_id', $areaIDS)
+            ->orderBy('name')->get();
         return view('admin.facility-menu.direct-passage-accidents.index')->with([
             'areas' => $areas,
             'service_unit' => $service_unit,
             'access' => $access,
+            'direct_passages' => $direct_passages,
         ]);
     }
 
@@ -168,14 +183,8 @@ class DirectPassageAccidentsController extends CustomController
             }
         }
         $areaIDS = $areas->pluck('id')->toArray();
-        $direct_passages = DirectPassage::with(['sub_track.track.area'])
-            ->whereHas('sub_track', function ($qst) use ($areaIDS) {
-                /** @var $qst Builder */
-                return $qst->whereHas('track', function ($qt) use ($areaIDS) {
-                    /** @var $qt Builder */
-                    return $qt->whereIn('area_id', $areaIDS);
-                });
-            })
+        $direct_passages = DirectPassage::with(['area'])
+            ->whereIn('area_id', $areaIDS)
             ->orderBy('name')->get();
         $cities = City::with([])->orderBy('name', 'ASC')->get();
         $sub_tracks = SubTrack::with(['track.area'])
@@ -250,14 +259,8 @@ class DirectPassageAccidentsController extends CustomController
             }
         }
         $areaIDS = $areas->pluck('id')->toArray();
-        $direct_passages = DirectPassage::with(['sub_track.track.area'])
-            ->whereHas('sub_track', function ($qst) use ($areaIDS) {
-                /** @var $qst Builder */
-                return $qst->whereHas('track', function ($qt) use ($areaIDS) {
-                    /** @var $qt Builder */
-                    return $qt->whereIn('area_id', $areaIDS);
-                });
-            })
+        $direct_passages = DirectPassage::with(['area'])
+            ->whereIn('area_id', $areaIDS)
             ->orderBy('name')->get();
         $cities = City::with([])->orderBy('name', 'ASC')->get();
         $sub_tracks = SubTrack::with(['track.area'])
@@ -310,10 +313,17 @@ class DirectPassageAccidentsController extends CustomController
         }
     }
 
-    public function export_to_excel()
+    public function export_to_excel($service_unit_id)
     {
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
         $fileName = 'peristiwa_luar_biasa_hebat_' . date('YmdHis') . '.xlsx';
-        $data = $this->generateData();
+        $data = $this->generateData($areaIDS);
         return Excel::download(
             new \App\Exports\DirectPassageAccident($data),
             $fileName
