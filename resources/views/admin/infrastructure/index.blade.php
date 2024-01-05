@@ -15,28 +15,28 @@
     </div>
     <section class="pt-3">
         <div class="row gx-3 justify-content-start ">
-            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 mb-3">
                 <div class="card-menu" data-slug="safety-assessment">
                     <span class="spanmenu"><img class="icon-menu"
                             src="{{ asset('images/local/prasarana/health.png') }}" /></span>
                     <span class="text-center text-menu">Safety Assessment</span>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 mb-3">
                 <div class="card-menu" data-slug="jembatan-penyebrangan">
                     <span class="spanmenu"><img class="icon-menu"
                             src="{{ asset('images/local/prasarana/overpass.png') }}" /></span>
-                    <span class="text-center text-menu">Jembatan Penyebrangan (JPOM, Underpass, Flyover)</span>
+                    <span class="text-center text-menu">Jembatan Penyebrangan<br> (JPOM, Underpass, Flyover)</span>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 mb-3">
                 <div class="card-menu" data-slug="permohonan-izin-melintas-rel">
                     <span class="spanmenu"><img class="icon-menu"
                             src="{{ asset('images/local/prasarana/approval.png') }}" /></span>
                     <span class="text-center text-menu">Permohonan Izin Melintas Rel (Crossing)</span>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 mb-3">
+            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 mb-3">
                 <div class="card-menu" data-slug="jembatan-kereta-api">
                     <span class="spanmenu"><img class="icon-menu"
                             src="{{ asset('images/local/prasarana/railway.png') }}" /></span>

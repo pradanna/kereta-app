@@ -19,18 +19,18 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="name" class="form-label d-none">Param</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari Nama Laporan">
-                        </div>
-                    </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <div class="form-group w-100">
                             <label for="month" class="form-label d-none">Masa Berlaku</label>
                             <input type="text" class="form-control datepicker" id="month"
                                    name="month" placeholder="mm-yyyy" value="{{ \Carbon\Carbon::now()->format('F Y') }}">
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="form-group w-100">
+                            <label for="name" class="form-label d-none">Param</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Cari Nama Laporan">
                         </div>
                     </div>
                 </div>
@@ -57,6 +57,7 @@
                     <th width="5%" class="text-center">#</th>
                     <th width="12%">Bulan</th>
                     <th>Nama Laporan</th>
+                    <th width="12%">Dokumen</th>
                     <th width="15%" class="text-center">Aksi</th>
                 </tr>
                 </thead>
@@ -78,6 +79,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
             integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
         let table;
@@ -92,7 +94,8 @@
                     type: 'GET',
                     url: path,
                     'data': function (d) {
-                        d.param = $('#param').val();
+                        d.name = $('#name').val();
+                        d.date = $('#month').val();
                     }
                 },
                 columns: [{
@@ -106,6 +109,13 @@
                         data: 'date',
                         name: 'date',
                         className: 'text-center middle-header',
+                        render: function (data) {
+                            let date = new Date(data)
+                            return date.toLocaleString('id-ID', {
+                                month: 'long',
+                                year: 'numeric',
+                            })
+                        }
                     },
                     {
                         data: 'name',
@@ -114,11 +124,19 @@
                     },
                     {
                         data: null,
+                        name: null,
+                        className: 'text-center middle-header',
+                        render: function (data) {
+                            let urlDocument = data['document'];
+                            return '<a href="'+urlDocument+'" target="_blank" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Unduh</a>'
+                        }
+                    },
+                    {
+                        data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
-                                    'id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            return '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
                                 '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
@@ -132,9 +150,40 @@
                 paging: true,
                 "fnDrawCallback": function (setting) {
                     // eventOpenDetail();
-                    // deleteEvent();
+                    deleteEvent();
                 },
                 dom: 'ltrip'
+            });
+        }
+
+        function deleteEvent() {
+            $('.btn-delete').on('click', function (e) {
+                e.preventDefault();
+                let id = this.dataset.id;
+                Swal.fire({
+                    title: "Konfirmasi!",
+                    text: "Apakah anda yakin menghapus data?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.value) {
+                        destroy(id);
+                    }
+                });
+
+            })
+        }
+
+        function destroy(id) {
+            let url = path + '/' + id + '/delete';
+            AjaxPost(url, {}, function () {
+                SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
+                    table.ajax.reload();
+                });
             });
         }
 
@@ -146,8 +195,12 @@
                 locale: 'id',
                 autoclose: true,
                 // startDate: new Date(),
-            })
+            });
             generateTable();
+            $('#btn-search').on('click', function (e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
         });
     </script>
 @endsection

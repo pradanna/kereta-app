@@ -141,7 +141,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::get('/{id}/peristiwa-luar-biasa-hebat', [\App\Http\Controllers\DirectPassageController::class, 'direct_passage_accident_page'])->name('means.direct-passage.accident');
             Route::get('/excel', [\App\Http\Controllers\DirectPassageController::class, 'export_to_excel'])->name('means.direct-passage.excel');
             Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\DirectPassageController::class, 'image_page'])->name('means.direct-passage.image');
-            Route::post('/{id}/delete-image', [\App\Http\Controllers\DirectPassageController::class, 'destroy_image'])->name('means.direct-passage.image.destroy');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\DirectPassageController::class, 'destroy_image'])->name('means.direct-passage.image.destroy');
         });
     });
 
@@ -154,6 +154,8 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::post('/{id}/delete', [\App\Http\Controllers\DisasterAreaController::class, 'destroy'])->name('means.disaster-area.service-unit.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\DisasterAreaController::class, 'detail'])->name('means.disaster-area.service-unit.detail');
             Route::get('/excel', [\App\Http\Controllers\DisasterAreaController::class, 'export_to_excel'])->name('means.disaster-area.service-unit.excel');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\DisasterAreaController::class, 'image_page'])->name('means.disaster-area.image');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\DisasterAreaController::class, 'destroy_image'])->name('means.disaster-area.image.destroy');
         });
     });
 
@@ -166,6 +168,8 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::post('/{id}/delete', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'destroy'])->name('means.direct-passage-accident.service-unit.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'detail'])->name('means.direct-passage-accident.service-unit.detail');
             Route::get('/excel', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'export_to_excel'])->name('means.direct-passage-accident.service-unit.excel');
+            Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'image_page'])->name('means.direct-passage-accident.image');
+            Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\DirectPassageAccidentsController::class, 'destroy_image'])->name('means.direct-passage-accident.image.destroy');
         });
     });
 
@@ -208,6 +212,8 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
         Route::group(['prefix' => 'laporan-bulanan-k3l'], function () {
             Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'report_page'])->name('means.work-safety.report');
             Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'report_add'])->name('means.work-safety.report.add');
+            Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'report_patch'])->name('means.work-safety.report.patch');
+            Route::post( '/{id}/delete', [\App\Http\Controllers\WorkSafetyController::class, 'report_destroy'])->name('means.work-safety.report.destroy');
         });
 //        Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'store'])->name('means.work-safety.add');
 //        Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\WorkSafetyController::class, 'patch'])->name('means.work-safety.patch');

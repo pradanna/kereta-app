@@ -205,6 +205,14 @@ class WorkSafetyController extends CustomController
         if ($name !== '') {
             $query->where('name', 'LIKE', '%' . $name . '%');
         }
+
+        if ($date !== null && $date !== '') {
+            $dateParam = Carbon::createFromFormat('F Y', $date);
+            $month = $dateParam->format('m');
+            $year = $dateParam->format('Y');
+            $query->whereYear('date', $year)
+                ->whereMonth('date', $month);
+        }
         return $query->orderBy('created_at', 'DESC')
             ->get();
     }
@@ -265,6 +273,57 @@ class WorkSafetyController extends CustomController
             }
         }
         return view('admin.facility-menu.new-work-safety.report.add');
+    }
+
+    public function report_patch($id)
+    {
+        $data = NewWorkSafetyReport::findOrFail($id);
+        if ($this->request->method() === 'POST' && $this->request->ajax()) {
+            try {
+                $validator = Validator::make($this->request->all(), $this->rule_report, $this->message_report);
+                if ($validator->fails()) {
+                    $errors = $validator->errors()->getMessages();
+                    return response()->json([
+                        'status' => 422,
+                        'message' => 'Harap Mengisi Kolom Dengan Benar...',
+                        'data' => $errors
+                    ], 422);
+                }
+                $date = Carbon::createFromFormat('F Y', $this->postField('date'));
+                $dateValue = $date->format('Y-m-d');
+                $data_request = [
+                    'date' => $dateValue,
+                    'name' => $this->postField('name'),
+                    'description' => $this->postField('description'),
+                ];
+                if ($this->request->hasFile('file')) {
+                    $file = $this->request->file('file');
+                    $extension = $file->getClientOriginalExtension();
+                    $document = Uuid::uuid4()->toString() . '.' . $extension;
+                    $storage_path = public_path('work-safety-reports');
+                    $documentName = $storage_path . '/' . $document;
+                    $data_request['document'] = '/work-safety-reports/' . $document;
+                    $file->move($storage_path, $documentName);
+                }
+                $data->update($data_request);
+                return $this->jsonSuccessResponse('success');
+            } catch (\Exception $e) {
+                return $this->jsonErrorResponse('');
+            }
+        }
+        return view('admin.facility-menu.new-work-safety.report.edit')->with([
+            'data' => $data
+        ]);
+    }
+
+    public function report_destroy($id)
+    {
+        try {
+            NewWorkSafetyReport::destroy($id);
+            return $this->jsonSuccessResponse('success');
+        } catch (\Exception $e) {
+            return $this->jsonErrorResponse('internal server error', $e->getMessage());
+        }
     }
 
     //old work safety method

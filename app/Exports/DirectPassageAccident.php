@@ -2,8 +2,6 @@
 
 namespace App\Exports;
 
-use App\Helper\Formula;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -16,7 +14,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DisasterArea implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
+class DirectPassageAccident implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
 {
 
     private $data;
@@ -42,7 +40,7 @@ class DisasterArea implements FromCollection, WithHeadings, WithStyles, WithStri
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:L' . $rowLength;
+        $cellRange = 'A1:Q' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -77,7 +75,7 @@ class DisasterArea implements FromCollection, WithHeadings, WithStyles, WithStri
     public function title(): string
     {
         // TODO: Implement title() method.
-        return 'DAERAH RAWAN BENCANA';
+        return  'PLH';
     }
 
     private function headingValues()
@@ -88,13 +86,18 @@ class DisasterArea implements FromCollection, WithHeadings, WithStyles, WithStri
             'LINTAS',
             'PETAK',
             'KM/HM',
-            'RESORT',
-            'TIPE LOKASI',
-            'KOORDINAT',
-            'JALUR',
-            'JENIS RAWAN',
-            'PENANGANAN',
-            'KETERANGAN'
+            'NO. JPL',
+            'KOTA/KABUPATEN',
+            'WAKTU KEJADIAN',
+            'JENIS KERETA API',
+            'JENIS LAKA',
+            'LOKASI',
+            'KORBAN LUKA-LUKA',
+            'KORBAN MENINGGAL',
+            'TOTAL KORBAN',
+            'KERUGIAN',
+            'KETERANGAN / TINDAK LANJUT',
+            'KRONOLOGI',
         ];
     }
 
@@ -103,31 +106,24 @@ class DisasterArea implements FromCollection, WithHeadings, WithStyles, WithStri
         $results = [];
         foreach ($this->data as $key => $datum) {
             $no = $key + 1;
-            $locationTypeValue = '-';
-            switch ($datum->location_type) {
-                case 0:
-                    $locationTypeValue = 'Jalan Rel';
-                    break;
-                case 1:
-                    $locationTypeValue = 'Jembatan';
-                    break;
-                default:
-                    break;
-            }
-
             $result = [
                 $no,
                 $datum->area->name,
                 $datum->track->code,
                 $datum->sub_track->code,
-                $datum->block,
-                $datum->resort->name,
-                $locationTypeValue,
-                strval($datum->latitude) .','. strval($datum->longitude),
-                $datum->lane,
-                $datum->disaster_type->name,
-                $datum->handling,
+                $datum->stakes,
+                $datum->direct_passage !== null ? $datum->direct_passage->name : '-',
+                $datum->city->name,
+                $datum->date,
+                $datum->train_name,
+                $datum->accident_type,
+                $datum->latitude . ', '.$datum->longitude,
+                $datum->injured,
+                $datum->died,
+                ($datum->died + $datum->injured),
+                $datum->damaged_description,
                 $datum->description,
+                $datum->chronology,
             ];
             array_push($results, $result);
         }

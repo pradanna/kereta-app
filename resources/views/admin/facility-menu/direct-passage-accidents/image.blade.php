@@ -10,22 +10,22 @@
     </div>
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">PERLINTASAN KERETA API (JPL) {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</p>
+            <h1 class="h1">PERISTIWA LUAR BIASA HEBAT (PLH) {{ $service_unit->name }}</h1>
+            <p class="mb-0">Manajemen Data Peristiwa Luar Biasa Hebat (PLH) {{ $service_unit->name }}</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('means.direct-passage.service-unit', ['service_unit_id' => $service_unit->id]) }}">Perlintasan
-                        Kereta Api (JPL) {{ $service_unit->name }}</a></li>
+                        href="{{ route('means.direct-passage-accident.service-unit', ['service_unit_id' => $service_unit->id]) }}">Peristiwa
+                        Luar Biasa Hebat (PLH) {{ $service_unit->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Gambar</li>
             </ol>
         </nav>
     </div>
     <div class="panel">
         <div class="title">
-            <p>Gambar Perlintasan Kereta Api (JPL) No. {{ $data->name }}</p>
+            <p>Gambar Peristiwa Luar Biasa Hebat KM/HM : {{ $data->stakes }} ({{ $data->date }})</p>
         </div>
         <div class="isi">
 
