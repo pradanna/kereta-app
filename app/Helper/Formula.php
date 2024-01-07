@@ -25,6 +25,7 @@ class Formula
     const APPMenuIllegalBuilding = 14;
     const APPWorkSafety = 15;
     const APPHumanResource = 16;
+    const APPSafetyAssessment = 17;
 
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';

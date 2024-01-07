@@ -359,7 +359,7 @@
                             let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
                                 'id'] + '">Delete</a>' : '';
                             return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
-                                data['id'] + '">Detail</a>' + elEdit + elDelete
+                                data['id'] + '">Detail</a>' + elEdit + elDelete;
                         },
                         orderable: false,
                         className: 'text-center',

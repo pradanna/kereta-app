@@ -320,15 +320,9 @@ class DirectPassageController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $areaIDS = $areas->pluck('id')->toArray();
         $sub_tracks = SubTrack::with(['track.area'])
-            ->whereHas('track', function ($qt) use ($areaIDS) {
-                /** @var $qt Builder */
-                return $qt->whereIn('area_id', $areaIDS);
-            })
             ->orderBy('name')->get();
         $tracks = Track::with(['area'])
-            ->whereIn('area_id', $areaIDS)
             ->orderBy('name', 'ASC')->get();
         $cities = City::all();
         return view('admin.facility-menu.direct-passage.edit')->with([

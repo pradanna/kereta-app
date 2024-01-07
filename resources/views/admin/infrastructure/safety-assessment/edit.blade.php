@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -31,7 +36,7 @@
                         href="{{ route('infrastructure.safety.assessment.main', ['service_unit_id' => $service_unit->id]) }}">Safety
                         Assessment {{ $service_unit->name }}</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
     </div>
@@ -39,27 +44,83 @@
         @csrf
         <div class="panel ">
             <div class="title">
-                <p>Tambah Data Safety Assessment</p>
+                <p>Edit Data Safety Assessment</p>
             </div>
             <div class="isi">
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="sub_track" class="form-label">Petak</label>
-                            <select class="select2 form-control" name="sub_track" id="sub_track"
+                            <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="area" id="area"
                                     style="width: 100%;">
-                                @foreach ($sub_tracks as $sub_track)
+                                @foreach ($areas as $area)
                                     <option
-                                        value="{{ $sub_track->id }}" {{ ($sub_track->id === $data->sub_track_id) ? 'selected' : '' }}>{{ $sub_track->code }}
-                                        ({{ $sub_track->track->code }} {{ $sub_track->track->area->name }})
-                                    </option>
+                                        value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' : '' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('area'))
+                                <div class="text-danger">
+                                    {{ $errors->first('area') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="district" class="form-label">Kecamatan</label>
+                            <label for="track" class="form-label">Lintas <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="track" id="track"
+                                    style="width: 100%;">
+                                @foreach ($tracks as $track)
+                                    <option
+                                        value="{{ $track->id }}" {{ ($track->id === $data->track_id) ? 'selected' : '' }}>{{ $track->code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('track'))
+                                <div class="text-danger">
+                                    {{ $errors->first('track') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="sub_track" class="form-label">Petak <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="sub_track" id="sub_track"
+                                    style="width: 100%;">
+                                @foreach ($sub_tracks as $sub_track)
+                                    <option
+                                        value="{{ $sub_track->id }}" {{ ($sub_track->id === $data->sub_track_id) ? 'selected' : '' }}>
+                                        {{ $sub_track->code }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('sub_track'))
+                                <div class="text-danger">
+                                    {{ $errors->first('sub_track') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="stakes" name="stakes"
+                                   placeholder="KM/HM" value="{{ $data->stakes }}">
+                            @if($errors->has('stakes'))
+                                <div class="text-danger">
+                                    {{ $errors->first('stakes') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="district" class="form-label">Kecamatan <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="district" id="district"
                                     style="width: 100%;">
                                 @foreach ($districts as $district)
@@ -67,46 +128,63 @@
                                         value="{{ $district->id }}" {{ ($district->id === $data->district_id) ? 'selected' : '' }}>{{ $district->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('district'))
+                                <div class="text-danger">
+                                    {{ $errors->first('district') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="recommendation_number" class="form-label">No. Surat Rekomendasi <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="recommendation_number"
+                                   name="recommendation_number" value="{{ $data->recommendation_number }}">
+                            @if($errors->has('recommendation_number'))
+                                <div class="text-danger">
+                                    {{ $errors->first('recommendation_number') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="stakes" class="form-label">KM/HM</label>
-                            <input type="text" class="form-control" id="stakes" name="stakes"
-                                   placeholder="KM/HM" value="{{ $data->stakes }}">
+                            <label for="organizer" class="form-label">Penyelenggara <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="organizer"
+                                   name="organizer" value="{{ $data->organizer }}">
+                            @if($errors->has('organizer'))
+                                <div class="text-danger">
+                                    {{ $errors->first('organizer') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="recommendation_number" class="form-label">No. Surat Rekomendasi</label>
-                            <input type="text" class="form-control" id="recommendation_number"
-                                   name="recommendation_number" value="{{ $data->recommendation_number }}">
+                            <label for="job_scope" class="form-label">Ruang Lingkup Pekerjaan <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="job_scope" name="job_scope"
+                                   value="{{ $data->job_scope }}">
+                            @if($errors->has('job_scope'))
+                                <div class="text-danger">
+                                    {{ $errors->first('job_scope') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="w-100">
-                            <label for="organizer" class="form-label">Penyelenggara</label>
-                            <input type="text" class="form-control" id="organizer"
-                                   name="organizer" value="{{ $data->organizer }}">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <div class="w-100">
-                            <label for="job_scope" class="form-label">Ruang Lingkup Pekerjaan</label>
-                            <input type="text" class="form-control" id="job_scope" name="job_scope" value="{{ $data->job_scope }}">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="w-100">
-                            <label for="follow_up" class="form-label">Rekomendasi Tindak Lanjut</label>
+                            <label for="follow_up" class="form-label">Rekomendasi Tindak Lanjut <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="follow_up"
                                    name="follow_up" value="{{ $data->follow_up }}">
+                            @if($errors->has('follow_up'))
+                                <div class="text-danger">
+                                    {{ $errors->first('follow_up') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
