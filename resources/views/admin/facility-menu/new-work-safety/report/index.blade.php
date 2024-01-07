@@ -23,7 +23,8 @@
                         <div class="form-group w-100">
                             <label for="month" class="form-label d-none">Masa Berlaku</label>
                             <input type="text" class="form-control datepicker" id="month"
-                                   name="month" placeholder="mm-yyyy" value="{{ \Carbon\Carbon::now()->format('F Y') }}">
+                                   name="month" placeholder="mm-yyyy"
+                                   value="{{ \Carbon\Carbon::now()->format('Y') }}">
                         </div>
                     </div>
                     <div class="col-9">
@@ -44,10 +45,12 @@
         <div class="title">
             <p>Data Laporan Bulanan K3L</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2"
-                   href="{{ route('means.work-safety.report.add') }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('means.work-safety.report.add') }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
             </div>
         </div>
         <div class="isi">
@@ -83,6 +86,9 @@
     <script>
         var path = '/{{ request()->path() }}';
         let table;
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
+
         function generateTable() {
             table = $('#table-data').DataTable({
                 "aaSorting": [],
@@ -128,7 +134,7 @@
                         className: 'text-center middle-header',
                         render: function (data) {
                             let urlDocument = data['document'];
-                            return '<a href="'+urlDocument+'" target="_blank" class="btn-detail me-2 btn-table-action" data-id="' +
+                            return '<a href="' + urlDocument + '" target="_blank" class="btn-detail me-2 btn-table-action" data-id="' +
                                 data['id'] + '">Unduh</a>'
                         }
                     },
@@ -136,11 +142,16 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+
+                            if (elEdit === '' && elDelete === '') {
+                                return '-';
+                            }
+                            return elEdit + elDelete;
                         },
                         orderable: false,
                         className: 'text-center middle-header',
@@ -189,9 +200,9 @@
 
         $(document).ready(function () {
             $('.datepicker').datepicker({
-                format: 'MM yyyy',
-                viewMode: 'months',
-                minViewMode: 'months',
+                format: 'yyyy',
+                viewMode: 'years',
+                minViewMode: 'years',
                 locale: 'id',
                 autoclose: true,
                 // startDate: new Date(),

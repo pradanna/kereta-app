@@ -23,6 +23,8 @@ class HumanResource extends Model
         'certification_number',
         'expired_date',
         'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function area()
@@ -43,5 +45,15 @@ class HumanResource extends Model
             return 'invalid';
         }
         return 'valid';
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

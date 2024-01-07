@@ -20,7 +20,8 @@
                     <div class="col-3">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option"
+                                    style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -57,13 +58,15 @@
         <div class="title">
             <p>Data Amus</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('means.human-resource.create', ['service_unit_id' => $service_unit->id, 'slug' => $slug]) }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('means.human-resource.create', ['service_unit_id' => $service_unit->id, 'slug' => $slug]) }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
                 <a class="btn-success sml rnd"
                    href="#"
-                   id="btn-export"
-                   target="_blank">Export
+                   id="btn-export">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -93,7 +96,8 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Safety Assessment</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Safety
+                        Assessment</p>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-6">
@@ -162,7 +166,8 @@
                         <div class="col-12">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
+                                <textarea rows="3" class="form-control" id="description" name="description"
+                                          disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -199,9 +204,11 @@
 
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail'));
         let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function(e) {
+            $('.btn-delete').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -224,7 +231,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function() {
+            AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
@@ -232,7 +239,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function(e) {
+            $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -346,14 +353,13 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
-                                data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                    'id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Detail</a>' + elEdit + elDelete
                         },
                         orderable: false,
                         className: 'text-center',
@@ -389,6 +395,16 @@
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
                 table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let status = $('#status-option').val();
+                let queryParam = '?area=' + area + '&name=' + name + '&status=' + status;
+                let exportPath = path + '/excel' + queryParam;
+                window.open(exportPath, '_blank');
             });
         });
     </script>

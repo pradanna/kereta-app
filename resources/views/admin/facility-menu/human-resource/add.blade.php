@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -44,68 +49,108 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah (Daerah Operasi)</label>
+                            <label for="area" class="form-label">Wilayah (Daerah Operasi) <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="area" id="area"
                                     style="width: 100%;">
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('area'))
+                                <div class="text-danger">
+                                    {{ $errors->first('area') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama</label>
+                            <label for="name" class="form-label">Nama <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name"
-                                   name="name">
+                                   name="name" placeholder="Nama Lengkap">
+                            @if($errors->has('name'))
+                                <div class="text-danger">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="birth_place" class="form-label">Tempat Lahir</label>
+                            <label for="birth_place" class="form-label">Tempat Lahir <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="birth_place"
-                                   name="birth_place">
+                                   name="birth_place" placeholder="Tempat Lahir">
+                            @if($errors->has('birth_place'))
+                                <div class="text-danger">
+                                    {{ $errors->first('birth_place') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="date_of_birth" class="form-label">Tanggal Lahir</label>
+                            <label for="date_of_birth" class="form-label">Tanggal Lahir <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="date_of_birth"
-                                   name="date_of_birth" placeholder="dd-mm-yyyy">
+                                   name="date_of_birth" placeholder="dd-mm-yyyy" value="{{ \Carbon\Carbon::now()->format('d-m-Y') }}">
+                            @if($errors->has('date_of_birth'))
+                                <div class="text-danger">
+                                    {{ $errors->first('date_of_birth') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="identity_number" class="form-label">No. Identitas</label>
+                            <label for="identity_number" class="form-label">No. Identitas <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="identity_number"
-                                   name="identity_number">
+                                   name="identity_number" placeholder="Nomor Identitas">
+                            @if($errors->has('identity_number'))
+                                <div class="text-danger">
+                                    {{ $errors->first('identity_number') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="certification_unit" class="form-label">Unit Pengajuan Sertifikasi</label>
+                            <label for="certification_unit" class="form-label">Unit Pengajuan Sertifikasi <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="certification_unit"
-                                   name="certification_unit">
+                                   name="certification_unit" placeholder="Unit Pengajuan Sertifikasi">
+                            @if($errors->has('certification_unit'))
+                                <div class="text-danger">
+                                    {{ $errors->first('certification_unit') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="certification_number" class="form-label">Kodefikasi Sertifikat</label>
+                            <label for="certification_number" class="form-label">Kodefikasi Sertifikat <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="certification_number"
-                                   name="certification_number">
+                                   name="certification_number" placeholder="kodefikasi sertifikat">
+                            @if($errors->has('certification_number'))
+                                <div class="text-danger">
+                                    {{ $errors->first('certification_number') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="expired_date" class="form-label">Tanggal Habis Berlaku</label>
+                            <label for="expired_date" class="form-label">Tanggal Habis Berlaku <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="expired_date"
-                                   name="expired_date" placeholder="dd-mm-yyyy">
+                                   name="expired_date" placeholder="dd-mm-yyyy" value="{{ \Carbon\Carbon::now()->format('d-m-Y') }}">
+                            @if($errors->has('expired_date'))
+                                <div class="text-danger">
+                                    {{ $errors->first('expired_date') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

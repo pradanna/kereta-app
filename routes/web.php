@@ -198,13 +198,11 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
             Route::get('/excel', [\App\Http\Controllers\IllegalBuildingController::class, 'export_to_excel'])->name('means.illegal-building.service-unit.excel');
             Route::match(['post', 'get'], '/{id}/gambar', [\App\Http\Controllers\IllegalBuildingController::class, 'image_page'])->name('means.illegal-building.image');
             Route::post('/{id}/gambar/{image_id}/delete-image', [\App\Http\Controllers\IllegalBuildingController::class, 'destroy_image'])->name('means.illegal-building.image.destroy');
-
         });
     });
 
     Route::group(['prefix' => 'keselamatan-dan-kesehatan-kerja'], function () {
         Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'index'])->name('means.work-safety');
-
         Route::group(['prefix' => 'monitoring-implementasi-k3'], function () {
             Route::get('/', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_page'])->name('means.work-safety.project-monitoring');
             Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\WorkSafetyController::class, 'project_monitoring_add'])->name('means.work-safety.project-monitoring.add');
@@ -237,6 +235,7 @@ Route::group(['prefix' => 'sarana-dan-keselamatan'], function () {
                 Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\HumanResourceController::class, 'patch'])->name('means.human-resource.patch');
                 Route::post('/{id}/delete', [\App\Http\Controllers\HumanResourceController::class, 'destroy'])->name('means.human-resource.destroy');
                 Route::get('/{id}/detail', [\App\Http\Controllers\HumanResourceController::class, 'detail'])->name('means.human-resource.detail');
+                Route::get('/excel', [\App\Http\Controllers\HumanResourceController::class, 'export_to_excel'])->name('means.human-resource.excel');
             });
         });
     });
