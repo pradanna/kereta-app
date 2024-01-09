@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\CrossingBridge;
 use App\Models\District;
 use App\Models\SafetyAssessment;
 use App\Models\ServiceUnit;
 use App\Models\SubTrack;
+use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 
 class CrossingBridgeController extends CustomController
 {
@@ -29,8 +32,38 @@ class CrossingBridgeController extends CustomController
             ]);
     }
 
+    private function generateData($areaIDS)
+    {
+        $query = CrossingBridge::with(['area', 'sub_track', 'track']);
+        $area = $this->request->query->get('area');
+        $name = $this->request->query->get('name');
+
+        if ($area !== '') {
+            $query->where('area_id', '=', $area);
+        } else {
+            $query->whereIn('area_id', $areaIDS);
+        }
+
+        if ($name !== '') {
+            $query->where(function ($q) use ($name) {
+                /** @var $q Builder */
+                $q->where('stakes', 'LIKE', '%' . $name . '%')
+                    ->orWhere('recommendation_number', 'LIKE', '%' . $name . '%');
+            });
+        }
+
+        return $query->orderBy('created_at', 'DESC')
+            ->get();
+    }
+
+
     public function main_page($service_unit_id)
     {
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+        $access = $this->getRoleAccess(Formula::APPCrossingBridges);
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $areas = Area::with(['service_units'])
             ->whereHas('service_units', function ($qs) use ($service_unit_id) {
@@ -38,50 +71,55 @@ class CrossingBridgeController extends CustomController
                 return $qs->where('service_unit_id', '=', $service_unit_id);
             })
             ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
         if ($this->request->ajax()) {
-            $query = CrossingBridge::with(['sub_track.track.area']);
-            $area = $this->request->query->get('area');
-            $name = $this->request->query->get('name');
-            if ($area !== '') {
-                $query->whereHas('sub_track', function ($qst) use ($area) {
-                    /** @var $qst Builder */
-                    return $qst->whereHas('track', function ($qt) use ($area) {
-                        /** @var $qt Builder */
-                        return $qt->where('area_id', '=', $area);
-                    });
-                });
-            } else {
-                $areaIDS = $areas->pluck('id')->toArray();
-                $query->whereHas('sub_track', function ($qst) use ($areaIDS) {
-                    /** @var $qst Builder */
-                    return $qst->whereHas('track', function ($qt) use ($areaIDS) {
-                        /** @var $qt Builder */
-                        return $qt->whereIn('area_id', $areaIDS);
-                    });
-                });
-            }
-
-            if ($name !== '') {
-                $query->where(function ($q) use ($name) {
-                    /** @var $q Builder */
-                    $q->where('stakes', 'LIKE', '%' . $name . '%')
-                        ->orWhere('recommendation_number', 'LIKE', '%' . $name . '%');
-                });
-            }
-
-            $data = $query
-                ->orderBy('created_at', 'ASC')
-                ->get();
+            $data = $this->generateData($areaIDS);
             return $this->basicDataTables($data);
         }
         return view('admin.infrastructure.crossing-bridge.index')->with([
             'service_unit' => $service_unit,
-            'areas' => $areas
+            'areas' => $areas,
+            'access' => $access,
         ]);
     }
 
+    private $rule = [
+        'area' => 'required',
+        'track' => 'required',
+        'sub_track' => 'required',
+        'stakes' => 'required',
+        'recommendation_number' => 'required',
+        'responsible_person' => 'required',
+        'long' => 'required',
+        'width' => 'required',
+        'road_class' => 'required',
+    ];
+
+    private $message = [
+        'area.required' => 'kolom wilayah wajib di isi',
+        'track.required' => 'kolom lintas wajib di isi',
+        'sub_track.required' => 'kolom petak wajib di isi',
+        'stakes.required' => 'kolom km/hm wajib di isi',
+        'recommendation_number.required' => 'kolom nomor surat rekomendasi wajib di isi',
+        'responsible_person.required' => 'kolom penanggung jawab wajib di isi',
+        'long.required' => 'kolom panjang bangunan wajib di isi',
+        'width.required' => 'kolom lebar bangunan wajib di isi',
+        'road_class.required' => 'kolom kelas jalan wajib di isi',
+    ];
+
     public function store($service_unit_id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::APPCrossingBridges);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
+
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $areas = Area::with(['service_units'])
             ->whereHas('service_units', function ($qs) use ($service_unit_id) {
@@ -93,9 +131,15 @@ class CrossingBridgeController extends CustomController
 
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
+                    'area_id' => $this->postField('area'),
+                    'track_id' => $this->postField('track'),
                     'sub_track_id' => $this->postField('sub_track'),
-                    'district_id' => $this->postField('district'),
+//                    'district_id' => $this->postField('district'),
                     'stakes' => $this->postField('stakes'),
                     'recommendation_number' => $this->postField('recommendation_number'),
                     'responsible_person' => $this->postField('responsible_person'),
@@ -103,6 +147,8 @@ class CrossingBridgeController extends CustomController
                     'width' => $this->postField('width'),
                     'road_class' => $this->postField('road_class'),
                     'description' => $this->postField('description'),
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id(),
                 ];
                 CrossingBridge::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -111,15 +157,14 @@ class CrossingBridgeController extends CustomController
             }
         }
         $sub_tracks = SubTrack::with(['track.area'])
-            ->whereHas('track', function ($qt) use ($areaIDS) {
-                /** @var $qt Builder */
-                return $qt->whereIn('area_id', $areaIDS);
-            })
+            ->orderBy('name', 'ASC')->get();
+        $tracks = Track::with(['area'])
             ->orderBy('name', 'ASC')->get();
 //        $districts = District::with([])->orderBy('name', 'ASC')->get();
         return view('admin.infrastructure.crossing-bridge.add')->with([
             'service_unit' => $service_unit,
             'areas' => $areas,
+            'tracks' => $tracks,
             'sub_tracks' => $sub_tracks,
 //            'districts' => $districts,
         ]);
@@ -131,7 +176,13 @@ class CrossingBridgeController extends CustomController
         $data = CrossingBridge::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
+                    'area_id' => $this->postField('area'),
+                    'track_id' => $this->postField('track'),
                     'sub_track_id' => $this->postField('sub_track'),
                     'district_id' => $this->postField('district'),
                     'stakes' => $this->postField('stakes'),
@@ -141,6 +192,7 @@ class CrossingBridgeController extends CustomController
                     'width' => $this->postField('width'),
                     'road_class' => $this->postField('road_class'),
                     'description' => $this->postField('description'),
+                    'updated_by' => auth()->id(),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');

@@ -26,6 +26,7 @@ class Formula
     const APPWorkSafety = 15;
     const APPHumanResource = 16;
     const APPSafetyAssessment = 17;
+    const APPCrossingBridges = 18;
 
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';

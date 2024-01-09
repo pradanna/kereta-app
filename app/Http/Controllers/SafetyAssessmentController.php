@@ -14,6 +14,7 @@ use App\Models\SubTrack;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SafetyAssessmentController extends CustomController
 {
@@ -266,5 +267,22 @@ class SafetyAssessmentController extends CustomController
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel($service_unit_id)
+    {
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
+        $fileName = 'safety_assessment_' . date('YmdHis') . '.xlsx';
+        $data = $this->generateData($areaIDS);
+        return Excel::download(
+            new \App\Exports\SafetyAssessment($data),
+            $fileName
+        );
     }
 }

@@ -363,6 +363,15 @@
                 e.preventDefault();
                 table.ajax.reload();
             });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let queryParam = '?area=' + area + '&name=' + name;
+                let exportPath = path + '/excel' + queryParam;
+                window.open(exportPath, '_blank');
+            });
         });
     </script>
 @endsection

@@ -252,6 +252,7 @@ Route::group(['prefix' => 'prasarana'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\SafetyAssessmentController::class, 'patch'])->name('infrastructure.safety.assessment.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\SafetyAssessmentController::class, 'destroy'])->name('infrastructure.safety.assessment.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\SafetyAssessmentController::class, 'detail'])->name('infrastructure.safety.assessment.detail');
+            Route::get('/excel', [\App\Http\Controllers\SafetyAssessmentController::class, 'export_to_excel'])->name('infrastructure.safety.assessment.excel');
         });
     });
 
