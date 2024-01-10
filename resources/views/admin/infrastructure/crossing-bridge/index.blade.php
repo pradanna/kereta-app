@@ -92,25 +92,33 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="track" class="form-label">Perlintasan</label>
+                                <label for="area" class="form-label">Wilayah</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="track" class="form-label">Lintas</label>
                                 <input type="text" class="form-control" id="track" name="track" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="sub_track" class="form-label">Petak</label>
                                 <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
                                 <input type="text" class="form-control" id="stakes" name="stakes" disabled>
                             </div>
                         </div>
-                        <div class="col-6">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
                             <div class="w-100">
                                 <label for="recommendation_number" class="form-label">No. Surat Rekomendasi</label>
                                 <input type="text" class="form-control" id="recommendation_number"
@@ -223,8 +231,9 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
+                let area = data['area']['name'];
                 let subTrack = data['sub_track']['code'];
-                let track = data['sub_track']['track']['code'];
+                let track = data['track']['code'];
                 let stakes = data['stakes'];
                 let recommendation_number = data['recommendation_number'];
                 let responsible_person = data['responsible_person'];
@@ -232,6 +241,7 @@
                 let long = data['long'];
                 let width = data['width'];
                 let description = data['description'];
+                $('#area').val(area);
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
                 $('#stakes').val(stakes);

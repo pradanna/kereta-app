@@ -24,6 +24,7 @@ class TechnicalSpecSpecialEquipment extends Model
         'coupler_height',
         'axle_load',
         'spoor_width',
+        'usability',
         'description',
         'created_by',
         'updated_by',

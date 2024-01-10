@@ -264,6 +264,7 @@ Route::group(['prefix' => 'prasarana'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\CrossingBridgeController::class, 'patch'])->name('infrastructure.crossing.bridge.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\CrossingBridgeController::class, 'destroy'])->name('infrastructure.crossing.bridge.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\CrossingBridgeController::class, 'detail'])->name('infrastructure.crossing.bridge.detail');
+            Route::get('/excel', [\App\Http\Controllers\CrossingBridgeController::class, 'export_to_excel'])->name('infrastructure.crossing.bridge.excel');
         });
     });
 

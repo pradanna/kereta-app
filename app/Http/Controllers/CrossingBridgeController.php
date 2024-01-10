@@ -15,6 +15,7 @@ use App\Models\SubTrack;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CrossingBridgeController extends CustomController
 {
@@ -172,6 +173,16 @@ class CrossingBridgeController extends CustomController
 
     public function patch($service_unit_id, $id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::APPCrossingBridges);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $service_unit = ServiceUnit::findOrFail($service_unit_id);
         $data = CrossingBridge::findOrFail($id);
         if ($this->request->method() === 'POST') {
@@ -184,7 +195,7 @@ class CrossingBridgeController extends CustomController
                     'area_id' => $this->postField('area'),
                     'track_id' => $this->postField('track'),
                     'sub_track_id' => $this->postField('sub_track'),
-                    'district_id' => $this->postField('district'),
+//                    'district_id' => $this->postField('district'),
                     'stakes' => $this->postField('stakes'),
                     'recommendation_number' => $this->postField('recommendation_number'),
                     'responsible_person' => $this->postField('responsible_person'),
@@ -208,14 +219,13 @@ class CrossingBridgeController extends CustomController
             ->orderBy('name', 'ASC')->get();
         $areaIDS = $areas->pluck('id')->toArray();
         $sub_tracks = SubTrack::with(['track.area'])
-            ->whereHas('track', function ($qt) use ($areaIDS) {
-                /** @var $qt Builder */
-                return $qt->whereIn('area_id', $areaIDS);
-            })
+            ->orderBy('name', 'ASC')->get();
+        $tracks = Track::with(['area'])
             ->orderBy('name', 'ASC')->get();
         return view('admin.infrastructure.crossing-bridge.edit')->with([
             'service_unit' => $service_unit,
             'areas' => $areas,
+            'tracks' => $tracks,
             'sub_tracks' => $sub_tracks,
             'data' => $data,
         ]);
@@ -223,6 +233,16 @@ class CrossingBridgeController extends CustomController
 
     public function destroy($service_unit_id, $id)
     {
+        //filtering service unit
+        $hasAccessServiceUnit = $this->hasServiceUnitAccess($service_unit_id);
+        if (!$hasAccessServiceUnit) {
+            abort(403);
+        }
+
+        $access = $this->getRoleAccess(Formula::APPCrossingBridges);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             $service_unit = ServiceUnit::with([])->where('id', '=', $service_unit_id)->first();
             if (!$service_unit) {
@@ -242,12 +262,29 @@ class CrossingBridgeController extends CustomController
             if (!$service_unit) {
                 return $this->jsonErrorResponse('Satuan Pelayanan Tidak Di Temukan...');
             }
-            $data = CrossingBridge::with(['sub_track.track.area'])
+            $data = CrossingBridge::with(['area', 'sub_track', 'track'])
                 ->where('id', '=', $id)
                 ->first();
             return $this->jsonSuccessResponse('success', $data);
         } catch (\Exception $e) {
             return $this->jsonErrorResponse('internal server error', $e->getMessage());
         }
+    }
+
+    public function export_to_excel($service_unit_id)
+    {
+        $areas = Area::with(['service_units'])
+            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+                /** @var $qs Builder */
+                return $qs->where('service_unit_id', '=', $service_unit_id);
+            })
+            ->orderBy('name', 'ASC')->get();
+        $areaIDS = $areas->pluck('id')->toArray();
+        $fileName = 'jembatan_penyebrangan_' . date('YmdHis') . '.xlsx';
+        $data = $this->generateData($areaIDS);
+        return Excel::download(
+            new \App\Exports\CrossingBridge($data),
+            $fileName
+        );
     }
 }

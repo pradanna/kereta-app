@@ -86,6 +86,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="form-group w-100">
+                                <label for="usability" class="form-label">Jenis / Fungsi Peralatan Khusus</label>
+                                <input type="text" class="form-control" id="usability"
+                                       name="usability"
+                                       placeholder="" disabled>
+                            </div>
+                        </div>
+                    </div>
                     <hr>
                     <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
                     <div class="row mb-3">
@@ -177,6 +187,7 @@
                 let width = data['width'];
                 let height = data['height'];
                 let spoorWidth = data['spoor_width'];
+                let usability = data['usability'];
                 let description = data['description'];
                 $('#special_equipment_type').val(specialEquipmentType);
                 $('#empty_weight').val(emptyWeight);
@@ -186,6 +197,7 @@
                 $('#width').val(width);
                 $('#height').val(height);
                 $('#spoor_width').val(spoorWidth);
+                $('#usability').val(usability);
                 $('#description').val(description);
                 modalDetail.show();
             } catch (e) {

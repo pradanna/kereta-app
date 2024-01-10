@@ -43,7 +43,7 @@
         @csrf
         <div class="panel ">
             <div class="title">
-                <p>Tambah Data Safety Assessment</p>
+                <p>Tambah Data Jembatan Penyebrangan</p>
             </div>
             <div class="isi">
                 <div class="row mb-3">

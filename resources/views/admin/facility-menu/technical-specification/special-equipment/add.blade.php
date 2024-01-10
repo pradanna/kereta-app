@@ -100,7 +100,20 @@
                             @endif
                         </div>
                     </div>
-
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="form-group w-100">
+                            <label for="usability" class="form-label">Jenis / Fungsi Peralatan Khusus <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="usability" name="usability"
+                                   placeholder="Jenis / Fungsi Peralatan Khusus">
+                            @if($errors->has('usability'))
+                                <div class="text-danger">
+                                    {{ $errors->first('usability') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <p style="font-size: 14px; color: #777777; font-weight: bold;">Dimensi</p>
@@ -129,7 +142,6 @@
                             @endif
                         </div>
                     </div>
-
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
