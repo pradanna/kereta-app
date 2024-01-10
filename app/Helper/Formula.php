@@ -23,6 +23,11 @@ class Formula
     const APPMenuDirectPassageAccident = 12;
     const APPMenuMaterialTool = 13;
     const APPMenuIllegalBuilding = 14;
+    const APPWorkSafety = 15;
+    const APPHumanResource = 16;
+    const APPSafetyAssessment = 17;
+    const APPCrossingBridges = 18;
+
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';
     const AreaExceptionName = 'DAOP 6';

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\NewWorkSafety;
 use App\Models\NewWorkSafetyDocument;
 use App\Models\NewWorkSafetyReport;
@@ -54,11 +55,15 @@ class WorkSafetyController extends CustomController
 
     public function project_monitoring_page()
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
         if ($this->request->ajax()) {
             $data = $this->generateDataMonitoring();
             return $this->basicDataTables($data);
         }
-        return view('admin.facility-menu.new-work-safety.project-monitoring.index');
+        return view('admin.facility-menu.new-work-safety.project-monitoring.index')
+            ->with([
+                'access' => $access
+            ]);
     }
 
     private $rule = [
@@ -75,6 +80,10 @@ class WorkSafetyController extends CustomController
 
     public function project_monitoring_add()
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
         if ($this->request->method() === 'POST') {
             try {
                 $validator = Validator::make($this->request->all(), $this->rule, $this->message);
@@ -86,6 +95,8 @@ class WorkSafetyController extends CustomController
                     'consultant' => $this->postField('consultant'),
                     'location' => $this->postField('location'),
                     'description' => $this->postField('description'),
+                    'created_by' => auth()->id(),
+                    'updated_by' => auth()->id(),
                 ];
                 NewWorkSafety::create($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -98,6 +109,10 @@ class WorkSafetyController extends CustomController
 
     public function project_monitoring_patch($id)
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $data = NewWorkSafety::with([])->findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
@@ -110,6 +125,7 @@ class WorkSafetyController extends CustomController
                     'consultant' => $this->postField('consultant'),
                     'location' => $this->postField('location'),
                     'description' => $this->postField('description'),
+                    'updated_by' => auth()->id(),
                 ];
                 $data->update($data_request);
                 return redirect()->back()->with('success', 'success');
@@ -124,6 +140,10 @@ class WorkSafetyController extends CustomController
 
     public function project_monitoring_destroy($id)
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             NewWorkSafety::destroy($id);
             return $this->jsonSuccessResponse('success');
@@ -146,6 +166,7 @@ class WorkSafetyController extends CustomController
 
     public function project_monitoring_document($id)
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
         $data = NewWorkSafety::with(['documents'])->findOrFail($id);
         if ($this->request->method() === 'POST' && $this->request->ajax()) {
             DB::beginTransaction();
@@ -182,12 +203,17 @@ class WorkSafetyController extends CustomController
         }
         return view('admin.facility-menu.new-work-safety.project-monitoring.document')
             ->with([
-                'data' => $data
+                'data' => $data,
+                'access' => $access,
             ]);
     }
 
     public function project_monitoring_document_destroy($id, $document_id)
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             NewWorkSafetyDocument::destroy($document_id);
             return $this->jsonSuccessResponse('success');
@@ -207,11 +233,9 @@ class WorkSafetyController extends CustomController
         }
 
         if ($date !== null && $date !== '') {
-            $dateParam = Carbon::createFromFormat('F Y', $date);
-            $month = $dateParam->format('m');
+            $dateParam = Carbon::createFromFormat('Y', $date);
             $year = $dateParam->format('Y');
-            $query->whereYear('date', $year)
-                ->whereMonth('date', $month);
+            $query->whereYear('date', $year);
         }
         return $query->orderBy('created_at', 'DESC')
             ->get();
@@ -220,11 +244,15 @@ class WorkSafetyController extends CustomController
 
     public function report_page()
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
         if ($this->request->ajax()) {
             $data = $this->generateDataReport();
             return $this->basicDataTables($data);
         }
-        return view('admin.facility-menu.new-work-safety.report.index');
+        return view('admin.facility-menu.new-work-safety.report.index')
+            ->with([
+                'access' => $access
+            ]);
     }
 
     private $rule_report = [
@@ -239,6 +267,10 @@ class WorkSafetyController extends CustomController
 
     public function report_add()
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
         if ($this->request->method() === 'POST') {
             try {
                 $validator = Validator::make($this->request->all(), $this->rule_report, $this->message_report);
@@ -277,6 +309,10 @@ class WorkSafetyController extends CustomController
 
     public function report_patch($id)
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $data = NewWorkSafetyReport::findOrFail($id);
         if ($this->request->method() === 'POST' && $this->request->ajax()) {
             try {
@@ -318,6 +354,10 @@ class WorkSafetyController extends CustomController
 
     public function report_destroy($id)
     {
+        $access = $this->getRoleAccess(Formula::APPWorkSafety);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             NewWorkSafetyReport::destroy($id);
             return $this->jsonSuccessResponse('success');

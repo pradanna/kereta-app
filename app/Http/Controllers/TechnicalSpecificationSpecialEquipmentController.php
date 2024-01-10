@@ -47,6 +47,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
         'width' => 'required',
         'height' => 'required',
         'spoor_width' => 'required',
+        'usability' => 'required',
     ];
 
     private $message = [
@@ -58,6 +59,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
         'width.required' => 'kolom lebar wajib di isi',
         'height.required' => 'kolom tinggi wajib di isi',
         'spoor_width.required' => 'kolom lebar spoor wajib di isi',
+        'usability.required' => 'kolom jenis/fungsi wajib di isi',
     ];
 
     public function store()
@@ -82,6 +84,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                     'height' => $this->postField('height'),
                     'coupler_height' => 0,
                     'spoor_width' => $this->postField('spoor_width'),
+                    'usability' => $this->postField('usability'),
                     'axle_load' => 0,
                     'description' => $this->postField('description'),
                     'created_by' => auth()->id(),
@@ -123,6 +126,7 @@ class TechnicalSpecificationSpecialEquipmentController extends CustomController
                     'height' => $this->postField('height'),
                     'coupler_height' => 0,
                     'spoor_width' => $this->postField('spoor_width'),
+                    'usability' => $this->postField('usability'),
                     'axle_load' => 0,
                     'description' => $this->postField('description'),
                     'updated_by' => auth()->id(),

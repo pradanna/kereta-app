@@ -15,11 +15,23 @@ class NewWorkSafety extends Model
         'location',
         'consultant',
         'document',
-        'description'
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function documents()
     {
         return $this->hasMany(NewWorkSafetyDocument::class, 'new_work_safety_id');
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

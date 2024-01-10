@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -44,64 +49,134 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="sub_track" class="form-label">Petak</label>
-                            <select class="select2 form-control" name="sub_track" id="sub_track"
+                            <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="area" id="area"
                                     style="width: 100%;">
-                                @foreach ($sub_tracks as $sub_track)
-                                    <option value="{{ $sub_track->id }}">{{ $sub_track->code }} ({{ $sub_track->track->code }} {{ $sub_track->track->area->name }})</option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('area'))
+                                <div class="text-danger">
+                                    {{ $errors->first('area') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="district" class="form-label">Kecamatan</label>
+                            <label for="track" class="form-label">Lintas <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="track" id="track"
+                                    style="width: 100%;">
+                                @foreach ($tracks as $track)
+                                    <option value="{{ $track->id }}">{{ $track->code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('track'))
+                                <div class="text-danger">
+                                    {{ $errors->first('track') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="sub_track" class="form-label">Petak <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="sub_track" id="sub_track"
+                                    style="width: 100%;">
+                                @foreach ($sub_tracks as $sub_track)
+                                    <option value="{{ $sub_track->id }}">{{ $sub_track->code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('sub_track'))
+                                <div class="text-danger">
+                                    {{ $errors->first('sub_track') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="stakes" name="stakes"
+                                   placeholder="KM/HM">
+                            @if($errors->has('stakes'))
+                                <div class="text-danger">
+                                    {{ $errors->first('stakes') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="district" class="form-label">Kecamatan <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="district" id="district"
                                     style="width: 100%;">
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}">{{ $district->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('district'))
+                                <div class="text-danger">
+                                    {{ $errors->first('district') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="w-100">
+                            <label for="recommendation_number" class="form-label">No. Surat Rekomendasi <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="recommendation_number"
+                                   name="recommendation_number" placeholder="No. Surat Rekomendasi">
+                            @if($errors->has('recommendation_number'))
+                                <div class="text-danger">
+                                    {{ $errors->first('recommendation_number') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="stakes" class="form-label">KM/HM</label>
-                            <input type="text" class="form-control" id="stakes" name="stakes"
-                                   placeholder="KM/HM">
+                            <label for="organizer" class="form-label">Penyelenggara <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="organizer" placeholder="Penyelenggara"
+                                   name="organizer">
+                            @if($errors->has('organizer'))
+                                <div class="text-danger">
+                                    {{ $errors->first('organizer') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="recommendation_number" class="form-label">No. Surat Rekomendasi</label>
-                            <input type="text" class="form-control" id="recommendation_number"
-                                   name="recommendation_number">
+                            <label for="job_scope" class="form-label">Ruang Lingkup Pekerjaan <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="job_scope" name="job_scope" placeholder="Ruang Lingkup Kerja">
+                            @if($errors->has('job_scope'))
+                                <div class="text-danger">
+                                    {{ $errors->first('job_scope') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="w-100">
-                            <label for="organizer" class="form-label">Penyelenggara</label>
-                            <input type="text" class="form-control" id="organizer"
-                                   name="organizer">
-                        </div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <div class="w-100">
-                            <label for="job_scope" class="form-label">Ruang Lingkup Pekerjaan</label>
-                            <input type="text" class="form-control" id="job_scope" name="job_scope">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="w-100">
-                            <label for="follow_up" class="form-label">Rekomendasi Tindak Lanjut</label>
-                            <input type="text" class="form-control" id="follow_up"
+                            <label for="follow_up" class="form-label">Rekomendasi Tindak Lanjut <span class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="follow_up" placeholder="Rekomendasi Tindak Lanjut"
                                    name="follow_up">
+                            @if($errors->has('follow_up'))
+                                <div class="text-danger">
+                                    {{ $errors->first('follow_up') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -109,7 +184,7 @@
                     <div class="col-12">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>
-                            <textarea rows="3" class="form-control" id="description" name="description"></textarea>
+                            <textarea rows="3" class="form-control" id="description" name="description" placeholder="Keterangan"></textarea>
                         </div>
                     </div>
                 </div>

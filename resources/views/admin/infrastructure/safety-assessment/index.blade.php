@@ -8,7 +8,6 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Safety Assessment {{ $service_unit->name }}</li>
             </ol>
@@ -21,7 +20,8 @@
                     <div class="col-3">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option"
+                                    style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -47,13 +47,15 @@
         <div class="title">
             <p>Data Sertifikasi Sarana Lokomotif</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('infrastructure.safety.assessment.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('infrastructure.safety.assessment.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
                 <a class="btn-success sml rnd"
                    href="#"
-                   id="btn-export"
-                   target="_blank">Export
+                   id="btn-export">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -83,19 +85,34 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Safety Assessment</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Safety
+                        Assessment</p>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="track" class="form-label">Perlintasan</label>
-                                <input type="text" class="form-control" id="track" name="track" disabled>
+                                <label for="area" class="form-label">Wilayah</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
+                                <label for="track" class="form-label">Lintas</label>
+                                <input type="text" class="form-control" id="track" name="track" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="form-group w-100">
                                 <label for="sub_track" class="form-label">Petak</label>
                                 <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="stakes" class="form-label">KM/HM</label>
+                                <input type="text" class="form-control" id="stakes" name="stakes" disabled>
                             </div>
                         </div>
                     </div>
@@ -117,24 +134,32 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="stakes" class="form-label">KM/HM</label>
-                                <input type="text" class="form-control" id="stakes" name="stakes" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="w-100">
                                 <label for="recommendation_number" class="form-label">No. Surat Rekomendasi</label>
                                 <input type="text" class="form-control" id="recommendation_number"
                                        name="recommendation_number" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="w-100">
                                 <label for="organizer" class="form-label">Penyelenggara</label>
                                 <input type="text" class="form-control" id="organizer"
                                        name="organizer" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="job_scope" class="form-label">Ruang Lingkup Pekerjaan</label>
+                                <input type="text" class="form-control" id="job_scope"
+                                       name="job_scope" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="follow_up" class="form-label">Rekomendasi Tindak Lanjut</label>
+                                <input type="text" class="form-control" id="follow_up"
+                                       name="follow_up" disabled>
                             </div>
                         </div>
                     </div>
@@ -163,11 +188,12 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail'));
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function(e) {
+            $('.btn-delete').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -190,7 +216,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function() {
+            AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
@@ -198,7 +224,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function(e) {
+            $('.btn-detail').on('click', function (e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -210,20 +236,26 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
+                let area = data['area']['name'];
                 let subTrack = data['sub_track']['code'];
-                let track = data['sub_track']['track']['code'];
+                let track = data['track']['code'];
                 let district = data['district']['name'];
                 let city = data['district']['city']['name'];
                 let stakes = data['stakes'];
                 let recommendation_number = data['recommendation_number'];
+                let job_scope = data['job_scope'];
+                let follow_up = data['follow_up'];
                 let organizer = data['organizer'];
                 let description = data['description'];
+                $('#area').val(area);
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
                 $('#district').val(district);
                 $('#city').val(city);
                 $('#stakes').val(stakes);
                 $('#recommendation_number').val(recommendation_number);
+                $('#job_scope').val(job_scope);
+                $('#follow_up').val(follow_up);
                 $('#organizer').val(organizer);
                 $('#description').val(description);
                 modalDetail.show();
@@ -256,13 +288,13 @@
                     // width: '30px'
                 },
                     {
-                        data: 'sub_track.track.area.name',
-                        name: 'sub_track.track.area.name',
+                        data: 'area.name',
+                        name: 'area.name',
                         className: 'text-center'
                     },
                     {
-                        data: 'sub_track.track.code',
-                        name: 'sub_track.track.code',
+                        data: 'track.code',
+                        name: 'track.code',
                         className: 'text-center'
                     },
                     {
@@ -295,14 +327,13 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
-                                data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                    'id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Detail</a>' + elEdit + elDelete;
                         },
                         orderable: false,
                         className: 'text-center',
@@ -331,6 +362,15 @@
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
                 table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let queryParam = '?area=' + area + '&name=' + name;
+                let exportPath = path + '/excel' + queryParam;
+                window.open(exportPath, '_blank');
             });
         });
     </script>

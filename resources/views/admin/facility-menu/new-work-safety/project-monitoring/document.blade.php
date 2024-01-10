@@ -37,20 +37,22 @@
                 <tbody></tbody>
             </table>
             <hr>
-            <p>Tambah Dokumen Baru</p>
-            <form method="post"
-                  enctype="multipart/form-data"
-                  id="form-data">
-                @csrf
-                <div class="w-100 needsclick dropzone" id="document-dropzone"></div>
-            </form>
-            <hr>
-            <div class="d-flex justify-content-end">
-                <a class="btn-utama rnd" id="btn-save" href="#">
-                    Upload
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_upload</i>
-                </a>
-            </div>
+            @if($access['is_granted_create'])
+                <p>Tambah Dokumen Baru</p>
+                <form method="post"
+                      enctype="multipart/form-data"
+                      id="form-data">
+                    @csrf
+                    <div class="w-100 needsclick dropzone" id="document-dropzone"></div>
+                </form>
+                <hr>
+                <div class="d-flex justify-content-end">
+                    <a class="btn-utama rnd" id="btn-save" href="#">
+                        Upload
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">file_upload</i>
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
@@ -73,6 +75,7 @@
         let table;
         var uploadedDocumentMap = {};
         var myDropzone;
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         Dropzone.autoDiscover = false;
         Dropzone.options.documentDropzone = {
@@ -114,11 +117,11 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = data['document'];
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
                             return '<a href="' + urlEdit +
                                 '" target="_blank" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Unduh</a>' +
-                                '<a href="#" class="btn-delete btn-drop-document btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                                '">Unduh</a>' + elDelete;
                         },
                         orderable: false,
                         className: 'text-center middle-header',
