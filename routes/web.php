@@ -288,6 +288,7 @@ Route::group(['prefix' => 'prasarana'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TrainBridgesController::class, 'patch'])->name('infrastructure.train.bridges.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\TrainBridgesController::class, 'destroy'])->name('infrastructure.train.bridges.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\TrainBridgesController::class, 'detail'])->name('infrastructure.train.bridges.detail');
+            Route::get('/excel', [\App\Http\Controllers\TrainBridgesController::class, 'export_to_excel'])->name('infrastructure.train.bridges.excel');
         });
     });
 });

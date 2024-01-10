@@ -9,7 +9,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Jembatan Kereta Api {{ $service_unit->name }}</li>
+                <li class="breadcrumb-item active" aria-current="page">Jembatan Kereta
+                    Api {{ $service_unit->name }}</li>
             </ol>
         </nav>
     </div>
@@ -47,14 +48,15 @@
         <div class="title">
             <p>Data Jembatan Kereta Api</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2"
-                   href="{{ route('infrastructure.train.bridges.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('infrastructure.train.bridges.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
                 <a class="btn-success sml rnd"
                    href="#"
-                   id="btn-export"
-                   target="_blank">Export
+                   id="btn-export">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -69,7 +71,7 @@
                     <th class="text-center middle-header" width="10%">Petak</th>
                     <th class="text-center middle-header" width="10%">KM/HM</th>
                     <th class="middle-header">Koridor</th>
-                    <th class="text-center middle-header" width="12%">Tanggal Di Pasang</th>
+                    <th class="text-center middle-header" width="12%">Tahun Di Pasang</th>
                     <th class="text-center middle-header" width="15%">Aksi</th>
                 </tr>
                 </thead>
@@ -83,29 +85,38 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Jembatan Kereta Api</p>
+                    <p style="font-size: 14px; color: #777777; font-weight: bold;">Detail Informasi Jembatan Kereta
+                        Api</p>
                     <hr>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="track" class="form-label">Perlintasan</label>
+                                <label for="area" class="form-label">Wilayah</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="track" class="form-label">Lintas</label>
                                 <input type="text" class="form-control" id="track" name="track" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="sub_track" class="form-label">Petak</label>
                                 <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
                                 <input type="text" class="form-control" id="stakes" name="stakes" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="corridor" class="form-label">Koridor</label>
@@ -113,9 +124,6 @@
                                        name="corridor" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="reference_number" class="form-label">No. BH</label>
@@ -123,6 +131,8 @@
                                        name="reference_number" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="building_type" class="form-label">Jenis Bangunan</label>
@@ -130,9 +140,6 @@
                                        name="building_type" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="span" class="form-label">Bentang</label>
@@ -140,6 +147,8 @@
                                        name="span" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="installed_date" class="form-label">Di Pasang</label>
@@ -147,9 +156,6 @@
                                        name="installed_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="replaced_date" class="form-label">Di Ganti</label>
@@ -157,6 +163,8 @@
                                        name="replaced_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="strengthened_date" class="form-label">Di Perkuat</label>
@@ -164,9 +172,6 @@
                                        name="strengthened_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="bridge_type" class="form-label">Jembatan</label>
@@ -174,31 +179,38 @@
                                        name="bridge_type" disabled>
                             </div>
                         </div>
-                        <div class="col-6">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-4">
                             <div class="w-100">
                                 <label for="volume" class="form-label">Volume Andas (Buah)</label>
                                 <input type="number" step="any" class="form-control" id="volume"
                                        name="volume" value="0" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="w-100">
                                 <label for="bearing" class="form-label">Jumlah Bantalan (Buah)</label>
                                 <input type="number" step="any" class="form-control" id="bearing"
                                        name="bearing" value="0" disabled>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="w-100">
                                 <label for="bolt" class="form-label">Jumlah Baut (Buah)</label>
                                 <input type="number" step="any" class="form-control" id="bolt"
                                        name="bolt" value="0" disabled>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <label for="description" class="form-label">Keterangan</label>
+                                <textarea rows="3" class="form-control" id="description"
+                                          name="description" disabled></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -215,10 +227,12 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
+        let table;
         var path = '/{{ request()->path() }}';
         let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail'));
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -264,8 +278,9 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
+                let area = data['area']['name'];
                 let subTrack = data['sub_track']['code'];
-                let track = data['sub_track']['track']['code'];
+                let track = data['track']['code'];
                 let stakes = data['stakes'];
                 let reference_number = data['reference_number'];
                 let corridor = data['corridor'];
@@ -278,7 +293,22 @@
                 let volume = data['volume'];
                 let bolt = data['bolt'];
                 let bearing = data['bearing'];
+                let description = data['description'];
 
+                let iDate = new Date(installed_date);
+                let rDate = new Date(replaced_date);
+                let sDate = new Date(strengthened_date);
+
+                let iDateValue = iDate.toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                });
+                let rDateValue = rDate.toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                });
+                let sDateValue = sDate.toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                });
+                $('#area').val(area);
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
                 $('#stakes').val(stakes);
@@ -287,13 +317,13 @@
                 $('#bridge_type').val(bridge_type);
                 $('#building_type').val(building_type);
                 $('#span').val(span);
-                $('#installed_date').val(installed_date);
-                $('#replaced_date').val(replaced_date);
-                $('#strengthened_date').val(strengthened_date);
+                $('#installed_date').val(iDateValue);
+                $('#replaced_date').val(rDateValue);
+                $('#strengthened_date').val(sDateValue);
                 $('#volume').val(volume);
                 $('#bolt').val(bolt);
                 $('#bearing').val(bearing);
-
+                $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
@@ -324,13 +354,13 @@
                     // width: '30px'
                 },
                     {
-                        data: 'sub_track.track.area.name',
-                        name: 'sub_track.track.area.name',
+                        data: 'area.name',
+                        name: 'area.name',
                         className: 'text-center'
                     },
                     {
-                        data: 'sub_track.track.code',
-                        name: 'sub_track.track.code',
+                        data: 'track.code',
+                        name: 'track.code',
                         className: 'text-center'
                     },
                     {
@@ -353,10 +383,8 @@
                         render: function (data) {
                             const v = new Date(data);
                             return v.toLocaleDateString('id-ID', {
-                                month: '2-digit',
                                 year: 'numeric',
-                                day: '2-digit'
-                            }).split('/').join('-')
+                            })
                         },
                         className: 'text-center',
                     },
@@ -364,14 +392,13 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
-                                data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                    'id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Detail</a>' + elEdit + elDelete;
                         },
                         orderable: false,
                         className: 'text-center',
@@ -407,6 +434,15 @@
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
                 table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let queryParam = '?area=' + area + '&name=' + name;
+                let exportPath = path + '/excel' + queryParam;
+                window.open(exportPath, '_blank');
             });
         });
     </script>
