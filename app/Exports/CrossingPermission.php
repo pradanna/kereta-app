@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
+class CrossingPermission implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
 {
     private $data;
 
@@ -39,7 +39,7 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:K' . $rowLength;
+        $cellRange = 'A1:N' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -74,7 +74,7 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     public function title(): string
     {
         // TODO: Implement title() method.
-        return 'JEMBATAN PENYEBRANGAN';
+        return 'PERMINTAAN IZIN MELINTAS REL';
     }
 
     private function headingValues()
@@ -85,11 +85,14 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
             'LINTAS',
             'PETAK',
             'KM/HM',
-            'NO. SURAT REKOMENDASI',
-            'PENANGGUNG JAWAB BANGUNAN',
-            'KELAS JALAN',
-            'PANJANG BANGUNAN (M)',
-            'LEBAR BANGUNAN (M)',
+            'NO. SK',
+            'TANGGAL SK',
+            'JENIS PERPOTONGAN/PERSINGGUNGAN',
+            'JENIS BANGUNAN',
+            'BADAN HUKUM/INSTANSI',
+            'TANGGAL HABIS MASA BERLAKU',
+            'AKAN HABIS',
+            'STATUS',
             'KETERANGAN',
         ];
     }
@@ -105,11 +108,14 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
                 $datum->track->code,
                 $datum->sub_track->code,
                 $datum->stakes,
-                $datum->recommendation_number,
-                $datum->responsible_person,
-                $datum->road_class,
-                $datum->long,
-                $datum->width,
+                $datum->decree_number,
+                $datum->decree_date,
+                $datum->intersection,
+                $datum->building_type,
+                $datum->agency,
+                $datum->expired_date,
+                $datum->expired_in,
+                ($datum->status === 'valid') ? 'BERLAKU' : 'HABIS MASA BERLAKU',
                 $datum->description,
             ];
             array_push($results, $result);

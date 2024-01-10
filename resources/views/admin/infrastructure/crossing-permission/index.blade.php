@@ -59,14 +59,15 @@
         <div class="title">
             <p>Data Permohonan Izin Melintas Rel</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2"
-                   href="{{ route('infrastructure.crossing.permission.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('infrastructure.crossing.permission.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
                 <a class="btn-success sml rnd"
                    href="#"
-                   id="btn-export"
-                   target="_blank">Export
+                   id="btn-export">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -103,24 +104,32 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="track" class="form-label">Perlintasan</label>
+                                <label for="area" class="form-label">Wilayah</label>
+                                <input type="text" class="form-control" id="area" name="area" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="track" class="form-label">Lintas</label>
                                 <input type="text" class="form-control" id="track" name="track" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="sub_track" class="form-label">Petak</label>
                                 <input type="text" class="form-control" id="sub_track" name="sub_track" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
                                 <input type="text" class="form-control" id="stakes" name="stakes" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="decree_number" class="form-label">No. SK</label>
@@ -128,8 +137,6 @@
                                        name="decree_number" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="decree_date" class="form-label">Tanggal SK</label>
@@ -137,6 +144,8 @@
                                        name="decree_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="intersection" class="form-label">Jenis Perpotongan / Persinggungan</label>
@@ -144,9 +153,6 @@
                                        name="intersection" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="building_type" class="form-label">Jenis Bangunan</label>
@@ -154,6 +160,8 @@
                                        name="building_type" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="agency" class="form-label">Badan Hukum / Instansi</label>
@@ -161,8 +169,6 @@
                                        name="agency" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="expired_date" class="form-label">Tanggal Habis Masa Berlaku</label>
@@ -170,18 +176,27 @@
                                        name="expired_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="expired_in" class="form-label">Akan Habis (Hari)</label>
                                 <input type="text" class="form-control" id="expired_in" name="expired_in" disabled>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="status" class="form-label">Status</label>
                                 <input type="text" class="form-control" id="status" name="status" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <label for="description" class="form-label">Keterangan</label>
+                                <textarea rows="3" class="form-control" id="description"
+                                          name="description" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -202,8 +217,9 @@
     <script>
         var path = '/{{ request()->path() }}';
         let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail'));
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -249,8 +265,9 @@
                 let url = path + '/' + id + '/detail';
                 let response = await $.get(url);
                 let data = response['data'];
+                let area = data['area']['name'];
                 let subTrack = data['sub_track']['code'];
-                let track = data['sub_track']['track']['code'];
+                let track = data['track']['code'];
                 let stakes = data['stakes'];
                 let decree_number = data['decree_number'];
                 let decree_date = data['decree_date'];
@@ -258,8 +275,10 @@
                 let building_type = data['building_type'];
                 let agency = data['agency'];
                 let expired_date = data['expired_date'];
+                let description = data['description'];
                 let expiredIn = data['expired_in'];
                 let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+                $('#area').val(area);
                 $('#sub_track').val(subTrack);
                 $('#track').val(track);
                 $('#stakes').val(stakes);
@@ -271,8 +290,10 @@
                 $('#expired_date').val(expired_date);
                 $('#expired_in').val(expiredIn);
                 $('#status').val(status);
+                $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
+                console.log(e)
                 alert('internal server error...')
             }
         }
@@ -302,13 +323,13 @@
                     // width: '30px'
                 },
                     {
-                        data: 'sub_track.track.area.name',
-                        name: 'sub_track.track.area.name',
+                        data: 'area.name',
+                        name: 'area.name',
                         className: 'text-center'
                     },
                     {
-                        data: 'sub_track.track.code',
-                        name: 'sub_track.track.code',
+                        data: 'track.code',
+                        name: 'track.code',
                         className: 'text-center'
                     },
                     {
@@ -364,14 +385,13 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
-                                data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                    'id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Detail</a>' + elEdit + elDelete;
                         },
                         orderable: false,
                         className: 'text-center',
@@ -407,6 +427,16 @@
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
                 table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let status = $('#status-option').val();
+                let queryParam = '?area=' + area + '&name=' + name + '&status=' + status;
+                let exportPath = path + '/excel' + queryParam;
+                window.open(exportPath, '_blank');
             });
         });
     </script>

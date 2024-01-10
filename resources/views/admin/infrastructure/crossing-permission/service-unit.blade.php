@@ -36,10 +36,25 @@
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
+        let authServiceUnit = '{{ auth()->user()->service_unit_id }}';
+        let authRole = '{{ auth()->user()->role }}';
         $(document).ready(function () {
             $('.card-service-unit').on('click', function () {
                 let id = this.dataset.id;
-                window.location.href = path + '/' + id;
+                if (authRole !== 'superadmin') {
+                    if (authServiceUnit === id) {
+                        window.location.href = path + '/' + id;
+                    } else {
+                        Swal.fire({
+                            title: 'Forbidden',
+                            text: 'Anda tidak memiliki akses untuk mengakses satuan pelayanan ini...',
+                            icon: 'error',
+                            timer: 2000
+                        })
+                    }
+                } else {
+                    window.location.href = path + '/' + id;
+                }
             });
         });
     </script>

@@ -276,6 +276,7 @@ Route::group(['prefix' => 'prasarana'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\CrossingPermissionController::class, 'patch'])->name('infrastructure.crossing.permission.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\CrossingPermissionController::class, 'destroy'])->name('infrastructure.crossing.permission.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\CrossingPermissionController::class, 'detail'])->name('infrastructure.crossing.permission.detail');
+            Route::get('/excel', [\App\Http\Controllers\CrossingPermissionController::class, 'export_to_excel'])->name('infrastructure.crossing.permission.excel');
         });
     });
 
