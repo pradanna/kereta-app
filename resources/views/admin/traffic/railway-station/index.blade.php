@@ -47,14 +47,15 @@
         <div class="title">
             <p>Data Jembatan Kereta Api</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2"
-                   href="{{ route('traffic.railway-station.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2"
+                       href="{{ route('traffic.railway-station.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
                 <a class="btn-success sml rnd"
                    href="#"
-                   id="btn-export"
-                   target="_blank">Export
+                   id="btn-export">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -88,10 +89,17 @@
                         Api</p>
                     <hr>
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="form-group w-100">
-                                <label for="area" class="form-label">Daerah Operasi</label>
+                                <label for="area" class="form-label">Wilayah</label>
                                 <input type="text" class="form-control" id="area" name="area" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="w-100">
+                                <label for="stakes" class="form-label">KM/HM</label>
+                                <input type="text" class="form-control" id="stakes" name="stakes"
+                                       placeholder="KM/HM" disabled>
                             </div>
                         </div>
                     </div>
@@ -104,7 +112,7 @@
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="city" class="form-label">Kota</label>
+                                <label for="city" class="form-label">Kota/Kabupaten</label>
                                 <input type="text" class="form-control" id="city"
                                        name="city" disabled>
                             </div>
@@ -129,16 +137,16 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="stakes" class="form-label">KM/HM</label>
-                                <input type="text" class="form-control" id="stakes" name="stakes"
-                                       placeholder="KM/HM" disabled>
+                                <label for="height" class="form-label">Ketinggian</label>
+                                <input type="number" step="any" class="form-control" id="height"
+                                       name="height" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="height" class="form-label">Ketinggian</label>
-                                <input type="number" step="any" class="form-control" id="height"
-                                       name="height" disabled>
+                                <label for="type" class="form-label">Jenis Stasiun</label>
+                                <input type="text" class="form-control" id="type"
+                                       name="type" disabled>
                             </div>
                         </div>
                     </div>
@@ -160,17 +168,26 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <div class="w-100">
-                                <label for="type" class="form-label">Jenis Stasiun</label>
-                                <input type="text" class="form-control" id="type"
-                                       name="type" disabled>
-                            </div>
-                        </div>
-                        <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="status" class="form-label">Status</label>
                                 <input type="text" class="form-control" id="status"
                                        name="status" disabled>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group w-100">
+                                <label for="station_class" class="form-label">Kelas Stasiun</label>
+                                <input type="text" class="form-control" id="station_class"
+                                       name="station_class" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="w-100">
+                                <label for="description" class="form-label">Keterangan</label>
+                                <textarea rows="3" class="form-control" id="description"
+                                          name="description" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -191,8 +208,9 @@
     <script>
         var path = '/{{ request()->path() }}';
         let expiration = parseInt('{{ \App\Helper\Formula::ExpirationLimit }}');
-
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail'));
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -248,6 +266,8 @@
                 let latitude = data['latitude'];
                 let longitude = data['longitude'];
                 let type = data['type'];
+                let station_class = data['station_class'];
+                let description = data['description'];
                 let status = data['status'] === 'aktif' ? 'Aktif' : 'Tidak Aktif';
 
 
@@ -262,6 +282,8 @@
                 $('#longitude').val(longitude);
                 $('#type').val(type);
                 $('#status').val(status);
+                $('#station_class').val(station_class);
+                $('#description').val(description);
                 modalDetail.show();
             } catch (e) {
                 alert('internal server error...')
@@ -329,14 +351,13 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
-                                data['id'] + '">Detail</a>' +
-                                '<a href="' + urlEdit +
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                    'id'] +
-                                '">Delete</a>';
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
+                                data['id'] + '">Detail</a>' + elEdit + elDelete;
                         },
                         orderable: false,
                         className: 'text-center',
@@ -372,6 +393,15 @@
             $('#btn-search').on('click', function (e) {
                 e.preventDefault();
                 table.ajax.reload();
+            });
+
+            $('#btn-export').on('click', function (e) {
+                e.preventDefault();
+                let area = $('#area-option').val();
+                let name = $('#name').val();
+                let queryParam = '?area=' + area + '&name=' + name;
+                let exportPath = path + '/excel' + queryParam;
+                window.open(exportPath, '_blank');
             });
         });
     </script>

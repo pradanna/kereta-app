@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -44,68 +49,150 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="sub_track" class="form-label">Petak</label>
+                            <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="area" id="area"
+                                    style="width: 100%;">
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('area'))
+                                <div class="text-danger">
+                                    {{ $errors->first('area') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="track" class="form-label">Lintas <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="track" id="track"
+                                    style="width: 100%;">
+                                @foreach ($tracks as $track)
+                                    <option value="{{ $track->id }}">{{ $track->code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('track'))
+                                <div class="text-danger">
+                                    {{ $errors->first('track') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form-group w-100">
+                            <label for="sub_track" class="form-label">Petak <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="sub_track" id="sub_track"
                                     style="width: 100%;">
                                 @foreach ($sub_tracks as $sub_track)
-                                    <option value="{{ $sub_track->id }}">{{ $sub_track->code }} ({{ $sub_track->track->code }} {{ $sub_track->track->area->name }})</option>
+                                    <option value="{{ $sub_track->id }}">{{ $sub_track->code }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('sub_track'))
+                                <div class="text-danger">
+                                    {{ $errors->first('sub_track') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="stakes" class="form-label">KM/HM</label>
+                            <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="stakes" name="stakes"
                                    placeholder="KM/HM">
+                            @if($errors->has('stakes'))
+                                <div class="text-danger">
+                                    {{ $errors->first('stakes') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="decree_number" class="form-label">No. SK</label>
+                            <label for="decree_number" class="form-label">No. SK <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="decree_number"
-                                   name="decree_number">
+                                   name="decree_number" placeholder="No. SK">
+                            @if($errors->has('decree_number'))
+                                <div class="text-danger">
+                                    {{ $errors->first('decree_number') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="decree_date" class="form-label">Tanggal SK</label>
+                            <label for="decree_date" class="form-label">Tanggal SK <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="decree_date"
-                                   name="decree_date" placeholder="dd-mm-yyyy">
+                                   name="decree_date" placeholder="dd-mm-yyyy" value="{{ \Carbon\Carbon::now()->format('d-m-Y') }}">
+                            @if($errors->has('decree_date'))
+                                <div class="text-danger">
+                                    {{ $errors->first('decree_date') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="intersection" class="form-label">Jenis Perpotongan / Persinggungan</label>
+                            <label for="intersection" class="form-label">Jenis Perpotongan / Persinggungan <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="intersection"
-                                   name="intersection">
+                                   name="intersection" placeholder="Jenis Perpotongan">
+                            @if($errors->has('intersection'))
+                                <div class="text-danger">
+                                    {{ $errors->first('intersection') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="building_type" class="form-label">Jenis Bangunan</label>
+                            <label for="building_type" class="form-label">Jenis Bangunan <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="building_type"
-                                   name="building_type">
+                                   name="building_type" placeholder="Jenis Bangunan">
+                            @if($errors->has('building_type'))
+                                <div class="text-danger">
+                                    {{ $errors->first('building_type') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="agency" class="form-label">Badan Hukum / Instansi</label>
+                            <label for="agency" class="form-label">Badan Hukum / Instansi <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="agency"
-                                   name="agency">
+                                   name="agency" placeholder="Badan Hukum / Instansi">
+                            @if($errors->has('agency'))
+                                <div class="text-danger">
+                                    {{ $errors->first('agency') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="expired_date" class="form-label">Tanggal Habis Masa Berlaku</label>
+                            <label for="expired_date" class="form-label">Tanggal Habis Masa Berlaku <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="expired_date"
-                                   name="expired_date" placeholder="dd-mm-yyyy">
+                                   name="expired_date" placeholder="dd-mm-yyyy" value="{{ \Carbon\Carbon::now()->format('d-m-Y') }}">
+                            @if($errors->has('expired_date'))
+                                <div class="text-danger">
+                                    {{ $errors->first('expired_date') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="w-100">
+                            <label for="description" class="form-label">Keterangan</label>
+                            <textarea rows="3" class="form-control" id="description" name="description" placeholder="Keterangan"></textarea>
                         </div>
                     </div>
                 </div>

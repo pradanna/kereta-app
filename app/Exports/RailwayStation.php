@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
+class RailwayStation implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
 {
     private $data;
 
@@ -39,7 +39,7 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:K' . $rowLength;
+        $cellRange = 'A1:M' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -74,7 +74,7 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     public function title(): string
     {
         // TODO: Implement title() method.
-        return 'JEMBATAN PENYEBRANGAN';
+        return  'STASIUN KERETA API';
     }
 
     private function headingValues()
@@ -82,14 +82,16 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
         return [
             'NO.',
             'WILAYAH',
-            'LINTAS',
             'PETAK',
-            'KM/HM',
-            'NO. SURAT REKOMENDASI',
-            'PENANGGUNG JAWAB BANGUNAN',
-            'KELAS JALAN',
-            'PANJANG BANGUNAN (M)',
-            'LEBAR BANGUNAN (M)',
+            'KECAMATAN',
+            'KOTA/KABUPATEN',
+            'NAMA STASIUN',
+            'SINGKATAN STASIUN',
+            'KETINGGIAN (MDPL)',
+            'JENIS STASIUN',
+            'LOKASI',
+            'STATUS',
+            'KELAS STASIUN',
             'KETERANGAN',
         ];
     }
@@ -102,14 +104,16 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
             $result = [
                 $no,
                 $datum->area->name,
-                $datum->track->code,
-                $datum->sub_track->code,
                 $datum->stakes,
-                $datum->recommendation_number,
-                $datum->responsible_person,
-                $datum->road_class,
-                $datum->long,
-                $datum->width,
+                $datum->district->name,
+                $datum->district->city->name,
+                $datum->name,
+                $datum->nickname,
+                $datum->height,
+                $datum->type,
+                $datum->latitude . ', '.$datum->longitude,
+                $datum->status,
+                $datum->station_class,
                 $datum->description,
             ];
             array_push($results, $result);

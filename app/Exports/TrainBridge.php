@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -14,7 +15,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
+class TrainBridge implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
 {
     private $data;
 
@@ -39,7 +40,7 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:K' . $rowLength;
+        $cellRange = 'A1:Q' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -74,7 +75,7 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     public function title(): string
     {
         // TODO: Implement title() method.
-        return 'JEMBATAN PENYEBRANGAN';
+        return 'JEMBATAN KERETA API';
     }
 
     private function headingValues()
@@ -85,11 +86,17 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
             'LINTAS',
             'PETAK',
             'KM/HM',
-            'NO. SURAT REKOMENDASI',
-            'PENANGGUNG JAWAB BANGUNAN',
-            'KELAS JALAN',
-            'PANJANG BANGUNAN (M)',
-            'LEBAR BANGUNAN (M)',
+            'KORIDOR',
+            'NO. BH',
+            'JEMBATAN',
+            'JENIS BANGUNAN',
+            'BENANG',
+            'DI PASANG',
+            'DI GANTI',
+            'DI PERKUAT',
+            'VOLUME ANDAS (BUAH)',
+            'JUMLAH BANTALAN (BUAH)',
+            'JUMLAH BAUT (BUAH)',
             'KETERANGAN',
         ];
     }
@@ -105,11 +112,17 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
                 $datum->track->code,
                 $datum->sub_track->code,
                 $datum->stakes,
-                $datum->recommendation_number,
-                $datum->responsible_person,
-                $datum->road_class,
-                $datum->long,
-                $datum->width,
+                $datum->corridor,
+                $datum->reference_number,
+                $datum->bridge_type,
+                $datum->building_type,
+                $datum->span,
+                Carbon::parse($datum->installed_date)->format('Y'),
+                Carbon::parse($datum->replaced_date)->format('Y'),
+                Carbon::parse($datum->strengthened_date)->format('Y'),
+                $datum->volume,
+                $datum->bolt,
+                $datum->bearing,
                 $datum->description,
             ];
             array_push($results, $result);

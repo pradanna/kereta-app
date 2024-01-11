@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -39,13 +44,13 @@
         @csrf
         <div class="panel ">
             <div class="title">
-                <p>Tambah Data Jembatan Kereta Api</p>
+                <p>Tambah Data Stasiun Kereta Api</p>
             </div>
             <div class="isi">
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah (Daerah Operasi)</label>
+                            <label for="area" class="form-label">Wilayah (Daerah Operasi) <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="area" id="area"
                                     style="width: 100%;">
                                 @foreach ($areas as $area)
@@ -53,84 +58,160 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @if($errors->has('area'))
+                                <div class="text-danger">
+                                    {{ $errors->first('area') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="district" class="form-label">Kecamatan</label>
+                            <label for="district" class="form-label">Kecamatan <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="district" id="district"
                                     style="width: 100%;">
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}">{{ $district->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('district'))
+                                <div class="text-danger">
+                                    {{ $errors->first('district') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama Stasiun</label>
+                            <label for="name" class="form-label">Nama Stasiun <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name"
-                                   name="name">
+                                   name="name" placeholder="Nama Stasiun">
+                            @if($errors->has('name'))
+                                <div class="text-danger">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="nickname" class="form-label">Singkatan Stasiun</label>
+                            <label for="nickname" class="form-label">Singkatan Stasiun <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="nickname"
-                                   name="nickname">
+                                   name="nickname" placeholder="Singkatan">
+                            @if($errors->has('nickname'))
+                                <div class="text-danger">
+                                    {{ $errors->first('nickname') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="stakes" class="form-label">KM/HM</label>
+                            <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="stakes" name="stakes"
                                    placeholder="KM/HM">
+                            @if($errors->has('stakes'))
+                                <div class="text-danger">
+                                    {{ $errors->first('stakes') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="height" class="form-label">Ketinggian</label>
+                            <label for="height" class="form-label">Ketinggian (mdpl) <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="height"
                                    name="height">
+                            @if($errors->has('height'))
+                                <div class="text-danger">
+                                    {{ $errors->first('height') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="latitude" class="form-label">Latitude</label>
+                            <label for="latitude" class="form-label">Latitude <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="latitude" name="latitude"
                                    placeholder="Contoh: 7.1129489">
+                            @if($errors->has('latitude'))
+                                <div class="text-danger">
+                                    {{ $errors->first('latitude') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="longitude" class="form-label">Longitude</label>
+                            <label for="longitude" class="form-label">Longitude <span class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="longitude" name="longitude"
                                    placeholder="Contoh: 110.1129489">
+                            @if($errors->has('longitude'))
+                                <div class="text-danger">
+                                    {{ $errors->first('longitude') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="type" class="form-label">Jenis Stasiun</label>
+                            <label for="type" class="form-label">Jenis Stasiun <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="type"
-                                   name="type">
+                                   name="type" placeholder="Jenis Stasiun">
+                            @if($errors->has('type'))
+                                <div class="text-danger">
+                                    {{ $errors->first('type') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="status" class="form-label">Status</label>
+                            <label for="status" class="form-label">Status <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="status" id="status"
                                     style="width: 100%;">
                                 <option value="aktif">Aktif</option>
                                 <option value="tidak aktif">Tidak Aktif</option>
                             </select>
+                            @if($errors->has('status'))
+                                <div class="text-danger">
+                                    {{ $errors->first('status') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="form-group w-100">
+                            <label for="station_class" class="form-label">Kelas Stasiun <span class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="station_class" id="station_class"
+                                    style="width: 100%;">
+                                <option value="besar">Besar</option>
+                                <option value="sedang">Sedang</option>
+                                <option value="kecil">Kecil</option>
+                            </select>
+                            @if($errors->has('station_class'))
+                                <div class="text-danger">
+                                    {{ $errors->first('station_class') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="w-100">
+                            <label for="description" class="form-label">Keterangan</label>
+                            <textarea rows="3" class="form-control" id="description" name="description" placeholder="Keterangan"></textarea>
                         </div>
                     </div>
                 </div>

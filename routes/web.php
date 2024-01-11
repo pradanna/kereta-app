@@ -276,6 +276,7 @@ Route::group(['prefix' => 'prasarana'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\CrossingPermissionController::class, 'patch'])->name('infrastructure.crossing.permission.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\CrossingPermissionController::class, 'destroy'])->name('infrastructure.crossing.permission.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\CrossingPermissionController::class, 'detail'])->name('infrastructure.crossing.permission.detail');
+            Route::get('/excel', [\App\Http\Controllers\CrossingPermissionController::class, 'export_to_excel'])->name('infrastructure.crossing.permission.excel');
         });
     });
 
@@ -287,6 +288,7 @@ Route::group(['prefix' => 'prasarana'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TrainBridgesController::class, 'patch'])->name('infrastructure.train.bridges.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\TrainBridgesController::class, 'destroy'])->name('infrastructure.train.bridges.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\TrainBridgesController::class, 'detail'])->name('infrastructure.train.bridges.detail');
+            Route::get('/excel', [\App\Http\Controllers\TrainBridgesController::class, 'export_to_excel'])->name('infrastructure.train.bridges.excel');
         });
     });
 });
@@ -302,6 +304,7 @@ Route::group(['prefix' => 'lalu-lintas'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\RailwayStationController::class, 'patch'])->name('traffic.railway-station.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\RailwayStationController::class, 'destroy'])->name('traffic.railway-station.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\RailwayStationController::class, 'detail'])->name('traffic.railway-station.detail');
+            Route::get('/excel', [\App\Http\Controllers\RailwayStationController::class, 'export_to_excel'])->name('traffic.railway-station.excel');
         });
     });
 });
