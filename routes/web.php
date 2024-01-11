@@ -304,6 +304,7 @@ Route::group(['prefix' => 'lalu-lintas'], function () {
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\RailwayStationController::class, 'patch'])->name('traffic.railway-station.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\RailwayStationController::class, 'destroy'])->name('traffic.railway-station.destroy');
             Route::get('/{id}/detail', [\App\Http\Controllers\RailwayStationController::class, 'detail'])->name('traffic.railway-station.detail');
+            Route::get('/excel', [\App\Http\Controllers\RailwayStationController::class, 'export_to_excel'])->name('traffic.railway-station.excel');
         });
     });
 });

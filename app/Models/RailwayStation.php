@@ -21,6 +21,10 @@ class RailwayStation extends Model
         'longitude',
         'type',
         'status',
+        'station_class',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     protected $casts = [
@@ -36,5 +40,15 @@ class RailwayStation extends Model
     public function district()
     {
         return $this->belongsTo(District::class, 'district_id');
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }
