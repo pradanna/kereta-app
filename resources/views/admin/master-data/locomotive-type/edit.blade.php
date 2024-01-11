@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -41,16 +46,26 @@
                 <div class="row mb-1">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="code" class="form-label">Kode</label>
+                            <label for="code" class="form-label">Kode <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="code" name="code"
                                    placeholder="Kode Jenis Lokomotif" value="{{ $data->code }}">
+                            @if($errors->has('code'))
+                                <div class="text-danger">
+                                    {{ $errors->first('code') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama</label>
+                            <label for="name" class="form-label">Nama <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
                                    placeholder="Nama Jenis Lokomotif" value="{{ $data->name }}">
+                            @if($errors->has('name'))
+                                <div class="text-danger">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

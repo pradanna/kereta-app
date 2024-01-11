@@ -30,6 +30,9 @@ class Formula
     const APPCrossingPermission = 19;
     const APPTrainBridge = 20;
     const APPRailwayStation = 21;
+    const APPMasterDistrict = 22;
+    const APPMasterLocomotiveType = 23;
+    const APPMasterTrainType = 24;
 
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';
