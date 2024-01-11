@@ -33,6 +33,7 @@ class Formula
     const APPMasterDistrict = 22;
     const APPMasterLocomotiveType = 23;
     const APPMasterTrainType = 24;
+    const APPMasterWagonType = 25;
 
 
     const ServiceUnitExceptionName = 'Satpel Surakarta';
