@@ -495,25 +495,25 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
+{{--                            <div class="mb-3">--}}
 {{--                                <img src="{{ asset('/images/sign-equipment/1ef.jpeg') }}" class="mb-2" alt="sign-image"--}}
 {{--                                     height="50">--}}
-                                <div class="w-100">
-                                    <label class="form-label">Peringatan Rintangan Obyek Berbahaya</label>
-                                    <div class="form-group">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="obstacles"
-                                                   id="obstacles_yes" value="1">
-                                            <label class="form-check-label" for="obstacles_yes">ADA</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="obstacles"
-                                                   id="obstacles_no" value="0" checked>
-                                            <label class="form-check-label" for="obstacles_no">TIDAK ADA</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                                <div class="w-100">--}}
+{{--                                    <label class="form-label">Peringatan Rintangan Obyek Berbahaya</label>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <div class="form-check form-check-inline">--}}
+{{--                                            <input class="form-check-input" type="radio" name="obstacles"--}}
+{{--                                                   id="obstacles_yes" value="1">--}}
+{{--                                            <label class="form-check-label" for="obstacles_yes">ADA</label>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="form-check form-check-inline">--}}
+{{--                                            <input class="form-check-input" type="radio" name="obstacles"--}}
+{{--                                                   id="obstacles_no" value="0" checked>--}}
+{{--                                            <label class="form-check-label" for="obstacles_no">TIDAK ADA</label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="mb-3">
                                 <img src="{{ asset('/images/sign-equipment/pita-penggaduh.jpeg') }}" class="mb-2" alt="sign-image"
