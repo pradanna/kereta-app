@@ -357,16 +357,16 @@ Route::group(['prefix' => 'master-data'], function () {
         Route::post('/{id}/delete', [\App\Http\Controllers\SpecialEquipmentTypeController::class, 'destroy'])->name('special-equipment-type.destroy');
     });
 
-    Route::group(['prefix' => 'perlintasan'], function () {
-        Route::get('/', [\App\Http\Controllers\TrackController::class, 'service_unit_page'])->name('track');
-        Route::group(['prefix' => '{service_unit_id}'], function () {
+    Route::group(['prefix' => 'lintas'], function () {
+//        Route::get('/', [\App\Http\Controllers\TrackController::class, 'service_unit_page'])->name('track');
+//        Route::group(['prefix' => '{service_unit_id}'], function () {
             Route::get('/', [\App\Http\Controllers\TrackController::class, 'index'])->name('track.service-unit');
             Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\TrackController::class, 'store'])->name('track.service-unit.create');
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\TrackController::class, 'patch'])->name('track.service-unit.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\TrackController::class, 'destroy'])->name('track.service-unit.destroy');
             Route::get('/excel', [\App\Http\Controllers\TrackController::class, 'export_to_excel'])->name('track.service-unit.excel');
             Route::get('/area', [\App\Http\Controllers\TrackController::class, 'getDataByArea'])->name('track.service-unit.by.area');
-        });
+//        });
     });
 
     Route::group(['prefix' => 'petak'], function () {

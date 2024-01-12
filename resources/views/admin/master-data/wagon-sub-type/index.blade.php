@@ -16,9 +16,11 @@
     <div class="panel">
         <div class="title">
             <p>Data Jenis Sub Jenis Gerbong</p>
-            <a class="btn-utama sml rnd " href="{{ route('wagon-sub-type.create') }}">Tambah
-                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-            </a>
+            @if($access['is_granted_create'])
+                <a class="btn-utama sml rnd " href="{{ route('wagon-sub-type.create') }}">Tambah
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+            @endif
         </div>
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
@@ -46,6 +48,8 @@
     <script>
         let table;
         let path = '{{ route('wagon-sub-type') }}';
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -111,10 +115,15 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>'
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            if (elEdit === '' && elDelete === '') {
+                                return '-';
+                            }
+                            return  elEdit + elDelete;
                         },
                         orderable: false
                     }

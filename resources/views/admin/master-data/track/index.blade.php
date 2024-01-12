@@ -3,14 +3,14 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER PERLINTASAN {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Data Master Perlintasan {{ $service_unit->name }}</p>
+            <h1 class="h1">MASTER LINTAS</h1>
+            <p class="mb-0">Manajemen Data Master Lintas</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('master-data') }}">Master Data</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('track') }}">Perlintasan {{ $service_unit->name }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $service_unit->name }}</li>
+{{--                <li class="breadcrumb-item"><a href="{{ route('track') }}">Lintas</a></li>--}}
+                <li class="breadcrumb-item active" aria-current="page">Lintas</li>
             </ol>
         </nav>
     </div>
@@ -18,18 +18,18 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    <div class="col-3">
-                        <div class="form-group w-100">
-                            <label for="area" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
-                                <option value="">Semua Daerah Operasi</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-9">
+{{--                    <div class="col-3">--}}
+{{--                        <div class="form-group w-100">--}}
+{{--                            <label for="area" class="form-label d-none">Daerah Operasi</label>--}}
+{{--                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">--}}
+{{--                                <option value="">Semua Daerah Operasi</option>--}}
+{{--                                @foreach ($areas as $area)--}}
+{{--                                    <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+                    <div class="col-12">
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
@@ -49,7 +49,7 @@
         <div class="title">
             <p>Data Perlintasan</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('track.service-unit.create', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                <a class="btn-utama sml rnd me-2" href="{{ route('track.service-unit.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
                 <a class="btn-success sml rnd" href="#" id="btn-export">

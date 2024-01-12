@@ -28,16 +28,16 @@ class TrackController extends CustomController
             ]);
     }
 
-    public function index($service_unit_id)
+    public function index()
     {
-        $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $areas = Area::with(['service_units'])
-            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
-                /** @var $qs Builder */
-                return $qs->where('service_unit_id', '=', $service_unit_id);
-            })
-            ->orderBy('name', 'ASC')->get();
-        $areaIDS = $areas->pluck('id')->toArray();
+//        $service_unit = ServiceUnit::findOrFail($service_unit_id);
+//        $areas = Area::with(['service_units'])
+//            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
+//                /** @var $qs Builder */
+//                return $qs->where('service_unit_id', '=', $service_unit_id);
+//            })
+//            ->orderBy('name', 'ASC')->get();
+//        $areaIDS = $areas->pluck('id')->toArray();
         if ($this->request->ajax()) {
             $service_unit = $this->request->query->get('service_unit');
             $area = $this->request->query->get('area');
@@ -45,11 +45,11 @@ class TrackController extends CustomController
 
             $query = Track::with(['area']);
 
-            if ($area !== '') {
-                $query->where('area_id', '=', $area);
-            } else {
-                $query->whereIn('area_id', $areaIDS);
-            }
+//            if ($area !== '') {
+//                $query->where('area_id', '=', $area);
+//            } else {
+//                $query->whereIn('area_id', $areaIDS);
+//            }
 
             if ($name !== '') {
                 $query->where(function ($q) use ($name) {
@@ -62,8 +62,8 @@ class TrackController extends CustomController
             return $this->basicDataTables($data);
         }
         return view('admin.master-data.track.index')->with([
-            'areas' => $areas,
-            'service_unit' => $service_unit,
+//            'areas' => $areas,
+//            'service_unit' => $service_unit,
         ]);
     }
 
