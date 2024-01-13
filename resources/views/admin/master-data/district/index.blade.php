@@ -15,17 +15,19 @@
     </div>
     <div class="panel">
         <div class="title">
-            <p>Data Kecamatann</p>
-            <a class="btn-utama sml rnd " href="{{ route('district.create') }}">Tambah
-                <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-            </a>
+            <p>Data Kecamatan</p>
+            @if($access['is_granted_create'])
+                <a class="btn-utama sml rnd " href="{{ route('district.create') }}">Tambah
+                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                </a>
+            @endif
         </div>
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
                 <tr>
                     <th width="5%" class="text-center">#</th>
-                    <th width="15%" class="text-center">Kota</th>
+                    <th width="20%" class="text-center">Kota</th>
                     <th>Nama</th>
                     <th width="12%" class="text-center">Aksi</th>
                 </tr>
@@ -45,6 +47,8 @@
     <script>
         let table;
         let path = '{{ route('district') }}';
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -106,10 +110,15 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>'
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            if (elEdit === '' && elDelete === '') {
+                                return '-';
+                            }
+                            return  elEdit + elDelete;
                         },
                         orderable: false
                     }

@@ -316,171 +316,231 @@
                 <div id="sign-part" class="content" role="tabpanel" aria-labelledby="sign-part-trigger">
                     <div class="panel ">
                         <div class="isi">
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Membunyikan Suling Lokomotif</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="locomotive_flute"
-                                               id="locomotive_flute_yes" value="1" {{ (1 === $data->sign_equipment->locomotive_flute) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="locomotive_flute_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="locomotive_flute"
-                                               id="locomotive_flute_no" value="0" {{ (0 === $data->sign_equipment->locomotive_flute) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="locomotive_flute_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Ada Perlintasan Kereta Api</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="crossing_exists"
-                                               id="crossing_exists_yes" value="1" {{ (1 === $data->sign_equipment->crossing_exists) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="crossing_exists_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="crossing_exists"
-                                               id="crossing_exists_no" value="0" {{ (0 === $data->sign_equipment->crossing_exists) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="crossing_exists_no">TIDAK ADA</label>
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/s35.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Peringatan Membunyikan Suling Lokomotif</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="locomotive_flute"
+                                                   id="locomotive_flute_yes" value="1" {{ (1 === $data->sign_equipment->locomotive_flute) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="locomotive_flute_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="locomotive_flute"
+                                                   id="locomotive_flute_no" value="0" {{ (0 === $data->sign_equipment->locomotive_flute) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="locomotive_flute_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Jarak Lokasi Kritis 450 Meter</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_450"
-                                               id="critical_distance_450_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_450) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="critical_distance_450_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_450"
-                                               id="critical_distance_450_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_450) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="critical_distance_450_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="{{ asset('/images/sign-equipment/8ef.jpeg') }}" class="" alt="sign-image"
+                                         height="50">
+                                    <img src="{{ asset('/images/sign-equipment/8ef_1.jpeg') }}" class=""
+                                         alt="sign-image" height="50">
+                                </div>
+                                <div class="w-100">
+                                    <label class="form-label">Peringatan Ada Perlintasan Kereta Api</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="crossing_exists"
+                                                   id="crossing_exists_yes" value="1" {{ (1 === $data->sign_equipment->crossing_exists) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="crossing_exists_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="crossing_exists"
+                                                   id="crossing_exists_no" value="0" {{ (0 === $data->sign_equipment->crossing_exists) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="crossing_exists_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Jarak Lokasi Kritis 300 Meter</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_300"
-                                               id="critical_distance_300_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_300) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="critical_distance_300_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_300"
-                                               id="critical_distance_300_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_300) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="critical_distance_300_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Jarak Lokasi Kritis 100 Meter</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_100"
-                                               id="critical_distance_100_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_100) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="critical_distance_100_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_100"
-                                               id="critical_distance_100_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_100) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="critical_distance_100_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/450.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Jarak Lokasi Kritis 450 Meter</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_450"
+                                                   id="critical_distance_450_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_450) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="critical_distance_450_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_450"
+                                                   id="critical_distance_450_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_450) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="critical_distance_450_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">1A (Rambu STOP)</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="stop_sign"
-                                               id="stop_sign_yes" value="1" {{ (1 === $data->sign_equipment->stop_sign) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="stop_sign_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="stop_sign"
-                                               id="stop_sign_no" value="0" {{ (0 === $data->sign_equipment->stop_sign) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="stop_sign_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Larangan Berjalan (Silang Andreas)</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="walking_ban"
-                                               id="walking_ban_yes" value="1" {{ (1 === $data->sign_equipment->walking_ban) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="walking_ban_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="walking_ban"
-                                               id="walking_ban_no" value="0" {{ (0 === $data->sign_equipment->walking_ban) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="walking_ban_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/300.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Jarak Lokasi Kritis 300 Meter</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_300"
+                                                   id="critical_distance_300_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_300) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="critical_distance_300_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_300"
+                                                   id="critical_distance_300_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_300) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="critical_distance_300_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Rintangan Obyek Berbahaya</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="obstacles"
-                                               id="obstacles_yes" value="1" {{ (1 === $data->sign_equipment->obstacles) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="obstacles_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="obstacles"
-                                               id="obstacles_no" value="0" {{ (0 === $data->sign_equipment->obstacles) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="obstacles_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Pita Penggaduh</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="noise_band"
-                                               id="noise_band_yes" value="1" {{ (1 === $data->sign_equipment->noise_band) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="noise_band_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="noise_band"
-                                               id="noise_band_no" value="0" {{ (0 === $data->sign_equipment->noise_band) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="noise_band_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/150.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100 mb-3">
+                                    <label class="form-label">Jarak Lokasi Kritis 100 Meter</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_100"
+                                                   id="critical_distance_100_yes" value="1" {{ (1 === $data->sign_equipment->critical_distance_100) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="critical_distance_100_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_100"
+                                                   id="critical_distance_100_no" value="0" {{ (0 === $data->sign_equipment->critical_distance_100) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="critical_distance_100_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Hati Hati Mendekati Perlintasan</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="approach"
-                                               id="approach_yes" value="1" {{ (1 === $data->sign_equipment->approach) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="approach_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="approach"
-                                               id="approach_no" value="0" {{ (0 === $data->sign_equipment->approach) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="approach_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Berhenti Tengok Kiri Kanan</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="look_around"
-                                               id="look_around_yes" value="1" {{ (1 === $data->sign_equipment->look_around) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="look_around_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="look_around"
-                                               id="look_around_no" value="0" {{ (0 === $data->sign_equipment->look_around) ? 'checked' :'' }}>
-                                        <label class="form-check-label" for="look_around_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/stop.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">1A (Rambu STOP)</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="stop_sign"
+                                                   id="stop_sign_yes" value="1" {{ (1 === $data->sign_equipment->stop_sign) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="stop_sign_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="stop_sign"
+                                                   id="stop_sign_no" value="0" {{ (0 === $data->sign_equipment->stop_sign) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="stop_sign_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="{{ asset('/images/sign-equipment/1ef.jpeg') }}" class="" alt="sign-image"
+                                         height="50">
+                                    <img src="{{ asset('/images/sign-equipment/1ef_1.jpeg') }}" class=""
+                                         alt="sign-image" height="50">
+                                </div>
+                                <div class="w-100">
+                                    <label class="form-label">Larangan Berjalan (Silang Andreas)</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="walking_ban"
+                                                   id="walking_ban_yes" value="1" {{ (1 === $data->sign_equipment->walking_ban) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="walking_ban_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="walking_ban"
+                                                   id="walking_ban_no" value="0" {{ (0 === $data->sign_equipment->walking_ban) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="walking_ban_no">TIDAK ADA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+{{--                            <div class="w-100 mb-3">--}}
+{{--                                <label class="form-label">Peringatan Rintangan Obyek Berbahaya</label>--}}
+{{--                                <div class="form-group">--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="obstacles"--}}
+{{--                                               id="obstacles_yes" value="1" {{ (1 === $data->sign_equipment->obstacles) ? 'checked' :'' }}>--}}
+{{--                                        <label class="form-check-label" for="obstacles_yes">ADA</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="form-check form-check-inline">--}}
+{{--                                        <input class="form-check-input" type="radio" name="obstacles"--}}
+{{--                                               id="obstacles_no" value="0" {{ (0 === $data->sign_equipment->obstacles) ? 'checked' :'' }}>--}}
+{{--                                        <label class="form-check-label" for="obstacles_no">TIDAK ADA</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/pita-penggaduh.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Pita Penggaduh</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="noise_band"
+                                                   id="noise_band_yes" value="1" {{ (1 === $data->sign_equipment->noise_band) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="noise_band_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="noise_band"
+                                                   id="noise_band_no" value="0" {{ (0 === $data->sign_equipment->noise_band) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="noise_band_no">TIDAK ADA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/hati-hati.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Hati Hati Mendekati Perlintasan</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="approach"
+                                                   id="approach_yes" value="1" {{ (1 === $data->sign_equipment->approach) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="approach_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="approach"
+                                                   id="approach_no" value="0" {{ (0 === $data->sign_equipment->approach) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="approach_no">TIDAK ADA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/berhenti-tengok.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Berhenti Tengok Kiri Kanan</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="look_around"
+                                                   id="look_around_yes" value="1" {{ (1 === $data->sign_equipment->look_around) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="look_around_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="look_around"
+                                                   id="look_around_no" value="0" {{ (0 === $data->sign_equipment->look_around) ? 'checked' :'' }}>
+                                            <label class="form-check-label" for="look_around_no">TIDAK ADA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <hr>
                             <div class="d-flex justify-content-end">
                                 <div class="d-flex align-items-center">

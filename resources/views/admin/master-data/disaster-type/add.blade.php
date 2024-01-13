@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -41,9 +46,14 @@
                 <div class="row mb-1">
                     <div class="col-12">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama</label>
+                            <label for="name" class="form-label">Nama <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
                                    placeholder="Nama Jenis Rawan Bencana" required>
+                            @if($errors->has('name'))
+                                <div class="text-danger">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

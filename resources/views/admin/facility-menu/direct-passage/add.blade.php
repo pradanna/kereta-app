@@ -31,7 +31,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.direct-passage.service-unit', ['service_unit_id' => $service_unit->id]) }}">Perlintasan Kereta Api (JPL) {{ $service_unit->name }}</a></li>
+                <li class="breadcrumb-item"><a
+                        href="{{ route('means.direct-passage.service-unit', ['service_unit_id' => $service_unit->id]) }}">Perlintasan
+                        Kereta Api (JPL) {{ $service_unit->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
@@ -63,7 +65,8 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="form-group w-100">
-                                        <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
+                                        <label for="area" class="form-label">Wilayah <span
+                                                class="text-danger ms-1">*</span></label>
                                         <select class="select2 form-control" name="area" id="area"
                                                 style="width: 100%;">
                                             @foreach ($areas as $area)
@@ -79,7 +82,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group w-100">
-                                        <label for="track" class="form-label">Lintas <span class="text-danger ms-1">*</span></label>
+                                        <label for="track" class="form-label">Lintas <span
+                                                class="text-danger ms-1">*</span></label>
                                         <select class="select2 form-control" name="track" id="track"
                                                 style="width: 100%;">
                                             @foreach ($tracks as $track)
@@ -97,7 +101,8 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="form-group w-100">
-                                        <label for="sub_track" class="form-label">Petak <span class="text-danger ms-1">*</span></label>
+                                        <label for="sub_track" class="form-label">Petak <span
+                                                class="text-danger ms-1">*</span></label>
                                         <select class="select2 form-control" name="sub_track" id="sub_track"
                                                 style="width: 100%;">
                                             @foreach ($sub_tracks as $sub_track)
@@ -113,7 +118,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
+                                        <label for="stakes" class="form-label">KM/HM <span
+                                                class="text-danger ms-1">*</span></label>
                                         <input type="text" class="form-control" id="stakes" name="stakes"
                                                placeholder="KM/HM">
                                         @if($errors->has('stakes'))
@@ -127,7 +133,8 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="name" class="form-label">No. JPL <span class="text-danger ms-1">*</span></label>
+                                        <label for="name" class="form-label">No. JPL <span
+                                                class="text-danger ms-1">*</span></label>
                                         <input type="text" class="form-control" id="name" name="name"
                                                placeholder="JPL">
                                         @if($errors->has('name'))
@@ -139,7 +146,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="width" class="form-label">Lebar Jalan (m) <span class="text-danger ms-1">*</span></label>
+                                        <label for="width" class="form-label">Lebar Jalan (m) <span
+                                                class="text-danger ms-1">*</span></label>
                                         <input type="number" step="any" class="form-control" id="width" name="width"
                                                placeholder="0" value="0">
                                         @if($errors->has('width'))
@@ -153,8 +161,10 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="road_class" class="form-label">Kelas Jalan <span class="text-danger ms-1">*</span></label>
-                                        <input type="text" class="form-control" id="road_class" name="road_class" placeholder="Kelas Jalan">
+                                        <label for="road_class" class="form-label">Kelas Jalan <span
+                                                class="text-danger ms-1">*</span></label>
+                                        <input type="text" class="form-control" id="road_class" name="road_class"
+                                               placeholder="Kelas Jalan">
                                         @if($errors->has('road_class'))
                                             <div class="text-danger">
                                                 {{ $errors->first('road_class') }}
@@ -164,8 +174,10 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="elevation" class="form-label">Elevasi (derajat) <span class="text-danger ms-1">*</span></label>
-                                        <input type="text" step="any" class="form-control" id="elevation" name="elevation"
+                                        <label for="elevation" class="form-label">Elevasi (derajat) <span
+                                                class="text-danger ms-1">*</span></label>
+                                        <input type="text" step="any" class="form-control" id="elevation"
+                                               name="elevation"
                                                placeholder="0" value="0">
                                         @if($errors->has('elevation'))
                                             <div class="text-danger">
@@ -178,7 +190,8 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="road_construction" class="form-label">Konstruksi Jalan <span class="text-danger ms-1">*</span></label>
+                                        <label for="road_construction" class="form-label">Konstruksi Jalan <span
+                                                class="text-danger ms-1">*</span></label>
                                         <input type="text" class="form-control" id="road_construction"
                                                name="road_construction"
                                                placeholder="Konstruksi Jalan">
@@ -191,7 +204,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group w-100">
-                                        <label for="city" class="form-label">Kabupaten / Kota <span class="text-danger ms-1">*</span></label>
+                                        <label for="city" class="form-label">Kabupaten / Kota <span
+                                                class="text-danger ms-1">*</span></label>
                                         <select class="select2 form-control" name="city" id="city"
                                                 style="width: 100%;">
                                             @foreach ($cities as $city)
@@ -209,8 +223,10 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="latitude" class="form-label">Latitude <span class="text-danger ms-1">*</span></label>
-                                        <input type="number" step="any" class="form-control" id="latitude" name="latitude"
+                                        <label for="latitude" class="form-label">Latitude <span
+                                                class="text-danger ms-1">*</span></label>
+                                        <input type="number" step="any" class="form-control" id="latitude"
+                                               name="latitude"
                                                placeholder="Contoh: 7.1129489">
                                         @if($errors->has('latitude'))
                                             <div class="text-danger">
@@ -221,8 +237,10 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="longitude" class="form-label">Longitude <span class="text-danger ms-1">*</span></label>
-                                        <input type="number" step="any" class="form-control" id="longitude" name="longitude"
+                                        <label for="longitude" class="form-label">Longitude <span
+                                                class="text-danger ms-1">*</span></label>
+                                        <input type="number" step="any" class="form-control" id="longitude"
+                                               name="longitude"
                                                placeholder="Contoh: 110.1129489">
                                         @if($errors->has('longitude'))
                                             <div class="text-danger">
@@ -235,7 +253,8 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="form-group w-100">
-                                        <label for="guarded_by" class="form-label">Status Penjagaan <span class="text-danger ms-1">*</span></label>
+                                        <label for="guarded_by" class="form-label">Status Penjagaan <span
+                                                class="text-danger ms-1">*</span></label>
                                         <select class="select2 form-control" name="guarded_by" id="guarded_by"
                                                 style="width: 100%;">
                                             <option value="0">OP (PT. KAI)</option>
@@ -254,7 +273,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="technical_documentation" class="form-label">No. Surat Rekomendasi Teknis <span class="text-danger ms-1">*</span></label>
+                                        <label for="technical_documentation" class="form-label">No. Surat Rekomendasi
+                                            Teknis <span class="text-danger ms-1">*</span></label>
                                         <input type="text" class="form-control" id="technical_documentation"
                                                name="technical_documentation"
                                                placeholder="No. Surat Rekomendasi Teknis">
@@ -269,7 +289,8 @@
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <div class="form-group w-100">
-                                        <label for="is_closed" class="form-label">Status JPL <span class="text-danger ms-1">*</span></label>
+                                        <label for="is_closed" class="form-label">Status JPL <span
+                                                class="text-danger ms-1">*</span></label>
                                         <select class="select2 form-control" name="is_closed" id="is_closed"
                                                 style="width: 100%;">
                                             <option value="0">Aktif</option>
@@ -286,8 +307,10 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="w-100">
-                                        <label for="road_name" class="form-label">Nama Jalan / Daerah <span class="text-danger ms-1">*</span></label>
-                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name" name="road_name"
+                                        <label for="road_name" class="form-label">Nama Jalan / Daerah <span
+                                                class="text-danger ms-1">*</span></label>
+                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name"
+                                                  name="road_name"
                                                   placeholder="Nama Jalan / Daerah"></textarea>
                                         @if($errors->has('road_name'))
                                             <div class="text-danger">
@@ -299,7 +322,8 @@
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="description" class="form-label">Keterangan</label>
-                                        <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
+                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem"
+                                                  id="description" name="description"
                                                   placeholder="Keterangan"></textarea>
                                         @if($errors->has('description'))
                                             <div class="text-danger">
@@ -321,171 +345,236 @@
                 <div id="sign-part" class="content" role="tabpanel" aria-labelledby="sign-part-trigger">
                     <div class="panel ">
                         <div class="isi">
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Membunyikan Suling Lokomotif</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="locomotive_flute"
-                                               id="locomotive_flute_yes" value="1">
-                                        <label class="form-check-label" for="locomotive_flute_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="locomotive_flute"
-                                               id="locomotive_flute_no" value="0" checked>
-                                        <label class="form-check-label" for="locomotive_flute_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Ada Perlintasan Kereta Api</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="crossing_exists"
-                                               id="crossing_exists_yes" value="1">
-                                        <label class="form-check-label" for="crossing_exists_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="crossing_exists"
-                                               id="crossing_exists_no" value="0" checked>
-                                        <label class="form-check-label" for="crossing_exists_no">TIDAK ADA</label>
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/s35.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Peringatan Membunyikan Suling Lokomotif</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="locomotive_flute"
+                                                   id="locomotive_flute_yes" value="1">
+                                            <label class="form-check-label" for="locomotive_flute_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="locomotive_flute"
+                                                   id="locomotive_flute_no" value="0" checked>
+                                            <label class="form-check-label" for="locomotive_flute_no">TIDAK
+                                                ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Jarak Lokasi Kritis 450 Meter</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_450"
-                                               id="critical_distance_450_yes" value="1">
-                                        <label class="form-check-label" for="critical_distance_450_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_450"
-                                               id="critical_distance_450_no" value="0" checked>
-                                        <label class="form-check-label" for="critical_distance_450_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="{{ asset('/images/sign-equipment/8ef.jpeg') }}" class="" alt="sign-image"
+                                         height="50">
+                                    <img src="{{ asset('/images/sign-equipment/8ef_1.jpeg') }}" class=""
+                                         alt="sign-image" height="50">
+                                </div>
+                                <div class="w-100">
+                                    <label class="form-label">Peringatan Ada Perlintasan Kereta Api</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="crossing_exists"
+                                                   id="crossing_exists_yes" value="1">
+                                            <label class="form-check-label" for="crossing_exists_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="crossing_exists"
+                                                   id="crossing_exists_no" value="0" checked>
+                                            <label class="form-check-label" for="crossing_exists_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Jarak Lokasi Kritis 300 Meter</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_300"
-                                               id="critical_distance_300_yes" value="1">
-                                        <label class="form-check-label" for="critical_distance_300_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_300"
-                                               id="critical_distance_300_no" value="0" checked>
-                                        <label class="form-check-label" for="critical_distance_300_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Jarak Lokasi Kritis 100 Meter</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_100"
-                                               id="critical_distance_100_yes" value="1">
-                                        <label class="form-check-label" for="critical_distance_100_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="critical_distance_100"
-                                               id="critical_distance_100_no" value="0" checked>
-                                        <label class="form-check-label" for="critical_distance_100_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/450.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Jarak Lokasi Kritis 450 Meter</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_450"
+                                                   id="critical_distance_450_yes" value="1">
+                                            <label class="form-check-label" for="critical_distance_450_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_450"
+                                                   id="critical_distance_450_no" value="0" checked>
+                                            <label class="form-check-label" for="critical_distance_450_no">TIDAK
+                                                ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">1A (Rambu STOP)</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="stop_sign"
-                                               id="stop_sign_yes" value="1">
-                                        <label class="form-check-label" for="stop_sign_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="stop_sign"
-                                               id="stop_sign_no" value="0" checked>
-                                        <label class="form-check-label" for="stop_sign_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Larangan Berjalan (Silang Andreas)</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="walking_ban"
-                                               id="walking_ban_yes" value="1">
-                                        <label class="form-check-label" for="walking_ban_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="walking_ban"
-                                               id="walking_ban_no" value="0" checked>
-                                        <label class="form-check-label" for="walking_ban_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/300.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Jarak Lokasi Kritis 300 Meter</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_300"
+                                                   id="critical_distance_300_yes" value="1">
+                                            <label class="form-check-label" for="critical_distance_300_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_300"
+                                                   id="critical_distance_300_no" value="0" checked>
+                                            <label class="form-check-label" for="critical_distance_300_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Peringatan Rintangan Obyek Berbahaya</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="obstacles"
-                                               id="obstacles_yes" value="1">
-                                        <label class="form-check-label" for="obstacles_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="obstacles"
-                                               id="obstacles_no" value="0" checked>
-                                        <label class="form-check-label" for="obstacles_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Pita Penggaduh</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="noise_band"
-                                               id="noise_band_yes" value="1">
-                                        <label class="form-check-label" for="noise_band_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="noise_band"
-                                               id="noise_band_no" value="0" checked>
-                                        <label class="form-check-label" for="noise_band_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/150.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Jarak Lokasi Kritis 100 Meter</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_100"
+                                                   id="critical_distance_100_yes" value="1">
+                                            <label class="form-check-label" for="critical_distance_100_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="critical_distance_100"
+                                                   id="critical_distance_100_no" value="0" checked>
+                                            <label class="form-check-label" for="critical_distance_100_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Hati Hati Mendekati Perlintasan</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="approach"
-                                               id="approach_yes" value="1">
-                                        <label class="form-check-label" for="approach_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="approach"
-                                               id="approach_no" value="0" checked>
-                                        <label class="form-check-label" for="approach_no">TIDAK ADA</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100 mb-3">
-                                <label class="form-label">Hati Hati Mendekati Perlintasan</label>
-                                <div class="form-group">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="look_around"
-                                               id="look_around_yes" value="1">
-                                        <label class="form-check-label" for="look_around_yes">ADA</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="look_around"
-                                               id="look_around_no" value="0" checked>
-                                        <label class="form-check-label" for="look_around_no">TIDAK ADA</label>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/stop.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100 mb-3">
+                                    <label class="form-label">1A (Rambu STOP)</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="stop_sign"
+                                                   id="stop_sign_yes" value="1">
+                                            <label class="form-check-label" for="stop_sign_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="stop_sign"
+                                                   id="stop_sign_no" value="0" checked>
+                                            <label class="form-check-label" for="stop_sign_no">TIDAK ADA</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="{{ asset('/images/sign-equipment/1ef.jpeg') }}" class="" alt="sign-image"
+                                         height="50">
+                                    <img src="{{ asset('/images/sign-equipment/1ef_1.jpeg') }}" class=""
+                                         alt="sign-image" height="50">
+                                </div>
+                                <div class="w-100 mb-3">
+                                    <label class="form-label">Larangan Berjalan (Silang Andreas)</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="walking_ban"
+                                                   id="walking_ban_yes" value="1">
+                                            <label class="form-check-label" for="walking_ban_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="walking_ban"
+                                                   id="walking_ban_no" value="0" checked>
+                                            <label class="form-check-label" for="walking_ban_no">TIDAK ADA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+{{--                            <div class="mb-3">--}}
+{{--                                <img src="{{ asset('/images/sign-equipment/1ef.jpeg') }}" class="mb-2" alt="sign-image"--}}
+{{--                                     height="50">--}}
+{{--                                <div class="w-100">--}}
+{{--                                    <label class="form-label">Peringatan Rintangan Obyek Berbahaya</label>--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <div class="form-check form-check-inline">--}}
+{{--                                            <input class="form-check-input" type="radio" name="obstacles"--}}
+{{--                                                   id="obstacles_yes" value="1">--}}
+{{--                                            <label class="form-check-label" for="obstacles_yes">ADA</label>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="form-check form-check-inline">--}}
+{{--                                            <input class="form-check-input" type="radio" name="obstacles"--}}
+{{--                                                   id="obstacles_no" value="0" checked>--}}
+{{--                                            <label class="form-check-label" for="obstacles_no">TIDAK ADA</label>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/pita-penggaduh.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100 mb-3">
+                                    <label class="form-label">Pita Penggaduh</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="noise_band"
+                                                   id="noise_band_yes" value="1">
+                                            <label class="form-check-label" for="noise_band_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="noise_band"
+                                                   id="noise_band_no" value="0" checked>
+                                            <label class="form-check-label" for="noise_band_no">TIDAK ADA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/hati-hati.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100 mb-3">
+                                    <label class="form-label">Hati Hati Mendekati Perlintasan</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="approach"
+                                                   id="approach_yes" value="1">
+                                            <label class="form-check-label" for="approach_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="approach"
+                                                   id="approach_no" value="0" checked>
+                                            <label class="form-check-label" for="approach_no">TIDAK ADA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <img src="{{ asset('/images/sign-equipment/berhenti-tengok.jpeg') }}" class="mb-2" alt="sign-image"
+                                     height="50">
+                                <div class="w-100">
+                                    <label class="form-label">Berhenti Tengok Kiri Kanan</label>
+                                    <div class="form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="look_around"
+                                                   id="look_around_yes" value="1">
+                                            <label class="form-check-label" for="look_around_yes">ADA</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="look_around"
+                                                   id="look_around_no" value="0" checked>
+                                            <label class="form-check-label" for="look_around_no">TIDAK ADA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <hr>
                             <div class="d-flex justify-content-end">
                                 <div class="d-flex align-items-center">
@@ -521,7 +610,7 @@
     <script>
         $(document).ready(function () {
             var stepper = new Stepper($('.bs-stepper')[0], {
-                linear: false
+                linear: true
             });
             $('.select2').select2({
                 width: 'resolve',
@@ -554,7 +643,7 @@
             //     stepper.to(2)
             // });
 
-            $('#btn-save').on('click', function(e) {
+            $('#btn-save').on('click', function (e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

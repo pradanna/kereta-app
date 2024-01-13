@@ -298,92 +298,155 @@
                         </div>
                         <div class="tab-pane fade" id="pills-equipment" role="tabpanel"
                              aria-labelledby="pills-equipment-tab">
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Peringatan Membunyikan Suling Lokomotif</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <img src="{{ asset('/images/sign-equipment/s35.jpeg') }}" class="mb-2"
+                                             alt="sign-image"
+                                             height="40">
+                                        <span
+                                            class="fw-bold d-block text-start">Peringatan Membunyikan Suling Lokomotif</span>
+                                    </div>
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_locomotive_flute">
+                                <div class="col-8 d-flex align-items-end" id="lbl_locomotive_flute">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Peringatan Ada Perlintasan Kereta Api</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <div class="d-flex align-items-center justify-content-center mb-2">
+                                            <img src="{{ asset('/images/sign-equipment/8ef.jpeg') }}" class=""
+                                                 alt="sign-image"
+                                                 height="40">
+                                            <img src="{{ asset('/images/sign-equipment/8ef_1.jpeg') }}" class=""
+                                                 alt="sign-image" height="40">
+                                        </div>
+                                        <span
+                                            class="fw-bold d-block text-start">Peringatan Ada Perlintasan Kereta Api</span>
+                                    </div>
+
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_crossing_exists">
+                                <div class="col-8 d-flex align-items-end" id="lbl_crossing_exists">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Jarak Lokasi Kritis 450 m</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <img src="{{ asset('/images/sign-equipment/450.jpeg') }}" class="mb-2"
+                                             alt="sign-image"
+                                             height="40">
+                                        <span class="fw-bold d-block text-start">Jarak Lokasi Kritis 450 m</span>
+                                    </div>
+
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_critical_distance_450">
+                                <div class="col-8 d-flex align-items-end" id="lbl_critical_distance_450">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Jarak Lokasi Kritis 300 m</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <img src="{{ asset('/images/sign-equipment/300.jpeg') }}" class="mb-2"
+                                             alt="sign-image"
+                                             height="40">
+                                        <span class="fw-bold d-block text-start">Jarak Lokasi Kritis 300 m</span>
+                                    </div>
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_critical_distance_300">
+                                <div class="col-8 d-flex align-items-end" id="lbl_critical_distance_300">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Jarak Lokasi Kritis 100 m</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <img src="{{ asset('/images/sign-equipment/150.jpeg') }}" class="mb-2"
+                                             alt="sign-image"
+                                             height="40">
+                                        <span class="fw-bold d-block text-start">Jarak Lokasi Kritis 100 m</span>
+                                    </div>
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_critical_distance_100">
+                                <div class="col-8 d-flex align-items-end" id="lbl_critical_distance_100">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">1A (Rambu STOP)</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <img src="{{ asset('/images/sign-equipment/stop.jpeg') }}" class="mb-2"
+                                             alt="sign-image"
+                                             height="40">
+                                        <span class="fw-bold d-block text-start">1A (Rambu STOP)</span>
+                                    </div>
+
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_stop_sign">
+                                <div class="col-8 d-flex align-items-end" id="lbl_stop_sign">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Larangan Berjalan (Silang Andreas)</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <div class="d-flex align-items-center justify-content-center mb-2">
+                                            <img src="{{ asset('/images/sign-equipment/1ef.jpeg') }}" class=""
+                                                 alt="sign-image"
+                                                 height="40">
+                                            <img src="{{ asset('/images/sign-equipment/1ef_1.jpeg') }}" class=""
+                                                 alt="sign-image" height="40">
+                                        </div>
+                                        <span
+                                            class="fw-bold d-block text-start">Larangan Berjalan (Silang Andreas)</span>
+                                    </div>
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_walking_ban">
+                                <div class="col-8 d-flex align-items-end" id="lbl_walking_ban">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-1 d-none">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
                                     <span class="fw-bold">Peringatan Rintangan Obyek Berbahaya</span>
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_obstacles">
+                                <div class="col-8 d-flex align-items-end" id="lbl_obstacles">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Pita Penggaduh</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <img src="{{ asset('/images/sign-equipment/pita-penggaduh.jpeg') }}"
+                                             class="mb-2" alt="sign-image"
+                                             height="40">
+                                        <span class="fw-bold d-block text-start">Pita Penggaduh</span>
+                                    </div>
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_noise_band">
+                                <div class="col-8 d-flex align-items-end" id="lbl_noise_band">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Hati-Hati Mendekati Perlintasan</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <img src="{{ asset('/images/sign-equipment/hati-hati.jpeg') }}" class="mb-2"
+                                             alt="sign-image"
+                                             height="40">
+                                        <span class="fw-bold d-block text-start">Hati-Hati Mendekati Perlintasan</span>
+                                    </div>
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_approach">
+                                <div class="col-8 d-flex align-items-end" id="lbl_approach">
                                 </div>
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4 d-flex justify-content-between align-items-center">
-                                    <span class="fw-bold">Berhenti Tengok Kiri Kanan</span>
+                            <div class="row mb-3">
+                                <div class="col-4 d-flex justify-content-between align-items-end">
+                                    <div class="flex-grow-1 text-center">
+                                        <img src="{{ asset('/images/sign-equipment/berhenti-tengok.jpeg') }}" class="mb-2" alt="sign-image"
+                                             height="40">
+                                        <span class="fw-bold d-block text-start">Berhenti Tengok Kiri Kanan</span>
+                                    </div>
                                     <span class="fw-bold">:</span>
                                 </div>
-                                <div class="col-8 d-flex align-items-center" id="lbl_look_around">
+                                <div class="col-8 d-flex align-items-end" id="lbl_look_around">
                                 </div>
                             </div>
                         </div>
@@ -581,14 +644,14 @@
                         value = '<div class="equipment-exists">' +
                             '<span class="material-symbols-outlined">check</span>' +
                             '</div>' +
-                            '<span class="ms-2">Ada</span>'
+                            '<span class="ms-2" style="line-height: 1">Ada</span>'
                     }
 
                     if (data['sign_equipment'][v] === 0) {
                         value = '<div class="equipment-not-exists">' +
                             '<span class="material-symbols-outlined">close</span>' +
                             '</div>' +
-                            '<span class="ms-2">Tidak Ada</span>'
+                            '<span class="ms-2" style="line-height: 1">Tidak Ada</span>'
                     }
                     let el = '#lbl_' + v;
                     $(el).html(value);

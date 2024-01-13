@@ -15,7 +15,7 @@ class CreateTracks extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('area_id');
+            $table->foreignUuid('area_id')->nullable();
             $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();

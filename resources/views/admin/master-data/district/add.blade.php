@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -41,19 +46,29 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="city" class="form-label">Kota</label>
+                            <label for="city" class="form-label">Kota <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="city" id="city" style="width: 100%;">
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
                             </select>
+                            @if($errors->has('city'))
+                                <div class="text-danger">
+                                    {{ $errors->first('city') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama</label>
+                            <label for="name" class="form-label">Nama <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
                                    placeholder="Nama Kecamatan" required>
+                            @if($errors->has('name'))
+                                <div class="text-danger">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
