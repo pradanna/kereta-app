@@ -370,13 +370,13 @@ Route::group(['prefix' => 'master-data'], function () {
     });
 
     Route::group(['prefix' => 'petak'], function () {
-        Route::get('/', [\App\Http\Controllers\SubTrackController::class, 'service_unit_page'])->name('sub-track');
-        Route::group(['prefix' => '{service_unit_id}'], function () {
+//        Route::get('/', [\App\Http\Controllers\SubTrackController::class, 'service_unit_page'])->name('sub-track');
+//        Route::group(['prefix' => '{service_unit_id}'], function () {
             Route::get('/', [\App\Http\Controllers\SubTrackController::class, 'index'])->name('sub-track.service-unit');
             Route::match(['post', 'get'], '/tambah', [\App\Http\Controllers\SubTrackController::class, 'store'])->name('sub-track.service-unit.create');
             Route::match(['post', 'get'], '/{id}/edit', [\App\Http\Controllers\SubTrackController::class, 'patch'])->name('sub-track.service-unit.patch');
             Route::post('/{id}/delete', [\App\Http\Controllers\SubTrackController::class, 'destroy'])->name('sub-track.service-unit.destroy');
-        });
+//        });
     });
 
     Route::group(['prefix' => 'jenis-rawan-bencana'], function () {

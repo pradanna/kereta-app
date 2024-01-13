@@ -15,7 +15,7 @@ class CreateSubTracks extends Migration
     {
         Schema::create('sub_tracks', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('track_id');
+            $table->foreignUuid('track_id')->nullable();
             $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();

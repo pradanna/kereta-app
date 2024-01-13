@@ -6,6 +6,11 @@
             Swal.fire("Ooops", 'internal server error...', "error")
         </script>
     @endif
+    @if (\Illuminate\Support\Facades\Session::has('validator'))
+        <script>
+            Swal.fire("Ooops", '{{ \Illuminate\Support\Facades\Session::get('validator') }}', "error")
+        </script>
+    @endif
     @if (\Illuminate\Support\Facades\Session::has('success'))
         <script>
             Swal.fire({
@@ -14,20 +19,19 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('sub-track.service-unit', ['service_unit_id' => $service_unit->id]) }}';
+                window.location.href = '{{ route('sub-track.service-unit') }}';
             })
         </script>
     @endif
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div class="page-title-container">
-            <h1 class="h1">MASTER PETAK {{ $service_unit->name }}</h1>
-            <p class="mb-0">Manajemen Tambah Data Master Petak {{ $service_unit->name }}</p>
+            <h1 class="h1">MASTER PETAK</h1>
+            <p class="mb-0">Manajemen Tambah Data Master Petak</p>
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('master-data') }}">Master Data</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('sub-track') }}">Petak {{ $service_unit->name }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('sub-track.service-unit', ['service_unit_id' => $service_unit->id]) }}">{{ $service_unit->name }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('sub-track.service-unit') }}">Petak</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
@@ -39,31 +43,41 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <div class="form-group w-100">
-                            <label for="track" class="form-label">Perlintasan</label>
-                            <select class="select2 form-control" name="track" id="track" style="width: 100%;">
-                                @foreach ($tracks as $track)
-                                    <option value="{{ $track->id }}">{{ $track->name }} ({{ $track->code }})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="row mb-3">--}}
+{{--                    <div class="col-12">--}}
+{{--                        <div class="form-group w-100">--}}
+{{--                            <label for="track" class="form-label">Perlintasan</label>--}}
+{{--                            <select class="select2 form-control" name="track" id="track" style="width: 100%;">--}}
+{{--                                @foreach ($tracks as $track)--}}
+{{--                                    <option value="{{ $track->id }}">{{ $track->name }} ({{ $track->code }})</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="code" class="form-label">Kode</label>
+                            <label for="code" class="form-label">Kode <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="code" name="code"
                                    placeholder="Kode Lintas Antara">
+                            @if($errors->has('code'))
+                                <div class="text-danger">
+                                    {{ $errors->first('code') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama Petak</label>
+                            <label for="name" class="form-label">Nama Petak <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
                                    placeholder="Nama Petak">
+                            @if($errors->has('name'))
+                                <div class="text-danger">
+                                    {{ $errors->first('name') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

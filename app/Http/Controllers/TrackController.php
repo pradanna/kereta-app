@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\FacilityTrain;
 use App\Models\ServiceUnit;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TrackController extends CustomController
@@ -30,27 +32,10 @@ class TrackController extends CustomController
 
     public function index()
     {
-//        $service_unit = ServiceUnit::findOrFail($service_unit_id);
-//        $areas = Area::with(['service_units'])
-//            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
-//                /** @var $qs Builder */
-//                return $qs->where('service_unit_id', '=', $service_unit_id);
-//            })
-//            ->orderBy('name', 'ASC')->get();
-//        $areaIDS = $areas->pluck('id')->toArray();
+        $access = $this->getRoleAccess(Formula::APPMasterTrack);
         if ($this->request->ajax()) {
-            $service_unit = $this->request->query->get('service_unit');
-            $area = $this->request->query->get('area');
             $name = $this->request->query->get('name');
-
             $query = Track::with(['area']);
-
-//            if ($area !== '') {
-//                $query->where('area_id', '=', $area);
-//            } else {
-//                $query->whereIn('area_id', $areaIDS);
-//            }
-
             if ($name !== '') {
                 $query->where(function ($q) use ($name) {
                     /** @var $q Builder */
@@ -62,24 +47,33 @@ class TrackController extends CustomController
             return $this->basicDataTables($data);
         }
         return view('admin.master-data.track.index')->with([
-//            'areas' => $areas,
-//            'service_unit' => $service_unit,
+            'access' => $access,
         ]);
     }
 
-    public function store($service_unit_id)
+    private $rule = [
+        'code' => 'required',
+        'name' => 'required',
+    ];
+
+    private $message = [
+        'code.required' => 'kolom kode wajib di isi',
+        'name.required' => 'kolom nama wajib di isi',
+    ];
+
+    public function store()
     {
-        $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $areas = Area::with(['service_units'])
-            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
-                /** @var $qs Builder */
-                return $qs->where('service_unit_id', '=', $service_unit_id);
-            })
-            ->orderBy('name', 'ASC')->get();
+        $access = $this->getRoleAccess(Formula::APPMasterTrack);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
-                    'area_id' => $this->postField('area'),
                     'code' => $this->postField('code'),
                     'name' => $this->postField('name'),
                 ];
@@ -89,26 +83,23 @@ class TrackController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        return view('admin.master-data.track.add')->with([
-            'areas' => $areas,
-            'service_unit' => $service_unit
-        ]);
+        return view('admin.master-data.track.add')->with([]);
     }
 
-    public function patch($service_unit_id, $id)
+    public function patch($id)
     {
-        $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $areas = Area::with(['service_units'])
-            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
-                /** @var $qs Builder */
-                return $qs->where('service_unit_id', '=', $service_unit_id);
-            })
-            ->orderBy('name', 'ASC')->get();
+        $access = $this->getRoleAccess(Formula::APPMasterTrack);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $data = Track::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
-                    'area_id' => $this->postField('area'),
                     'code' => $this->postField('code'),
                     'name' => $this->postField('name'),
                 ];
@@ -119,16 +110,17 @@ class TrackController extends CustomController
             }
 
         }
-
         return view('admin.master-data.track.edit')->with([
             'data' => $data,
-            'areas' => $areas,
-            'service_unit' => $service_unit
         ]);
     }
 
-    public function destroy($service_unit_id, $id)
+    public function destroy($id)
     {
+        $access = $this->getRoleAccess(Formula::APPMasterTrack);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             Track::destroy($id);
             return $this->jsonSuccessResponse('success');

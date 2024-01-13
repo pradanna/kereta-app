@@ -9,7 +9,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('master-data') }}">Master Data</a></li>
-{{--                <li class="breadcrumb-item"><a href="{{ route('track') }}">Lintas</a></li>--}}
+                {{--                <li class="breadcrumb-item"><a href="{{ route('track') }}">Lintas</a></li>--}}
                 <li class="breadcrumb-item active" aria-current="page">Lintas</li>
             </ol>
         </nav>
@@ -18,17 +18,17 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-{{--                    <div class="col-3">--}}
-{{--                        <div class="form-group w-100">--}}
-{{--                            <label for="area" class="form-label d-none">Daerah Operasi</label>--}}
-{{--                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">--}}
-{{--                                <option value="">Semua Daerah Operasi</option>--}}
-{{--                                @foreach ($areas as $area)--}}
-{{--                                    <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                    <div class="col-3">--}}
+                    {{--                        <div class="form-group w-100">--}}
+                    {{--                            <label for="area" class="form-label d-none">Daerah Operasi</label>--}}
+                    {{--                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">--}}
+                    {{--                                <option value="">Semua Daerah Operasi</option>--}}
+                    {{--                                @foreach ($areas as $area)--}}
+                    {{--                                    <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
+                    {{--                                @endforeach--}}
+                    {{--                            </select>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
@@ -47,15 +47,17 @@
 
     <div class="panel">
         <div class="title">
-            <p>Data Perlintasan</p>
+            <p>Data Lintas</p>
             <div class="d-flex align-item-center">
-                <a class="btn-utama sml rnd me-2" href="{{ route('track.service-unit.create') }}">Tambah
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
-                </a>
-                <a class="btn-success sml rnd" href="#" id="btn-export">
-                    Export
-                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
-                </a>
+                @if($access['is_granted_create'])
+                    <a class="btn-utama sml rnd me-2" href="{{ route('track.service-unit.create') }}">Tambah
+                        <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
+                    </a>
+                @endif
+{{--                <a class="btn-success sml rnd" href="#" id="btn-export">--}}
+{{--                    Export--}}
+{{--                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>--}}
+{{--                </a>--}}
             </div>
         </div>
         <div class="isi">
@@ -63,7 +65,7 @@
                 <thead>
                 <tr>
                     <th width="5%" class="text-center">#</th>
-                    <th width="15%">Wilayah</th>
+{{--                    <th width="15%">Wilayah</th>--}}
                     <th width="12%">Kode</th>
                     <th>Nama</th>
                     <th width="10%" class="text-center">Aksi</th>
@@ -86,6 +88,8 @@
     <script>
         let table;
         let path = '/{{ request()->path() }}';
+        let grantedUpdate = '{{ $access['is_granted_update'] }}';
+        let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
             $('.btn-delete').on('click', function (e) {
@@ -132,7 +136,7 @@
                     type: 'GET',
                     url: path,
                     'data': function (d) {
-                        d.area = $('#area').val();
+                        // d.area = $('#area').val();
                         d.name = $('#name').val();
                     }
                 },
@@ -142,10 +146,10 @@
                     searchable: false,
                     orderable: false
                 },
-                    {
-                        data: 'area.name',
-                        name: 'area.name'
-                    },
+                    // {
+                    //     data: 'area.name',
+                    //     name: 'area.name'
+                    // },
                     {
                         data: 'code',
                         name: 'code'
@@ -158,16 +162,21 @@
                         data: null,
                         render: function (data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
-                                '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
-                                '">Delete</a>';
+                            let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '">Edit</a>' : '';
+                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                'id'] + '">Delete</a>' : '';
+                            if (elEdit === '' && elDelete === '') {
+                                return '-';
+                            }
+                            return  elEdit + elDelete;
                         },
                         orderable: false
                     }
                 ],
                 columnDefs: [{
-                    targets: [0, 1, 2, 4],
+                    targets: [0,  1, 3 ],
                     className: 'text-center'
                 }],
                 paging: true,

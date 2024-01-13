@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\ServiceUnit;
 use App\Models\SubTrack;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SubTrackController extends CustomController
@@ -28,45 +30,41 @@ class SubTrackController extends CustomController
             ]);
     }
 
-    public function index($service_unit_id)
+    public function index()
     {
-        $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $areas = Area::with(['service_units'])
-            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
-                /** @var $qs Builder */
-                return $qs->where('service_unit_id', '=', $service_unit_id);
-            })
-            ->orderBy('name', 'ASC')->get();
-        $areaIDS = $areas->pluck('id')->toArray();
+        $access = $this->getRoleAccess(Formula::APPMasterSubTrack);
         if ($this->request->ajax()) {
-            $data = $this->generateData($areaIDS);
+            $data = $this->generateData();
             return $this->basicDataTables($data);
         }
-
-        $tracks = Track::with([])
-            ->whereIn('area_id', $areaIDS)
-            ->orderBy('code', 'ASC')
-            ->get();
         return view('admin.master-data.sub-track.index')->with([
-            'areas' => $areas,
-            'service_unit' => $service_unit,
+            'access' => $access,
         ]);
     }
 
-    public function store($service_unit_id)
+    private $rule = [
+        'code' => 'required',
+        'name' => 'required',
+    ];
+
+    private $message = [
+        'code.required' => 'kolom kode wajib di isi',
+        'name.required' => 'kolom nama wajib di isi',
+    ];
+
+    public function store()
     {
-        $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $areas = Area::with(['service_units'])
-            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
-                /** @var $qs Builder */
-                return $qs->where('service_unit_id', '=', $service_unit_id);
-            })
-            ->orderBy('name', 'ASC')->get();
-        $areaIDS = $areas->pluck('id')->toArray();
+        $access = $this->getRoleAccess(Formula::APPMasterSubTrack);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
-                    'track_id' => $this->postField('track'),
                     'code' => $this->postField('code'),
                     'name' => $this->postField('name'),
                 ];
@@ -76,31 +74,23 @@ class SubTrackController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $tracks = Track::with([])
-            ->whereIn('area_id', $areaIDS)
-            ->orderBy('code', 'ASC')
-            ->get();
-        return view('admin.master-data.sub-track.add')->with([
-            'tracks' => $tracks,
-            'service_unit' => $service_unit,
-        ]);
+        return view('admin.master-data.sub-track.add')->with([]);
     }
 
-    public function patch($service_unit_id, $id)
+    public function patch($id)
     {
-        $service_unit = ServiceUnit::findOrFail($service_unit_id);
-        $areas = Area::with(['service_units'])
-            ->whereHas('service_units', function ($qs) use ($service_unit_id) {
-                /** @var $qs Builder */
-                return $qs->where('service_unit_id', '=', $service_unit_id);
-            })
-            ->orderBy('name', 'ASC')->get();
-        $areaIDS = $areas->pluck('id')->toArray();
+        $access = $this->getRoleAccess(Formula::APPMasterSubTrack);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $data = SubTrack::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
-                    'track_id' => $this->postField('track'),
                     'code' => $this->postField('code'),
                     'name' => $this->postField('name'),
                 ];
@@ -111,19 +101,17 @@ class SubTrackController extends CustomController
             }
 
         }
-        $tracks = Track::with([])
-            ->whereIn('area_id', $areaIDS)
-            ->orderBy('code', 'ASC')
-            ->get();
         return view('admin.master-data.sub-track.edit')->with([
             'data' => $data,
-            'tracks' => $tracks,
-            'service_unit' => $service_unit,
         ]);
     }
 
-    public function destroy($service_unit_id, $id)
+    public function destroy($id)
     {
+        $access = $this->getRoleAccess(Formula::APPMasterSubTrack);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             SubTrack::destroy($id);
             return $this->jsonSuccessResponse('success');
@@ -142,36 +130,17 @@ class SubTrackController extends CustomController
         );
     }
 
-    private function generateData($areaIDS)
+    private function generateData()
     {
-        $area = $this->request->query->get('area');
-        $track = $this->request->query->get('track');
         $name = $this->request->query->get('name');
-
-        $query = SubTrack::with(['track.area']);
-        if ($area !== '') {
-            $query->whereHas('track', function ($q) use ($area){
-                /** @var $q Builder */
-                return $q->where('area_id', '=', $area);
-            });
-        } else {
-            $query->whereHas('track', function ($q) use ($areaIDS){
-                /** @var $q Builder */
-                return $q->whereIn('area_id', $areaIDS);
-            });
-        }
-
-//        if ($track !== '') {
-//            $query->where('track_id', '=', $track);
-//        }
-
+        $query = SubTrack::with([]);
         if ($name !== '') {
             $query->where(function ($q) use ($name) {
+                /** @var Builder $q */
                 $q->where('code', 'LIKE', '%' . $name . '%')
                     ->orWhere('name', 'LIKE', '%' . $name . '%');
             });
         }
-
         return $query->orderBy('created_at', 'ASC')->get();
     }
 
