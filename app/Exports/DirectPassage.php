@@ -41,7 +41,7 @@ class DirectPassage implements FromCollection, WithHeadings, WithStyles, WithStr
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 4;
-        $cellRange = 'A1:AE' . $rowLength;
+        $cellRange = 'A1:AF' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -84,26 +84,28 @@ class DirectPassage implements FromCollection, WithHeadings, WithStyles, WithStr
         $sheet->mergeCells('M1:M4');
         $sheet->mergeCells('N1:N4');
         $sheet->mergeCells('N1:N4');
-        $sheet->mergeCells('O1:S1');
+        $sheet->mergeCells('O1:T1');
         $sheet->mergeCells('O2:Q2');
         $sheet->mergeCells('O3:P3');
         $sheet->mergeCells('O3:P3');
         $sheet->mergeCells('R2:R4');
         $sheet->mergeCells('S2:S4');
-        $sheet->mergeCells('T1:T4');
-        $sheet->mergeCells('U1:AE1');
-        $sheet->mergeCells('U2:U4');
-        $sheet->mergeCells('V2:V4');
-        $sheet->mergeCells('W2:W4');
-        $sheet->mergeCells('X2:X4');
-        $sheet->mergeCells('Y2:Y4');
-        $sheet->mergeCells('Z2:Z4');
+        $sheet->mergeCells('T2:T4');
+        $sheet->mergeCells('U1:U4');
+        $sheet->mergeCells('V1:AF1');
+        $sheet->mergeCells('V3:V4');
+        $sheet->mergeCells('W3:W4');
+        $sheet->mergeCells('X3:X4');
+        $sheet->mergeCells('Y3:Y4');
+        $sheet->mergeCells('Z3:Z4');
         $sheet->mergeCells('AA2:AA4');
-        $sheet->mergeCells('AB2:AB4');
-        $sheet->mergeCells('AC2:AC4');
+        $sheet->mergeCells('AB3:AB4');
+        $sheet->mergeCells('AC3:AC4');
         $sheet->mergeCells('AD2:AD4');
         $sheet->mergeCells('AE2:AE4');
-        $sheet->getStyle('O1:S1')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('AF2:AF4');
+        $sheet->getStyle('A1:AF4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+//        $sheet->getStyle('V1:AF1')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
     }
 
     /**
@@ -122,18 +124,19 @@ class DirectPassage implements FromCollection, WithHeadings, WithStyles, WithStr
                 'NO.',
                 'WILAYAH',
                 'LINTAS',
-                'ANTARA',
+                'PETAK',
                 'PM 94 / 2018',
                 '',
                 'KOORDINAT LOKASI',
-                'USULAN PENATAAN PERLINTASAN',
+                'STATUS',
                 'RIWAYAT KECELAKAAN',
                 'KELAS JALAN',
                 'LEBAR JALAN (m)',
                 'KONSTRUKSI JALAN',
                 'NAMA JALAN / DAERAH',
                 'KOTA / KABUPATEN',
-                'STATUS',
+                'STATUS PENJAGAAN',
+                '',
                 '',
                 '',
                 '',
@@ -171,18 +174,19 @@ class DirectPassage implements FromCollection, WithHeadings, WithStyles, WithStr
                 '',
                 'RESMI TIDAK DIJAGA',
                 'LIAR',
+                'SWADAYA',
                 '',
-                'PERINGATAN MEMBUNYIKAN LOKOMOTIF',
-                'PERINGATAN PINTU PERLINTASAN SEBIDANG',
-                'PERINGATAN TANPA PINTU PERLINTASAN SEBIDANG',
-                'PERINGATAN',
-                'JARAK LOKASI KRITIS 450M',
-                'JARAK LOKASI KRITIS 300M',
-                'JARAK LOKASI KRITIS 100M',
-                'RAMBU STOP',
-                'LARANGAN BERJALAN',
-                'LARANGAN MASUK KENDARAAN',
-                'GARIS KEJUT',
+                'S 35',
+                '8E/8F',
+                '10A',
+                '10B',
+                '10C',
+                '1A (RAMBU STOP)',
+                '1E/1F',
+                '11A/11B/11C',
+                'PITA PENGGADUH',
+                'HATI-HATI MENDEKATI PERLINTASAN',
+                'BERHENTI TENGOK KANAN DAN KIRI',
             ],
             [
                 '',
@@ -206,13 +210,14 @@ class DirectPassage implements FromCollection, WithHeadings, WithStyles, WithStr
                 '',
                 '',
                 '',
+                'PERINGATAN MEMBUNYIKAN LOKOMOTIF',
+                'PERINGATAN ADA PERLINTASAN KERETA API',
+                'JARAK LOKASI KRITIS 450M',
+                'JARAK LOKASI KRITIS 450M',
+                'JARAK LOKASI KRITIS 100M',
                 '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
+                'LARANGAN BERJALAN (SILANG ANDREAS)',
+                'PERINGATAN RINTANGAN OBYEK BERBAHAYA',
                 '',
                 '',
                 '',
@@ -249,6 +254,7 @@ class DirectPassage implements FromCollection, WithHeadings, WithStyles, WithStr
                 '',
                 '',
                 '',
+                '',
             ]
 
         ];
@@ -261,15 +267,15 @@ class DirectPassage implements FromCollection, WithHeadings, WithStyles, WithStr
             $no = $key + 1;
             $result = [
                 $no,
-                $datum->sub_track->track->area->name,
-                $datum->sub_track->track->code,
+                $datum->area->name,
+                $datum->track->code,
                 $datum->sub_track->code,
                 $datum->name,
                 $datum->stakes,
                 $datum->latitude . ', '.$datum->longitude,
-                $datum->arrangement_proposal === 0 ? '-' : 'v',
-                $datum->accident_history,
-                '-',
+                $datum->is_closed === 1 ? 'Tidak Aktif' : 'Aktif',
+                $datum->count_accident,
+                $datum->road_class,
                 $datum->width,
                 $datum->road_construction,
                 $datum->road_name,
@@ -279,18 +285,19 @@ class DirectPassage implements FromCollection, WithHeadings, WithStyles, WithStr
                 ($datum->guarded_by === 2 ? 'v' : '-'),
                 ($datum->guarded_by === 3 ? 'v' : '-'),
                 ($datum->guarded_by === 4 ? 'v' : '-'),
+                ($datum->guarded_by === 5 ? 'v' : '-'),
                 $datum->description,
                 ($datum->sign_equipment->locomotive_flute === 1 ? 'ada' : '-'),
-                ($datum->sign_equipment->crossing_gate === 1 ? 'ada' : '-'),
-                ($datum->sign_equipment->non_crossing_gate === 1 ? 'ada' : '-'),
-                ($datum->sign_equipment->warning === 1 ? 'ada' : '-'),
+                ($datum->sign_equipment->crossing_exists === 1 ? 'ada' : '-'),
                 ($datum->sign_equipment->critical_distance_450 === 1 ? 'ada' : '-'),
                 ($datum->sign_equipment->critical_distance_300 === 1 ? 'ada' : '-'),
                 ($datum->sign_equipment->critical_distance_100 === 1 ? 'ada' : '-'),
                 ($datum->sign_equipment->stop_sign === 1 ? 'ada' : '-'),
                 ($datum->sign_equipment->walking_ban === 1 ? 'ada' : '-'),
-                ($datum->sign_equipment->vehicle_entry_ban === 1 ? 'ada' : '-'),
-                ($datum->sign_equipment->shock_line === 1 ? 'ada' : '-'),
+                ($datum->sign_equipment->obstacles === 1 ? 'ada' : '-'),
+                ($datum->sign_equipment->noise_band === 1 ? 'ada' : '-'),
+                ($datum->sign_equipment->approach === 1 ? 'ada' : '-'),
+                ($datum->sign_equipment->look_around === 1 ? 'ada' : '-'),
             ];
             array_push($results, $result);
         }

@@ -136,7 +136,7 @@
         }
 
         function destroy(id) {
-            let url = '{{ route('service-unit') }}' + '/' + id + '/delete';
+            let url = path + '/' + id + '/delete';
             AjaxPost(url, {}, function () {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();

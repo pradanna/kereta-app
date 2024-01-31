@@ -16,6 +16,7 @@ class FacilityTrain extends Model
         'area_id',
         'storehouse_id',
         'train_type_id',
+        'train_type_string',
         'engine_type',
         'ownership',
         'facility_number',
@@ -23,6 +24,9 @@ class FacilityTrain extends Model
         'service_start_date',
         'service_expired_date',
         'testing_number',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function area()
@@ -53,5 +57,15 @@ class FacilityTrain extends Model
             return 'invalid';
         }
         return 'valid';
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

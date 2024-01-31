@@ -5,6 +5,7 @@ namespace App\Helper;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\AccessMenu;
 use App\Models\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -201,5 +202,41 @@ class CustomController extends Controller
     public function basicDataTables($object)
     {
         return DataTables::of($object)->addIndexColumn()->make(true);
+    }
+
+    public function getRoleAccess($keyMenu)
+    {
+        $access = [
+            'is_granted_create' => false,
+            'is_granted_update' => false,
+            'is_granted_delete' => false,
+        ];
+        if (auth()->user()->role === 'superadmin') {
+            $access['is_granted_create'] = true;
+            $access['is_granted_update'] = true;
+            $access['is_granted_delete'] = true;
+        } else {
+            $accessMenu = AccessMenu::with([])
+                ->where('user_id', '=', auth()->id())
+                ->where('app_menu_id', '=', $keyMenu)
+                ->first();
+            if ($accessMenu) {
+                $access['is_granted_create'] = $accessMenu->is_granted_create;
+                $access['is_granted_update'] = $accessMenu->is_granted_update;
+                $access['is_granted_delete'] = $accessMenu->is_granted_delete;
+            }
+        }
+        return $access;
+    }
+
+    public function hasServiceUnitAccess($service_unit_id)
+    {
+        $userServiceUnitID = auth()->user()->service_unit_id;
+        if (auth()->user()->role !== 'superadmin') {
+            if ($userServiceUnitID !== $service_unit_id) {
+                return false;
+            }
+        }
+        return true;
     }
 }

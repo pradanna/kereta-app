@@ -14,7 +14,8 @@ class TechnicalSpecWagonDocument extends Model
 
     protected $fillable = [
         'ts_wagon_id',
-        'document'
+        'document',
+        'name'
     ];
 
     public function technical_spec()

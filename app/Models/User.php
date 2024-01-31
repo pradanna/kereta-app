@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'nickname', 'password', 'role', 'area_id', 'service_unit_id'
+        'username', 'nickname', 'password', 'role', 'service_unit_id'
     ];
 
     /**
@@ -39,13 +39,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function area()
-    {
-        return $this->belongsTo(Area::class, 'area_id');
-    }
+    //    public function area()
+    //    {
+    //        return $this->belongsTo(Area::class, 'area_id');
+    //    }
 
     public function service_unit()
     {
         return $this->belongsTo(ServiceUnit::class, 'service_unit_id');
+    }
+
+    public function role_access()
+    {
+        return $this->hasMany(AccessMenu::class, 'user_id');
     }
 }

@@ -39,7 +39,7 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 2;
-        $cellRange = 'A1:K' . $rowLength;
+        $cellRange = 'A1:L' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -72,10 +72,11 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
         $sheet->mergeCells('D1:D2');
         $sheet->mergeCells('E1:E2');
         $sheet->mergeCells('F1:F2');
-        $sheet->mergeCells('G1:H1');
-        $sheet->mergeCells('I1:I2');
+        $sheet->mergeCells('G1:G2');
+        $sheet->mergeCells('H1:I1');
         $sheet->mergeCells('J1:J2');
         $sheet->mergeCells('K1:K2');
+        $sheet->mergeCells('L1:L2');
     }
 
     /**
@@ -92,18 +93,20 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
         return [
             [
                 'NO.',
+                'WILAYAH',
                 'LINTAS',
                 'ANTARA',
                 'KM/HM',
                 'KECAMATAN',
-                'KABUPATEN',
+                'KOTA/KABUPATEN',
                 'LUAS',
                 '',
                 'JARAK DARI AS REL',
                 'JUMLAH BANGUNAN LIAR',
-                'SUDAH DI BONGKAR'
+                'KETERANGAN'
             ],
             [
+                '',
                 '',
                 '',
                 '',
@@ -127,7 +130,8 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
             $no = $key + 1;
             $result = [
                 $no,
-                $datum->sub_track->track->code,
+                $datum->area->name,
+                $datum->track->code,
                 $datum->sub_track->code,
                 $datum->stakes,
                 $datum->district->name,
@@ -136,7 +140,7 @@ class IllegalBuilding implements FromCollection, WithHeadings, WithStyles, WithS
                 $datum->building_area,
                 $datum->distance_from_rail,
                 $datum->illegal_building,
-                $datum->demolished,
+                $datum->description,
             ];
             array_push($results, $result);
         }

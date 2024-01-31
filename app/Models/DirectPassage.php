@@ -11,6 +11,8 @@ class DirectPassage extends Model
     use HasFactory, Uuids;
 
     protected $fillable = [
+        'area_id',
+        'track_id',
         'sub_track_id',
         'city_id',
         'name',
@@ -28,6 +30,10 @@ class DirectPassage extends Model
         'longitude',
         'description',
         'technical_documentation',
+        'elevation',
+        'road_class',
+        'created_by',
+        'updated_by',
     ];
 
     protected $casts = [
@@ -37,12 +43,27 @@ class DirectPassage extends Model
 
     public function direct_passage_guard()
     {
-        return $this->hasOne(DirectPassageGuard::class, 'direct_passage_id');
+        return $this->hasMany(DirectPassageGuard::class, 'direct_passage_id');
+    }
+
+    public function getCountGuardAttribute()
+    {
+        return count($this->direct_passage_guard()->get());
     }
 
     public function sign_equipment()
     {
         return $this->hasOne(DirectPassageSignEquipment::class, 'direct_passage_id');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo(Area::class, 'area_id');
+    }
+
+    public function track()
+    {
+        return $this->belongsTo(Track::class, 'track_id');
     }
 
     public function sub_track()
@@ -58,5 +79,25 @@ class DirectPassage extends Model
     public function images()
     {
         return $this->hasMany(DirectPassageImage::class, 'direct_passage_id');
+    }
+
+    public function accidents()
+    {
+        return $this->hasMany(DirectPassageAccident::class, 'direct_passage_id');
+    }
+
+    public function getCountAccidentAttribute()
+    {
+        return $this->accidents()->count();
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

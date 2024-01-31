@@ -9,7 +9,41 @@ use Illuminate\Database\Eloquent\Collection;
 class Formula
 {
     const ExpirationLimit = 30;
+    const APPMenuFacilityLocomotive = 1;
+    const APPMenuFacilityTrain = 2;
+    const APPMenuFacilityWagon = 3;
+    const APPMenuFacilitySpecialEquipment = 4;
+    const APPMenuStorehouse = 5;
+    const APPTechSpecLocomotive = 6;
+    const APPTechSpecTrain = 7;
+    const APPTechSpecWagon = 8;
+    const APPTechSpecSpecialEquipment = 9;
+    const AppMenuDirectPassage = 10;
+    const APPMenuDisasterArea = 11;
+    const APPMenuDirectPassageAccident = 12;
+    const APPMenuMaterialTool = 13;
+    const APPMenuIllegalBuilding = 14;
+    const APPWorkSafety = 15;
+    const APPHumanResource = 16;
+    const APPSafetyAssessment = 17;
+    const APPCrossingBridges = 18;
+    const APPCrossingPermission = 19;
+    const APPTrainBridge = 20;
+    const APPRailwayStation = 21;
+    const APPMasterDistrict = 22;
+    const APPMasterLocomotiveType = 23;
+    const APPMasterTrainType = 24;
+    const APPMasterWagonType = 25;
+    const APPMasterSubWagonType = 26;
+    const APPMasterSpecialEquipmentType = 27;
+    const APPMasterTrack = 28;
+    const APPMasterSubTrack = 29;
+    const APPMasterDisasterType = 30;
+    const APPMasterResort = 31;
 
+
+    const ServiceUnitExceptionName = 'Satpel Surakarta';
+    const AreaExceptionName = 'DAOP 6';
     /**
      * @param $type
      * @param $areas Collection
@@ -30,8 +64,7 @@ class Formula
         $facility_diesel_trains,
         $facility_wagons,
         $facility_special_equipment
-    )
-    {
+    ) {
         $total_facilities = [];
         if ($type === 'total') {
             foreach ($areas as $area) {

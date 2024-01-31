@@ -63,7 +63,6 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-
                     <div class="col-6">
                         <div class="w-100">
                             <label for="stakes" class="form-label">KM/HM</label>
@@ -81,7 +80,6 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-
                     <div class="col-6">
                         <div class="w-100">
                             <label for="building_area" class="form-label">Luas Bangunan (m2)</label>
@@ -100,7 +98,6 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-
                     <div class="col-6">
                         <div class="w-100">
                             <label for="illegal_building" class="form-label">Jumlah Bangunan Liar (+/-)</label>
@@ -119,7 +116,6 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-
                     <div class="col-12">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>

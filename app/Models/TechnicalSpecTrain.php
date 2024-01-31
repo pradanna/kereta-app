@@ -10,6 +10,8 @@ class TechnicalSpecTrain extends Model
 {
     use HasFactory, Uuids;
 
+    protected $table = 'ts_trains';
+
     protected $fillable = [
         'train_type_id',
         'empty_weight',
@@ -22,6 +24,9 @@ class TechnicalSpecTrain extends Model
         'coupler_height',
         'axle_load',
         'spoor_width',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function train_type()
@@ -37,5 +42,15 @@ class TechnicalSpecTrain extends Model
     public function tech_images()
     {
         return $this->hasMany(TechnicalSpecTrainImage::class, 'ts_train_id');
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

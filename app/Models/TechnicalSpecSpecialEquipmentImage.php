@@ -10,7 +10,7 @@ class TechnicalSpecSpecialEquipmentImage extends Model
 {
     use HasFactory, Uuids;
 
-    protected $table = 'ts_se_images';
+    protected $table = 'ts_se_equipment_images';
 
     protected $fillable = [
         'ts_special_equipment_id',

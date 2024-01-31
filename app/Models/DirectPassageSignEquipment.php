@@ -20,8 +20,14 @@ class DirectPassageSignEquipment extends Model
         'critical_distance_300',
         'critical_distance_100',
         'stop_sign',
+        'walking_ban',
         'vehicle_entry_ban',
         'shock_line',
+        'crossing_exists',
+        'obstacles',
+        'noise_band',
+        'approach',
+        'look_around',
     ];
 
     public function direct_passage()

@@ -71,7 +71,8 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
             'MASA BERLAKU SARANA',
             'NOMOR BA PENGUJIAN',
             'AKAN HABIS (HARI)',
-            'STATUS'
+            'STATUS',
+            'KETERANGAN',
         ];
     }
 
@@ -91,6 +92,7 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
                 $datum->testing_number,
                 $datum->expired_in,
                 ($datum->expired_in <= Formula::ExpirationLimit ? 'HABIS MASA BERLAKU' : 'BERLAKU'),
+                $datum->description,
             ];
             array_push($results, $result);
         }
@@ -104,7 +106,7 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:J' . $rowLength;
+        $cellRange = 'A1:K' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([

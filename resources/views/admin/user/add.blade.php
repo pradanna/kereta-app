@@ -71,20 +71,20 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-6">
-                        <div class="form-group w-100">
-                            <label for="role" class="form-label">Hak Akses</label>
-                            <select class="select2 form-control" name="role" id="role" style="width: 100%;">
+{{--                    <div class="col-6">--}}
+{{--                        <div class="form-group w-100">--}}
+{{--                            <label for="role" class="form-label">Hak Akses</label>--}}
+{{--                            <select class="select2 form-control" name="role" id="role" style="width: 100%;">--}}
 {{--                                <option value="admin-area">Admin Daerah Operasi (DAOP)</option>--}}
 {{--                                <option value="chief-area">Kepala Daerah Operasi (DAOP)</option>--}}
-                                <option value="admin-service-unit">Admin Satuan Pelayanan (SATPEL)</option>
-                                <option value="chief-service-unit">Kepala Satuan Pelayanan (SATPEL)</option>
+{{--                                <option value="admin-service-unit">Admin Satuan Pelayanan (SATPEL)</option>--}}
+{{--                                <option value="chief-service-unit">Kepala Satuan Pelayanan (SATPEL)</option>--}}
 {{--                                <option value="admin-office">Admin Balai (BTP)</option>--}}
 {{--                                <option value="chief-office">Kepala Balai (BTP)</option>--}}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-6">
+{{--                            </select>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+                    <div class="col-12">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
                             <select class="select2 form-control" name="service_unit" id="service_unit" style="width: 100%;">

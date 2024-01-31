@@ -11,10 +11,9 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea
-/public/tech-document
-/public/tech-image
 /public/service-unit
-/public/storehouse
+/public/tech-image
+/public/tech-document
 /public/direct-passage
 /public/direct-passage-accident
 /public/work-safety-documents

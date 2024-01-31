@@ -10,6 +10,7 @@ class TechnicalSpecWagon extends Model
 {
     use HasFactory, Uuids;
 
+    protected $table = 'ts_wagons';
     protected $fillable = [
         'wagon_sub_type_id',
         'loading_weight',
@@ -19,8 +20,11 @@ class TechnicalSpecWagon extends Model
         'width',
         'height_from_rail',
         'axle_load',
-        'bogie_distance',
+        'boogie_distance',
         'usability',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function facility_wagon()
@@ -43,4 +47,13 @@ class TechnicalSpecWagon extends Model
         return $this->hasMany(TechnicalSpecWagonImage::class, 'ts_wagon_id');
     }
 
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

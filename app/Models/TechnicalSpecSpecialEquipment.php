@@ -10,6 +10,8 @@ class TechnicalSpecSpecialEquipment extends Model
 {
     use HasFactory, Uuids;
 
+    protected $table = 'ts_special_equipment';
+
     protected $fillable = [
         'special_equipment_type_id',
         'empty_weight',
@@ -22,6 +24,10 @@ class TechnicalSpecSpecialEquipment extends Model
         'coupler_height',
         'axle_load',
         'spoor_width',
+        'usability',
+        'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function special_equipment_type()
@@ -37,5 +43,15 @@ class TechnicalSpecSpecialEquipment extends Model
     public function tech_images()
     {
         return $this->hasMany(TechnicalSpecSpecialEquipmentImage::class, 'ts_special_equipment_id');
+    }
+
+    public function author_create()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function author_update()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

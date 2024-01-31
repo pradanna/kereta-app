@@ -10,11 +10,12 @@ class TechnicalSpecSpecialEquipmentDocument extends Model
 {
     use HasFactory, Uuids;
 
-    protected $table = 'ts_se_documents';
+    protected $table = 'ts_se_equipment_documents';
 
     protected $fillable = [
         'ts_special_equipment_id',
-        'document'
+        'document',
+        'name'
     ];
 
     public function technical_spec()

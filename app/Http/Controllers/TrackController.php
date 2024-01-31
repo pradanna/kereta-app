@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 
 
 use App\Helper\CustomController;
+use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\FacilityTrain;
+use App\Models\ServiceUnit;
 use App\Models\Track;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class TrackController extends CustomController
@@ -18,25 +21,21 @@ class TrackController extends CustomController
         parent::__construct();
     }
 
+    public function service_unit_page()
+    {
+        $service_units = ServiceUnit::with([])->orderBy('name', 'ASC')->get();
+        return view('admin.master-data.track.service-unit')
+            ->with([
+                'service_units' => $service_units
+            ]);
+    }
+
     public function index()
     {
+        $access = $this->getRoleAccess(Formula::APPMasterTrack);
         if ($this->request->ajax()) {
-            $service_unit = $this->request->query->get('service_unit');
-            $area = $this->request->query->get('area');
             $name = $this->request->query->get('name');
-
             $query = Track::with(['area']);
-
-            if ($service_unit !== '' && $service_unit !== null) {
-                $query->where('area', function ($qa) use ($service_unit){
-                    /** @var $qa Builder */
-                    return $qa->where('service_unit_id', '=', $service_unit);
-                });
-            }
-            if ($area !== '') {
-                $query->where('area_id', '=', $area);
-            }
-
             if ($name !== '') {
                 $query->where(function ($q) use ($name) {
                     /** @var $q Builder */
@@ -47,18 +46,34 @@ class TrackController extends CustomController
             $data = $query->orderBy('created_at', 'ASC')->get();
             return $this->basicDataTables($data);
         }
-        $areas = Area::with([])->orderBy('name', 'ASC')->get();
-        return view('admin.master.track.index')->with([
-            'areas' => $areas,
+        return view('admin.master-data.track.index')->with([
+            'access' => $access,
         ]);
     }
 
+    private $rule = [
+        'code' => 'required',
+        'name' => 'required',
+    ];
+
+    private $message = [
+        'code.required' => 'kolom kode wajib di isi',
+        'name.required' => 'kolom nama wajib di isi',
+    ];
+
     public function store()
     {
+        $access = $this->getRoleAccess(Formula::APPMasterTrack);
+        if (!$access['is_granted_create']) {
+            abort(403);
+        }
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
-                    'area_id' => $this->postField('area'),
                     'code' => $this->postField('code'),
                     'name' => $this->postField('name'),
                 ];
@@ -68,18 +83,23 @@ class TrackController extends CustomController
                 return redirect()->back()->with('failed', 'internal server error');
             }
         }
-        $areas = Area::with([])->orderBy('name', 'ASC')
-            ->get();
-        return view('admin.master.track.add')->with(['areas' => $areas]);
+        return view('admin.master-data.track.add')->with([]);
     }
 
     public function patch($id)
     {
+        $access = $this->getRoleAccess(Formula::APPMasterTrack);
+        if (!$access['is_granted_update']) {
+            abort(403);
+        }
         $data = Track::findOrFail($id);
         if ($this->request->method() === 'POST') {
             try {
+                $validator = Validator::make($this->request->all(), $this->rule, $this->message);
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->with('validator', 'Harap Mengisi Kolom Dengan Benar');
+                }
                 $data_request = [
-                    'area_id' => $this->postField('area'),
                     'code' => $this->postField('code'),
                     'name' => $this->postField('name'),
                 ];
@@ -90,15 +110,17 @@ class TrackController extends CustomController
             }
 
         }
-        $areas = Area::all();
-        return view('admin.master.track.edit')->with([
+        return view('admin.master-data.track.edit')->with([
             'data' => $data,
-            'areas' => $areas
         ]);
     }
 
     public function destroy($id)
     {
+        $access = $this->getRoleAccess(Formula::APPMasterTrack);
+        if (!$access['is_granted_delete']) {
+            return $this->jsonErrorResponse('cannot access delete perform...');
+        }
         try {
             Track::destroy($id);
             return $this->jsonSuccessResponse('success');
