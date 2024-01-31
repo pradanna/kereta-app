@@ -118,7 +118,7 @@
         $(document).ready(function() {
             $("#document-dropzone").dropzone({
                 url: path,
-                maxFilesize: 2,
+                maxFilesize: 32,
                 addRemoveLinks: true,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
@@ -157,8 +157,8 @@
                         blockLoading(false);
                         SuccessAlert('Berhasil', 'Berhasil Menambahkan Data Gambar...').then((
                             r) => {
-                                window.location.reload();
-                            })
+                            window.location.reload();
+                        })
                     });
 
                     this.on('errormultiple', function(file, response) {

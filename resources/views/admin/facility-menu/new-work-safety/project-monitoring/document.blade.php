@@ -28,20 +28,18 @@
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                <tr>
-                    <th width="5%" class="text-center">#</th>
-                    <th>Nama Dokumen</th>
-                    <th width="15%" class="text-center">Aksi</th>
-                </tr>
+                    <tr>
+                        <th width="5%" class="text-center">#</th>
+                        <th>Nama Dokumen</th>
+                        <th width="15%" class="text-center">Aksi</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
             <hr>
-            @if($access['is_granted_create'])
+            @if ($access['is_granted_create'])
                 <p>Tambah Dokumen Baru</p>
-                <form method="post"
-                      enctype="multipart/form-data"
-                      id="form-data">
+                <form method="post" enctype="multipart/form-data" id="form-data">
                     @csrf
                     <div class="w-100 needsclick dropzone" id="document-dropzone"></div>
                 </form>
@@ -58,8 +56,8 @@
 @endsection
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
-    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
+    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet" />
     <style>
         .dz-error-message {
             display: none !important;
@@ -80,7 +78,7 @@
         Dropzone.autoDiscover = false;
         Dropzone.options.documentDropzone = {
 
-            success: function (file, response) {
+            success: function(file, response) {
                 $('form').append('<input type="hidden" name="files[]" value="' + file.name + '">');
                 console.log(response);
                 uploadedDocumentMap[file.name] = response.name
@@ -97,17 +95,17 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.param = $('#param').val();
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false,
-                    className: 'text-center middle-header',
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false,
+                        className: 'text-center middle-header',
+                    },
                     {
                         data: 'name',
                         name: 'name',
@@ -115,12 +113,14 @@
                     },
                     {
                         data: null,
-                        render: function (data) {
+                        render: function(data) {
                             let urlEdit = data['document'];
-                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                'id'] + '">Delete</a>' : '';
+                            let elDelete = grantedDelete === '1' ?
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                    'id'] + '">Delete</a>' : '';
                             return '<a href="' + urlEdit +
-                                '" target="_blank" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                                '" target="_blank" class="btn-edit me-2 btn-table-action" data-id="' + data[
+                                    'id'] +
                                 '">Unduh</a>' + elDelete;
                         },
                         orderable: false,
@@ -129,7 +129,7 @@
                 ],
                 columnDefs: [],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     deleteEvent();
                 },
                 dom: 'ltrip'
@@ -137,7 +137,7 @@
         }
 
         function deleteEvent() {
-            $('.btn-drop-document').on('click', function (e) {
+            $('.btn-drop-document').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -160,7 +160,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 Swal.fire({
                     title: 'Success',
                     text: 'Berhasil Menghapus Dokumen...',
@@ -175,7 +175,7 @@
         function setupDropzone() {
             $("#document-dropzone").dropzone({
                 url: path,
-                maxFilesize: 2,
+                maxFilesize: 32,
                 addRemoveLinks: true,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
@@ -184,9 +184,9 @@
                 uploadMultiple: true,
                 paramName: "files",
 
-                init: function () {
+                init: function() {
                     myDropzone = this;
-                    $('#btn-save').on('click', function (e) {
+                    $('#btn-save').on('click', function(e) {
                         e.preventDefault();
                         Swal.fire({
                             title: "Konfirmasi!",
@@ -209,7 +209,7 @@
                             }
                         });
                     });
-                    this.on('successmultiple', function (file, response) {
+                    this.on('successmultiple', function(file, response) {
                         blockLoading(false);
                         Swal.fire({
                             title: 'Success',
@@ -221,7 +221,7 @@
                         })
                     });
 
-                    this.on('errormultiple', function (file, response) {
+                    this.on('errormultiple', function(file, response) {
                         blockLoading(false);
                         ErrorAlert('Error', 'Terjadi Kesalahan Server...');
                         console.log(response);
@@ -230,7 +230,7 @@
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             generateTable();
             setupDropzone();
         })

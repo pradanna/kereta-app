@@ -120,7 +120,7 @@
         $(document).ready(function() {
             $("#document-dropzone").dropzone({
                 url: path,
-                maxFilesize: 2,
+                maxFilesize: 32,
                 addRemoveLinks: true,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
