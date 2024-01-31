@@ -16,3 +16,10 @@ yarn-error.log
 /public/service-unit
 /public/storehouse
 /public/direct-passage
+/public/direct-passage-accident
+/public/work-safety-documents
+/public/work-safety-reports
+/public/disaster-area
+/public/material-tool
+/public/illegal-building
+public/storehouse
