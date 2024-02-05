@@ -32,7 +32,7 @@
                     <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3"
                         style="width: 250px;">
                         <img src="{{ asset('/images/local/logo-google.png') }}" alt="document-image" height="200"
-                            width="200" style="object-fit: cover;">
+                            style="object-fit: cover;">
                         <p class="fw-bold text-truncate" style="max-width: 200px;">{{ $document->name }}</p>
                         <a href="#" class="btn-drop-document btn-table-action" data-id="{{ $document->id }}">Hapus</a>
                     </div>
