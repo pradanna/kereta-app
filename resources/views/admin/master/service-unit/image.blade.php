@@ -29,7 +29,7 @@
             <div class="d-flex flex-wrap justify-content-center gx-3">
                 @forelse($data->images as $image)
                     <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3">
-                        <img src="{{ asset($image->image) }}" height="200" width="200" style="object-fit: cover;"
+                        <img src="{{ asset($image->image) }}" height="200" style="object-fit: cover;"
                             alt="img-service-unit">
                         <a href="#" class="btn-drop-image btn-table-action" data-id="{{ $image->id }}">Hapus</a>
                     </div>
@@ -155,8 +155,8 @@
                         blockLoading(false);
                         SuccessAlert('Berhasil', 'Berhasil Menambahkan Data Gambar...').then((
                             r) => {
-                                window.location.reload();
-                            })
+                            window.location.reload();
+                        })
                     });
 
                     this.on('errormultiple', function(file, response) {
