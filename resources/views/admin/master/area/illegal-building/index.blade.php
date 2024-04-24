@@ -21,18 +21,19 @@
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="track-option" class="form-label d-none">Perlintasan</label>
-                            <select class="select2 form-control" name="track-option" id="track-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="track-option" id="track-option" style="width: 100%;">
                                 <option value="">Semua Perlintasan</option>
                                 @foreach ($tracks as $track)
-                                    <option value="{{ $track->id }}">{{ $track->code }} ({{ $track->area->name }})</option>
+                                    <option value="{{ $track->id }}">{{ $track->code }} ({{ $track->area->name }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -49,37 +50,37 @@
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                <tr>
-                    <th class="text-center middle-header" width="5%" rowspan="2">#</th>
-                    <th class="text-center middle-header" width="10%" rowspan="2">Wilayah</th>
-                    <th class="text-center middle-header" width="10%" rowspan="2">Perlintasan</th>
-                    <th class="text-center middle-header" width="10%" rowspan="2">Petak</th>
-                    <th class="text-center middle-header" rowspan="2">KM/HM</th>
-                    <th class="text-center middle-header" width="12%" rowspan="2">Kecamatan</th>
-                    <th class="text-center middle-header" colspan="2">Luas</th>
-                    <th class="text-center middle-header" width="10%" rowspan="2">Jumlah Bangli (+/-)</th>
-                    <th class="text-center middle-header" width="8%" rowspan="2">Aksi</th>
-                </tr>
-                <tr>
-                    <th class="text-center middle-header" width="8%">Tanah (m2)</th>
-                    <th class="text-center middle-header" width="8%">Bangunan (m2)</th>
-                </tr>
+                    <tr>
+                        <th class="text-center middle-header" width="5%" rowspan="2">#</th>
+                        <th class="text-center middle-header" width="10%" rowspan="2">Wilayah</th>
+                        <th class="text-center middle-header" width="10%" rowspan="2">Perlintasan</th>
+                        <th class="text-center middle-header" width="10%" rowspan="2">Petak</th>
+                        <th class="text-center middle-header" rowspan="2">KM/HM</th>
+                        <th class="text-center middle-header" width="12%" rowspan="2">Kecamatan</th>
+                        <th class="text-center middle-header" colspan="2">Luas</th>
+                        <th class="text-center middle-header" width="10%" rowspan="2">Jumlah Bangli (+/-)</th>
+                        <th class="text-center middle-header" width="8%" rowspan="2">Aksi</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center middle-header" width="8%">Tanah (m2)</th>
+                        <th class="text-center middle-header" width="8%">Bangunan (m2)</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
                 <tfoot>
-                <tr>
-                    <th class="middle-header" colspan="6">Jumlah</th>
-                    <th class="text-center middle-header" width="8%">0</th>
-                    <th class="text-center middle-header" width="8%">0</th>
-                    <th class="text-center middle-header" width="8%">0</th>
-                    <th class="text-center middle-header" width="8%">Aksi</th>
-                </tr>
+                    <tr>
+                        <th class="middle-header" colspan="6">Jumlah</th>
+                        <th class="text-center middle-header" width="8%">0</th>
+                        <th class="text-center middle-header" width="8%">0</th>
+                        <th class="text-center middle-header" width="8%">0</th>
+                        <th class="text-center middle-header" width="8%">Aksi</th>
+                    </tr>
                 </tfoot>
             </table>
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
@@ -125,7 +126,7 @@
                             <div class="w-100">
                                 <label for="surface_area" class="form-label">Luas Tanah (m2)</label>
                                 <input type="number" step="any" class="form-control" id="surface_area"
-                                       name="surface_area" disabled>
+                                    name="surface_area" disabled>
                             </div>
                         </div>
                     </div>
@@ -134,14 +135,14 @@
                             <div class="w-100">
                                 <label for="building_area" class="form-label">Luas Bangunan (m2)</label>
                                 <input type="number" step="any" class="form-control" id="building_area"
-                                       name="building_area" disabled>
+                                    name="building_area" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="distance_from_rail" class="form-label">Jarak Dari AS Rel</label>
+                                <label for="distance_from_rail" class="form-label">Jarak Dari AS Rel (m)</label>
                                 <input type="number" step="any" class="form-control" id="distance_from_rail"
-                                       name="distance_from_rail" disabled>
+                                    name="distance_from_rail" disabled>
                             </div>
                         </div>
                     </div>
@@ -150,14 +151,14 @@
                             <div class="w-100">
                                 <label for="illegal_building" class="form-label">Jumlah Bangunan Liar</label>
                                 <input type="number" step="any" class="form-control" id="illegal_building"
-                                       name="illegal_building" disabled>
+                                    name="illegal_building" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="demolished" class="form-label">Sudah Dibongkar</label>
                                 <input type="number" step="any" class="form-control" id="demolished"
-                                       name="demolished" disabled>
+                                    name="demolished" disabled>
                             </div>
                         </div>
                     </div>
@@ -176,8 +177,8 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
@@ -192,7 +193,7 @@
         var modalDetail = new bootstrap.Modal(document.getElementById('modal-detail-certification'));
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function (e) {
+            $('.btn-detail').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -232,7 +233,7 @@
             }
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -245,18 +246,18 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = areaID;
                         d.track = $('#track-option').val();
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false,
-                    className: 'text-center',
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false,
+                        className: 'text-center',
+                    },
                     {
                         data: 'sub_track.track.area.name',
                         name: 'sub_track.track.area.name',
@@ -299,7 +300,7 @@
                     },
                     {
                         data: null,
-                        render: function (data) {
+                        render: function(data) {
                             return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
                                 data['id'] + '">Detail</a>';
                         },
@@ -309,19 +310,19 @@
                 ],
                 columnDefs: [],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     eventOpenDetail();
                 },
                 dom: 'ltrip',
-                footerCallback: function (row, data, start, end, display) {
+                footerCallback: function(row, data, start, end, display) {
                     let api = this.api();
 
-                    let intVal = function (i) {
-                        return typeof i === 'string'
-                            ? i.replace(/[\$,]/g, '') * 1
-                            : typeof i === 'number'
-                                ? i
-                                : 0;
+                    let intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i :
+                            0;
                     };
                     for (let i = 6; i < 9; i++) {
                         total = api
@@ -339,12 +340,12 @@
                 }
             });
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
 
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = areaID;
                 let track = $('#track-option').val();
