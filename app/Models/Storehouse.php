@@ -62,6 +62,16 @@ class Storehouse extends Model
         return $this->hasMany(FacilityWagon::class, 'storehouse_id');
     }
 
+    public function specialEquipment()
+    {
+        return $this->hasMany(FacilitySpecialEquipment::class, 'storehouse_id');
+    }
+
+    public function getCountSpecialEquipmentAttribute()
+    {
+        return count($this->specialEquipment()->get());
+    }
+
     public function getCountLocomotiveAttribute()
     {
         return count($this->locomotives()->get());
@@ -71,6 +81,22 @@ class Storehouse extends Model
     {
         return count($this->trains()->get());
     }
+
+    public function getCountUsualTrainAttribute()
+    {
+        return count($this->trains()->where('engine_type', 'train')->get());
+    }
+
+    public function getCountElectricTrainAttribute()
+    {
+        return count($this->trains()->where('engine_type', 'electric-train')->get());
+    }
+
+    public function getCountDieselTrainAttribute()
+    {
+        return count($this->trains()->where('engine_type', 'diesel-train')->get());
+    }
+
 
     public function getCountWagonAttribute()
     {
