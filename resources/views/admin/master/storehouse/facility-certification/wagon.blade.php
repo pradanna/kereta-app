@@ -9,7 +9,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('storehouse') }}">Depo Dan Balai Yasa {{ $data->name }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('storehouse') }}">Depo Dan Balai Yasa {{ $data->name }}</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Gerbong</li>
             </ol>
         </nav>
@@ -22,7 +23,7 @@
                         <div class="form-group w-100">
                             <label for="status-option" class="form-label d-none">Status</label>
                             <select class="select2 form-control" name="status-option" id="status-option"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="">Semua Status</option>
                                 <option value="1">Berlaku</option>
                                 <option value="0">Habis Masa Berlaku</option>
@@ -33,12 +34,13 @@
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari No. Sarana atau No. BA Pengujian">
+                                placeholder="Cari No. Sarana atau No. BA Pengujian">
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -47,8 +49,7 @@
         <div class="title">
             <p>Sertifikasi Sarana Gerbong</p>
             <div class="d-flex align-item-center">
-                <a class="btn-success sml rnd" href="#" id="btn-export"
-                   target="_blank">Export
+                <a class="btn-success sml rnd" href="#" id="btn-export" target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -56,17 +57,17 @@
         <div class="isi">
             <table id="table-data" class="display table w-100">
                 <thead>
-                <tr>
-                    <th class="text-center middle-header" width="5%">#</th>
-                    <th class="text-center middle-header" width="10%">Wilayah</th>
-                    <th class="text-center middle-header" width="10%">Kepemilikan</th>
-                    <th class="text-center middle-header" width="12%">No. Sarana</th>
-                    <th class="text-center middle-header" width="8%">Depo Induk</th>
-                    <th class="text-center middle-header">No. BA Pengujian</th>
-                    <th class="text-center middle-header" width="10%">Masa Berlaku</th>
-                    <th class="text-center middle-header" width="10%">Akan Habis (Hari)</th>
-                    <th class="text-center middle-header" width="5%">Aksi</th>
-                </tr>
+                    <tr>
+                        <th class="text-center middle-header" width="5%">#</th>
+                        <th class="text-center middle-header" width="10%">Wilayah</th>
+                        <th class="text-center middle-header" width="10%">Kepemilikan</th>
+                        <th class="text-center middle-header" width="12%">No. Sarana</th>
+                        <th class="text-center middle-header" width="8%">Depo Induk</th>
+                        <th class="text-center middle-header">No. BA Pengujian</th>
+                        <th class="text-center middle-header" width="10%">Masa Berlaku</th>
+                        <th class="text-center middle-header" width="10%">Akan Habis (Hari)</th>
+                        <th class="text-center middle-header" width="5%">Aksi</th>
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -74,7 +75,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
@@ -91,7 +92,7 @@
                             <div class="form-group w-100">
                                 <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>
                                 <input type="text" class="form-control" id="wagon_sub_type" name="wagon_sub_type"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -114,14 +115,14 @@
                             <div class="form-group w-100">
                                 <label for="facility_number" class="form-label">No. Sarana</label>
                                 <input type="text" class="form-control" id="facility_number" name="facility_number"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="testing_number" class="form-label">No. BA Pengujian</label>
                                 <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -130,14 +131,14 @@
                             <div class="form-group w-100">
                                 <label for="service_start_date" class="form-label">Mulai Dinas</label>
                                 <input type="text" class="form-control" id="service_start_date"
-                                       name="service_start_date" placeholder="dd-mm-yyyy" disabled>
+                                    name="service_start_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="service_expired_date" class="form-label">Masa Berlaku</label>
                                 <input type="text" class="form-control" id="service_expired_date"
-                                       name="service_expired_date" placeholder="dd-mm-yyyy" disabled>
+                                    name="service_expired_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
                     </div>
@@ -162,12 +163,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
@@ -190,7 +191,7 @@
                 ajax: {
                     type: 'GET',
                     url: facilityPath,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = areaID;
                         d.name = $('#name').val();
                         d.storehouse = storeHouseID;
@@ -198,12 +199,12 @@
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false,
-                    className: 'text-center'
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false,
+                        className: 'text-center'
+                    },
                     {
                         data: 'area.name',
                         name: 'area.name',
@@ -223,8 +224,8 @@
                         data: 'storehouse',
                         name: 'storehouse',
                         className: 'text-center',
-                        render: function (data) {
-                            return data['name'] + ' ('+data['storehouse_type']['name']+')'
+                        render: function(data) {
+                            return data['name'] + ' (' + data['storehouse_type']['name'] + ')'
                         }
                     },
                     {
@@ -259,18 +260,17 @@
                     {
                         data: null,
                         render: function(data) {
-                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data['id'] + '">Detail</a>';
+                            return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
+                                'id'] + '">Detail</a>';
                         },
                         orderable: false,
                         className: 'text-center'
                     }
                 ],
-                columnDefs: [
-                    {
-                        targets: '_all',
-                        className: 'middle-header'
-                    }
-                ],
+                columnDefs: [{
+                    targets: '_all',
+                    className: 'middle-header'
+                }],
                 paging: true,
                 "fnDrawCallback": function(setting) {
                     eventOpenDetail();
@@ -331,17 +331,18 @@
                 width: 'resolve',
             });
             generateTableFacilityCertification();
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = areaID;
                 let name = $('#name').val();
                 let storehouse = storeHouseID;
                 let status = $('#status-option').val();
-                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse + '&status=' + status;
+                let queryParam = '?area=' + area + '&name=' + name + '&storehouse=' + storehouse +
+                    '&status=' + status;
                 let exportPath = '{{ route('facility-certification-wagon.excel') }}' + queryParam;
                 window.open(exportPath, '_blank');
             });

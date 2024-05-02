@@ -32,13 +32,14 @@
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari Kode atau Nama Perlintasan">
+                                placeholder="Cari Kode atau Nama Perlintasan">
                         </div>
                     </div>
 
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -60,13 +61,13 @@
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                <tr>
-                    <th width="5%" class="text-center">#</th>
-                    <th width="15%">Wilayah</th>
-                    <th width="12%">Kode</th>
-                    <th>Nama</th>
-                    <th width="10%" class="text-center">Aksi</th>
-                </tr>
+                    <tr>
+                        <th width="5%" class="text-center">#</th>
+                        <th width="15%">Wilayah</th>
+                        <th width="12%">Kode</th>
+                        <th>Nama</th>
+                        <th width="10%" class="text-center">Aksi</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
@@ -75,19 +76,19 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
         let path = '{{ route('track') }}';
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function (e) {
+            $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -110,14 +111,14 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -130,17 +131,17 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = $('#area').val();
                         d.name = $('#name').val();
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false
+                    },
                     {
                         data: 'area.name',
                         name: 'area.name'
@@ -155,11 +156,13 @@
                     },
                     {
                         data: null,
-                        render: function (data) {
+                        render: function(data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
-                            return '<a href="' + urlEdit + '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
+                            return '<a href="' + urlEdit +
+                                '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' +
-                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                    'id'] +
                                 '">Delete</a>';
                         },
                         orderable: false
@@ -170,17 +173,17 @@
                     className: 'text-center'
                 }],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     deleteEvent();
                 },
                 dom: 'ltrip'
             })
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = $('#area').val();
                 let name = $('#name').val();

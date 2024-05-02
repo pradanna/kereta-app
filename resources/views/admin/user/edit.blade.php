@@ -42,15 +42,15 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                   placeholder="Username" value="{{ $data->username }}">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                                value="{{ $data->username }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="nickname" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nickname" name="nickname"
-                                   placeholder="Nama" value="{{ $data->nickname }}">
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nama"
+                                value="{{ $data->nickname }}">
                         </div>
                     </div>
                 </div>
@@ -59,35 +59,37 @@
                         <div class="w-100">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="Password">
+                                placeholder="Password">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="password-confirm" class="form-label">Konfirmasi Password</label>
                             <input type="password" class="form-control" id="password-confirm" name="password-confirm"
-                                   placeholder="Konfirmasi Password">
+                                placeholder="Konfirmasi Password">
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
-{{--                    <div class="col-6">--}}
-{{--                        <div class="form-group w-100">--}}
-{{--                            <label for="role" class="form-label">Hak Akses</label>--}}
-{{--                            <select class="select2 form-control" name="role" id="role" style="width: 100%;">--}}
-{{--                                <option value="admin-area" {{ ($data->role === 'admin-area') ? 'selected' : '' }}>Admin Daerah Operasi (DAOP)</option>--}}
-{{--                                <option value="chief-area" {{ ($data->role === 'chief-area') ? 'selected' : '' }}>Kepala Daerah Operasi (DAOP)</option>--}}
-{{--                                <option value="admin-service-unit" {{ ($data->role === 'admin-service-unit') ? 'selected' : '' }}>Admin Satuan Pelayanan (SATPEL)</option>--}}
-{{--                                <option value="chief-service-unit" {{ ($data->role === 'chief-service-unit') ? 'selected' : '' }}>Kepala Satuan Pelayanan (SATPEL)</option>--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                    <div class="col-6"> --}}
+                    {{--                        <div class="form-group w-100"> --}}
+                    {{--                            <label for="role" class="form-label">Hak Akses</label> --}}
+                    {{--                            <select class="select2 form-control" name="role" id="role" style="width: 100%;"> --}}
+                    {{--                                <option value="admin-area" {{ ($data->role === 'admin-area') ? 'selected' : '' }}>Admin Daerah Operasi (DAOP)</option> --}}
+                    {{--                                <option value="chief-area" {{ ($data->role === 'chief-area') ? 'selected' : '' }}>Kepala Daerah Operasi (DAOP)</option> --}}
+                    {{--                                <option value="admin-service-unit" {{ ($data->role === 'admin-service-unit') ? 'selected' : '' }}>Admin Satuan Pelayanan (SATPEL)</option> --}}
+                    {{--                                <option value="chief-service-unit" {{ ($data->role === 'chief-service-unit') ? 'selected' : '' }}>Kepala Satuan Pelayanan (SATPEL)</option> --}}
+                    {{--                            </select> --}}
+                    {{--                        </div> --}}
+                    {{--                    </div> --}}
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
                             <select class="select2 form-control" name="service_unit" id="service_unit" style="width: 100%;">
                                 @foreach ($service_units as $service_unit)
-                                    <option value="{{ $service_unit->id }}" {{ ($data->service_unit_id === $service_unit->id) ? 'selected' : '' }}>{{ $service_unit->name }}</option>
+                                    <option value="{{ $service_unit->id }}"
+                                        {{ $data->service_unit_id === $service_unit->id ? 'selected' : '' }}>
+                                        {{ $service_unit->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -106,12 +108,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             $('.select2').select2({

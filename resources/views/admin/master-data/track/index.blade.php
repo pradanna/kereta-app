@@ -9,7 +9,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('master-data') }}">Master Data</a></li>
-                {{--                <li class="breadcrumb-item"><a href="{{ route('track') }}">Lintas</a></li>--}}
+                {{--                <li class="breadcrumb-item"><a href="{{ route('track') }}">Lintas</a></li> --}}
                 <li class="breadcrumb-item active" aria-current="page">Lintas</li>
             </ol>
         </nav>
@@ -18,28 +18,29 @@
         <div class="isi">
             <div class="d-flex align-items-center">
                 <div class="flex-grow-1 row gx-2">
-                    {{--                    <div class="col-3">--}}
-                    {{--                        <div class="form-group w-100">--}}
-                    {{--                            <label for="area" class="form-label d-none">Daerah Operasi</label>--}}
-                    {{--                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">--}}
-                    {{--                                <option value="">Semua Daerah Operasi</option>--}}
-                    {{--                                @foreach ($areas as $area)--}}
-                    {{--                                    <option value="{{ $area->id }}">{{ $area->name }}</option>--}}
-                    {{--                                @endforeach--}}
-                    {{--                            </select>--}}
-                    {{--                        </div>--}}
-                    {{--                    </div>--}}
+                    {{--                    <div class="col-3"> --}}
+                    {{--                        <div class="form-group w-100"> --}}
+                    {{--                            <label for="area" class="form-label d-none">Daerah Operasi</label> --}}
+                    {{--                            <select class="select2 form-control" name="area" id="area" style="width: 100%;"> --}}
+                    {{--                                <option value="">Semua Daerah Operasi</option> --}}
+                    {{--                                @foreach ($areas as $area) --}}
+                    {{--                                    <option value="{{ $area->id }}">{{ $area->name }}</option> --}}
+                    {{--                                @endforeach --}}
+                    {{--                            </select> --}}
+                    {{--                        </div> --}}
+                    {{--                    </div> --}}
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari Kode atau Nama Perlintasan">
+                                placeholder="Cari Kode atau Nama Perlintasan">
                         </div>
                     </div>
 
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -49,27 +50,27 @@
         <div class="title">
             <p>Data Lintas</p>
             <div class="d-flex align-item-center">
-                @if($access['is_granted_create'])
+                @if ($access['is_granted_create'])
                     <a class="btn-utama sml rnd me-2" href="{{ route('track.service-unit.create') }}">Tambah
                         <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                     </a>
                 @endif
-{{--                <a class="btn-success sml rnd" href="#" id="btn-export">--}}
-{{--                    Export--}}
-{{--                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>--}}
-{{--                </a>--}}
+                {{--                <a class="btn-success sml rnd" href="#" id="btn-export"> --}}
+                {{--                    Export --}}
+                {{--                    <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i> --}}
+                {{--                </a> --}}
             </div>
         </div>
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                <tr>
-                    <th width="5%" class="text-center">#</th>
-{{--                    <th width="15%">Wilayah</th>--}}
-                    <th width="12%">Kode</th>
-                    <th>Nama</th>
-                    <th width="10%" class="text-center">Aksi</th>
-                </tr>
+                    <tr>
+                        <th width="5%" class="text-center">#</th>
+                        {{--                    <th width="15%">Wilayah</th> --}}
+                        <th width="12%">Kode</th>
+                        <th>Nama</th>
+                        <th width="10%" class="text-center">Aksi</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
@@ -78,12 +79,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
@@ -92,7 +93,7 @@
         let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function (e) {
+            $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -115,14 +116,14 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -135,17 +136,17 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         // d.area = $('#area').val();
                         d.name = $('#name').val();
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false
+                    },
                     // {
                     //     data: 'area.name',
                     //     name: 'area.name'
@@ -160,37 +161,38 @@
                     },
                     {
                         data: null,
-                        render: function (data) {
+                        render: function(data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
                             let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' : '';
-                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                'id'] + '">Delete</a>' : '';
+                            let elDelete = grantedDelete === '1' ?
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                    'id'] + '">Delete</a>' : '';
                             if (elEdit === '' && elDelete === '') {
                                 return '-';
                             }
-                            return  elEdit + elDelete;
+                            return elEdit + elDelete;
                         },
                         orderable: false
                     }
                 ],
                 columnDefs: [{
-                    targets: [0,  1, 3 ],
+                    targets: [0, 1, 3],
                     className: 'text-center'
                 }],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     deleteEvent();
                 },
                 dom: 'ltrip'
             })
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = $('#area').val();
                 let name = $('#name').val();

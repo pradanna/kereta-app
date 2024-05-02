@@ -52,7 +52,7 @@
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('city'))
+                            @if ($errors->has('city'))
                                 <div class="text-danger">
                                     {{ $errors->first('city') }}
                                 </div>
@@ -63,8 +63,8 @@
                         <div class="w-100">
                             <label for="name" class="form-label">Nama <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Kecamatan" required>
-                            @if($errors->has('name'))
+                                placeholder="Nama Kecamatan" required>
+                            @if ($errors->has('name'))
                                 <div class="text-danger">
                                     {{ $errors->first('name') }}
                                 </div>
@@ -83,18 +83,18 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

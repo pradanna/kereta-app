@@ -19,7 +19,8 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('infrastructure.safety.assessment.main', ['service_unit_id' => $service_unit->id]) }}';
+                window.location.href =
+                    '{{ route('infrastructure.safety.assessment.main', ['service_unit_id' => $service_unit->id]) }}';
             })
         </script>
     @endif
@@ -33,7 +34,8 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('infrastructure.safety.assessment.main', ['service_unit_id' => $service_unit->id]) }}">Safety Assessment {{ $service_unit->name }}</a>
+                        href="{{ route('infrastructure.safety.assessment.main', ['service_unit_id' => $service_unit->id]) }}">Safety
+                        Assessment {{ $service_unit->name }}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
@@ -50,13 +52,12 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="area" id="area"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('area'))
+                            @if ($errors->has('area'))
                                 <div class="text-danger">
                                     {{ $errors->first('area') }}
                                 </div>
@@ -66,13 +67,12 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="track" class="form-label">Lintas <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="track" id="track"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="track" id="track" style="width: 100%;">
                                 @foreach ($tracks as $track)
                                     <option value="{{ $track->id }}">{{ $track->code }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('track'))
+                            @if ($errors->has('track'))
                                 <div class="text-danger">
                                     {{ $errors->first('track') }}
                                 </div>
@@ -84,13 +84,12 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="sub_track" class="form-label">Petak <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="sub_track" id="sub_track"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="sub_track" id="sub_track" style="width: 100%;">
                                 @foreach ($sub_tracks as $sub_track)
                                     <option value="{{ $sub_track->id }}">{{ $sub_track->code }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('sub_track'))
+                            @if ($errors->has('sub_track'))
                                 <div class="text-danger">
                                     {{ $errors->first('sub_track') }}
                                 </div>
@@ -100,9 +99,8 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="stakes" name="stakes"
-                                   placeholder="KM/HM">
-                            @if($errors->has('stakes'))
+                            <input type="text" class="form-control" id="stakes" name="stakes" placeholder="KM/HM">
+                            @if ($errors->has('stakes'))
                                 <div class="text-danger">
                                     {{ $errors->first('stakes') }}
                                 </div>
@@ -114,14 +112,14 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="district" class="form-label">Kecamatan <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="district" id="district"
-                                    style="width: 100%;">
+                            <label for="district" class="form-label">Kecamatan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="district" id="district" style="width: 100%;">
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}">{{ $district->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('district'))
+                            @if ($errors->has('district'))
                                 <div class="text-danger">
                                     {{ $errors->first('district') }}
                                 </div>
@@ -130,10 +128,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="recommendation_number" class="form-label">No. Surat Rekomendasi <span class="text-danger ms-1">*</span></label>
+                            <label for="recommendation_number" class="form-label">No. Surat Rekomendasi <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="recommendation_number"
-                                   name="recommendation_number" placeholder="No. Surat Rekomendasi">
-                            @if($errors->has('recommendation_number'))
+                                name="recommendation_number" placeholder="No. Surat Rekomendasi">
+                            @if ($errors->has('recommendation_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('recommendation_number') }}
                                 </div>
@@ -144,10 +143,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="organizer" class="form-label">Penyelenggara <span class="text-danger ms-1">*</span></label>
+                            <label for="organizer" class="form-label">Penyelenggara <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="organizer" placeholder="Penyelenggara"
-                                   name="organizer">
-                            @if($errors->has('organizer'))
+                                name="organizer">
+                            @if ($errors->has('organizer'))
                                 <div class="text-danger">
                                     {{ $errors->first('organizer') }}
                                 </div>
@@ -156,9 +156,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="job_scope" class="form-label">Ruang Lingkup Pekerjaan <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="job_scope" name="job_scope" placeholder="Ruang Lingkup Kerja">
-                            @if($errors->has('job_scope'))
+                            <label for="job_scope" class="form-label">Ruang Lingkup Pekerjaan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="job_scope" name="job_scope"
+                                placeholder="Ruang Lingkup Kerja">
+                            @if ($errors->has('job_scope'))
                                 <div class="text-danger">
                                     {{ $errors->first('job_scope') }}
                                 </div>
@@ -169,10 +171,11 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="w-100">
-                            <label for="follow_up" class="form-label">Rekomendasi Tindak Lanjut <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="follow_up" placeholder="Rekomendasi Tindak Lanjut"
-                                   name="follow_up">
-                            @if($errors->has('follow_up'))
+                            <label for="follow_up" class="form-label">Rekomendasi Tindak Lanjut <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="follow_up"
+                                placeholder="Rekomendasi Tindak Lanjut" name="follow_up">
+                            @if ($errors->has('follow_up'))
                                 <div class="text-danger">
                                     {{ $errors->first('follow_up') }}
                                 </div>
@@ -200,20 +203,20 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",
@@ -232,5 +235,4 @@
             });
         });
     </script>
-
 @endsection

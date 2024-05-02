@@ -19,7 +19,8 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('means.human-resource.main', ['service_unit_id' => $service_unit->id, 'slug' => $slug]) }}';
+                window.location.href =
+                    '{{ route('means.human-resource.main', ['service_unit_id' => $service_unit->id, 'slug' => $slug]) }}';
             })
         </script>
     @endif
@@ -33,7 +34,8 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('means.human-resource.main', ['service_unit_id' => $service_unit->id, 'slug' => $slug]) }}">SDM {{ $type }} {{ $service_unit->name }}</a>
+                        href="{{ route('means.human-resource.main', ['service_unit_id' => $service_unit->id, 'slug' => $slug]) }}">SDM
+                        {{ $type }} {{ $service_unit->name }}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
@@ -49,14 +51,16 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah (Daerah Operasi) <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="area" id="area"
-                                    style="width: 100%;">
+                            <label for="area" class="form-label">Wilayah (Daerah Operasi) <span
+                                    class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($data->area_id === $area->id) ? 'selected' : '' }}>{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}"
+                                        {{ $data->area_id === $area->id ? 'selected' : '' }}>{{ $area->name }}
+                                    </option>
                                 @endforeach
                             </select>
-                            @if($errors->has('area'))
+                            @if ($errors->has('area'))
                                 <div class="text-danger">
                                     {{ $errors->first('area') }}
                                 </div>
@@ -66,9 +70,9 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="name" class="form-label">Nama <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="name"
-                                   name="name" value="{{ $data->name }}" placeholder="Nama Lengkap">
-                            @if($errors->has('name'))
+                            <input type="text" class="form-control" id="name" name="name"
+                                value="{{ $data->name }}" placeholder="Nama Lengkap">
+                            @if ($errors->has('name'))
                                 <div class="text-danger">
                                     {{ $errors->first('name') }}
                                 </div>
@@ -79,10 +83,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="birth_place" class="form-label">Tempat Lahir <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="birth_place"
-                                   name="birth_place" value="{{ $data->birth_place }}" placeholder="Tempat Lahir">
-                            @if($errors->has('birth_place'))
+                            <label for="birth_place" class="form-label">Tempat Lahir <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="birth_place" name="birth_place"
+                                value="{{ $data->birth_place }}" placeholder="Tempat Lahir">
+                            @if ($errors->has('birth_place'))
                                 <div class="text-danger">
                                     {{ $errors->first('birth_place') }}
                                 </div>
@@ -91,10 +96,11 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="date_of_birth" class="form-label">Tanggal Lahir <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control datepicker" id="date_of_birth"
-                                   name="date_of_birth" placeholder="dd-mm-yyyy">
-                            @if($errors->has('date_of_birth'))
+                            <label for="date_of_birth" class="form-label">Tanggal Lahir <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control datepicker" id="date_of_birth" name="date_of_birth"
+                                placeholder="dd-mm-yyyy">
+                            @if ($errors->has('date_of_birth'))
                                 <div class="text-danger">
                                     {{ $errors->first('date_of_birth') }}
                                 </div>
@@ -105,10 +111,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="identity_number" class="form-label">No. Identitas <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="identity_number"
-                                   name="identity_number" value="{{ $data->identity_number }}" placeholder="Nomor Identitas">
-                            @if($errors->has('identity_number'))
+                            <label for="identity_number" class="form-label">No. Identitas <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="identity_number" name="identity_number"
+                                value="{{ $data->identity_number }}" placeholder="Nomor Identitas">
+                            @if ($errors->has('identity_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('identity_number') }}
                                 </div>
@@ -117,10 +124,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="certification_unit" class="form-label">Unit Pengajuan Sertifikasi <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="certification_unit"
-                                   name="certification_unit" value="{{ $data->certification_unit }}" placeholder="Unit Pengajuan Sertifikasi">
-                            @if($errors->has('certification_unit'))
+                            <label for="certification_unit" class="form-label">Unit Pengajuan Sertifikasi <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="certification_unit" name="certification_unit"
+                                value="{{ $data->certification_unit }}" placeholder="Unit Pengajuan Sertifikasi">
+                            @if ($errors->has('certification_unit'))
                                 <div class="text-danger">
                                     {{ $errors->first('certification_unit') }}
                                 </div>
@@ -131,10 +139,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="certification_number" class="form-label">Kodefikasi Sertifikat <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="certification_number"
-                                   name="certification_number" placeholder="kodefikasi sertifikat" value="{{ $data->certification_number }}">
-                            @if($errors->has('certification_number'))
+                            <label for="certification_number" class="form-label">Kodefikasi Sertifikat <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="certification_number" name="certification_number"
+                                placeholder="kodefikasi sertifikat" value="{{ $data->certification_number }}">
+                            @if ($errors->has('certification_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('certification_number') }}
                                 </div>
@@ -143,10 +152,11 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="expired_date" class="form-label">Tanggal Habis Berlaku <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control datepicker" id="expired_date"
-                                   name="expired_date" placeholder="dd-mm-yyyy">
-                            @if($errors->has('expired_date'))
+                            <label for="expired_date" class="form-label">Tanggal Habis Berlaku <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control datepicker" id="expired_date" name="expired_date"
+                                placeholder="dd-mm-yyyy">
+                            @if ($errors->has('expired_date'))
                                 <div class="text-danger">
                                     {{ $errors->first('expired_date') }}
                                 </div>
@@ -174,19 +184,19 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
-          integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
+        integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
-            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
@@ -200,7 +210,7 @@
             $('#expired_date').datepicker('setDate', expiredDate);
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -209,7 +219,7 @@
             });
 
             initializeDate();
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",
@@ -228,5 +238,4 @@
             });
         });
     </script>
-
 @endsection

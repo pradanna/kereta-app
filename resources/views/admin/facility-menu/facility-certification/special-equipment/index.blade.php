@@ -22,8 +22,7 @@
                     <div class="col-3">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -35,7 +34,7 @@
                         <div class="form-group w-100">
                             <label for="status-option" class="form-label d-none">Status</label>
                             <select class="select2 form-control" name="status-option" id="status-option"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="">Semua Status</option>
                                 <option value="1">Berlaku</option>
                                 <option value="0">Habis Masa Berlaku</option>
@@ -46,12 +45,13 @@
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari No. Sarana atau No. BA Pengujian">
+                                placeholder="Cari No. Sarana atau No. BA Pengujian">
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -60,14 +60,13 @@
         <div class="title">
             <p>Sertifikasi Sarana Peralatan Khusus</p>
             <div class="d-flex align-item-center">
-                @if($access['is_granted_create'])
+                @if ($access['is_granted_create'])
                     <a class="btn-utama sml rnd me-2"
-                       href="{{ route('means.facility-certification.special-equipment.create') }}">Tambah
+                        href="{{ route('means.facility-certification.special-equipment.create') }}">Tambah
                         <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                     </a>
                 @endif
-                <a class="btn-success sml rnd" href="#" id="btn-export"
-                   target="_blank">Export
+                <a class="btn-success sml rnd" href="#" id="btn-export" target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -75,19 +74,19 @@
         <div class="isi">
             <table id="table-data" class="display table w-100">
                 <thead>
-                <tr>
-                    <th class="text-center middle-header" width="5%">#</th>
-                    <th class="text-center middle-header" width="10%">Wilayah</th>
-                    <th class="text-center middle-header" width="10%">Kepemilikan</th>
-                    {{--                            <th class="text-center">Jenis Sarana</th> --}}
-                    <th class="text-center middle-header" width="10%">No. Sarana Baru</th>
-                    <th class="text-center middle-header" width="10%">No. Sarana Lama</th>
-                    <th class="text-center middle-header">No. BA Pengujian</th>
-                    <th class="text-center middle-header" width="10%">Masa Berlaku</th>
-                    <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
-                    {{--                            <th class="text-center">Status</th> --}}
-                    <th class="text-center middle-header" width="15%">Aksi</th>
-                </tr>
+                    <tr>
+                        <th class="text-center middle-header" width="5%">#</th>
+                        <th class="text-center middle-header" width="10%">Wilayah</th>
+                        <th class="text-center middle-header" width="10%">Kepemilikan</th>
+                        {{--                            <th class="text-center">Jenis Sarana</th> --}}
+                        <th class="text-center middle-header" width="10%">No. Sarana Baru</th>
+                        <th class="text-center middle-header" width="10%">No. Sarana Lama</th>
+                        <th class="text-center middle-header">No. BA Pengujian</th>
+                        <th class="text-center middle-header" width="10%">Masa Berlaku</th>
+                        <th class="text-center middle-header" width="5%">Akan Habis (Hari)</th>
+                        {{--                            <th class="text-center">Status</th> --}}
+                        <th class="text-center middle-header" width="15%">Aksi</th>
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -95,7 +94,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
@@ -103,13 +102,13 @@
                         Khusus</p>
                     <hr>
                     <div class="row mb-3">
-                        {{--                        <div class="col-6">--}}
-                        {{--                            <div class="form-group w-100">--}}
-                        {{--                                <label for="special_equipment_type" class="form-label">Jenis Sarana</label>--}}
-                        {{--                                <input type="text" class="form-control" id="special_equipment_type"--}}
-                        {{--                                    name="special_equipment_type" disabled>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
+                        {{--                        <div class="col-6"> --}}
+                        {{--                            <div class="form-group w-100"> --}}
+                        {{--                                <label for="special_equipment_type" class="form-label">Jenis Sarana</label> --}}
+                        {{--                                <input type="text" class="form-control" id="special_equipment_type" --}}
+                        {{--                                    name="special_equipment_type" disabled> --}}
+                        {{--                            </div> --}}
+                        {{--                        </div> --}}
                         <div class="col-12">
                             <div class="form-group w-100">
                                 <label for="area" class="form-label">Wilayah</label>
@@ -122,14 +121,14 @@
                             <div class="form-group w-100">
                                 <label for="new_facility_number" class="form-label">No. Sarana Baru</label>
                                 <input type="text" class="form-control" id="new_facility_number"
-                                       name="new_facility_number" disabled>
+                                    name="new_facility_number" disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group w-100">
                                 <label for="old_facility_number" class="form-label">No. Sarana Lama</label>
                                 <input type="text" class="form-control" id="old_facility_number"
-                                       name="old_facility_number" disabled>
+                                    name="old_facility_number" disabled>
                             </div>
                         </div>
                     </div>
@@ -138,7 +137,7 @@
                             <div class="form-group w-100">
                                 <label for="testing_number" class="form-label">No. BA Pengujian</label>
                                 <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
@@ -153,7 +152,7 @@
                             <div class="form-group w-100">
                                 <label for="service_expired_date" class="form-label">Masa Berlaku</label>
                                 <input type="text" class="form-control" id="service_expired_date"
-                                       name="service_expired_date" placeholder="dd-mm-yyyy" disabled>
+                                    name="service_expired_date" placeholder="dd-mm-yyyy" disabled>
                             </div>
                         </div>
                     </div>
@@ -175,9 +174,8 @@
                         <div class="col-12">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan</label>
-                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
-                                          name="description"
-                                          placeholder="Keterangan" disabled></textarea>
+                                <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description" name="description"
+                                    placeholder="Keterangan" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -188,12 +186,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
@@ -215,19 +213,19 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = $('#area-option').val();
                         d.name = $('#name').val();
                         d.status = $('#status-option').val();
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false,
-                    className: 'text-center'
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false,
+                        className: 'text-center'
+                    },
                     {
                         data: 'area.name',
                         name: 'area.name',
@@ -257,7 +255,7 @@
                     {
                         data: 'service_expired_date',
                         name: 'service_expired_date',
-                        render: function (data) {
+                        render: function(data) {
                             const v = new Date(data);
                             return v.toLocaleDateString('id-ID', {
                                 month: '2-digit',
@@ -271,7 +269,7 @@
                     {
                         data: 'expired_in',
                         name: 'expired_in',
-                        render: function (data) {
+                        render: function(data) {
                             return data;
                         },
                         className: 'text-center'
@@ -286,12 +284,13 @@
                     // },
                     {
                         data: null,
-                        render: function (data) {
+                        render: function(data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
                             let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' : '';
-                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
+                            let elDelete = grantedDelete === '1' ?
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data['id'] +
                                 '">Delete</a>' : '';
                             return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' + data[
                                 'id'] + '">Detail</a>' + elEdit + elDelete;
@@ -300,18 +299,16 @@
                         className: 'text-center'
                     }
                 ],
-                columnDefs: [
-                    {
-                        targets: '_all',
-                        className: 'middle-header'
-                    }
-                ],
+                columnDefs: [{
+                    targets: '_all',
+                    className: 'middle-header'
+                }],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     eventOpenDetail();
                     deleteEvent();
                 },
-                createdRow: function (row, data, index) {
+                createdRow: function(row, data, index) {
                     if (data['expired_in'] < expiration) {
                         $('td', row).css({
                             'background-color': '#fecba1'
@@ -323,7 +320,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function (e) {
+            $('.btn-detail').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id)
@@ -362,7 +359,7 @@
         }
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function (e) {
+            $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -385,31 +382,32 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                 });
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
             generateTableFacilityCertification();
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
 
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let name = $('#name').val();
                 let status = $('#status-option').val();
                 let queryParam = '?area=' + area + '&name=' + name + '&status=' + status;
-                let exportPath = '{{ route('means.facility-certification.special-equipment.excel') }}' + queryParam;
+                let exportPath = '{{ route('means.facility-certification.special-equipment.excel') }}' +
+                    queryParam;
                 window.open(exportPath, '_blank');
             });
         });

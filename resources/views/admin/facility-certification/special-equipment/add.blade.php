@@ -26,7 +26,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('facility-certification-special-equipment') }}">Sertifikasi Sarana Peralatan Khusus</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('facility-certification-special-equipment') }}">Sertifikasi
+                        Sarana Peralatan Khusus</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
@@ -53,9 +54,11 @@
                         <div class="form-group w-100">
                             <label for="special_equipment_type" class="form-label">Jenis Sarana</label>
                             <select class="select2 form-control" name="special_equipment_type" id="special_equipment_type"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 @foreach ($special_equipment_types as $special_equipment_type)
-                                    <option value="{{ $special_equipment_type->id }}">{{ $special_equipment_type->code }} ({{ $special_equipment_type->name }})</option>
+                                    <option value="{{ $special_equipment_type->id }}">{{ $special_equipment_type->code }}
+                                        ({{ $special_equipment_type->name }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -66,14 +69,14 @@
                         <div class="form-group w-100">
                             <label for="new_facility_number" class="form-label">No. Sarana Baru</label>
                             <input type="text" class="form-control" id="new_facility_number" name="new_facility_number"
-                                   placeholder="Nomor Sarana Baru">
+                                placeholder="Nomor Sarana Baru">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="old_facility_number" class="form-label">No. Sarana Lama</label>
                             <input type="text" class="form-control" id="old_facility_number" name="old_facility_number"
-                                   placeholder="Nomor Sarana Lama">
+                                placeholder="Nomor Sarana Lama">
                         </div>
                     </div>
                 </div>
@@ -82,14 +85,13 @@
                         <div class="form-group w-100">
                             <label for="testing_number" class="form-label">No. BA Pengujian</label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                   placeholder="Nomor BA Pengujian">
+                                placeholder="Nomor BA Pengujian">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
-                            <select class="select2 form-control" name="ownership" id="ownership"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="ownership" id="ownership" style="width: 100%;">
                                 <option value="PT. KAI">PT. KAI</option>
                                 <option value="DJKA">DJKA</option>
                             </select>
@@ -101,7 +103,7 @@
                         <div class="form-group w-100">
                             <label for="service_expired_date" class="form-label">Masa Berlaku</label>
                             <input type="text" class="form-control datepicker" id="service_expired_date"
-                                   name="service_expired_date" placeholder="dd-mm-yyyy">
+                                name="service_expired_date" placeholder="dd-mm-yyyy">
                         </div>
                     </div>
                 </div>
@@ -116,7 +118,7 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
@@ -125,7 +127,7 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
         integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

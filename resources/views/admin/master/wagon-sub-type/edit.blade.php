@@ -44,7 +44,9 @@
                             <label for="wagon_type" class="form-label">Jenis Gerbong</label>
                             <select class="select2 form-control" name="wagon_type" id="wagon_type" style="width: 100%;">
                                 @foreach ($wagon_types as $wagon_type)
-                                    <option value="{{ $wagon_type->id }}" {{ ($data->wagon_type_id === $wagon_type->id ) ? 'selected' : '' }}>{{ $wagon_type->name }} ({{ $wagon_type->code }})</option>
+                                    <option value="{{ $wagon_type->id }}"
+                                        {{ $data->wagon_type_id === $wagon_type->id ? 'selected' : '' }}>
+                                        {{ $wagon_type->name }} ({{ $wagon_type->code }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,14 +57,14 @@
                         <div class="w-100">
                             <label for="code" class="form-label">Kode</label>
                             <input type="text" class="form-control" id="code" name="code"
-                                   placeholder="Kode Sub Jenis Gerbong" value="{{ $data->code }}">
+                                placeholder="Kode Sub Jenis Gerbong" value="{{ $data->code }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Sub Jenis Gerbong" value="{{ $data->name }}">
+                                placeholder="Nama Sub Jenis Gerbong" value="{{ $data->name }}">
                         </div>
                     </div>
                 </div>
@@ -77,18 +79,18 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

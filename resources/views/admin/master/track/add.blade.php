@@ -44,7 +44,9 @@
                             <label for="area" class="form-label">Daerah Operasi</label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}">{{ $area->name }} ({{ $area->service_unit->name }})</option>
+                                    <option value="{{ $area->id }}">{{ $area->name }}
+                                        ({{ $area->service_unit->name }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,14 +57,14 @@
                         <div class="w-100">
                             <label for="code" class="form-label">Kode</label>
                             <input type="text" class="form-control" id="code" name="code"
-                                   placeholder="Kode Perlintasan">
+                                placeholder="Kode Perlintasan">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="name" class="form-label">Nama Perlintasan</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Perlintasan">
+                                placeholder="Nama Perlintasan">
                         </div>
                     </div>
                 </div>
@@ -77,18 +79,18 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

@@ -31,7 +31,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.facility-certification.special-equipment') }}">Sertifikasi
+                <li class="breadcrumb-item"><a
+                        href="{{ route('means.facility-certification.special-equipment') }}">Sertifikasi
                         Sarana Peralatan Khusus</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
@@ -50,37 +51,39 @@
                             <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}"
+                                        {{ $area->id === $data->area_id ? 'selected' : '' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('area'))
+                            @if ($errors->has('area'))
                                 <div class="text-danger">
                                     {{ $errors->first('area') }}
                                 </div>
                             @endif
                         </div>
                     </div>
-{{--                    <div class="col-6">--}}
-{{--                        <div class="form-group w-100">--}}
-{{--                            <label for="special_equipment_type" class="form-label">Jenis Sarana</label>--}}
-{{--                            <select class="select2 form-control" name="special_equipment_type" id="special_equipment_type"--}}
-{{--                                style="width: 100%;">--}}
-{{--                                @foreach ($special_equipment_types as $special_equipment_type)--}}
-{{--                                    <option value="{{ $special_equipment_type->id }}" {{ ($special_equipment_type->id === $data->special_equipment_type_id) ? 'selected' :'' }}>{{ $special_equipment_type->code }}--}}
-{{--                                        ({{ $special_equipment_type->name }})</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                    <div class="col-6"> --}}
+                    {{--                        <div class="form-group w-100"> --}}
+                    {{--                            <label for="special_equipment_type" class="form-label">Jenis Sarana</label> --}}
+                    {{--                            <select class="select2 form-control" name="special_equipment_type" id="special_equipment_type" --}}
+                    {{--                                style="width: 100%;"> --}}
+                    {{--                                @foreach ($special_equipment_types as $special_equipment_type) --}}
+                    {{--                                    <option value="{{ $special_equipment_type->id }}" {{ ($special_equipment_type->id === $data->special_equipment_type_id) ? 'selected' :'' }}>{{ $special_equipment_type->code }} --}}
+                    {{--                                        ({{ $special_equipment_type->name }})</option> --}}
+                    {{--                                @endforeach --}}
+                    {{--                            </select> --}}
+                    {{--                        </div> --}}
+                    {{--                    </div> --}}
 
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="new_facility_number" class="form-label">No. Sarana Baru <span class="text-danger ms-1">*</span></label>
+                            <label for="new_facility_number" class="form-label">No. Sarana Baru <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="new_facility_number" name="new_facility_number"
                                 placeholder="Nomor Sarana Baru" value="{{ $data->new_facility_number }}">
-                            @if($errors->has('new_facility_number'))
+                            @if ($errors->has('new_facility_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('new_facility_number') }}
                                 </div>
@@ -89,10 +92,11 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="old_facility_number" class="form-label">No. Sarana Lama <span class="text-danger ms-1">*</span></label>
+                            <label for="old_facility_number" class="form-label">No. Sarana Lama <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="old_facility_number" name="old_facility_number"
                                 placeholder="Nomor Sarana Lama" value="{{ $data->old_facility_number }}">
-                            @if($errors->has('old_facility_number'))
+                            @if ($errors->has('old_facility_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('old_facility_number') }}
                                 </div>
@@ -103,10 +107,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="testing_number" class="form-label">No. BA Pengujian <span class="text-danger ms-1">*</span></label>
+                            <label for="testing_number" class="form-label">No. BA Pengujian <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
                                 placeholder="Nomor BA Pengujian" value="{{ $data->testing_number }}">
-                            @if($errors->has('testing_number'))
+                            @if ($errors->has('testing_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('testing_number') }}
                                 </div>
@@ -115,13 +120,14 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="ownership" class="form-label">Kepemilikan <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="ownership" id="ownership"
-                                    style="width: 100%;">
-                                <option value="PT. KAI" {{ ($data->ownership === 'PT. KAI') ? 'selected' : '' }}>PT. KAI</option>
-                                <option value="DJKA" {{ ($data->ownership === 'DJKA') ? 'selected' : '' }}>DJKA</option>
+                            <label for="ownership" class="form-label">Kepemilikan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="ownership" id="ownership" style="width: 100%;">
+                                <option value="PT. KAI" {{ $data->ownership === 'PT. KAI' ? 'selected' : '' }}>PT. KAI
+                                </option>
+                                <option value="DJKA" {{ $data->ownership === 'DJKA' ? 'selected' : '' }}>DJKA</option>
                             </select>
-                            @if($errors->has('ownership'))
+                            @if ($errors->has('ownership'))
                                 <div class="text-danger">
                                     {{ $errors->first('ownership') }}
                                 </div>
@@ -133,10 +139,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="service_expired_date" class="form-label">Masa Berlaku <span class="text-danger ms-1">*</span></label>
+                            <label for="service_expired_date" class="form-label">Masa Berlaku <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="service_expired_date"
                                 name="service_expired_date" placeholder="dd-mm-yyyy">
-                            @if($errors->has('service_expired_date'))
+                            @if ($errors->has('service_expired_date'))
                                 <div class="text-danger">
                                     {{ $errors->first('service_expired_date') }}
                                 </div>
@@ -146,8 +153,8 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>
-                            <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
-                                      placeholder="Keterangan">{{ $data->description }}</textarea>
+                            <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description" name="description"
+                                placeholder="Keterangan">{{ $data->description }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -162,7 +169,7 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
@@ -171,7 +178,7 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
         integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

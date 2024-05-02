@@ -44,7 +44,8 @@
                             <label for="city" class="form-label">Kota</label>
                             <select class="select2 form-control" name="city" id="city" style="width: 100%;">
                                 @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}" {{ ($city->id === $data->city_id) ? 'selected' : '' }}>{{ $city->name }}</option>
+                                    <option value="{{ $city->id }}"
+                                        {{ $city->id === $data->city_id ? 'selected' : '' }}>{{ $city->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -53,7 +54,7 @@
                         <div class="w-100">
                             <label for="name" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Kecamatan" required value="{{ $data->name }}">
+                                placeholder="Nama Kecamatan" required value="{{ $data->name }}">
                         </div>
                     </div>
                 </div>
@@ -68,18 +69,18 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

@@ -21,8 +21,7 @@
                     <div class="col-4">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -34,7 +33,7 @@
                         <div class="form-group w-100">
                             <label for="status-option" class="form-label d-none">Status JPL</label>
                             <select class="select2 form-control" name="status-option" id="status-option"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="">Semua Status</option>
                                 <option value="0">Aktif</option>
                                 <option value="1">Tidak Aktif</option>
@@ -45,12 +44,13 @@
                         <div class="form-group w-100">
                             <label for="param" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="param" name="param"
-                                   placeholder="Cari No. JPL">
+                                placeholder="Cari No. JPL">
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -59,9 +59,9 @@
         <div class="title">
             <p>Data Jalur Perlintasan Langsung (JPL)</p>
             <div class="d-flex align-item-center">
-                @if($access['is_granted_create'])
+                @if ($access['is_granted_create'])
                     <a class="btn-utama sml rnd me-2"
-                       href="{{ route('means.direct-passage.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        href="{{ route('means.direct-passage.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
                         <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                     </a>
                 @endif
@@ -76,19 +76,18 @@
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active d-flex align-items-center" id="pills-table-tab"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-table" type="button" role="tab" aria-controls="pills-table"
-                                    aria-selected="true">
-                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">view_list</i>
+                                data-bs-toggle="pill" data-bs-target="#pills-table" type="button" role="tab"
+                                aria-controls="pills-table" aria-selected="true">
+                                <i class="material-symbols-outlined me-1"
+                                    style="font-size: 14px; color: inherit">view_list</i>
                                 Data
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link d-flex align-items-center" id="pills-map-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-map" type="button" role="tab"
-                                    aria-controls="pills-map" aria-selected="false">
-                                <i class="material-symbols-outlined me-1"
-                                   style="font-size: 14px; color: inherit">public</i>
+                            <button class="nav-link d-flex align-items-center" id="pills-map-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-map" type="button" role="tab" aria-controls="pills-map"
+                                aria-selected="false">
+                                <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">public</i>
                                 Peta
                             </button>
                         </li>
@@ -96,22 +95,21 @@
                 </div>
             </div>
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="pills-table" role="tabpanel"
-                     aria-labelledby="pills-table-tab">
+                <div class="tab-pane fade show active" id="pills-table" role="tabpanel" aria-labelledby="pills-table-tab">
                     <table id="table-data" class="display table table-striped w-100">
                         <thead>
-                        <tr>
-                            <th class="text-center middle-header" width="5%">#</th>
-                            <th class="text-center middle-header" width="10%">Wilayah</th>
-                            <th class="text-center middle-header" width="10%">Lintas</th>
-                            <th class="text-center middle-header" width="10%">Petak</th>
-                            <th class="text-center middle-header" width="8%">KM/HM</th>
-                            <th class="text-center middle-header">No. JPL</th>
-                            <th class="text-center middle-header" width="8%">Jumlah PLH</th>
-                            <th class="text-center middle-header" width="8%">Status</th>
-                            <th class="text-center middle-header" width="8%">Gambar</th>
-                            <th class="text-center middle-header" width="15%">Aksi</th>
-                        </tr>
+                            <tr>
+                                <th class="text-center middle-header" width="5%">#</th>
+                                <th class="text-center middle-header" width="10%">Wilayah</th>
+                                <th class="text-center middle-header" width="10%">Lintas</th>
+                                <th class="text-center middle-header" width="10%">Petak</th>
+                                <th class="text-center middle-header" width="8%">KM/HM</th>
+                                <th class="text-center middle-header">No. JPL</th>
+                                <th class="text-center middle-header" width="8%">Jumlah PLH</th>
+                                <th class="text-center middle-header" width="8%">Status</th>
+                                <th class="text-center middle-header" width="8%">Gambar</th>
+                                <th class="text-center middle-header" width="15%">Aksi</th>
+                            </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
@@ -123,7 +121,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-body">
@@ -133,17 +131,15 @@
                     <ul class="nav nav-pills" id="pills-tab-detail" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active d-flex align-items-center" id="pills-information-tab"
-                                    data-bs-toggle="pill"
-                                    data-bs-target="#pills-information" type="button" role="tab"
-                                    aria-controls="pills-information"
-                                    aria-selected="true">
+                                data-bs-toggle="pill" data-bs-target="#pills-information" type="button" role="tab"
+                                aria-controls="pills-information" aria-selected="true">
                                 Informasi utama
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link d-flex align-items-center" id="pills-equipment-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-equipment" type="button" role="tab"
-                                    aria-controls="pills-equipment" aria-selected="false">
+                                data-bs-toggle="pill" data-bs-target="#pills-equipment" type="button" role="tab"
+                                aria-controls="pills-equipment" aria-selected="false">
                                 Perlengkapan Rambu
                             </button>
                         </li>
@@ -151,20 +147,20 @@
                     <hr>
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="pills-information" role="tabpanel"
-                             aria-labelledby="pills-information-tab">
+                            aria-labelledby="pills-information-tab">
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="form-group w-100">
                                         <label for="area" class="form-label">Area</label>
                                         <input type="text" class="form-control" id="area" name="area"
-                                               disabled>
+                                            disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="track" class="form-label">Lintas</label>
                                         <input type="text" class="form-control" id="track" name="track"
-                                               disabled>
+                                            disabled>
                                     </div>
                                 </div>
                             </div>
@@ -173,16 +169,14 @@
                                     <div class="form-group w-100">
                                         <label for="sub_track" class="form-label">Petak</label>
                                         <input type="text" class="form-control" id="sub_track" name="sub_track"
-                                               placeholder="JPL"
-                                               disabled>
+                                            placeholder="JPL" disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="stakes" class="form-label">KM/HM</label>
                                         <input type="text" class="form-control" id="stakes" name="stakes"
-                                               placeholder="KM/HM"
-                                               disabled>
+                                            placeholder="KM/HM" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -190,15 +184,15 @@
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="name" class="form-label">No. JPL</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="JPL"
-                                               disabled>
+                                        <input type="text" class="form-control" id="name" name="name"
+                                            placeholder="JPL" disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="width" class="form-label">Lebar Jalan (m)</label>
-                                        <input type="number" step="any" class="form-control" id="width" name="width"
-                                               placeholder="0" disabled>
+                                        <input type="number" step="any" class="form-control" id="width"
+                                            name="width" placeholder="0" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -207,15 +201,14 @@
                                     <div class="w-100">
                                         <label for="road_class" class="form-label">Kelas Jalan</label>
                                         <input type="text" class="form-control" id="road_class" name="road_class"
-                                               disabled>
+                                            disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="elevation" class="form-label">Elevasi (derajat)</label>
                                         <input type="text" step="any" class="form-control" id="elevation"
-                                               name="elevation"
-                                               placeholder="0" disabled>
+                                            name="elevation" placeholder="0" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -224,13 +217,14 @@
                                     <div class="w-100">
                                         <label for="road_construction" class="form-label">Konstruksi Jalan</label>
                                         <input type="text" class="form-control" id="road_construction"
-                                               name="road_construction" placeholder="Konstruksi Jalan" disabled>
+                                            name="road_construction" placeholder="Konstruksi Jalan" disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group w-100">
                                         <label for="city" class="form-label">Kota</label>
-                                        <input type="text" class="form-control" id="city" name="city" disabled>
+                                        <input type="text" class="form-control" id="city" name="city"
+                                            disabled>
                                     </div>
                                 </div>
                             </div>
@@ -239,14 +233,14 @@
                                     <div class="w-100">
                                         <label for="latitude" class="form-label">Latitude</label>
                                         <input type="number" step="any" class="form-control" id="latitude"
-                                               name="latitude" placeholder="Contoh: 7.1129489" disabled>
+                                            name="latitude" placeholder="Contoh: 7.1129489" disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="longitude" class="form-label">Longitude</label>
                                         <input type="number" step="any" class="form-control" id="longitude"
-                                               name="longitude" placeholder="Contoh: 110.1129489" disabled>
+                                            name="longitude" placeholder="Contoh: 110.1129489" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +249,7 @@
                                     <div class="form-group w-100">
                                         <label for="guarded_by" class="form-label">Status Penjagaan</label>
                                         <input type="text" class="form-control" id="guarded_by" name="guarded_by"
-                                               disabled>
+                                            disabled>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -263,7 +257,7 @@
                                         <label for="technical_documentation" class="form-label">No. Surat Rekomendasi
                                             Teknis</label>
                                         <input type="text" class="form-control" id="technical_documentation"
-                                               name="technical_documentation" disabled>
+                                            name="technical_documentation" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -272,7 +266,7 @@
                                     <div class="form-group w-100">
                                         <label for="is_closed" class="form-label">Status JPL</label>
                                         <input type="text" class="form-control" id="is_closed" name="is_closed"
-                                               disabled>
+                                            disabled>
                                     </div>
                                 </div>
                             </div>
@@ -280,32 +274,28 @@
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="road_name" class="form-label">Nama Jalan / Daerah</label>
-                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name"
-                                                  name="road_name"
-                                                  placeholder="Konstruksi Jalan" disabled></textarea>
+                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="road_name" name="road_name"
+                                            placeholder="Konstruksi Jalan" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="w-100">
                                         <label for="description" class="form-label">Keterangan</label>
-                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem"
-                                                  id="description"
-                                                  name="description"
-                                                  placeholder="Keterangan" disabled></textarea>
+                                        <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description" name="description"
+                                            placeholder="Keterangan" disabled></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-equipment" role="tabpanel"
-                             aria-labelledby="pills-equipment-tab">
+                            aria-labelledby="pills-equipment-tab">
                             <div class="row mb-3">
                                 <div class="col-4 d-flex justify-content-between align-items-end">
                                     <div class="flex-grow-1 text-center">
                                         <img src="{{ asset('/images/sign-equipment/s35.jpeg') }}" class="mb-2"
-                                             alt="sign-image"
-                                             height="40">
-                                        <span
-                                            class="fw-bold d-block text-start">Peringatan Membunyikan Suling Lokomotif</span>
+                                            alt="sign-image" height="40">
+                                        <span class="fw-bold d-block text-start">Peringatan Membunyikan Suling
+                                            Lokomotif</span>
                                     </div>
                                     <span class="fw-bold">:</span>
                                 </div>
@@ -317,13 +307,12 @@
                                     <div class="flex-grow-1 text-center">
                                         <div class="d-flex align-items-center justify-content-center mb-2">
                                             <img src="{{ asset('/images/sign-equipment/8ef.jpeg') }}" class=""
-                                                 alt="sign-image"
-                                                 height="40">
+                                                alt="sign-image" height="40">
                                             <img src="{{ asset('/images/sign-equipment/8ef_1.jpeg') }}" class=""
-                                                 alt="sign-image" height="40">
+                                                alt="sign-image" height="40">
                                         </div>
-                                        <span
-                                            class="fw-bold d-block text-start">Peringatan Ada Perlintasan Kereta Api</span>
+                                        <span class="fw-bold d-block text-start">Peringatan Ada Perlintasan Kereta
+                                            Api</span>
                                     </div>
 
                                     <span class="fw-bold">:</span>
@@ -335,8 +324,7 @@
                                 <div class="col-4 d-flex justify-content-between align-items-end">
                                     <div class="flex-grow-1 text-center">
                                         <img src="{{ asset('/images/sign-equipment/450.jpeg') }}" class="mb-2"
-                                             alt="sign-image"
-                                             height="40">
+                                            alt="sign-image" height="40">
                                         <span class="fw-bold d-block text-start">Jarak Lokasi Kritis 450 m</span>
                                     </div>
 
@@ -349,8 +337,7 @@
                                 <div class="col-4 d-flex justify-content-between align-items-end">
                                     <div class="flex-grow-1 text-center">
                                         <img src="{{ asset('/images/sign-equipment/300.jpeg') }}" class="mb-2"
-                                             alt="sign-image"
-                                             height="40">
+                                            alt="sign-image" height="40">
                                         <span class="fw-bold d-block text-start">Jarak Lokasi Kritis 300 m</span>
                                     </div>
                                     <span class="fw-bold">:</span>
@@ -362,8 +349,7 @@
                                 <div class="col-4 d-flex justify-content-between align-items-end">
                                     <div class="flex-grow-1 text-center">
                                         <img src="{{ asset('/images/sign-equipment/150.jpeg') }}" class="mb-2"
-                                             alt="sign-image"
-                                             height="40">
+                                            alt="sign-image" height="40">
                                         <span class="fw-bold d-block text-start">Jarak Lokasi Kritis 100 m</span>
                                     </div>
                                     <span class="fw-bold">:</span>
@@ -375,8 +361,7 @@
                                 <div class="col-4 d-flex justify-content-between align-items-end">
                                     <div class="flex-grow-1 text-center">
                                         <img src="{{ asset('/images/sign-equipment/stop.jpeg') }}" class="mb-2"
-                                             alt="sign-image"
-                                             height="40">
+                                            alt="sign-image" height="40">
                                         <span class="fw-bold d-block text-start">1A (Rambu STOP)</span>
                                     </div>
 
@@ -390,13 +375,11 @@
                                     <div class="flex-grow-1 text-center">
                                         <div class="d-flex align-items-center justify-content-center mb-2">
                                             <img src="{{ asset('/images/sign-equipment/1ef.jpeg') }}" class=""
-                                                 alt="sign-image"
-                                                 height="40">
+                                                alt="sign-image" height="40">
                                             <img src="{{ asset('/images/sign-equipment/1ef_1.jpeg') }}" class=""
-                                                 alt="sign-image" height="40">
+                                                alt="sign-image" height="40">
                                         </div>
-                                        <span
-                                            class="fw-bold d-block text-start">Larangan Berjalan (Silang Andreas)</span>
+                                        <span class="fw-bold d-block text-start">Larangan Berjalan (Silang Andreas)</span>
                                     </div>
                                     <span class="fw-bold">:</span>
                                 </div>
@@ -415,8 +398,7 @@
                                 <div class="col-4 d-flex justify-content-between align-items-end">
                                     <div class="flex-grow-1 text-center">
                                         <img src="{{ asset('/images/sign-equipment/pita-penggaduh.jpeg') }}"
-                                             class="mb-2" alt="sign-image"
-                                             height="40">
+                                            class="mb-2" alt="sign-image" height="40">
                                         <span class="fw-bold d-block text-start">Pita Penggaduh</span>
                                     </div>
                                     <span class="fw-bold">:</span>
@@ -428,8 +410,7 @@
                                 <div class="col-4 d-flex justify-content-between align-items-end">
                                     <div class="flex-grow-1 text-center">
                                         <img src="{{ asset('/images/sign-equipment/hati-hati.jpeg') }}" class="mb-2"
-                                             alt="sign-image"
-                                             height="40">
+                                            alt="sign-image" height="40">
                                         <span class="fw-bold d-block text-start">Hati-Hati Mendekati Perlintasan</span>
                                     </div>
                                     <span class="fw-bold">:</span>
@@ -440,8 +421,8 @@
                             <div class="row mb-3">
                                 <div class="col-4 d-flex justify-content-between align-items-end">
                                     <div class="flex-grow-1 text-center">
-                                        <img src="{{ asset('/images/sign-equipment/berhenti-tengok.jpeg') }}" class="mb-2" alt="sign-image"
-                                             height="40">
+                                        <img src="{{ asset('/images/sign-equipment/berhenti-tengok.jpeg') }}"
+                                            class="mb-2" alt="sign-image" height="40">
                                         <span class="fw-bold d-block text-start">Berhenti Tengok Kiri Kanan</span>
                                     </div>
                                     <span class="fw-bold">:</span>
@@ -456,14 +437,12 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('js/map-control.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
     <style>
         .equipment-exists {
             height: 15px;
@@ -503,7 +482,7 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=initMap&v=weekly"
         async></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
@@ -514,7 +493,7 @@
         let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function changeTabEvent() {
-            $("#pills-tab").on("shown.bs.tab", function (e) {
+            $("#pills-tab").on("shown.bs.tab", function(e) {
                 if (e.target.id === "pills-table-tab") {
                     table.columns.adjust();
                 }
@@ -545,7 +524,7 @@
 
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function (e) {
+            $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -568,7 +547,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                     generateMapDirectPassage()
@@ -577,7 +556,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function (e) {
+            $('.btn-detail').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -585,7 +564,9 @@
         }
 
         async function detailHandler(id) {
-            let availableGuards = ['OP (PT. KAI)', 'JJ (PT. KAI)', 'Instansi Lain', 'Resmi Tidak Dijaga', 'Liar', 'Swadaya'];
+            let availableGuards = ['OP (PT. KAI)', 'JJ (PT. KAI)', 'Instansi Lain', 'Resmi Tidak Dijaga', 'Liar',
+                'Swadaya'
+            ];
             let availableSignEquipment = [
                 'locomotive_flute',
                 'crossing_exists',
@@ -638,7 +619,7 @@
                 $('#longitude').val(longitude);
                 $('#is_closed').val(is_closed);
                 $('#description').val(description);
-                $.each(availableSignEquipment, function (k, v) {
+                $.each(availableSignEquipment, function(k, v) {
                     let value = '-';
                     if (data['sign_equipment'][v] === 1) {
                         value = '<div class="equipment-exists">' +
@@ -662,7 +643,7 @@
             }
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             changeTabEvent();
             $('.select2').select2({
                 width: 'resolve',
@@ -677,7 +658,7 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = $('#area-option').val();
                         d.status = $('#status-option').val();
                         d.name = $('#param').val();
@@ -685,12 +666,12 @@
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false,
-                    className: 'text-center',
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false,
+                        className: 'text-center',
+                    },
                     {
                         data: 'area.name',
                         name: 'area.name',
@@ -720,9 +701,10 @@
                         data: null,
                         name: null,
                         className: 'text-center',
-                        render: function (data) {
+                        render: function(data) {
                             let url = path + '/' + data['id'] + '/peristiwa-luar-biasa-hebat';
-                            return '<a href="' + url + '" class="btn-guard me-2 btn-table-action" data-id="' +
+                            return '<a href="' + url +
+                                '" class="btn-guard me-2 btn-table-action" data-id="' +
                                 data['id'] + '">' + data['count_accident'] + '</a>';
                         }
                     },
@@ -740,7 +722,7 @@
                         data: null,
                         name: null,
                         className: 'text-center',
-                        render: function (data) {
+                        render: function(data) {
                             return data['is_closed'] === 1 ? 'Tidak Aktif' : 'Aktif'
                         }
                     },
@@ -748,20 +730,22 @@
                         data: null,
                         orderable: false,
                         className: 'text-center',
-                        render: function (data) {
+                        render: function(data) {
                             let url = path + '/' + data['id'] + '/gambar';
-                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
+                            return '<a href="' + url +
+                                '" class="btn-image btn-table-action">Lihat</a>';
                         }
                     },
                     {
                         data: null,
-                        render: function (data) {
+                        render: function(data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
                             let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' : '';
-                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                'id'] + '">Delete</a>' : '';
+                            let elDelete = grantedDelete === '1' ?
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                    'id'] + '">Delete</a>' : '';
                             return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
                                 data['id'] + '">Detail</a>' + elEdit + elDelete
                         },
@@ -771,20 +755,20 @@
                 ],
                 columnDefs: [],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     eventOpenDetail();
                     deleteEvent();
                 },
                 dom: 'ltrip'
             });
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
                 generateMapDirectPassage();
             });
 
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let status = $('#status-option').val();

@@ -19,7 +19,8 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('means.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}';
+                window.location.href =
+                    '{{ route('means.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}';
             })
         </script>
     @endif
@@ -31,7 +32,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}">Depo Dan Balai
+                <li class="breadcrumb-item"><a
+                        href="{{ route('means.storehouse.service-unit', ['service_unit_id' => $service_unit->id]) }}">Depo
+                        Dan Balai
                         Yasa {{ $service_unit->name }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
@@ -47,13 +50,15 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Daerah Operasi <span class="text-danger ms-1">*</span></label>
+                            <label for="area" class="form-label">Daerah Operasi <span
+                                    class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($data->area_id === $area->id ) ? 'selected' : '' }}>{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}"
+                                        {{ $data->area_id === $area->id ? 'selected' : '' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('area'))
+                            @if ($errors->has('area'))
                                 <div class="text-danger">
                                     {{ $errors->first('area') }}
                                 </div>
@@ -62,14 +67,17 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="storehouse_type" class="form-label">Tipe <span class="text-danger ms-1">*</span></label>
+                            <label for="storehouse_type" class="form-label">Tipe <span
+                                    class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="storehouse_type" id="storehouse_type"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 @foreach ($storehouse_types as $storehouse_type)
-                                    <option value="{{ $storehouse_type->id }}" {{ ($data->storehouse_type_id === $storehouse_type->id ) ? 'selected' : '' }}>{{ $storehouse_type->name }}</option>
+                                    <option value="{{ $storehouse_type->id }}"
+                                        {{ $data->storehouse_type_id === $storehouse_type->id ? 'selected' : '' }}>
+                                        {{ $storehouse_type->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('storehouse_type'))
+                            @if ($errors->has('storehouse_type'))
                                 <div class="text-danger">
                                     {{ $errors->first('storehouse_type') }}
                                 </div>
@@ -80,13 +88,16 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="city" class="form-label">Kabupaten/Kota <span class="text-danger ms-1">*</span></label>
+                            <label for="city" class="form-label">Kabupaten/Kota <span
+                                    class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="city" id="city" style="width: 100%;">
                                 @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}" {{ ($data->city_id === $city->id ) ? 'selected' : '' }}>{{ $city->name }}</option>
+                                    <option value="{{ $city->id }}"
+                                        {{ $data->city_id === $city->id ? 'selected' : '' }}>{{ $city->name }}
+                                    </option>
                                 @endforeach
                             </select>
-                            @if($errors->has('city'))
+                            @if ($errors->has('city'))
                                 <div class="text-danger">
                                     {{ $errors->first('city') }}
                                 </div>
@@ -95,10 +106,11 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="name" class="form-label">Depo / Balai Yasa <span class="text-danger ms-1">*</span></label>
+                            <label for="name" class="form-label">Depo / Balai Yasa <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Contoh: SMC" value="{{ $data->name }}">
-                            @if($errors->has('name'))
+                                placeholder="Contoh: SMC" value="{{ $data->name }}">
+                            @if ($errors->has('name'))
                                 <div class="text-danger">
                                     {{ $errors->first('name') }}
                                 </div>
@@ -109,10 +121,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="latitude" class="form-label">Latitude <span class="text-danger ms-1">*</span></label>
+                            <label for="latitude" class="form-label">Latitude <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="latitude" name="latitude"
-                                   placeholder="Contoh: 7.1129489" value="{{ $data->latitude }}">
-                            @if($errors->has('latitude'))
+                                placeholder="Contoh: 7.1129489" value="{{ $data->latitude }}">
+                            @if ($errors->has('latitude'))
                                 <div class="text-danger">
                                     {{ $errors->first('latitude') }}
                                 </div>
@@ -121,10 +134,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="longitude" class="form-label">Longitude <span class="text-danger ms-1">*</span></label>
+                            <label for="longitude" class="form-label">Longitude <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="longitude" name="longitude"
-                                   placeholder="Contoh: 110.1129489" value="{{ $data->longitude }}">
-                            @if($errors->has('longitude'))
+                                placeholder="Contoh: 110.1129489" value="{{ $data->longitude }}">
+                            @if ($errors->has('longitude'))
                                 <div class="text-danger">
                                     {{ $errors->first('longitude') }}
                                 </div>
@@ -136,8 +150,8 @@
                     <div class="col-12">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>
-                            <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
-                                      placeholder="Keterangan">{{ $data->description }}</textarea>
+                            <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description" name="description"
+                                placeholder="Keterangan">{{ $data->description }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -152,18 +166,18 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

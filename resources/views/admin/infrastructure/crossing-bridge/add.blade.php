@@ -19,7 +19,8 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('infrastructure.crossing.bridge.main', ['service_unit_id' => $service_unit->id]) }}';
+                window.location.href =
+                    '{{ route('infrastructure.crossing.bridge.main', ['service_unit_id' => $service_unit->id]) }}';
             })
         </script>
     @endif
@@ -33,7 +34,8 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('infrastructure') }}">Prasarana</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('infrastructure.crossing.bridge.main', ['service_unit_id' => $service_unit->id]) }}">Jembatan Penyebrangan {{ $service_unit->name }}</a>
+                        href="{{ route('infrastructure.crossing.bridge.main', ['service_unit_id' => $service_unit->id]) }}">Jembatan
+                        Penyebrangan {{ $service_unit->name }}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
@@ -50,13 +52,12 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="area" class="form-label">Wilayah <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="area" id="area"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('area'))
+                            @if ($errors->has('area'))
                                 <div class="text-danger">
                                     {{ $errors->first('area') }}
                                 </div>
@@ -66,13 +67,12 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="track" class="form-label">Lintas <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="track" id="track"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="track" id="track" style="width: 100%;">
                                 @foreach ($tracks as $track)
                                     <option value="{{ $track->id }}">{{ $track->code }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('track'))
+                            @if ($errors->has('track'))
                                 <div class="text-danger">
                                     {{ $errors->first('track') }}
                                 </div>
@@ -84,13 +84,12 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="sub_track" class="form-label">Petak <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="sub_track" id="sub_track"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="sub_track" id="sub_track" style="width: 100%;">
                                 @foreach ($sub_tracks as $sub_track)
                                     <option value="{{ $sub_track->id }}">{{ $sub_track->code }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('sub_track'))
+                            @if ($errors->has('sub_track'))
                                 <div class="text-danger">
                                     {{ $errors->first('sub_track') }}
                                 </div>
@@ -100,9 +99,8 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="stakes" name="stakes"
-                                   placeholder="KM/HM">
-                            @if($errors->has('stakes'))
+                            <input type="text" class="form-control" id="stakes" name="stakes" placeholder="KM/HM">
+                            @if ($errors->has('stakes'))
                                 <div class="text-danger">
                                     {{ $errors->first('stakes') }}
                                 </div>
@@ -113,10 +111,11 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="w-100">
-                            <label for="recommendation_number" class="form-label">No. Surat Rekomendasi <span class="text-danger ms-1">*</span></label>
+                            <label for="recommendation_number" class="form-label">No. Surat Rekomendasi <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="recommendation_number"
-                                   name="recommendation_number" placeholder="No. Surat Rekomendasi">
-                            @if($errors->has('recommendation_number'))
+                                name="recommendation_number" placeholder="No. Surat Rekomendasi">
+                            @if ($errors->has('recommendation_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('recommendation_number') }}
                                 </div>
@@ -127,10 +126,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="responsible_person" class="form-label">Penanggung Jawab Bangunan <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="responsible_person"
-                                   name="responsible_person" placeholder="Penanggung Jawab Bangunan">
-                            @if($errors->has('responsible_person'))
+                            <label for="responsible_person" class="form-label">Penanggung Jawab Bangunan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="responsible_person" name="responsible_person"
+                                placeholder="Penanggung Jawab Bangunan">
+                            @if ($errors->has('responsible_person'))
                                 <div class="text-danger">
                                     {{ $errors->first('responsible_person') }}
                                 </div>
@@ -139,10 +139,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="road_class" class="form-label">Kelas Jalan <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="road_class"
-                                   name="road_class" placeholder="Kelas Jalan">
-                            @if($errors->has('road_class'))
+                            <label for="road_class" class="form-label">Kelas Jalan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="road_class" name="road_class"
+                                placeholder="Kelas Jalan">
+                            @if ($errors->has('road_class'))
                                 <div class="text-danger">
                                     {{ $errors->first('road_class') }}
                                 </div>
@@ -153,10 +154,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="long" class="form-label">Panjang Bangunan (m) <span class="text-danger ms-1">*</span></label>
-                            <input type="number" step="any" class="form-control" id="long"
-                                   name="long" value="0">
-                            @if($errors->has('long'))
+                            <label for="long" class="form-label">Panjang Bangunan (m) <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="number" step="any" class="form-control" id="long" name="long"
+                                value="0">
+                            @if ($errors->has('long'))
                                 <div class="text-danger">
                                     {{ $errors->first('long') }}
                                 </div>
@@ -165,10 +167,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="width" class="form-label">Lebar Bangunan (m) <span class="text-danger ms-1">*</span></label>
-                            <input type="number" step="any" class="form-control" id="width"
-                                   name="width" value="0">
-                            @if($errors->has('width'))
+                            <label for="width" class="form-label">Lebar Bangunan (m) <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="number" step="any" class="form-control" id="width" name="width"
+                                value="0">
+                            @if ($errors->has('width'))
                                 <div class="text-danger">
                                     {{ $errors->first('width') }}
                                 </div>
@@ -196,20 +199,20 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",
@@ -228,5 +231,4 @@
             });
         });
     </script>
-
 @endsection

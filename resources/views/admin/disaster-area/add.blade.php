@@ -42,8 +42,7 @@
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
-                            <select class="select2 form-control" name="service_unit" id="service_unit"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="service_unit" id="service_unit" style="width: 100%;">
                                 @foreach ($service_units as $service_unit)
                                     <option value="{{ $service_unit->id }}">{{ $service_unit->name }}</option>
                                 @endforeach
@@ -55,16 +54,14 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="resort" class="form-label">Resort</label>
-                            <select class="select2 form-control" name="resort" id="resort"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="resort" id="resort" style="width: 100%;">
                             </select>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="sub_track" class="form-label">Petak</label>
-                            <select class="select2 form-control" name="sub_track" id="sub_track"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="sub_track" id="sub_track" style="width: 100%;">
                             </select>
                         </div>
                     </div>
@@ -74,7 +71,7 @@
                         <div class="w-100">
                             <label for="location_type" class="form-label">Lokasi</label>
                             <select class="select2 form-control" name="location_type" id="location_type"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="0">Jalan Rel</option>
                                 <option value="1">Jembatan</option>
                             </select>
@@ -84,7 +81,7 @@
                         <div class="w-100">
                             <label for="disaster_type" class="form-label">Jenis Rawan</label>
                             <select class="select2 form-control" name="disaster_type" id="disaster_type"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 @foreach ($disaster_types as $disaster_type)
                                     <option value="{{ $disaster_type->id }}">{{ $disaster_type->name }}</option>
                                 @endforeach
@@ -96,17 +93,15 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="block" class="form-label">KM</label>
-                            <input type="text" step="any" class="form-control" id="block"
-                                   name="block"
-                                   placeholder="KM">
+                            <input type="text" step="any" class="form-control" id="block" name="block"
+                                placeholder="KM">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="lane" class="form-label">Jalur</label>
-                            <input type="text" step="any" class="form-control" id="lane"
-                                   name="lane"
-                                   placeholder="Jalur">
+                            <input type="text" step="any" class="form-control" id="lane" name="lane"
+                                placeholder="Jalur">
                         </div>
                     </div>
                 </div>
@@ -115,14 +110,14 @@
                         <div class="w-100">
                             <label for="latitude" class="form-label">Latitude</label>
                             <input type="number" step="any" class="form-control" id="latitude" name="latitude"
-                                   placeholder="Contoh: 7.1129489">
+                                placeholder="Contoh: 7.1129489">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="longitude" class="form-label">Longitude</label>
                             <input type="number" step="any" class="form-control" id="longitude" name="longitude"
-                                   placeholder="Contoh: 110.1129489">
+                                placeholder="Contoh: 110.1129489">
                         </div>
                     </div>
                 </div>
@@ -149,20 +144,18 @@
             </div>
         </div>
     </form>
-
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
     <script>
-
         function getDataResort() {
             let serviceUnitID = $('#service_unit').val();
             let resortPath = '{{ route('resort') }}';
@@ -183,7 +176,7 @@
             let elOption = '';
             getDataResort().then((response) => {
                 const data = response['data'];
-                $.each(data, function (k, v) {
+                $.each(data, function(k, v) {
                     elOption += '<option value="' + v['id'] + '">' + v['name'] + '</option>';
                 });
             }).always(() => {
@@ -200,7 +193,7 @@
             let elOption = '';
             getDataSubTrack().then((response) => {
                 const data = response['data'];
-                $.each(data, function (k, v) {
+                $.each(data, function(k, v) {
                     elOption += '<option value="' + v['id'] + '">' + v['code'] + '</option>';
                 });
             }).always(() => {
@@ -210,18 +203,18 @@
                 });
             })
         }
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
 
             generateResortOption();
             generateSubTrackOption();
-            $('#service_unit').on('change', function () {
+            $('#service_unit').on('change', function() {
                 generateResortOption();
                 generateSubTrackOption();
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

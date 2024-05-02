@@ -44,7 +44,9 @@
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
                             <select class="select2 form-control" name="service_unit" id="service_unit" style="width: 100%;">
                                 @foreach ($service_units as $k => $service_unit)
-                                    <option value="{{ $service_unit->id }}" selected="{{ ($service_unit->id == $data->service_unit_id) ? 'selected' : '' }}">{{ $service_unit->name }}</option>
+                                    <option value="{{ $service_unit->id }}"
+                                        selected="{{ $service_unit->id == $data->service_unit_id ? 'selected' : '' }}">
+                                        {{ $service_unit->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -86,12 +88,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             $('.select2').select2({
