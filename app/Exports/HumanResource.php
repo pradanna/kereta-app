@@ -120,9 +120,9 @@ class HumanResource implements FromCollection, WithHeadings, WithStyles, WithStr
                 $datum->certification_unit,
                 strval($datum->certification_number),
                 $datum->expired_date,
-                $datum->description,
                 $datum->expired_in,
                 ($datum->status === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU'),
+                $datum->description,
             ];
             array_push($results, $result);
         }
