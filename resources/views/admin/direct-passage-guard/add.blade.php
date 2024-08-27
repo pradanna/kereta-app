@@ -26,7 +26,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('direct-passage-guard') }}">Penjaga Jalur Lintasan (PJL)</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('direct-passage-guard') }}">Penjaga Jalur Lintasan (PJL)</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Tambah</li>
             </ol>
         </nav>
@@ -42,9 +43,12 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="direct_passage" class="form-label">Jalur Perlintasan Langsung (JPL)</label>
-                            <select class="select2 form-control" name="direct_passage" id="direct_passage" style="width: 100%;">
+                            <select class="select2 form-control" name="direct_passage" id="direct_passage"
+                                style="width: 100%;">
                                 @foreach ($direct_passages as $direct_passage)
-                                    <option value="{{ $direct_passage->id }}">{{ $direct_passage->name }} ({{ $direct_passage->sub_track->code }})</option>
+                                    <option value="{{ $direct_passage->id }}">{{ $direct_passage->name }}
+                                        ({{ $direct_passage->sub_track->code }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -52,7 +56,8 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="human_resource" class="form-label">Penjaga</label>
-                            <select class="select2 form-control" name="human_resource" id="human_resource" style="width: 100%;">
+                            <select class="select2 form-control" name="human_resource" id="human_resource"
+                                style="width: 100%;">
                                 @foreach ($human_resources as $human_resource)
                                     <option value="{{ $human_resource->id }}">{{ $human_resource->name }}</option>
                                 @endforeach
@@ -73,12 +78,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             $('.select2').select2({

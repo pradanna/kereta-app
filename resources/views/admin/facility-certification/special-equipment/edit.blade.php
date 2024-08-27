@@ -45,7 +45,8 @@
                             <label for="area" class="form-label">Wilayah</label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id) ? 'selected' :'' }}>{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}"
+                                        {{ $area->id === $data->area_id ? 'selected' : '' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -56,8 +57,11 @@
                             <select class="select2 form-control" name="special_equipment_type" id="special_equipment_type"
                                 style="width: 100%;">
                                 @foreach ($special_equipment_types as $special_equipment_type)
-                                    <option value="{{ $special_equipment_type->id }}" {{ ($special_equipment_type->id === $data->special_equipment_type_id) ? 'selected' :'' }}>{{ $special_equipment_type->code }}
-                                        ({{ $special_equipment_type->name }})</option>
+                                    <option value="{{ $special_equipment_type->id }}"
+                                        {{ $special_equipment_type->id === $data->special_equipment_type_id ? 'selected' : '' }}>
+                                        {{ $special_equipment_type->code }}
+                                        ({{ $special_equipment_type->name }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -91,10 +95,10 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="ownership" class="form-label">Kepemilikan</label>
-                            <select class="select2 form-control" name="ownership" id="ownership"
-                                    style="width: 100%;">
-                                <option value="PT. KAI" {{ ($data->ownership === 'PT. KAI') ? 'selected' : '' }}>PT. KAI</option>
-                                <option value="DJKA" {{ ($data->ownership === 'DJKA') ? 'selected' : '' }}>DJKA</option>
+                            <select class="select2 form-control" name="ownership" id="ownership" style="width: 100%;">
+                                <option value="PT. KAI" {{ $data->ownership === 'PT. KAI' ? 'selected' : '' }}>PT. KAI
+                                </option>
+                                <option value="DJKA" {{ $data->ownership === 'DJKA' ? 'selected' : '' }}>DJKA</option>
                             </select>
                         </div>
                     </div>
@@ -120,7 +124,7 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
@@ -129,7 +133,7 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
         integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

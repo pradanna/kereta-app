@@ -22,19 +22,19 @@
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                <tr>
-                    <th class="text-center middle-header" width="5%" rowspan="2">#</th>
-                    <th class="text-center middle-header" width="12%" rowspan="2">Tanggal</th>
-                    <th class="text-center middle-header" width="8%" rowspan="2">Jam</th>
-                    <th class="middle-header" rowspan="2">Jenis Kereta Api</th>
-                    <th class="text-center middle-header" width="15%" rowspan="2">Jenis Laka</th>
-                    <th class="text-center middle-header" colspan="3">Korban Jiwa</th>
-                </tr>
-                <tr>
-                    <th class="text-center middle-header" width="8%">Luka-Luka</th>
-                    <th class="text-center middle-header" width="8%">Meninggal</th>
-                    <th class="text-center middle-header" width="8%">Total</th>
-                </tr>
+                    <tr>
+                        <th class="text-center middle-header" width="5%" rowspan="2">#</th>
+                        <th class="text-center middle-header" width="12%" rowspan="2">Tanggal</th>
+                        <th class="text-center middle-header" width="8%" rowspan="2">Jam</th>
+                        <th class="middle-header" rowspan="2">Jenis Kereta Api</th>
+                        <th class="text-center middle-header" width="15%" rowspan="2">Jenis Laka</th>
+                        <th class="text-center middle-header" colspan="3">Korban Jiwa</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center middle-header" width="8%">Luka-Luka</th>
+                        <th class="text-center middle-header" width="8%">Meninggal</th>
+                        <th class="text-center middle-header" width="8%">Total</th>
+                    </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -44,17 +44,17 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
-        $(document).ready(function () {
+        $(document).ready(function() {
             table = $('#table-data').Datatable()
         });
     </script>

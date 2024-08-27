@@ -42,7 +42,8 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
-                            <select class="select2 form-control" multiple name="service_unit[]" id="service_unit" style="width: 100%;">
+                            <select class="select2 form-control" multiple name="service_unit[]" id="service_unit"
+                                style="width: 100%;">
                                 @foreach ($service_units as $service_unit)
                                     <option value="{{ $service_unit->id }}">{{ $service_unit->name }}</option>
                                 @endforeach
@@ -86,12 +87,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             $('.select2').select2({

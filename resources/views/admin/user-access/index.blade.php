@@ -27,8 +27,7 @@
         <div class="isi">
             <div class="form-group w-100 mb-3">
                 <label for="user-option" class="form-label">Pengguna Aplikasi</label>
-                <select class="select2 form-control" name="user-option" id="user-option"
-                        style="width: 100%;">
+                <select class="select2 form-control" name="user-option" id="user-option" style="width: 100%;">
                     @foreach ($users as $user)
                         <option value="{{ $user->id }}">{{ $user->username }}</option>
                     @endforeach
@@ -39,37 +38,33 @@
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active d-flex align-items-center" id="pills-facility-tab"
-                                data-bs-toggle="pill"
-                                data-bs-target="#pills-facility" type="button" role="tab" aria-controls="pills-facility"
-                                aria-selected="true">
+                            data-bs-toggle="pill" data-bs-target="#pills-facility" type="button" role="tab"
+                            aria-controls="pills-facility" aria-selected="true">
                             <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">train</i>
                             Sarana Dan Keselamatan
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link d-flex align-items-center" id="pills-infrastructure-tab"
-                                data-bs-toggle="pill" data-bs-target="#pills-infrastructure" type="button" role="tab"
-                                aria-controls="pills-infrastructure" aria-selected="false">
-                            <i class="material-symbols-outlined me-1"
-                               style="font-size: 14px; color: inherit">category</i>
+                            data-bs-toggle="pill" data-bs-target="#pills-infrastructure" type="button" role="tab"
+                            aria-controls="pills-infrastructure" aria-selected="false">
+                            <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">category</i>
                             PRASARANA
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link d-flex align-items-center" id="pills-traffic-tab"
-                                data-bs-toggle="pill" data-bs-target="#pills-traffic" type="button" role="tab"
-                                aria-controls="pills-traffic" aria-selected="false">
-                            <i class="material-symbols-outlined me-1"
-                               style="font-size: 14px; color: inherit">signpost</i>
+                        <button class="nav-link d-flex align-items-center" id="pills-traffic-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-traffic" type="button" role="tab" aria-controls="pills-traffic"
+                            aria-selected="false">
+                            <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">signpost</i>
                             LALU LINTAS
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link d-flex align-items-center" id="pills-master-tab"
-                                data-bs-toggle="pill" data-bs-target="#pills-master" type="button" role="tab"
-                                aria-controls="pills-master" aria-selected="false">
-                            <i class="material-symbols-outlined me-1"
-                               style="font-size: 14px; color: inherit">widgets</i>
+                        <button class="nav-link d-flex align-items-center" id="pills-master-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-master" type="button" role="tab" aria-controls="pills-master"
+                            aria-selected="false">
+                            <i class="material-symbols-outlined me-1" style="font-size: 14px; color: inherit">widgets</i>
                             MASTER DATA
                         </button>
                     </li>
@@ -77,7 +72,7 @@
                 <hr>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="pills-facility" role="tabpanel"
-                         aria-labelledby="pills-facility-tab">
+                        aria-labelledby="pills-facility-tab">
                         <div class="row gx-3 mb-3">
                             <div class="col-6">
                                 <div class="w-100 menu-access mb-1">
@@ -85,103 +80,107 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Sertifikasi
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Sertifikasi
                                             Sarana Lokomotif</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-lokomotif-create"
-                                                   name="check-sertifikasi-sarana-lokomotif">
+                                                id="sertifikasi-sarana-lokomotif-create"
+                                                name="check-sertifikasi-sarana-lokomotif">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-lokomotif-create">Tambah</label>
+                                                for="sertifikasi-sarana-lokomotif-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-lokomotif-update"
-                                                   name="check-sertifikasi-sarana-lokomotif">
+                                                id="sertifikasi-sarana-lokomotif-update"
+                                                name="check-sertifikasi-sarana-lokomotif">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-lokomotif-update">Edit</label>
+                                                for="sertifikasi-sarana-lokomotif-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-lokomotif-delete"
-                                                   name="check-sertifikasi-sarana-lokomotif">
+                                                id="sertifikasi-sarana-lokomotif-delete"
+                                                name="check-sertifikasi-sarana-lokomotif">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-lokomotif-delete">Hapus</label>
+                                                for="sertifikasi-sarana-lokomotif-delete">Hapus</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Sertifikasi
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Sertifikasi
                                             Sarana Kereta</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-kereta-create"
-                                                   name="check-sertifikasi-sarana-kereta">
+                                                id="sertifikasi-sarana-kereta-create"
+                                                name="check-sertifikasi-sarana-kereta">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-kereta-create">Tambah</label>
+                                                for="sertifikasi-sarana-kereta-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-kereta-update"
-                                                   name="check-sertifikasi-sarana-kereta">
+                                                id="sertifikasi-sarana-kereta-update"
+                                                name="check-sertifikasi-sarana-kereta">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-kereta-update">Edit</label>
+                                                for="sertifikasi-sarana-kereta-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-kereta-delete"
-                                                   name="check-sertifikasi-sarana-kereta">
+                                                id="sertifikasi-sarana-kereta-delete"
+                                                name="check-sertifikasi-sarana-kereta">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-kereta-delete">Hapus</label>
+                                                for="sertifikasi-sarana-kereta-delete">Hapus</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Sertifikasi
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Sertifikasi
                                             Sarana Gerbong</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-gerbong-create"
-                                                   name="check-sertifikasi-sarana-gerbong">
+                                                id="sertifikasi-sarana-gerbong-create"
+                                                name="check-sertifikasi-sarana-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-gerbong-create">Tambah</label>
+                                                for="sertifikasi-sarana-gerbong-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-gerbong-update"
-                                                   name="check-sertifikasi-sarana-gerbong">
+                                                id="sertifikasi-sarana-gerbong-update"
+                                                name="check-sertifikasi-sarana-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-gerbong-update">Edit</label>
+                                                for="sertifikasi-sarana-gerbong-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-gerbong-delete"
-                                                   name="check-sertifikasi-sarana-gerbong">
+                                                id="sertifikasi-sarana-gerbong-delete"
+                                                name="check-sertifikasi-sarana-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-gerbong-delete">Hapus</label>
+                                                for="sertifikasi-sarana-gerbong-delete">Hapus</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Sertifikasi
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Sertifikasi
                                             Sarana Peralatan Khusus</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-peralatan-khusus-create"
-                                                   name="check-sertifikasi-sarana-peralatan-khusus">
+                                                id="sertifikasi-sarana-peralatan-khusus-create"
+                                                name="check-sertifikasi-sarana-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-peralatan-khusus-create">Tambah</label>
+                                                for="sertifikasi-sarana-peralatan-khusus-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-peralatan-khusus-update"
-                                                   name="check-sertifikasi-sarana-peralatan-khusus">
+                                                id="sertifikasi-sarana-peralatan-khusus-update"
+                                                name="check-sertifikasi-sarana-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-peralatan-khusus-update">Edit</label>
+                                                for="sertifikasi-sarana-peralatan-khusus-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sertifikasi-sarana-peralatan-khusus-delete"
-                                                   name="check-sertifikasi-sarana-peralatan-khusus">
+                                                id="sertifikasi-sarana-peralatan-khusus-delete"
+                                                name="check-sertifikasi-sarana-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="sertifikasi-sarana-peralatan-khusus-delete">Hapus</label>
+                                                for="sertifikasi-sarana-peralatan-khusus-delete">Hapus</label>
                                         </div>
                                     </div>
 
@@ -193,22 +192,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Depo
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Depo
                                             Dan Balai Yasa</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="depo-dan-balai-yasa-create" name="check-depo-dan-balai-yasa">
-                                            <label class="form-check-label menu-title" for="depo-dan-balai-yasa-create">Tambah</label>
+                                                id="depo-dan-balai-yasa-create" name="check-depo-dan-balai-yasa">
+                                            <label class="form-check-label menu-title"
+                                                for="depo-dan-balai-yasa-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="depo-dan-balai-yasa-update" name="check-depo-dan-balai-yasa">
-                                            <label class="form-check-label menu-title" for="depo-dan-balai-yasa-update">Edit</label>
+                                                id="depo-dan-balai-yasa-update" name="check-depo-dan-balai-yasa">
+                                            <label class="form-check-label menu-title"
+                                                for="depo-dan-balai-yasa-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="depo-dan-balai-yasa-delete" name="check-depo-dan-balai-yasa">
-                                            <label class="form-check-label menu-title" for="depo-dan-balai-yasa-delete">Hapus</label>
+                                                id="depo-dan-balai-yasa-delete" name="check-depo-dan-balai-yasa">
+                                            <label class="form-check-label menu-title"
+                                                for="depo-dan-balai-yasa-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -221,107 +224,111 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Spesifikasi
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Spesifikasi
                                             Teknis
                                             Sarana Lokomotif</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-lokomotif-create"
-                                                   name="check-spesifikasi-teknis-sarana-lokomotif">
+                                                id="spesifikasi-teknis-sarana-lokomotif-create"
+                                                name="check-spesifikasi-teknis-sarana-lokomotif">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-lokomotif-create">Tambah</label>
+                                                for="spesifikasi-teknis-sarana-lokomotif-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-lokomotif-update"
-                                                   name="check-spesifikasi-teknis-sarana-lokomotif">
+                                                id="spesifikasi-teknis-sarana-lokomotif-update"
+                                                name="check-spesifikasi-teknis-sarana-lokomotif">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-lokomotif-update">Edit</label>
+                                                for="spesifikasi-teknis-sarana-lokomotif-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-lokomotif-delete"
-                                                   name="check-spesifikasi-teknis-sarana-lokomotif">
+                                                id="spesifikasi-teknis-sarana-lokomotif-delete"
+                                                name="check-spesifikasi-teknis-sarana-lokomotif">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-lokomotif-delete">Hapus</label>
+                                                for="spesifikasi-teknis-sarana-lokomotif-delete">Hapus</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Spesifikasi
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Spesifikasi
                                             Teknis
                                             Sarana Kereta</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-kereta-create"
-                                                   name="check-spesifikasi-teknis-sarana-kereta">
+                                                id="spesifikasi-teknis-sarana-kereta-create"
+                                                name="check-spesifikasi-teknis-sarana-kereta">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-kereta-create">Tambah</label>
+                                                for="spesifikasi-teknis-sarana-kereta-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-kereta-update"
-                                                   name="check-spesifikasi-teknis-sarana-kereta">
+                                                id="spesifikasi-teknis-sarana-kereta-update"
+                                                name="check-spesifikasi-teknis-sarana-kereta">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-kereta-update">Edit</label>
+                                                for="spesifikasi-teknis-sarana-kereta-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-kereta-delete"
-                                                   name="check-spesifikasi-teknis-sarana-kereta">
+                                                id="spesifikasi-teknis-sarana-kereta-delete"
+                                                name="check-spesifikasi-teknis-sarana-kereta">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-kereta-delete">Hapus</label>
+                                                for="spesifikasi-teknis-sarana-kereta-delete">Hapus</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Spesifikasi
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Spesifikasi
                                             Teknis
                                             Sarana Gerbong</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-gerbong-create"
-                                                   name="check-spesifikasi-teknis-sarana-gerbong">
+                                                id="spesifikasi-teknis-sarana-gerbong-create"
+                                                name="check-spesifikasi-teknis-sarana-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-gerbong-create">Tambah</label>
+                                                for="spesifikasi-teknis-sarana-gerbong-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-gerbong-update"
-                                                   name="check-spesifikasi-teknis-sarana-gerbong">
+                                                id="spesifikasi-teknis-sarana-gerbong-update"
+                                                name="check-spesifikasi-teknis-sarana-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-gerbong-update">Edit</label>
+                                                for="spesifikasi-teknis-sarana-gerbong-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-gerbong-delete"
-                                                   name="check-spesifikasi-teknis-sarana-gerbong">
+                                                id="spesifikasi-teknis-sarana-gerbong-delete"
+                                                name="check-spesifikasi-teknis-sarana-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-gerbong-delete">Hapus</label>
+                                                for="spesifikasi-teknis-sarana-gerbong-delete">Hapus</label>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Spesifikasi
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Spesifikasi
                                             Teknis
                                             Sarana Peralatan Khusus</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-peralatan-khusus-create"
-                                                   name="check-spesifikasi-teknis-sarana-peralatan-khusus">
+                                                id="spesifikasi-teknis-sarana-peralatan-khusus-create"
+                                                name="check-spesifikasi-teknis-sarana-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-peralatan-khusus-create">Tambah</label>
+                                                for="spesifikasi-teknis-sarana-peralatan-khusus-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-peralatan-khusus-update"
-                                                   name="check-spesifikasi-teknis-sarana-peralatan-khusus">
+                                                id="spesifikasi-teknis-sarana-peralatan-khusus-update"
+                                                name="check-spesifikasi-teknis-sarana-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-peralatan-khusus-update">Edit</label>
+                                                for="spesifikasi-teknis-sarana-peralatan-khusus-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="spesifikasi-teknis-sarana-peralatan-khusus-delete"
-                                                   name="check-spesifikasi-teknis-sarana-peralatan-khusus">
+                                                id="spesifikasi-teknis-sarana-peralatan-khusus-delete"
+                                                name="check-spesifikasi-teknis-sarana-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="spesifikasi-teknis-sarana-peralatan-khusus-delete">Hapus</label>
+                                                for="spesifikasi-teknis-sarana-peralatan-khusus-delete">Hapus</label>
                                         </div>
                                     </div>
 
@@ -333,28 +340,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Perlintasan
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Perlintasan
                                             Kereta Api (JPL)</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="perlintasan-kereta-api-create"
-                                                   name="check-perlintasan-kereta-api">
+                                                id="perlintasan-kereta-api-create" name="check-perlintasan-kereta-api">
                                             <label class="form-check-label menu-title"
-                                                   for="perlintasan-kereta-api-create">Tambah</label>
+                                                for="perlintasan-kereta-api-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="perlintasan-kereta-api-update"
-                                                   name="check-perlintasan-kereta-api">
+                                                id="perlintasan-kereta-api-update" name="check-perlintasan-kereta-api">
                                             <label class="form-check-label menu-title"
-                                                   for="perlintasan-kereta-api-update">Edit</label>
+                                                for="perlintasan-kereta-api-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="perlintasan-kereta-api-delete"
-                                                   name="check-perlintasan-kereta-api">
+                                                id="perlintasan-kereta-api-delete" name="check-perlintasan-kereta-api">
                                             <label class="form-check-label menu-title"
-                                                   for="perlintasan-kereta-api-delete">Hapus</label>
+                                                for="perlintasan-kereta-api-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -367,25 +372,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">IDRK
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">IDRK
                                             (Daerah Rawan Bencana)</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="daerah-rawan-bencana-create" name="check-daerah-rawan-bencana">
+                                                id="daerah-rawan-bencana-create" name="check-daerah-rawan-bencana">
                                             <label class="form-check-label menu-title"
-                                                   for="daerah-rawan-bencana-create">Tambah</label>
+                                                for="daerah-rawan-bencana-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="daerah-rawan-bencana-update" name="check-daerah-rawan-bencana">
+                                                id="daerah-rawan-bencana-update" name="check-daerah-rawan-bencana">
                                             <label class="form-check-label menu-title"
-                                                   for="daerah-rawan-bencana-update">Edit</label>
+                                                for="daerah-rawan-bencana-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="daerah-rawan-bencana-delete" name="check-daerah-rawan-bencana">
+                                                id="daerah-rawan-bencana-delete" name="check-daerah-rawan-bencana">
                                             <label class="form-check-label menu-title"
-                                                   for="daerah-rawan-bencana-delete">Hapus</label>
+                                                for="daerah-rawan-bencana-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -396,28 +402,29 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Peristiwa
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Peristiwa
                                             Luar Biasa Hebat (PLH)</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="peristiwa-luar-biasa-hebat-create"
-                                                   name="check-peristiwa-luar-biasa-hebat">
+                                                id="peristiwa-luar-biasa-hebat-create"
+                                                name="check-peristiwa-luar-biasa-hebat">
                                             <label class="form-check-label menu-title"
-                                                   for="peristiwa-luar-biasa-hebat-create">Tambah</label>
+                                                for="peristiwa-luar-biasa-hebat-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="peristiwa-luar-biasa-hebat-update"
-                                                   name="check-peristiwa-luar-biasa-hebat">
+                                                id="peristiwa-luar-biasa-hebat-update"
+                                                name="check-peristiwa-luar-biasa-hebat">
                                             <label class="form-check-label menu-title"
-                                                   for="peristiwa-luar-biasa-hebat-update">Edit</label>
+                                                for="peristiwa-luar-biasa-hebat-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="peristiwa-luar-biasa-hebat-delete"
-                                                   name="check-peristiwa-luar-biasa-hebat">
+                                                id="peristiwa-luar-biasa-hebat-delete"
+                                                name="check-peristiwa-luar-biasa-hebat">
                                             <label class="form-check-label menu-title"
-                                                   for="peristiwa-luar-biasa-hebat-delete">Hapus</label>
+                                                for="peristiwa-luar-biasa-hebat-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -430,21 +437,22 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Alat
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Alat
                                             Material Untuk Siaga (AMUS)</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="amus-create" name="check-amus">
+                                            <input class="form-check-input" type="checkbox" id="amus-create"
+                                                name="check-amus">
                                             <label class="form-check-label menu-title" for="amus-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="amus-update" name="check-amus">
+                                            <input class="form-check-input" type="checkbox" id="amus-update"
+                                                name="check-amus">
                                             <label class="form-check-label menu-title" for="amus-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="amus-delete" name="check-amus">
+                                            <input class="form-check-input" type="checkbox" id="amus-delete"
+                                                name="check-amus">
                                             <label class="form-check-label menu-title" for="amus-delete">Hapus</label>
                                         </div>
                                     </div>
@@ -456,25 +464,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Bangunan
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Bangunan
                                             Liar</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="bangunan-liar-create" name="check-bangunan-liar">
+                                            <input class="form-check-input" type="checkbox" id="bangunan-liar-create"
+                                                name="check-bangunan-liar">
                                             <label class="form-check-label menu-title"
-                                                   for="bangunan-liar-create">Tambah</label>
+                                                for="bangunan-liar-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="bangunan-liar-update" name="check-bangunan-liar">
+                                            <input class="form-check-input" type="checkbox" id="bangunan-liar-update"
+                                                name="check-bangunan-liar">
                                             <label class="form-check-label menu-title"
-                                                   for="bangunan-liar-update">Edit</label>
+                                                for="bangunan-liar-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="bangunan-liar-delete" name="check-bangunan-liar">
+                                            <input class="form-check-input" type="checkbox" id="bangunan-liar-delete"
+                                                name="check-bangunan-liar">
                                             <label class="form-check-label menu-title"
-                                                   for="bangunan-liar-delete">Hapus</label>
+                                                for="bangunan-liar-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -487,28 +496,29 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Keselamatan
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Keselamatan
                                             Dan Kesehatan Kerja (K3)</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="keselamatan-dan-kesehatan-kerja-create"
-                                                   name="check-keselamatan-dan-kesehatan-kerja">
+                                                id="keselamatan-dan-kesehatan-kerja-create"
+                                                name="check-keselamatan-dan-kesehatan-kerja">
                                             <label class="form-check-label menu-title"
-                                                   for="keselamatan-dan-kesehatan-kerja-create">Tambah</label>
+                                                for="keselamatan-dan-kesehatan-kerja-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="keselamatan-dan-kesehatan-kerja-update"
-                                                   name="check-keselamatan-dan-kesehatan-kerja">
+                                                id="keselamatan-dan-kesehatan-kerja-update"
+                                                name="check-keselamatan-dan-kesehatan-kerja">
                                             <label class="form-check-label menu-title"
-                                                   for="keselamatan-dan-kesehatan-kerja-update">Edit</label>
+                                                for="keselamatan-dan-kesehatan-kerja-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="keselamatan-dan-kesehatan-kerja-delete"
-                                                   name="check-keselamatan-dan-kesehatan-kerja">
+                                                id="keselamatan-dan-kesehatan-kerja-delete"
+                                                name="check-keselamatan-dan-kesehatan-kerja">
                                             <label class="form-check-label menu-title"
-                                                   for="keselamatan-dan-kesehatan-kerja-delete">Hapus</label>
+                                                for="keselamatan-dan-kesehatan-kerja-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -519,22 +529,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Sumber
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Sumber
                                             Daya Manusia</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sumber-daya-manusia-create" name="check-sumber-daya-manusia">
-                                            <label class="form-check-label menu-title" for="sumber-daya-manusia-create">Tambah</label>
+                                                id="sumber-daya-manusia-create" name="check-sumber-daya-manusia">
+                                            <label class="form-check-label menu-title"
+                                                for="sumber-daya-manusia-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sumber-daya-manusia-update" name="check-sumber-daya-manusia">
-                                            <label class="form-check-label menu-title" for="sumber-daya-manusia-update">Edit</label>
+                                                id="sumber-daya-manusia-update" name="check-sumber-daya-manusia">
+                                            <label class="form-check-label menu-title"
+                                                for="sumber-daya-manusia-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="sumber-daya-manusia-delete" name="check-sumber-daya-manusia">
-                                            <label class="form-check-label menu-title" for="sumber-daya-manusia-delete">Hapus</label>
+                                                id="sumber-daya-manusia-delete" name="check-sumber-daya-manusia">
+                                            <label class="form-check-label menu-title"
+                                                for="sumber-daya-manusia-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -542,7 +556,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-infrastructure" role="tabpanel"
-                         aria-labelledby="pills-infrastructure-tab">
+                        aria-labelledby="pills-infrastructure-tab">
                         <div class="row gx-3 mb-3">
                             <div class="col-6">
                                 <div class="w-100 menu-access mb-1">
@@ -550,22 +564,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Safety
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Safety
                                             Assessment</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="safety-assessment-create" name="check-safety-assessment">
-                                            <label class="form-check-label menu-title" for="safety-assessment-create">Tambah</label>
+                                            <input class="form-check-input" type="checkbox" id="safety-assessment-create"
+                                                name="check-safety-assessment">
+                                            <label class="form-check-label menu-title"
+                                                for="safety-assessment-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="safety-assessment-update" name="check-safety-assessment">
-                                            <label class="form-check-label menu-title" for="safety-assessment-update">Edit</label>
+                                            <input class="form-check-input" type="checkbox" id="safety-assessment-update"
+                                                name="check-safety-assessment">
+                                            <label class="form-check-label menu-title"
+                                                for="safety-assessment-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="safety-assessment-delete" name="check-safety-assessment">
-                                            <label class="form-check-label menu-title" for="safety-assessment-delete">Hapus</label>
+                                            <input class="form-check-input" type="checkbox" id="safety-assessment-delete"
+                                                name="check-safety-assessment">
+                                            <label class="form-check-label menu-title"
+                                                for="safety-assessment-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -576,25 +594,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Jembatan
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Jembatan
                                             Penyebrangan (JPOM, Underpass, Flyover)</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="jembatan-penyebrangan-create" name="check-jembatan-penyebrangan">
+                                                id="jembatan-penyebrangan-create" name="check-jembatan-penyebrangan">
                                             <label class="form-check-label menu-title"
-                                                   for="jembatan-penyebrangan-create">Tambah</label>
+                                                for="jembatan-penyebrangan-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="jembatan-penyebrangan-update" name="check-jembatan-penyebrangan">
+                                                id="jembatan-penyebrangan-update" name="check-jembatan-penyebrangan">
                                             <label class="form-check-label menu-title"
-                                                   for="jembatan-penyebrangan-update">Edit</label>
+                                                for="jembatan-penyebrangan-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="jembatan-penyebrangan-delete" name="check-jembatan-penyebrangan">
+                                                id="jembatan-penyebrangan-delete" name="check-jembatan-penyebrangan">
                                             <label class="form-check-label menu-title"
-                                                   for="jembatan-penyebrangan-delete">Hapus</label>
+                                                for="jembatan-penyebrangan-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -607,28 +626,29 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Permohonan
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Permohonan
                                             Izin Melintas Rel (Crossing)</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="permohonan-izin-melintas-rel-create"
-                                                   name="check-permohonan-izin-melintas-rel">
+                                                id="permohonan-izin-melintas-rel-create"
+                                                name="check-permohonan-izin-melintas-rel">
                                             <label class="form-check-label menu-title"
-                                                   for="permohonan-izin-melintas-rel-create">Tambah</label>
+                                                for="permohonan-izin-melintas-rel-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="permohonan-izin-melintas-rel-update"
-                                                   name="check-permohonan-izin-melintas-rel">
+                                                id="permohonan-izin-melintas-rel-update"
+                                                name="check-permohonan-izin-melintas-rel">
                                             <label class="form-check-label menu-title"
-                                                   for="permohonan-izin-melintas-rel-update">Edit</label>
+                                                for="permohonan-izin-melintas-rel-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="permohonan-izin-melintas-rel-delete"
-                                                   name="check-permohonan-izin-melintas-rel">
+                                                id="permohonan-izin-melintas-rel-delete"
+                                                name="check-permohonan-izin-melintas-rel">
                                             <label class="form-check-label menu-title"
-                                                   for="permohonan-izin-melintas-rel-delete">Hapus</label>
+                                                for="permohonan-izin-melintas-rel-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -639,30 +659,33 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Jembatan
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Jembatan
                                             Kereta Api (BH)</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="jembatan-kereta-api-create" name="check-jembatan-kereta-api">
-                                            <label class="form-check-label menu-title" for="jembatan-kereta-api-create">Tambah</label>
+                                                id="jembatan-kereta-api-create" name="check-jembatan-kereta-api">
+                                            <label class="form-check-label menu-title"
+                                                for="jembatan-kereta-api-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="jembatan-kereta-api-update" name="check-jembatan-kereta-api">
-                                            <label class="form-check-label menu-title" for="jembatan-kereta-api-update">Edit</label>
+                                                id="jembatan-kereta-api-update" name="check-jembatan-kereta-api">
+                                            <label class="form-check-label menu-title"
+                                                for="jembatan-kereta-api-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="jembatan-kereta-api-delete" name="check-jembatan-kereta-api">
-                                            <label class="form-check-label menu-title" for="jembatan-kereta-api-delete">Hapus</label>
+                                                id="jembatan-kereta-api-delete" name="check-jembatan-kereta-api">
+                                            <label class="form-check-label menu-title"
+                                                for="jembatan-kereta-api-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-traffic" role="tabpanel"
-                         aria-labelledby="pills-traffic-tab">
+                    <div class="tab-pane fade" id="pills-traffic" role="tabpanel" aria-labelledby="pills-traffic-tab">
                         <div class="row gx-3 mb-3">
                             <div class="col-6">
                                 <div class="w-100 menu-access mb-1">
@@ -670,30 +693,33 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Stasiun
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Stasiun
                                             Kereta Api</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="stasiun-kereta-api-create" name="check-stasiun-kereta-api">
-                                            <label class="form-check-label menu-title" for="stasiun-kereta-api-create">Tambah</label>
+                                                id="stasiun-kereta-api-create" name="check-stasiun-kereta-api">
+                                            <label class="form-check-label menu-title"
+                                                for="stasiun-kereta-api-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="stasiun-kereta-api-update" name="check-stasiun-kereta-api">
-                                            <label class="form-check-label menu-title" for="stasiun-kereta-api-update">Edit</label>
+                                                id="stasiun-kereta-api-update" name="check-stasiun-kereta-api">
+                                            <label class="form-check-label menu-title"
+                                                for="stasiun-kereta-api-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="stasiun-kereta-api-delete" name="check-stasiun-kereta-api">
-                                            <label class="form-check-label menu-title" for="stasiun-kereta-api-delete">Hapus</label>
+                                                id="stasiun-kereta-api-delete" name="check-stasiun-kereta-api">
+                                            <label class="form-check-label menu-title"
+                                                for="stasiun-kereta-api-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-master" role="tabpanel"
-                         aria-labelledby="pills-master-tab">
+                    <div class="tab-pane fade" id="pills-master" role="tabpanel" aria-labelledby="pills-master-tab">
                         <div class="row gx-3 mb-3">
                             <div class="col-6">
                                 <div class="w-100 menu-access mb-1">
@@ -701,21 +727,25 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Kecamatan</label>
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Kecamatan</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-kecamatan-create" name="check-master-kecamatan">
-                                            <label class="form-check-label menu-title" for="master-kecamatan-create">Tambah</label>
+                                            <input class="form-check-input" type="checkbox" id="master-kecamatan-create"
+                                                name="check-master-kecamatan">
+                                            <label class="form-check-label menu-title"
+                                                for="master-kecamatan-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-kecamatan-update" name="check-master-kecamatan">
-                                            <label class="form-check-label menu-title" for="master-kecamatan-update">Edit</label>
+                                            <input class="form-check-input" type="checkbox" id="master-kecamatan-update"
+                                                name="check-master-kecamatan">
+                                            <label class="form-check-label menu-title"
+                                                for="master-kecamatan-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-kecamatan-delete" name="check-master-kecamatan">
-                                            <label class="form-check-label menu-title" for="master-kecamatan-delete">Hapus</label>
+                                            <input class="form-check-input" type="checkbox" id="master-kecamatan-delete"
+                                                name="check-master-kecamatan">
+                                            <label class="form-check-label menu-title"
+                                                for="master-kecamatan-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -726,21 +756,22 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Jenis
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Jenis
                                             Lokomotif</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="amus-create" name="check-amus">
+                                            <input class="form-check-input" type="checkbox" id="amus-create"
+                                                name="check-amus">
                                             <label class="form-check-label menu-title" for="amus-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="amus-update" name="check-amus">
+                                            <input class="form-check-input" type="checkbox" id="amus-update"
+                                                name="check-amus">
                                             <label class="form-check-label menu-title" for="amus-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="amus-delete" name="check-amus">
+                                            <input class="form-check-input" type="checkbox" id="amus-delete"
+                                                name="check-amus">
                                             <label class="form-check-label menu-title" for="amus-delete">Hapus</label>
                                         </div>
                                     </div>
@@ -754,22 +785,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Jenis
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Jenis
                                             Kereta</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-kereta-create" name="check-master-jenis-kereta">
-                                            <label class="form-check-label menu-title" for="master-jenis-kereta-create">Tambah</label>
+                                                id="master-jenis-kereta-create" name="check-master-jenis-kereta">
+                                            <label class="form-check-label menu-title"
+                                                for="master-jenis-kereta-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-kereta-update" name="check-master-jenis-kereta">
-                                            <label class="form-check-label menu-title" for="master-jenis-kereta-update">Edit</label>
+                                                id="master-jenis-kereta-update" name="check-master-jenis-kereta">
+                                            <label class="form-check-label menu-title"
+                                                for="master-jenis-kereta-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-kereta-delete" name="check-master-jenis-kereta">
-                                            <label class="form-check-label menu-title" for="master-jenis-kereta-delete">Hapus</label>
+                                                id="master-jenis-kereta-delete" name="check-master-jenis-kereta">
+                                            <label class="form-check-label menu-title"
+                                                for="master-jenis-kereta-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -780,25 +815,26 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Jenis
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Jenis
                                             Gerbong</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-gerbong-create" name="check-master-jenis-gerbong">
+                                                id="master-jenis-gerbong-create" name="check-master-jenis-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-gerbong-create">Tambah</label>
+                                                for="master-jenis-gerbong-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-gerbong-update" name="check-master-jenis-gerbong">
+                                                id="master-jenis-gerbong-update" name="check-master-jenis-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-gerbong-update">Edit</label>
+                                                for="master-jenis-gerbong-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-gerbong-delete" name="check-master-jenis-gerbong">
+                                                id="master-jenis-gerbong-delete" name="check-master-jenis-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-gerbong-delete">Hapus</label>
+                                                for="master-jenis-gerbong-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -811,28 +847,29 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Sub
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Sub
                                             Jenis Gerbong</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-sub-jenis-gerbong-create"
-                                                   name="check-master-sub-jenis-gerbong">
+                                                id="master-sub-jenis-gerbong-create"
+                                                name="check-master-sub-jenis-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="master-sub-jenis-gerbong-create">Tambah</label>
+                                                for="master-sub-jenis-gerbong-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-sub-jenis-gerbong-update"
-                                                   name="check-master-sub-jenis-gerbong">
+                                                id="master-sub-jenis-gerbong-update"
+                                                name="check-master-sub-jenis-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="master-sub-jenis-gerbong-update">Edit</label>
+                                                for="master-sub-jenis-gerbong-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-sub-jenis-gerbong-delete"
-                                                   name="check-master-sub-jenis-gerbong">
+                                                id="master-sub-jenis-gerbong-delete"
+                                                name="check-master-sub-jenis-gerbong">
                                             <label class="form-check-label menu-title"
-                                                   for="master-sub-jenis-gerbong-delete">Hapus</label>
+                                                for="master-sub-jenis-gerbong-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -843,28 +880,29 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Jenis
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Jenis
                                             Peralatan Khusus</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-peralatan-khusus-create"
-                                                   name="check-master-jenis-peralatan-khusus">
+                                                id="master-jenis-peralatan-khusus-create"
+                                                name="check-master-jenis-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-peralatan-khusus-create">Tambah</label>
+                                                for="master-jenis-peralatan-khusus-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-peralatan-khusus-update"
-                                                   name="check-master-jenis-peralatan-khusus">
+                                                id="master-jenis-peralatan-khusus-update"
+                                                name="check-master-jenis-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-peralatan-khusus-update">Edit</label>
+                                                for="master-jenis-peralatan-khusus-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-peralatan-khusus-delete"
-                                                   name="check-master-jenis-peralatan-khusus">
+                                                id="master-jenis-peralatan-khusus-delete"
+                                                name="check-master-jenis-peralatan-khusus">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-peralatan-khusus-delete">Hapus</label>
+                                                for="master-jenis-peralatan-khusus-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -877,22 +915,25 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Lintasan</label>
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Lintasan</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-lintasan-create" name="check-master-lintasan">
-                                            <label class="form-check-label menu-title" for="master-lintasan-create">Tambah</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-lintasan-update" name="check-master-lintasan">
+                                            <input class="form-check-input" type="checkbox" id="master-lintasan-create"
+                                                name="check-master-lintasan">
                                             <label class="form-check-label menu-title"
-                                                   for="master-lintasan-update">Edit</label>
+                                                for="master-lintasan-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-lintasan-delete" name="check-master-lintasan">
-                                            <label class="form-check-label menu-title" for="master-lintasan-delete">Hapus</label>
+                                            <input class="form-check-input" type="checkbox" id="master-lintasan-update"
+                                                name="check-master-lintasan">
+                                            <label class="form-check-label menu-title"
+                                                for="master-lintasan-update">Edit</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="master-lintasan-delete"
+                                                name="check-master-lintasan">
+                                            <label class="form-check-label menu-title"
+                                                for="master-lintasan-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -903,24 +944,25 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Petak</label>
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Petak</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-petak-create" name="check-master-petak">
+                                            <input class="form-check-input" type="checkbox" id="master-petak-create"
+                                                name="check-master-petak">
                                             <label class="form-check-label menu-title"
-                                                   for="master-petak-create">Tambah</label>
+                                                for="master-petak-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-petak-update" name="check-master-petak">
+                                            <input class="form-check-input" type="checkbox" id="master-petak-update"
+                                                name="check-master-petak">
                                             <label class="form-check-label menu-title"
-                                                   for="master-petak-update">Edit</label>
+                                                for="master-petak-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-petak-delete" name="check-master-petak">
+                                            <input class="form-check-input" type="checkbox" id="master-petak-delete"
+                                                name="check-master-petak">
                                             <label class="form-check-label menu-title"
-                                                   for="master-petak-delete">Hapus</label>
+                                                for="master-petak-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -933,28 +975,29 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Jenis
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Jenis
                                             Rawan Bencana</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-rawan-bencana-create"
-                                                   name="check-master-jenis-rawan-bencana">
+                                                id="master-jenis-rawan-bencana-create"
+                                                name="check-master-jenis-rawan-bencana">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-rawan-bencana-create">Tambah</label>
+                                                for="master-jenis-rawan-bencana-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-rawan-bencana-update"
-                                                   name="check-master-jenis-rawan-bencana">
+                                                id="master-jenis-rawan-bencana-update"
+                                                name="check-master-jenis-rawan-bencana">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-rawan-bencana-update">Edit</label>
+                                                for="master-jenis-rawan-bencana-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox"
-                                                   id="master-jenis-rawan-bencana-delete"
-                                                   name="check-master-jenis-rawan-bencana">
+                                                id="master-jenis-rawan-bencana-delete"
+                                                name="check-master-jenis-rawan-bencana">
                                             <label class="form-check-label menu-title"
-                                                   for="master-jenis-rawan-bencana-delete">Hapus</label>
+                                                for="master-jenis-rawan-bencana-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -965,24 +1008,25 @@
                                 </div>
                                 <div class="p-3">
                                     <div class="mb-3">
-                                        <label for="menu" class="form-label d-block fw-bold" style="color: #1a202c">Resort</label>
+                                        <label for="menu" class="form-label d-block fw-bold"
+                                            style="color: #1a202c">Resort</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-resort-create" name="check-master-resort">
+                                            <input class="form-check-input" type="checkbox" id="master-resort-create"
+                                                name="check-master-resort">
                                             <label class="form-check-label menu-title"
-                                                   for="master-resort-create">Tambah</label>
+                                                for="master-resort-create">Tambah</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-resort-update" name="check-master-resort">
+                                            <input class="form-check-input" type="checkbox" id="master-resort-update"
+                                                name="check-master-resort">
                                             <label class="form-check-label menu-title"
-                                                   for="master-resort-update">Edit</label>
+                                                for="master-resort-update">Edit</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox"
-                                                   id="master-resort-delete" name="check-master-resort">
+                                            <input class="form-check-input" type="checkbox" id="master-resort-delete"
+                                                name="check-master-resort">
                                             <label class="form-check-label menu-title"
-                                                   for="master-resort-delete">Hapus</label>
+                                                for="master-resort-delete">Hapus</label>
                                         </div>
                                     </div>
                                 </div>
@@ -1002,12 +1046,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
@@ -1068,7 +1112,7 @@
 
         function matchAccessMenu(data = []) {
             $('input:checkbox').prop('checked', false);
-            $.each(data, function (k, v) {
+            $.each(data, function(k, v) {
                 let slug = v['app_menu']['slug'];
                 let create = v['is_granted_create'];
                 let update = v['is_granted_update'];
@@ -1092,7 +1136,9 @@
                 };
                 let data = JSON.stringify(tmpData);
                 blockLoading(true);
-                await $.post(path, {data});
+                await $.post(path, {
+                    data
+                });
                 blockLoading(false);
                 Swal.fire({
                     title: 'Success',
@@ -1102,7 +1148,7 @@
                 }).then(() => {
                     window.location.reload();
                 });
-            }catch (e) {
+            } catch (e) {
                 blockLoading(false);
                 let error_message = JSON.parse(e.responseText);
                 ErrorAlert('Error', error_message.message);
@@ -1112,10 +1158,10 @@
 
         function generateRoleAccessData() {
             let results = [];
-            $.each(accessMenus, function (k, v) {
+            $.each(accessMenus, function(k, v) {
                 let granted = ['create', 'update', 'delete'];
                 let resultGranted = [];
-                $.each(granted, function (kG, vG) {
+                $.each(granted, function(kG, vG) {
                     let elName = '#' + v + '-' + vG;
                     let val = $(elName).is(':checked');
                     let obj = {
@@ -1133,15 +1179,15 @@
             return results;
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
             getAccessMenu();
-            $('#user-option').on('change', function () {
+            $('#user-option').on('change', function() {
                 getAccessMenu();
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

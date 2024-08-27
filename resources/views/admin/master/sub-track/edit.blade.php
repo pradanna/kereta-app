@@ -44,7 +44,10 @@
                             <label for="track" class="form-label">Perlintasan</label>
                             <select class="select2 form-control" name="track" id="track" style="width: 100%;">
                                 @foreach ($tracks as $track)
-                                    <option value="{{ $track->id }}" {{ ($data->track_id === $track->id) ? 'selected' :'' }}>{{ $track->name }} ({{ $track->code }})</option>
+                                    <option value="{{ $track->id }}"
+                                        {{ $data->track_id === $track->id ? 'selected' : '' }}>{{ $track->name }}
+                                        ({{ $track->code }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,14 +58,14 @@
                         <div class="w-100">
                             <label for="code" class="form-label">Kode</label>
                             <input type="text" class="form-control" id="code" name="code"
-                                   placeholder="Kode Lintas Antara" value="{{ $data->code }}">
+                                placeholder="Kode Lintas Antara" value="{{ $data->code }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="name" class="form-label">Nama Petak</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Petak" value="{{ $data->name }}">
+                                placeholder="Nama Petak" value="{{ $data->name }}">
                         </div>
                     </div>
                 </div>
@@ -77,12 +80,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             $('.select2').select2({

@@ -20,8 +20,7 @@
                     <div class="col-3">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -33,7 +32,7 @@
                         <div class="form-group w-100">
                             <label for="status-option" class="form-label d-none">Status</label>
                             <select class="select2 form-control" name="status-option" id="status-option"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="">Semua Status</option>
                                 <option value="1">Berlaku</option>
                                 <option value="0">Habis Masa Berlaku</option>
@@ -44,12 +43,13 @@
                         <div class="form-group w-100">
                             <label for="name" class="form-label d-none"></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Cari No. Sarana atau No. BA Pengujian">
+                                placeholder="Cari No. Sarana atau No. BA Pengujian">
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -62,8 +62,7 @@
                     href="{{ route('facility-certification-special-equipment.create') }}">Tambah
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                 </a>
-                <a class="btn-success sml rnd" href="#" id="btn-export"
-                    target="_blank">Export
+                <a class="btn-success sml rnd" href="#" id="btn-export" target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -174,12 +173,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
@@ -202,7 +201,7 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = $('#area-option').val();
                         d.name = $('#name').val();
                         d.status = $('#status-option').val();
@@ -287,12 +286,10 @@
                         className: 'text-center'
                     }
                 ],
-                columnDefs: [
-                    {
-                        targets: '_all',
-                        className: 'middle-header'
-                    }
-                ],
+                columnDefs: [{
+                    targets: '_all',
+                    className: 'middle-header'
+                }],
                 paging: true,
                 "fnDrawCallback": function(setting) {
                     eventOpenDetail();
@@ -383,18 +380,19 @@
             });
             generateTableFacilityCertification();
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
 
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let name = $('#name').val();
                 let status = $('#status-option').val();
                 let queryParam = '?area=' + area + '&name=' + name + '&status=' + status;
-                let exportPath = '{{ route('facility-certification-special-equipment.excel') }}' + queryParam;
+                let exportPath = '{{ route('facility-certification-special-equipment.excel') }}' +
+                    queryParam;
                 window.open(exportPath, '_blank');
             });
         });

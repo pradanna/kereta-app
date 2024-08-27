@@ -43,11 +43,10 @@
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="train_type" class="form-label">Jenis Kereta</label>
-                            <select class="select2 form-control" name="train_type"
-                                    id="train_type" style="width: 100%;">
+                            <select class="select2 form-control" name="train_type" id="train_type" style="width: 100%;">
                                 @foreach ($train_types as $train_type)
-                                    <option
-                                        value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})</option>
+                                    <option value="{{ $train_type->id }}">{{ $train_type->code }} ({{ $train_type->name }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -58,14 +57,14 @@
                         <div class="form-group w-100">
                             <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
                             <input type="number" step="any" class="form-control" id="empty_weight" name="empty_weight"
-                                   placeholder="Berat Kosong">
+                                placeholder="Berat Kosong">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="passenger_capacity" class="form-label">Kapasitas Penumpang</label>
-                            <input type="number" step="any" class="form-control" id="passenger_capacity" name="passenger_capacity"
-                                   placeholder="Kapasitas Penumpang">
+                            <input type="number" step="any" class="form-control" id="passenger_capacity"
+                                name="passenger_capacity" placeholder="Kapasitas Penumpang">
                         </div>
                     </div>
 
@@ -74,16 +73,15 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
-                            <input type="number" step="any" class="form-control" id="maximum_speed" name="maximum_speed"
-                                   placeholder="Kecepatan Maksimum (VMax)">
+                            <input type="number" step="any" class="form-control" id="maximum_speed"
+                                name="maximum_speed" placeholder="Kecepatan Maksimum (VMax)">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="air_conditioner" class="form-label">Jenis AC</label>
-                            <input type="text" class="form-control" id="air_conditioner"
-                                   name="air_conditioner"
-                                   placeholder="Jenis AC">
+                            <input type="text" class="form-control" id="air_conditioner" name="air_conditioner"
+                                placeholder="Jenis AC">
                         </div>
                     </div>
                 </div>
@@ -94,14 +92,14 @@
                         <div class="form-group w-100">
                             <label for="long" class="form-label">Panjang Kereta (mm)</label>
                             <input type="number" step="any" class="form-control" id="long" name="long"
-                                   placeholder="Panjang Kereta">
+                                placeholder="Panjang Kereta">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="width" class="form-label">Lebar Kereta (mm)</label>
                             <input type="number" step="any" class="form-control" id="width" name="width"
-                                   placeholder="Lebar Kereta">
+                                placeholder="Lebar Kereta">
                         </div>
                     </div>
                 </div>
@@ -110,14 +108,14 @@
                         <div class="form-group w-100">
                             <label for="height" class="form-label">Tinggi Kereta (mm)</label>
                             <input type="number" step="any" class="form-control" id="height" name="height"
-                                   placeholder="Tinggi Kereta">
+                                placeholder="Tinggi Kereta">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="coupler_height" class="form-label">Tinggi Alat Perangkai (mm)</label>
-                            <input type="number" step="any" class="form-control" id="coupler_height" name="coupler_height"
-                                   placeholder="Tinggi Alat Perangkai">
+                            <input type="number" step="any" class="form-control" id="coupler_height"
+                                name="coupler_height" placeholder="Tinggi Alat Perangkai">
                         </div>
                     </div>
                 </div>
@@ -126,14 +124,14 @@
                         <div class="form-group w-100">
                             <label for="axle_load" class="form-label">Beban Gandar (Ton)</label>
                             <input type="number" step="any" class="form-control" id="axle_load" name="axle_load"
-                                   placeholder="Beban Gandar">
+                                placeholder="Beban Gandar">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="spoor_width" class="form-label">Lebar Spoor (mm)</label>
-                            <input type="number" step="any" class="form-control" id="spoor_width" name="spoor_width"
-                                   placeholder="Lebar Spoor">
+                            <input type="number" step="any" class="form-control" id="spoor_width"
+                                name="spoor_width" placeholder="Lebar Spoor">
                         </div>
                     </div>
                 </div>
@@ -150,14 +148,14 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });

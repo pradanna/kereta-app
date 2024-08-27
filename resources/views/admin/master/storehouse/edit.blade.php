@@ -44,7 +44,8 @@
                             <label for="area" class="form-label">Daerah Operasi</label>
                             <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($data->area_id === $area->id ) ? 'selected' : '' }}>{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}"
+                                        {{ $data->area_id === $area->id ? 'selected' : '' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -55,7 +56,9 @@
                             <select class="select2 form-control" name="storehouse_type" id="storehouse_type"
                                 style="width: 100%;">
                                 @foreach ($storehouse_types as $storehouse_type)
-                                    <option value="{{ $storehouse_type->id }}" {{ ($data->storehouse_type_id === $storehouse_type->id ) ? 'selected' : '' }}>{{ $storehouse_type->name }}</option>
+                                    <option value="{{ $storehouse_type->id }}"
+                                        {{ $data->storehouse_type_id === $storehouse_type->id ? 'selected' : '' }}>
+                                        {{ $storehouse_type->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -67,7 +70,9 @@
                             <label for="city" class="form-label">Kota</label>
                             <select class="select2 form-control" name="city" id="city" style="width: 100%;">
                                 @foreach ($cities as $city)
-                                    <option value="{{ $city->id }}" {{ ($data->city_id === $city->id ) ? 'selected' : '' }}>{{ $city->name }}</option>
+                                    <option value="{{ $city->id }}"
+                                        {{ $data->city_id === $city->id ? 'selected' : '' }}>{{ $city->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -107,12 +112,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             $('.select2').select2({

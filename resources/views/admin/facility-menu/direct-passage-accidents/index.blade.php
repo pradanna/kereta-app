@@ -21,8 +21,7 @@
                     <div class="col-4">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Wilayah (Daerah Operasi)</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
                                 <option value="">Semua DAOP</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -32,16 +31,17 @@
                     </div>
                     <div class="col-3">
                         <div class="form-group w-100">
-                            <label for="date" class="form-label d-none">Tanggal Kejadian <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control datepicker" id="date"
-                                   name="date" placeholder="Periode Tahun" value="">
+                            <label for="date" class="form-label d-none">Tanggal Kejadian <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control datepicker" id="date" name="date"
+                                placeholder="Periode Tahun" value="">
                         </div>
                     </div>
                     <div class="col-5">
                         <div class="form-group w-100">
                             <label for="direct-passage-option" class="form-label d-none">No. JPL</label>
                             <select class="select2 form-control" name="direct-passage-option" id="direct-passage-option"
-                                    style="width: 100%;">
+                                style="width: 100%;">
                                 <option value="none">Semua JPL dan Semua yang tidak berada pada JPL</option>
                                 <option value="">Tidak Berada Pada Jalur Perlintasan Langsung</option>
                                 @foreach ($direct_passages as $direct_passage)
@@ -52,7 +52,8 @@
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -61,14 +62,13 @@
         <div class="title">
             <p>Data Peristiwa Luar Biasa Hebat (PLH) {{ $service_unit->name }}</p>
             <div class="d-flex align-item-center">
-                @if($access['is_granted_create'])
+                @if ($access['is_granted_create'])
                     <a class="btn-utama sml rnd me-2"
-                       href="{{ route('means.direct-passage-accident.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
+                        href="{{ route('means.direct-passage-accident.service-unit.add', ['service_unit_id' => $service_unit->id]) }}">Tambah
                         <i class="material-symbols-outlined menu-icon ms-2 text-white">add_circle</i>
                     </a>
                 @endif
-                <a class="btn-success sml rnd" href="#" id="btn-export"
-                   target="_blank">Export
+                <a class="btn-success sml rnd" href="#" id="btn-export" target="_blank">Export
                     <i class="material-symbols-outlined menu-icon ms-2 text-white">file_download</i>
                 </a>
             </div>
@@ -76,26 +76,26 @@
         <div class="isi">
             <table id="table-data" class="display table table-striped w-100">
                 <thead>
-                <tr>
-                    <th class="text-center middle-header" width="5%">#</th>
-                    <th class="text-center middle-header" width="10%">Kota/Kabupaten</th>
-                    <th class="text-center middle-header" width="8%">Wilayah</th>
-                    <th class="text-center middle-header" width="8%">Lintas</th>
-                    <th class="text-center middle-header" width="8%">Petak</th>
-                    <th class="text-center middle-header" width="8%">KM/HM</th>
-                    <th class="text-center middle-header">Waktu</th>
-                    <th class="text-center middle-header" width="10%">JPL</th>
-                    {{--                    <th class="middle-header">Jenis Kereta Api</th>--}}
-                    {{--                    <th class="text-center middle-header">Jenis Laka</th>--}}
-                    <th class="text-center middle-header" width="8%">Korban Jiwa</th>
-                    <th class="text-center middle-header" width="8%">Gambar</th>
-                    <th class="text-center middle-header" width="15%">Aksi</th>
-                </tr>
-                {{--                <tr>--}}
-                {{--                    <th class="text-center middle-header" width="8%">Luka-Luka</th>--}}
-                {{--                    <th class="text-center middle-header" width="8%">Meninggal</th>--}}
-                {{--                    <th class="text-center middle-header" width="8%">Total</th>--}}
-                {{--                </tr>--}}
+                    <tr>
+                        <th class="text-center middle-header" width="5%">#</th>
+                        <th class="text-center middle-header" width="10%">Kota/Kabupaten</th>
+                        <th class="text-center middle-header" width="8%">Wilayah</th>
+                        <th class="text-center middle-header" width="8%">Lintas</th>
+                        <th class="text-center middle-header" width="8%">Petak</th>
+                        <th class="text-center middle-header" width="8%">KM/HM</th>
+                        <th class="text-center middle-header">Waktu</th>
+                        <th class="text-center middle-header" width="10%">JPL</th>
+                        {{--                    <th class="middle-header">Jenis Kereta Api</th> --}}
+                        {{--                    <th class="text-center middle-header">Jenis Laka</th> --}}
+                        <th class="text-center middle-header" width="8%">Korban Jiwa</th>
+                        <th class="text-center middle-header" width="8%">Gambar</th>
+                        <th class="text-center middle-header" width="15%">Aksi</th>
+                    </tr>
+                    {{--                <tr> --}}
+                    {{--                    <th class="text-center middle-header" width="8%">Luka-Luka</th> --}}
+                    {{--                    <th class="text-center middle-header" width="8%">Meninggal</th> --}}
+                    {{--                    <th class="text-center middle-header" width="8%">Total</th> --}}
+                    {{--                </tr> --}}
                 </thead>
                 <tbody>
                 </tbody>
@@ -103,7 +103,7 @@
         </div>
     </div>
     <div class="modal fade" id="modal-detail-certification" tabindex="-1" aria-labelledby="modal-detail-certification"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
@@ -135,9 +135,8 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="stakes" class="form-label">KM/HM</label>
-                                <input type="text" class="form-control" id="stakes"
-                                       name="stakes"
-                                       placeholder="KM" disabled>
+                                <input type="text" class="form-control" id="stakes" name="stakes"
+                                    placeholder="KM" disabled>
                             </div>
                         </div>
 
@@ -175,7 +174,7 @@
                             <div class="w-100">
                                 <label for="accident_type" class="form-label">Jenis Laka</label>
                                 <input type="text" class="form-control" name="accident_type" id="accident_type"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -198,13 +197,14 @@
                             <div class="w-100">
                                 <label for="injured" class="form-label">Korban Luka-Luka</label>
                                 <input type="number" class="form-control" id="injured" name="injured" value="0"
-                                       disabled>
+                                    disabled>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="died" class="form-label">Korban Meninggal</label>
-                                <input type="number" class="form-control" id="died" name="died" value="0" disabled>
+                                <input type="number" class="form-control" id="died" name="died" value="0"
+                                    disabled>
                             </div>
                         </div>
                     </div>
@@ -212,15 +212,13 @@
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="damaged_description" class="form-label">Kerugian</label>
-                                <textarea rows="3" class="form-control" id="damaged_description"
-                                          name="damaged_description" disabled></textarea>
+                                <textarea rows="3" class="form-control" id="damaged_description" name="damaged_description" disabled></textarea>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="w-100">
                                 <label for="description" class="form-label">Keterangan/Tindak Lanjut</label>
-                                <textarea rows="3" class="form-control" id="description" name="description"
-                                          disabled></textarea>
+                                <textarea rows="3" class="form-control" id="description" name="description" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -228,8 +226,7 @@
                         <div class="col-12">
                             <div class="w-100">
                                 <label for="chronology" class="form-label">Kronologi</label>
-                                <textarea rows="3" class="form-control" id="chronology" name="chronology"
-                                          disabled></textarea>
+                                <textarea rows="3" class="form-control" id="chronology" name="chronology" disabled></textarea>
                             </div>
                         </div>
                     </div>
@@ -240,19 +237,19 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
-          integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}"/>
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
+        integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
-            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         let table;
@@ -262,7 +259,7 @@
         let grantedDelete = '{{ $access['is_granted_delete'] }}';
 
         function deleteEvent() {
-            $('.btn-delete').on('click', function (e) {
+            $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -285,7 +282,7 @@
 
         function destroy(id) {
             let url = path + '/' + id + '/delete';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 SuccessAlert('Success', 'Berhasil Menghapus Data...').then(() => {
                     table.ajax.reload();
                     generateMapDisasterArea();
@@ -294,7 +291,7 @@
         }
 
         function eventOpenDetail() {
-            $('.btn-detail').on('click', function (e) {
+            $('.btn-detail').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 detailHandler(id);
@@ -346,7 +343,7 @@
         }
 
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
@@ -367,19 +364,19 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = $('#area-option').val();
                         d.date = $('#date').val();
                         d.direct_passage = $('#direct-passage-option').val();
                     }
                 },
                 columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex',
-                    searchable: false,
-                    orderable: false,
-                    className: 'text-center middle-header',
-                },
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        searchable: false,
+                        orderable: false,
+                        className: 'text-center middle-header',
+                    },
                     {
                         data: 'city.name',
                         name: 'city.name',
@@ -409,7 +406,7 @@
                         data: null,
                         name: null,
                         className: 'text-center middle-header',
-                        render: function (data) {
+                        render: function(data) {
                             let result = '';
                             if (data['date'] !== null) {
                                 let dateVal = new Date(data['date']);
@@ -428,7 +425,7 @@
                         data: 'direct_passage',
                         name: 'direct_passage',
                         className: 'text-center middle-header',
-                        render: function (data) {
+                        render: function(data) {
                             let value = '-';
                             if (data !== null) {
                                 value = data['name'];
@@ -460,7 +457,7 @@
                         data: null,
                         name: null,
                         className: 'text-center middle-header',
-                        render: function (data) {
+                        render: function(data) {
                             return parseInt(data['injured']) + parseInt(data['died'])
                         }
                     },
@@ -468,20 +465,22 @@
                         data: null,
                         orderable: false,
                         className: 'text-center middle-header',
-                        render: function (data) {
+                        render: function(data) {
                             let url = path + '/' + data['id'] + '/gambar';
-                            return '<a href="' + url + '" class="btn-image btn-table-action">Lihat</a>';
+                            return '<a href="' + url +
+                                '" class="btn-image btn-table-action">Lihat</a>';
                         }
                     },
                     {
                         data: null,
-                        render: function (data) {
+                        render: function(data) {
                             let urlEdit = path + '/' + data['id'] + '/edit';
                             let elEdit = grantedUpdate === '1' ? '<a href="' + urlEdit +
                                 '" class="btn-edit me-2 btn-table-action" data-id="' + data['id'] +
                                 '">Edit</a>' : '';
-                            let elDelete = grantedDelete === '1' ? '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
-                                'id'] + '">Delete</a>' : '';
+                            let elDelete = grantedDelete === '1' ?
+                                '<a href="#" class="btn-delete btn-table-action" data-id="' + data[
+                                    'id'] + '">Delete</a>' : '';
                             return '<a href="#" class="btn-detail me-2 btn-table-action" data-id="' +
                                 data['id'] + '">Detail</a>' + elEdit + elDelete
                         },
@@ -491,19 +490,19 @@
                 ],
                 columnDefs: [],
                 paging: true,
-                "fnDrawCallback": function (setting) {
+                "fnDrawCallback": function(setting) {
                     eventOpenDetail();
                     deleteEvent();
                 },
                 dom: 'ltrip'
             });
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
 
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let date = $('#date').val();

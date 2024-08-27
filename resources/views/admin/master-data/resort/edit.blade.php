@@ -31,7 +31,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('resort') }}">Resort {{ $service_unit->name }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('resort.service-unit', ['service_unit_id' => $service_unit->id]) }}">{{ $service_unit->name }}</a></li>
+                <li class="breadcrumb-item"><a
+                        href="{{ route('resort.service-unit', ['service_unit_id' => $service_unit->id]) }}">{{ $service_unit->name }}</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
@@ -46,10 +48,11 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama Resort <span class="text-danger ms-1">*</span></label>
+                            <label for="name" class="form-label">Nama Resort <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Contoh: Semarang Poncol" value="{{ $data->name }}">
-                            @if($errors->has('name'))
+                            @if ($errors->has('name'))
                                 <div class="text-danger">
                                     {{ $errors->first('name') }}
                                 </div>
@@ -70,12 +73,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
         $(document).ready(function() {
             $('.select2').select2({

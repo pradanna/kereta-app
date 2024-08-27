@@ -43,14 +43,13 @@
                         <div class="w-100">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username"
-                                   placeholder="Username">
+                                placeholder="Username">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="w-100">
                             <label for="nickname" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nickname" name="nickname"
-                                placeholder="Nama">
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Nama">
                         </div>
                     </div>
                 </div>
@@ -59,7 +58,7 @@
                         <div class="w-100">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="Password">
+                                placeholder="Password">
                         </div>
                     </div>
                     <div class="col-6">
@@ -71,19 +70,19 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-{{--                    <div class="col-6">--}}
-{{--                        <div class="form-group w-100">--}}
-{{--                            <label for="role" class="form-label">Hak Akses</label>--}}
-{{--                            <select class="select2 form-control" name="role" id="role" style="width: 100%;">--}}
-{{--                                <option value="admin-area">Admin Daerah Operasi (DAOP)</option>--}}
-{{--                                <option value="chief-area">Kepala Daerah Operasi (DAOP)</option>--}}
-{{--                                <option value="admin-service-unit">Admin Satuan Pelayanan (SATPEL)</option>--}}
-{{--                                <option value="chief-service-unit">Kepala Satuan Pelayanan (SATPEL)</option>--}}
-{{--                                <option value="admin-office">Admin Balai (BTP)</option>--}}
-{{--                                <option value="chief-office">Kepala Balai (BTP)</option>--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                    <div class="col-6"> --}}
+                    {{--                        <div class="form-group w-100"> --}}
+                    {{--                            <label for="role" class="form-label">Hak Akses</label> --}}
+                    {{--                            <select class="select2 form-control" name="role" id="role" style="width: 100%;"> --}}
+                    {{--                                <option value="admin-area">Admin Daerah Operasi (DAOP)</option> --}}
+                    {{--                                <option value="chief-area">Kepala Daerah Operasi (DAOP)</option> --}}
+                    {{--                                <option value="admin-service-unit">Admin Satuan Pelayanan (SATPEL)</option> --}}
+                    {{--                                <option value="chief-service-unit">Kepala Satuan Pelayanan (SATPEL)</option> --}}
+                    {{--                                <option value="admin-office">Admin Balai (BTP)</option> --}}
+                    {{--                                <option value="chief-office">Kepala Balai (BTP)</option> --}}
+                    {{--                            </select> --}}
+                    {{--                        </div> --}}
+                    {{--                    </div> --}}
                     <div class="col-12">
                         <div class="form-group w-100">
                             <label for="service_unit" class="form-label">Satuan Pelayanan</label>
@@ -108,14 +107,13 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-
         $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',

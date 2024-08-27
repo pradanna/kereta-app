@@ -30,8 +30,10 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="{{ route('means.work-safety') }}">Keselamatan dan Kesehatan Kerja (K3)</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('means.work-safety.project-monitoring') }}">Monitoring Implementasi K3</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.work-safety') }}">Keselamatan dan Kesehatan Kerja
+                        (K3)</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.work-safety.project-monitoring') }}">Monitoring
+                        Implementasi K3</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
         </nav>
@@ -46,11 +48,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="project_name" class="form-label">Nama Proyek <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="project_name"
-                                   name="project_name"
-                                   placeholder="Nama Proyek" value="{{ $data->project_name }}">
-                            @if($errors->has('project_name'))
+                            <label for="project_name" class="form-label">Nama Proyek <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="project_name" name="project_name"
+                                placeholder="Nama Proyek" value="{{ $data->project_name }}">
+                            @if ($errors->has('project_name'))
                                 <div class="text-danger">
                                     {{ $errors->first('project_name') }}
                                 </div>
@@ -59,11 +61,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="consultant" class="form-label">Penyedia Jasa Konsultan <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="consultant"
-                                   name="consultant"
-                                   placeholder="Penyedia Jasa Konsultan" value="{{ $data->consultant }}">
-                            @if($errors->has('consultant'))
+                            <label for="consultant" class="form-label">Penyedia Jasa Konsultan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="consultant" name="consultant"
+                                placeholder="Penyedia Jasa Konsultan" value="{{ $data->consultant }}">
+                            @if ($errors->has('consultant'))
                                 <div class="text-danger">
                                     {{ $errors->first('consultant') }}
                                 </div>
@@ -74,11 +76,11 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="w-100">
-                            <label for="location" class="form-label">Lokasi Pekerjaan <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="location"
-                                   name="location"
-                                   placeholder="Lokasi Pekerjaan" value="{{ $data->location }}">
-                            @if($errors->has('location'))
+                            <label for="location" class="form-label">Lokasi Pekerjaan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="location" name="location"
+                                placeholder="Lokasi Pekerjaan" value="{{ $data->location }}">
+                            @if ($errors->has('location'))
                                 <div class="text-danger">
                                     {{ $errors->first('location') }}
                                 </div>
@@ -90,8 +92,8 @@
                     <div class="col-12">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>
-                            <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
-                                      placeholder="Keterangan">{{ $data->description }}</textarea>
+                            <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description" name="description"
+                                placeholder="Keterangan">{{ $data->description }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -104,25 +106,23 @@
             </div>
         </div>
     </form>
-
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
     <script>
-
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

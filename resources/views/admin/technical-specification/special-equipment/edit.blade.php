@@ -43,11 +43,12 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="special_equipment_type" class="form-label">Jenis Peralatan Khusus</label>
-                            <select class="select2 form-control" name="special_equipment_type"
-                                    id="special_equipment_type" style="width: 100%;">
+                            <select class="select2 form-control" name="special_equipment_type" id="special_equipment_type"
+                                style="width: 100%;">
                                 @foreach ($special_equipment_types as $special_equipment_type)
-                                    <option
-                                        value="{{ $special_equipment_type->id }}" {{ ($special_equipment_type->id === $data->special_equipment_type_id) ? 'selected' :'' }}>{{ $special_equipment_type->code }} ({{ $special_equipment_type->name }})</option>
+                                    <option value="{{ $special_equipment_type->id }}"
+                                        {{ $special_equipment_type->id === $data->special_equipment_type_id ? 'selected' : '' }}>
+                                        {{ $special_equipment_type->code }} ({{ $special_equipment_type->name }})</option>
                                 @endforeach
                             </select>
                         </div>
@@ -56,7 +57,7 @@
                         <div class="form-group w-100">
                             <label for="empty_weight" class="form-label">Berat Kosong (Ton)</label>
                             <input type="number" step="any" class="form-control" id="empty_weight" name="empty_weight"
-                                   placeholder="Berat Kosong" value="{{ $data->empty_weight }}">
+                                placeholder="Berat Kosong" value="{{ $data->empty_weight }}">
                         </div>
                     </div>
                 </div>
@@ -64,15 +65,17 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="maximum_speed" class="form-label">Kecepatan Maksimum (Km/Jam)</label>
-                            <input type="number" step="any" class="form-control" id="maximum_speed" name="maximum_speed"
-                                   placeholder="Kecepatan Maksimum (VMax)" value="{{ $data->maximum_speed }}">
+                            <input type="number" step="any" class="form-control" id="maximum_speed"
+                                name="maximum_speed" placeholder="Kecepatan Maksimum (VMax)"
+                                value="{{ $data->maximum_speed }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="passenger_capacity" class="form-label">Kapasitas Penumpang</label>
-                            <input type="number" step="any" class="form-control" id="passenger_capacity" name="passenger_capacity"
-                                   placeholder="Kapasitas Penumpang" value="{{ $data->passenger_capacity }}">
+                            <input type="number" step="any" class="form-control" id="passenger_capacity"
+                                name="passenger_capacity" placeholder="Kapasitas Penumpang"
+                                value="{{ $data->passenger_capacity }}">
                         </div>
                     </div>
 
@@ -84,14 +87,14 @@
                         <div class="form-group w-100">
                             <label for="long" class="form-label">Panjang (mm)</label>
                             <input type="number" step="any" class="form-control" id="long" name="long"
-                                   placeholder="Panjang Kereta" value="{{ $data->long }}">
+                                placeholder="Panjang Kereta" value="{{ $data->long }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="height" class="form-label">Tinggi (mm)</label>
                             <input type="number" step="any" class="form-control" id="height" name="height"
-                                   placeholder="Tinggi Kereta" value="{{ $data->height }}">
+                                placeholder="Tinggi Kereta" value="{{ $data->height }}">
                         </div>
                     </div>
 
@@ -101,14 +104,14 @@
                         <div class="form-group w-100">
                             <label for="width" class="form-label">Lebar (mm)</label>
                             <input type="number" step="any" class="form-control" id="width" name="width"
-                                   placeholder="Lebar Kereta" value="{{ $data->width }}">
+                                placeholder="Lebar Kereta" value="{{ $data->width }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="spoor_width" class="form-label">Lebar Spoor (mm)</label>
-                            <input type="number" step="any" class="form-control" id="spoor_width" name="spoor_width"
-                                   placeholder="Lebar Spoor" value="{{ $data->spoor_width }}">
+                            <input type="number" step="any" class="form-control" id="spoor_width"
+                                name="spoor_width" placeholder="Lebar Spoor" value="{{ $data->spoor_width }}">
                         </div>
                     </div>
                 </div>
@@ -125,14 +128,14 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });

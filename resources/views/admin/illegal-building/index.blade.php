@@ -20,8 +20,7 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="area-option" class="form-label d-none">Daerah Operasi</label>
-                            <select class="select2 form-control" name="area-option" id="area-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="area-option" id="area-option" style="width: 100%;">
                                 <option value="">Semua Daerah Operasi</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
@@ -32,15 +31,15 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="track-option" class="form-label d-none">Perlintasan</label>
-                            <select class="select2 form-control" name="track-option" id="track-option"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="track-option" id="track-option" style="width: 100%;">
                                 <option value="">Semua Perlintasan</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#" style="padding: 0.6rem 1.25rem">Cari</a>
+                    <a id="btn-search" class="btn-utama sml rnd ms-2" href="#"
+                        style="padding: 0.6rem 1.25rem">Cari</a>
                 </div>
             </div>
         </div>
@@ -78,13 +77,13 @@
                 </thead>
                 <tbody></tbody>
                 <tfoot>
-                <tr>
-                    <th class="middle-header" colspan="6">Jumlah</th>
-                    <th class="text-center middle-header" width="8%">0</th>
-                    <th class="text-center middle-header" width="8%">0</th>
-                    <th class="text-center middle-header" width="8%">0</th>
-                    <th class="text-center middle-header">Aksi</th>
-                </tr>
+                    <tr>
+                        <th class="middle-header" colspan="6">Jumlah</th>
+                        <th class="text-center middle-header" width="8%">0</th>
+                        <th class="text-center middle-header" width="8%">0</th>
+                        <th class="text-center middle-header" width="8%">0</th>
+                        <th class="text-center middle-header">Aksi</th>
+                    </tr>
                 </tfoot>
             </table>
         </div>
@@ -150,7 +149,7 @@
                         </div>
                         <div class="col-6">
                             <div class="w-100">
-                                <label for="distance_from_rail" class="form-label">Jarak Dari AS Rel</label>
+                                <label for="distance_from_rail" class="form-label">Jarak Dari AS Rel (m)</label>
                                 <input type="number" step="any" class="form-control" id="distance_from_rail"
                                     name="distance_from_rail" disabled>
                             </div>
@@ -187,12 +186,12 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('/css/custom-style.css') }}" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
@@ -214,7 +213,7 @@
             let elOption = '<option value="">Semua Perlintasan</option>';
             getDataTrack().then((response) => {
                 const data = response['data'];
-                $.each(data, function (k, v) {
+                $.each(data, function(k, v) {
                     elOption += '<option value="' + v['id'] + '">' + v['code'] + '</option>';
                 });
             }).catch((e) => {
@@ -301,7 +300,7 @@
 
         $(document).ready(function() {
             generateDataTrackOption();
-            $('#area-option').on('change', function () {
+            $('#area-option').on('change', function() {
                 generateDataTrackOption();
             });
             table = $('#table-data').DataTable({
@@ -313,7 +312,7 @@
                 ajax: {
                     type: 'GET',
                     url: path,
-                    'data': function (d) {
+                    'data': function(d) {
                         d.area = $('#area-option').val();
                         d.track = $('#track-option').val();
                     }
@@ -389,15 +388,15 @@
                     deleteEvent();
                 },
                 dom: 'ltrip',
-                footerCallback: function (row, data, start, end, display) {
+                footerCallback: function(row, data, start, end, display) {
                     let api = this.api();
 
-                    let intVal = function (i) {
-                        return typeof i === 'string'
-                            ? i.replace(/[\$,]/g, '') * 1
-                            : typeof i === 'number'
-                                ? i
-                                : 0;
+                    let intVal = function(i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                            i :
+                            0;
                     };
                     for (let i = 6; i < 9; i++) {
                         total = api
@@ -406,7 +405,7 @@
                             .reduce((a, b) => intVal(a) + intVal(b), 0);
                         if (i === 8) {
                             api.column(i).footer().innerHTML = total.toFixed(0);
-                        }else {
+                        } else {
                             api.column(i).footer().innerHTML = total.toFixed(2);
                         }
 
@@ -415,12 +414,12 @@
                 }
             });
 
-            $('#btn-search').on('click', function (e) {
+            $('#btn-search').on('click', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
             });
 
-            $('#btn-export').on('click', function (e) {
+            $('#btn-export').on('click', function(e) {
                 e.preventDefault();
                 let area = $('#area-option').val();
                 let track = $('#track-option').val();

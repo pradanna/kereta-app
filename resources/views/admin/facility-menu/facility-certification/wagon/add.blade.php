@@ -53,32 +53,33 @@
                                     <option value="{{ $area->id }}">{{ $area->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('area'))
+                            @if ($errors->has('area'))
                                 <div class="text-danger">
                                     {{ $errors->first('area') }}
                                 </div>
                             @endif
                         </div>
                     </div>
-{{--                    <div class="col-6">--}}
-{{--                        <div class="form-group w-100">--}}
-{{--                            <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label>--}}
-{{--                            <select class="select2 form-control" name="wagon_sub_type" id="wagon_sub_type"--}}
-{{--                                    style="width: 100%;">--}}
-{{--                                @foreach ($wagon_sub_types as $wagon_sub_type)--}}
-{{--                                    <option value="{{ $wagon_sub_type->id }}">{{ $wagon_sub_type->code }} ({{ $wagon_sub_type->wagon_type->code }})</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                    <div class="col-6"> --}}
+                    {{--                        <div class="form-group w-100"> --}}
+                    {{--                            <label for="wagon_sub_type" class="form-label">Jenis Gerbong</label> --}}
+                    {{--                            <select class="select2 form-control" name="wagon_sub_type" id="wagon_sub_type" --}}
+                    {{--                                    style="width: 100%;"> --}}
+                    {{--                                @foreach ($wagon_sub_types as $wagon_sub_type) --}}
+                    {{--                                    <option value="{{ $wagon_sub_type->id }}">{{ $wagon_sub_type->code }} ({{ $wagon_sub_type->wagon_type->code }})</option> --}}
+                    {{--                                @endforeach --}}
+                    {{--                            </select> --}}
+                    {{--                        </div> --}}
+                    {{--                    </div> --}}
                 </div>
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="storehouse" class="form-label">Depo Induk <span class="text-danger ms-1">*</span></label>
+                            <label for="storehouse" class="form-label">Depo Induk <span
+                                    class="text-danger ms-1">*</span></label>
                             <select class="select2 form-control" name="storehouse" id="storehouse" style="width: 100%;">
                             </select>
-                            @if($errors->has('storehouse'))
+                            @if ($errors->has('storehouse'))
                                 <div class="text-danger">
                                     {{ $errors->first('storehouse') }}
                                 </div>
@@ -87,13 +88,13 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="ownership" class="form-label">Kepemilikan <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="ownership" id="ownership"
-                                    style="width: 100%;">
+                            <label for="ownership" class="form-label">Kepemilikan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="ownership" id="ownership" style="width: 100%;">
                                 <option value="PT. KAI">PT. KAI</option>
                                 <option value="DJKA">DJKA</option>
                             </select>
-                            @if($errors->has('ownership'))
+                            @if ($errors->has('ownership'))
                                 <div class="text-danger">
                                     {{ $errors->first('ownership') }}
                                 </div>
@@ -104,10 +105,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="facility_number" class="form-label">No. Sarana <span class="text-danger ms-1">*</span></label>
+                            <label for="facility_number" class="form-label">No. Sarana <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="facility_number" name="facility_number"
-                                   placeholder="Nomor Sarana">
-                            @if($errors->has('facility_number'))
+                                placeholder="Nomor Sarana">
+                            @if ($errors->has('facility_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('facility_number') }}
                                 </div>
@@ -116,10 +118,11 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="testing_number" class="form-label">No. BA Pengujian Terakhir <span class="text-danger ms-1">*</span></label>
+                            <label for="testing_number" class="form-label">No. BA Pengujian Terakhir <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="testing_number" name="testing_number"
-                                   placeholder="Nomor BA Pengujian">
-                            @if($errors->has('testing_number'))
+                                placeholder="Nomor BA Pengujian">
+                            @if ($errors->has('testing_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('testing_number') }}
                                 </div>
@@ -130,10 +133,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="service_start_date" class="form-label">Mulai Dinas <span class="text-danger ms-1">*</span></label>
+                            <label for="service_start_date" class="form-label">Mulai Dinas <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="service_start_date"
-                                   name="service_start_date" placeholder="dd-mm-yyyy">
-                            @if($errors->has('service_start_date'))
+                                name="service_start_date" placeholder="dd-mm-yyyy">
+                            @if ($errors->has('service_start_date'))
                                 <div class="text-danger">
                                     {{ $errors->first('service_start_date') }}
                                 </div>
@@ -142,10 +146,11 @@
                     </div>
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="service_expired_date" class="form-label">Masa Berlaku <span class="text-danger ms-1">*</span></label>
+                            <label for="service_expired_date" class="form-label">Masa Berlaku <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="service_expired_date"
-                                   name="service_expired_date" placeholder="dd-mm-yyyy">
-                            @if($errors->has('service_expired_date'))
+                                name="service_expired_date" placeholder="dd-mm-yyyy">
+                            @if ($errors->has('service_expired_date'))
                                 <div class="text-danger">
                                     {{ $errors->first('service_expired_date') }}
                                 </div>
@@ -157,8 +162,8 @@
                     <div class="col-12">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>
-                            <textarea rows="3" class="form-control"  style="font-size: 0.8rem" id="description" name="description"
-                                      placeholder="Keterangan"></textarea>
+                            <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description" name="description"
+                                placeholder="Keterangan"></textarea>
                         </div>
                     </div>
                 </div>
@@ -173,7 +178,7 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
@@ -182,7 +187,7 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
         integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -200,8 +205,9 @@
             let elOption = '';
             getDataStorehouse().then((response) => {
                 const data = response['data'];
-                $.each(data, function (k, v) {
-                    elOption += '<option value="' + v['id'] + '">' + v['name'] + ' (' + v['storehouse_type']['name'] + ')</option>';
+                $.each(data, function(k, v) {
+                    elOption += '<option value="' + v['id'] + '">' + v['name'] + ' (' + v['storehouse_type']
+                        ['name'] + ')</option>';
                 });
             }).always(() => {
                 el.append(elOption);

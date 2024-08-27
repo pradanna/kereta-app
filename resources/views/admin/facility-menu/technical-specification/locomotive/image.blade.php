@@ -18,8 +18,8 @@
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('means.technical-specification') }}">Spesifikasi Teknis
                         Sarana</a></li>
-                <li class="breadcrumb-item"><a
-                        href="{{ route('means.technical-specification.locomotive') }}">Lokomotif</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('means.technical-specification.locomotive') }}">Lokomotif</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">Gambar</li>
             </ol>
         </nav>
@@ -32,10 +32,11 @@
             <div class="d-flex flex-wrap justify-content-center gx-3">
                 @forelse($data->tech_images as $image)
                     <div class="d-flex flex-column justify-content-center align-items-center me-1 mb-3">
-                        <img src="{{ asset($image->image) }}" alt="storehouse-image" height="200" width="200"
-                             style="object-fit: cover;">
-                        @if($access['is_granted_delete'])
-                            <a href="#" class="btn-drop-image btn-table-action" data-id="{{ $image->id }}">Hapus</a>
+                        <img src="{{ asset($image->image) }}" alt="storehouse-image" height="200"
+                            style="object-fit: cover;">
+                        @if ($access['is_granted_delete'])
+                            <a href="#" class="btn-drop-image btn-table-action"
+                                data-id="{{ $image->id }}">Hapus</a>
                         @endif
                     </div>
                 @empty
@@ -44,11 +45,9 @@
                     </div>
                 @endforelse
             </div>
-            @if($access['is_granted_create'])
+            @if ($access['is_granted_create'])
                 <hr>
-                <form method="post"
-                      enctype="multipart/form-data"
-                      id="form-data">
+                <form method="post" enctype="multipart/form-data" id="form-data">
                     @csrf
                     <div class="w-100 needsclick dropzone" id="document-dropzone"></div>
                 </form>
@@ -65,14 +64,13 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet" />
     <style>
         .dz-error-message {
             display: none !important;
         }
     </style>
-
 @endsection
 
 @section('js')
@@ -86,7 +84,7 @@
         Dropzone.autoDiscover = false;
         Dropzone.options.documentDropzone = {
 
-            success: function (file, response) {
+            success: function(file, response) {
                 $('form').append('<input type="hidden" name="files[]" value="' + file.name + '">');
                 console.log(response);
                 uploadedDocumentMap[file.name] = response.name
@@ -94,7 +92,7 @@
         };
 
         function deleteEvent() {
-            $('.btn-drop-image').on('click', function (e) {
+            $('.btn-drop-image').on('click', function(e) {
                 e.preventDefault();
                 let id = this.dataset.id;
                 Swal.fire({
@@ -117,7 +115,7 @@
 
         function destroy(id) {
             let url = '{{ route('means.technical-specification.locomotive') }}' + '/' + id + '/delete-image';
-            AjaxPost(url, {}, function () {
+            AjaxPost(url, {}, function() {
                 Swal.fire({
                     title: 'Success',
                     text: 'Berhasil Menghapus Gambar...',
@@ -129,10 +127,10 @@
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#document-dropzone").dropzone({
                 url: path,
-                maxFilesize: 2,
+                maxFilesize: 32,
                 addRemoveLinks: true,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
@@ -141,9 +139,9 @@
                 uploadMultiple: true,
                 paramName: "files",
 
-                init: function () {
+                init: function() {
                     myDropzone = this;
-                    $('#btn-save').on('click', function (e) {
+                    $('#btn-save').on('click', function(e) {
                         e.preventDefault();
                         Swal.fire({
                             title: "Konfirmasi!",
@@ -161,12 +159,13 @@
                                     myDropzone.processQueue();
                                 } else {
                                     blockLoading(false);
-                                    ErrorAlert('Error', 'Harap Menambahkan Data Gambar...')
+                                    ErrorAlert('Error',
+                                        'Harap Menambahkan Data Gambar...')
                                 }
                             }
                         });
                     });
-                    this.on('successmultiple', function (file, response) {
+                    this.on('successmultiple', function(file, response) {
                         blockLoading(false);
                         Swal.fire({
                             title: 'Success',
@@ -178,7 +177,7 @@
                         })
                     });
 
-                    this.on('errormultiple', function (file, response) {
+                    this.on('errormultiple', function(file, response) {
                         blockLoading(false);
                         ErrorAlert('Error', 'Terjadi Kesalahan Server...');
                         console.log(response);
@@ -191,4 +190,3 @@
         });
     </script>
 @endsection
-

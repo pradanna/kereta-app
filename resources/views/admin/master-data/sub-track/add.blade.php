@@ -43,25 +43,25 @@
         <div class="isi">
             <form method="post" id="form-data">
                 @csrf
-{{--                <div class="row mb-3">--}}
-{{--                    <div class="col-12">--}}
-{{--                        <div class="form-group w-100">--}}
-{{--                            <label for="track" class="form-label">Perlintasan</label>--}}
-{{--                            <select class="select2 form-control" name="track" id="track" style="width: 100%;">--}}
-{{--                                @foreach ($tracks as $track)--}}
-{{--                                    <option value="{{ $track->id }}">{{ $track->name }} ({{ $track->code }})</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                {{--                <div class="row mb-3"> --}}
+                {{--                    <div class="col-12"> --}}
+                {{--                        <div class="form-group w-100"> --}}
+                {{--                            <label for="track" class="form-label">Perlintasan</label> --}}
+                {{--                            <select class="select2 form-control" name="track" id="track" style="width: 100%;"> --}}
+                {{--                                @foreach ($tracks as $track) --}}
+                {{--                                    <option value="{{ $track->id }}">{{ $track->name }} ({{ $track->code }})</option> --}}
+                {{--                                @endforeach --}}
+                {{--                            </select> --}}
+                {{--                        </div> --}}
+                {{--                    </div> --}}
+                {{--                </div> --}}
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
                             <label for="code" class="form-label">Kode <span class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="code" name="code"
-                                   placeholder="Kode Lintas Antara">
-                            @if($errors->has('code'))
+                                placeholder="Kode Lintas Antara">
+                            @if ($errors->has('code'))
                                 <div class="text-danger">
                                     {{ $errors->first('code') }}
                                 </div>
@@ -70,10 +70,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="name" class="form-label">Nama Petak <span class="text-danger ms-1">*</span></label>
+                            <label for="name" class="form-label">Nama Petak <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nama Petak">
-                            @if($errors->has('name'))
+                                placeholder="Nama Petak">
+                            @if ($errors->has('name'))
                                 <div class="text-danger">
                                     {{ $errors->first('name') }}
                                 </div>
@@ -92,18 +93,18 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",

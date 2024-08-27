@@ -19,7 +19,8 @@
                 icon: 'success',
                 timer: 1000
             }).then(() => {
-                window.location.href = '{{ route('means.material-tool.main', ['service_unit_id' => $service_unit->id]) }}';
+                window.location.href =
+                    '{{ route('means.material-tool.main', ['service_unit_id' => $service_unit->id]) }}';
             })
         </script>
     @endif
@@ -33,7 +34,8 @@
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('means') }}">Sarana Dan Keselamatan</a></li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('means.material-tool.main', ['service_unit_id' => $service_unit->id]) }}">Alat Material Untuk Siaga (AMUS) {{ $service_unit->name }}</a>
+                        href="{{ route('means.material-tool.main', ['service_unit_id' => $service_unit->id]) }}">Alat
+                        Material Untuk Siaga (AMUS) {{ $service_unit->name }}</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Edit</li>
             </ol>
@@ -49,14 +51,15 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="area" class="form-label">Wilayah (Daerah Operasi) <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="area" id="area"
-                                    style="width: 100%;">
+                            <label for="area" class="form-label">Wilayah (Daerah Operasi) <span
+                                    class="text-danger ms-1">*</span></label>
+                            <select class="select2 form-control" name="area" id="area" style="width: 100%;">
                                 @foreach ($areas as $area)
-                                    <option value="{{ $area->id }}" {{ ($area->id === $data->area_id ? 'selected' : '') }}>{{ $area->name }}</option>
+                                    <option value="{{ $area->id }}"
+                                        {{ $area->id === $data->area_id ? 'selected' : '' }}>{{ $area->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('area'))
+                            @if ($errors->has('area'))
                                 <div class="text-danger">
                                     {{ $errors->first('area') }}
                                 </div>
@@ -66,13 +69,14 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="resort" class="form-label">Resort <span class="text-danger ms-1">*</span></label>
-                            <select class="select2 form-control" name="resort" id="resort"
-                                    style="width: 100%;">
+                            <select class="select2 form-control" name="resort" id="resort" style="width: 100%;">
                                 @foreach ($resorts as $resort)
-                                    <option value="{{ $resort->id }}" {{ ($resort->id === $data->resort_id ? 'selected' : '') }}>{{ $resort->name }}</option>
+                                    <option value="{{ $resort->id }}"
+                                        {{ $resort->id === $data->resort_id ? 'selected' : '' }}>{{ $resort->name }}
+                                    </option>
                                 @endforeach
                             </select>
-                            @if($errors->has('resort'))
+                            @if ($errors->has('resort'))
                                 <div class="text-danger">
                                     {{ $errors->first('resort') }}
                                 </div>
@@ -83,10 +87,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="type" class="form-label">Jenis Amus <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="type"
-                                   name="type" value="{{ $data->type }}">
-                            @if($errors->has('type'))
+                            <label for="type" class="form-label">Jenis Amus <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="type" name="type"
+                                value="{{ $data->type }}">
+                            @if ($errors->has('type'))
                                 <div class="text-danger">
                                     {{ $errors->first('type') }}
                                 </div>
@@ -96,9 +101,9 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="stakes" class="form-label">KM/HM <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="stakes" name="stakes"
-                                   placeholder="KM/HM" value="{{ $data->stakes }}">
-                            @if($errors->has('stakes'))
+                            <input type="text" class="form-control" id="stakes" name="stakes" placeholder="KM/HM"
+                                value="{{ $data->stakes }}">
+                            @if ($errors->has('stakes'))
                                 <div class="text-danger">
                                     {{ $errors->first('stakes') }}
                                 </div>
@@ -109,10 +114,11 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="latitude" class="form-label">Latitude <span class="text-danger ms-1">*</span></label>
+                            <label for="latitude" class="form-label">Latitude <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="latitude" name="latitude"
-                                   placeholder="Contoh: 7.1129489" value="{{ $data->latitude }}">
-                            @if($errors->has('latitude'))
+                                placeholder="Contoh: 7.1129489" value="{{ $data->latitude }}">
+                            @if ($errors->has('latitude'))
                                 <div class="text-danger">
                                     {{ $errors->first('latitude') }}
                                 </div>
@@ -121,10 +127,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="longitude" class="form-label">Longitude <span class="text-danger ms-1">*</span></label>
+                            <label for="longitude" class="form-label">Longitude <span
+                                    class="text-danger ms-1">*</span></label>
                             <input type="number" step="any" class="form-control" id="longitude" name="longitude"
-                                   placeholder="Contoh: 110.1129489" value="{{ $data->longitude }}">
-                            @if($errors->has('longitude'))
+                                placeholder="Contoh: 110.1129489" value="{{ $data->longitude }}">
+                            @if ($errors->has('longitude'))
                                 <div class="text-danger">
                                     {{ $errors->first('longitude') }}
                                 </div>
@@ -136,8 +143,9 @@
                     <div class="col-6">
                         <div class="w-100">
                             <label for="qty" class="form-label">Jumlah <span class="text-danger ms-1">*</span></label>
-                            <input type="number" step="any" class="form-control" id="qty" name="qty" value="{{ $data->qty }}">
-                            @if($errors->has('qty'))
+                            <input type="number" step="any" class="form-control" id="qty" name="qty"
+                                value="{{ $data->qty }}">
+                            @if ($errors->has('qty'))
                                 <div class="text-danger">
                                     {{ $errors->first('qty') }}
                                 </div>
@@ -146,10 +154,11 @@
                     </div>
                     <div class="col-6">
                         <div class="w-100">
-                            <label for="unit" class="form-label">Satuan <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="unit"
-                                   name="unit" value="{{ $data->unit }}">
-                            @if($errors->has('unit'))
+                            <label for="unit" class="form-label">Satuan <span
+                                    class="text-danger ms-1">*</span></label>
+                            <input type="text" class="form-control" id="unit" name="unit"
+                                value="{{ $data->unit }}">
+                            @if ($errors->has('unit'))
                                 <div class="text-danger">
                                     {{ $errors->first('unit') }}
                                 </div>
@@ -177,20 +186,20 @@
 @endsection
 
 @section('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('select2/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
 @endsection
 
 @section('js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
         var path = '/{{ request()->path() }}';
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('#btn-save').on('click', function (e) {
+            $('#btn-save').on('click', function(e) {
                 e.preventDefault();
                 Swal.fire({
                     title: "Konfirmasi!",
@@ -209,5 +218,4 @@
             });
         });
     </script>
-
 @endsection

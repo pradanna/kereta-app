@@ -34,8 +34,8 @@
                     <div class="col-6">
                         <div class="form-group w-100">
                             <label for="date" class="form-label">Bulan <span class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control datepicker" id="date"
-                                   name="date" placeholder="Bulan" value="{{ \Carbon\Carbon::now()->format('F Y') }}">
+                            <input type="text" class="form-control datepicker" id="date" name="date"
+                                placeholder="Bulan" value="{{ \Carbon\Carbon::now()->format('F Y') }}">
                             <div class="text-danger d-none" id="error-date">
                             </div>
                         </div>
@@ -44,10 +44,9 @@
                         <div class="w-100">
                             <label for="name" class="form-label">Nama Laporan <span
                                     class="text-danger ms-1">*</span></label>
-                            <input type="text" class="form-control" id="name"
-                                   name="name"
-                                   placeholder="Nama Laporan">
-                                <div class="text-danger" id="error-name"></div>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Nama Laporan">
+                            <div class="text-danger" id="error-name"></div>
                         </div>
                     </div>
                 </div>
@@ -55,9 +54,8 @@
                     <div class="col-12">
                         <div class="w-100">
                             <label for="description" class="form-label">Keterangan</label>
-                            <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description"
-                                      name="description"
-                                      placeholder="Keterangan"></textarea>
+                            <textarea rows="3" class="form-control" style="font-size: 0.8rem" id="description" name="description"
+                                placeholder="Keterangan"></textarea>
                         </div>
                     </div>
                 </div>
@@ -80,12 +78,12 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/custom-style.css') }}" rel="stylesheet" />
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
-          integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet"/>
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
+        integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="{{ asset('/css/dropzone.min.css') }}" rel="stylesheet" />
     <style>
         .dz-error-message {
             display: none !important;
@@ -95,8 +93,8 @@
 
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
-            integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('/js/dropzone.min.js') }}"></script>
     <script src="{{ asset('js/helper.js') }}"></script>
     <script>
@@ -109,7 +107,7 @@
         Dropzone.autoDiscover = false;
         Dropzone.options.documentDropzone = {
 
-            success: function (file, response) {
+            success: function(file, response) {
                 $('form').append('<input type="hidden" name="file" value="' + file.name + '">');
                 console.log(response);
                 uploadedDocumentMap[file.name] = response.name
@@ -119,7 +117,7 @@
         function setupDropzone() {
             $("#document-dropzone").dropzone({
                 url: path,
-                maxFilesize: 2,
+                maxFilesize: 32,
                 addRemoveLinks: true,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
@@ -127,9 +125,9 @@
                 autoProcessQueue: false,
                 paramName: "file",
 
-                init: function () {
+                init: function() {
                     myDropzone = this;
-                    $('#btn-save').on('click', function (e) {
+                    $('#btn-save').on('click', function(e) {
                         e.preventDefault();
                         Swal.fire({
                             title: "Konfirmasi!",
@@ -152,7 +150,7 @@
                             }
                         });
                     });
-                    this.on('success', function (file, response) {
+                    this.on('success', function(file, response) {
                         blockLoading(false);
                         Swal.fire({
                             title: 'Berhasil',
@@ -164,7 +162,7 @@
                         });
                     });
 
-                    this.on('error', function (file, response) {
+                    this.on('error', function(file, response) {
                         blockLoading(false);
                         if (response['status'] === 422) {
                             let data = response['data'];
@@ -196,16 +194,16 @@
                         console.log(response);
                     });
 
-                    this.on('addedfile', function (file) {
+                    this.on('addedfile', function(file) {
                         if (this.files.length > 1) {
                             this.removeFile(this.files[0]);
                         }
                     });
 
-                    this.on('sending', function (file, xhr, formData) {
+                    this.on('sending', function(file, xhr, formData) {
                         // Append all form inputs to the formData Dropzone will POST
                         var data = $('#form-data').serializeArray();
-                        $.each(data, function (key, el) {
+                        $.each(data, function(key, el) {
                             formData.append(el.name, el.value);
                         });
                     });
@@ -213,7 +211,7 @@
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.datepicker').datepicker({
                 format: 'MM yyyy',
                 viewMode: 'months',

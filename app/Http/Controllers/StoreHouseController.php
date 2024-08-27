@@ -71,7 +71,7 @@ class StoreHouseController extends CustomController
             }
             switch ($type) {
                 case 'map':
-                    $data = $query->get()->append(['count_locomotive', 'count_train', 'count_wagon']);
+                    $data = $query->get()->append(['count_locomotive', 'count_train', 'count_wagon', 'count_electric_train', 'count_diesel_train', 'count_usual_train', 'count_special_equipment',]);
                     return $this->jsonSuccessResponse('success', $data);
                 case 'table':
                     $data = $query
@@ -273,7 +273,6 @@ class StoreHouseController extends CustomController
                 DB::rollBack();
                 return $this->jsonErrorResponse('internal server error');
             }
-
         }
         return view('admin.facility-menu.storehouse.image')->with([
             'data' => $data,
@@ -306,15 +305,15 @@ class StoreHouseController extends CustomController
     {
         try {
             $area = $this->request->query->get('area');
-//            $service_unit = $this->request->query->get('service_unit');
+            //            $service_unit = $this->request->query->get('service_unit');
             $query = Storehouse::with(['area', 'storehouse_type']);
 
-//            if ($service_unit !== '' && $service_unit !== null) {
-//                $query->whereHas('area', function ($qa) use ($service_unit) {
-//                    /** @var $qa Builder */
-//                    return $qa->where('service_unit_id', '=', $service_unit);
-//                });
-//            }
+            //            if ($service_unit !== '' && $service_unit !== null) {
+            //                $query->whereHas('area', function ($qa) use ($service_unit) {
+            //                    /** @var $qa Builder */
+            //                    return $qa->where('service_unit_id', '=', $service_unit);
+            //                });
+            //            }
             if ($area !== '') {
                 $query->where('area_id', '=', $area);
             }
