@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Exception;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
@@ -48,7 +49,7 @@ class FacilitySpecialEquipment extends DefaultValueBinder implements FromCollect
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 2;
-        $cellRange = 'A1:J' . $rowLength;
+        $cellRange = 'A9:J' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -75,15 +76,33 @@ class FacilitySpecialEquipment extends DefaultValueBinder implements FromCollect
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
-        $sheet->mergeCells('A1:A2');
-        $sheet->mergeCells('B1:B2');
-        $sheet->mergeCells('C1:D1');
-        $sheet->mergeCells('E1:E2');
-        $sheet->mergeCells('F1:F2');
-        $sheet->mergeCells('G1:G2');
-        $sheet->mergeCells('H1:H2');
-        $sheet->mergeCells('I1:I2');
-        $sheet->mergeCells('J1:J2');
+        $sheet->mergeCells('A1:J1');
+        $sheet->mergeCells('A2:J2');
+        $sheet->mergeCells('A3:J3');
+        $sheet->mergeCells('A4:J4');
+        $sheet->mergeCells('A6:J6');
+        $sheet->mergeCells('A7:J7');
+        $sheet->getStyle('A1:J1')
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A2:J2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:J3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:J4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:J6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A7:J7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:J7')->getFont()->setSize(16)->setBold(true);
+
+        $sheet->mergeCells('A9:A10');
+        $sheet->mergeCells('B9:B10');
+        $sheet->mergeCells('C9:D9');
+        $sheet->mergeCells('E9:E10');
+        $sheet->mergeCells('F9:F10');
+        $sheet->mergeCells('G9:G10');
+        $sheet->mergeCells('H9:H10');
+        $sheet->mergeCells('I9:I10');
+        $sheet->mergeCells('J9:J10');
 
     }
 
@@ -99,6 +118,86 @@ class FacilitySpecialEquipment extends DefaultValueBinder implements FromCollect
     private function headingValues()
     {
         return [
+            [
+                'KEMENTRIAN PERHUBUNGAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DIREKTORAT JENDERAL PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DEPO SARANA PENGGERAK & TANPA PENGGERAK ',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
             [
                 'NO.',
                 'KEPEMILIKAN',

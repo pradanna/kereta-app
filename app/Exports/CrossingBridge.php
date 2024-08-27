@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -24,8 +25,8 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     }
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         //
@@ -39,7 +40,7 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:K' . $rowLength;
+        $cellRange = 'A9:K' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -66,6 +67,24 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
+        $sheet->mergeCells('A1:K1');
+        $sheet->mergeCells('A2:K2');
+        $sheet->mergeCells('A3:K3');
+        $sheet->mergeCells('A4:K4');
+        $sheet->mergeCells('A6:K6');
+        $sheet->mergeCells('A7:K7');
+        $sheet->getStyle('A1:K1')
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A2:K2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:K3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:K4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:K6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A7:K7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:K7')->getFont()->setSize(16)->setBold(true);
+
     }
 
     /**
@@ -80,17 +99,99 @@ class CrossingBridge implements FromCollection, WithHeadings, WithStyles, WithSt
     private function headingValues()
     {
         return [
-            'NO.',
-            'WILAYAH',
-            'LINTAS',
-            'PETAK',
-            'KM/HM',
-            'NO. SURAT REKOMENDASI',
-            'PENANGGUNG JAWAB BANGUNAN',
-            'KELAS JALAN',
-            'PANJANG BANGUNAN (M)',
-            'LEBAR BANGUNAN (M)',
-            'KETERANGAN',
+            [
+                'KEMENTRIAN PERHUBUNGAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DIREKTORAT JENDERAL PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DEPO SARANA PENGGERAK & TANPA PENGGERAK ',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'NO.',
+                'WILAYAH',
+                'LINTAS',
+                'PETAK',
+                'KM/HM',
+                'NO. SURAT REKOMENDASI',
+                'PENANGGUNG JAWAB BANGUNAN',
+                'KELAS JALAN',
+                'PANJANG BANGUNAN (M)',
+                'LEBAR BANGUNAN (M)',
+                'KETERANGAN',
+            ]
         ];
     }
 

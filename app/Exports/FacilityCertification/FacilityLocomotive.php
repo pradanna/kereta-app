@@ -50,9 +50,21 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
         // TODO: Implement styles() method.
         $sheet->mergeCells('A1:K1');
         $sheet->mergeCells('A2:K2');
-        $sheet->getStyle('A1:K1')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A2:K2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('A3:K3');
+        $sheet->mergeCells('A4:K4');
+        $sheet->mergeCells('A6:K6');
+        $sheet->mergeCells('A7:K7');
+        $sheet->getStyle('A1:K1')
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
+        $sheet->getStyle('A2:K2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:K3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:K4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:K6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A7:K7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:K7')->getFont()->setSize(16)->setBold(true);
     }
 
     /**
@@ -193,7 +205,7 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A8:K' . $rowLength;
+        $cellRange = 'A9:K' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([

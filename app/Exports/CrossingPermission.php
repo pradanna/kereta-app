@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -24,8 +25,8 @@ class CrossingPermission implements FromCollection, WithHeadings, WithStyles, Wi
     }
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         //
@@ -66,6 +67,23 @@ class CrossingPermission implements FromCollection, WithHeadings, WithStyles, Wi
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
+        $sheet->mergeCells('A1:N1');
+        $sheet->mergeCells('A2:N2');
+        $sheet->mergeCells('A3:N3');
+        $sheet->mergeCells('A4:N4');
+        $sheet->mergeCells('A6:N6');
+        $sheet->mergeCells('A7:N7');
+        $sheet->getStyle('A1:K1')
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A2:N2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:N3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:N4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:N6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A7:N7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:N7')->getFont()->setSize(16)->setBold(true);
     }
 
     /**
@@ -80,20 +98,102 @@ class CrossingPermission implements FromCollection, WithHeadings, WithStyles, Wi
     private function headingValues()
     {
         return [
-            'NO.',
-            'WILAYAH',
-            'LINTAS',
-            'PETAK',
-            'KM/HM',
-            'NO. SK',
-            'TANGGAL SK',
-            'JENIS PERPOTONGAN/PERSINGGUNGAN',
-            'JENIS BANGUNAN',
-            'BADAN HUKUM/INSTANSI',
-            'TANGGAL HABIS MASA BERLAKU',
-            'AKAN HABIS',
-            'STATUS',
-            'KETERANGAN',
+            [
+                'KEMENTRIAN PERHUBUNGAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DIREKTORAT JENDERAL PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DEPO SARANA PENGGERAK & TANPA PENGGERAK ',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'NO.',
+                'WILAYAH',
+                'LINTAS',
+                'PETAK',
+                'KM/HM',
+                'NO. SK',
+                'TANGGAL SK',
+                'JENIS PERPOTONGAN/PERSINGGUNGAN',
+                'JENIS BANGUNAN',
+                'BADAN HUKUM/INSTANSI',
+                'TANGGAL HABIS MASA BERLAKU',
+                'AKAN HABIS',
+                'STATUS',
+                'KETERANGAN',
+            ]
         ];
     }
 

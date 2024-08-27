@@ -13,6 +13,7 @@ use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -26,8 +27,8 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     }
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         //
@@ -41,7 +42,7 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:M' . $rowLength;
+        $cellRange = 'A9:M' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -68,6 +69,23 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
+        $sheet->mergeCells('A1:M1');
+        $sheet->mergeCells('A2:M2');
+        $sheet->mergeCells('A3:M3');
+        $sheet->mergeCells('A4:M4');
+        $sheet->mergeCells('A6:M6');
+        $sheet->mergeCells('A7:M7');
+        $sheet->getStyle('A1:M1')
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A2:M2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:M3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:M4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:M6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A7:M7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:M7')->getFont()->setSize(16)->setBold(true);
     }
 
     /**
@@ -82,19 +100,101 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     private function headingValues()
     {
         return [
-            'NO.',
-            'KEPEMILIKAN',
-            'NO. SARANA',
-            'WILAYAH',
-            'JENIS KERETA',
-            'TIPE KERETA',
-            'DEPO INDUK',
-            'MULAI DINAS',
-            'MASA BERLAKU SARANA',
-            'NOMOR BA PENGUJIAN',
-            'AKAN HABIS (HARI)',
-            'STATUS',
-            'KETERANGAN'
+            [
+                'KEMENTRIAN PERHUBUNGAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DIREKTORAT JENDERAL PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DEPO SARANA PENGGERAK & TANPA PENGGERAK ',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'NO.',
+                'KEPEMILIKAN',
+                'NO. SARANA',
+                'WILAYAH',
+                'JENIS KERETA',
+                'TIPE KERETA',
+                'DEPO INDUK',
+                'MULAI DINAS',
+                'MASA BERLAKU SARANA',
+                'NOMOR BA PENGUJIAN',
+                'AKAN HABIS (HARI)',
+                'STATUS',
+                'KETERANGAN'
+            ]
         ];
     }
 

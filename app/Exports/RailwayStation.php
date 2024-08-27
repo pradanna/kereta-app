@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -24,8 +25,8 @@ class RailwayStation implements FromCollection, WithHeadings, WithStyles, WithSt
     }
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         //
@@ -39,7 +40,7 @@ class RailwayStation implements FromCollection, WithHeadings, WithStyles, WithSt
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:M' . $rowLength;
+        $cellRange = 'A9:M' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -66,6 +67,23 @@ class RailwayStation implements FromCollection, WithHeadings, WithStyles, WithSt
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
+        $sheet->mergeCells('A1:M1');
+        $sheet->mergeCells('A2:M2');
+        $sheet->mergeCells('A3:M3');
+        $sheet->mergeCells('A4:M4');
+        $sheet->mergeCells('A6:M6');
+        $sheet->mergeCells('A7:M7');
+        $sheet->getStyle('A1:M1')
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A2:M2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:M3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:M4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:M6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A7:M7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:M7')->getFont()->setSize(16)->setBold(true);
     }
 
     /**
@@ -74,25 +92,107 @@ class RailwayStation implements FromCollection, WithHeadings, WithStyles, WithSt
     public function title(): string
     {
         // TODO: Implement title() method.
-        return  'STASIUN KERETA API';
+        return 'STASIUN KERETA API';
     }
 
     private function headingValues()
     {
         return [
-            'NO.',
-            'WILAYAH',
-            'PETAK',
-            'KECAMATAN',
-            'KOTA/KABUPATEN',
-            'NAMA STASIUN',
-            'SINGKATAN STASIUN',
-            'KETINGGIAN (MDPL)',
-            'JENIS STASIUN',
-            'LOKASI',
-            'STATUS',
-            'KELAS STASIUN',
-            'KETERANGAN',
+            [
+                'KEMENTRIAN PERHUBUNGAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DIREKTORAT JENDERAL PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DEPO SARANA PENGGERAK & TANPA PENGGERAK ',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'NO.',
+                'WILAYAH',
+                'PETAK',
+                'KECAMATAN',
+                'KOTA/KABUPATEN',
+                'NAMA STASIUN',
+                'SINGKATAN STASIUN',
+                'KETINGGIAN (MDPL)',
+                'JENIS STASIUN',
+                'LOKASI',
+                'STATUS',
+                'KELAS STASIUN',
+                'KETERANGAN',
+            ]
         ];
     }
 
@@ -111,7 +211,7 @@ class RailwayStation implements FromCollection, WithHeadings, WithStyles, WithSt
                 $datum->nickname,
                 $datum->height,
                 $datum->type,
-                $datum->latitude . ', '.$datum->longitude,
+                $datum->latitude . ', ' . $datum->longitude,
                 $datum->status,
                 $datum->station_class,
                 $datum->description,
