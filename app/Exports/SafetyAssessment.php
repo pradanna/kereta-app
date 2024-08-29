@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -24,8 +25,8 @@ class SafetyAssessment implements FromCollection, WithHeadings, WithStyles, With
     }
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return new Collection($this->rowValues());
@@ -38,7 +39,7 @@ class SafetyAssessment implements FromCollection, WithHeadings, WithStyles, With
     {
         // TODO: Implement registerEvents() method.
         $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A1:K' . $rowLength;
+        $cellRange = 'A9:K' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -65,6 +66,23 @@ class SafetyAssessment implements FromCollection, WithHeadings, WithStyles, With
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
+        $sheet->mergeCells('A1:K1');
+        $sheet->mergeCells('A2:K2');
+        $sheet->mergeCells('A3:K3');
+        $sheet->mergeCells('A4:K4');
+        $sheet->mergeCells('A6:K6');
+        $sheet->mergeCells('A7:K7');
+        $sheet->getStyle('A1:K1')
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A2:K2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:K3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:K4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:K6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A7:K7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:K7')->getFont()->setSize(16)->setBold(true);
     }
 
     /**
@@ -73,23 +91,105 @@ class SafetyAssessment implements FromCollection, WithHeadings, WithStyles, With
     public function title(): string
     {
         // TODO: Implement title() method.
-        return  'SAFETY ASSESSMENT';
+        return 'SAFETY ASSESSMENT';
     }
 
     private function headingValues()
     {
         return [
-            'NO.',
-            'WILAYAH',
-            'LINTAS',
-            'PETAK',
-            'KOTA/KABUPATEN',
-            'KECAMATAN',
-            'NO. SURAT REKOMENDASI',
-            'PENYELENGGARA',
-            'RUANG LINGKUP PEKERJAAN',
-            'REKOMENDASI TINDAK LANJUT',
-            'KETERANGAN',
+            [
+                'KEMENTRIAN PERHUBUNGAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DIREKTORAT JENDERAL PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DEPO SARANA PENGGERAK & TANPA PENGGERAK ',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'NO.',
+                'WILAYAH',
+                'LINTAS',
+                'PETAK',
+                'KOTA/KABUPATEN',
+                'KECAMATAN',
+                'NO. SURAT REKOMENDASI',
+                'PENYELENGGARA',
+                'RUANG LINGKUP PEKERJAAN',
+                'REKOMENDASI TINDAK LANJUT',
+                'KETERANGAN',
+            ]
         ];
     }
 

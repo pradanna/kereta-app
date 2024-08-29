@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -25,8 +26,8 @@ class TrainBridge implements FromCollection, WithHeadings, WithStyles, WithStric
     }
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         //
@@ -67,6 +68,23 @@ class TrainBridge implements FromCollection, WithHeadings, WithStyles, WithStric
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
+        $sheet->mergeCells('A1:Q1');
+        $sheet->mergeCells('A2:Q2');
+        $sheet->mergeCells('A3:Q3');
+        $sheet->mergeCells('A4:Q4');
+        $sheet->mergeCells('A6:Q6');
+        $sheet->mergeCells('A7:Q7');
+        $sheet->getStyle('A1:Q1')
+            ->getAlignment()
+            ->setVertical(Alignment::VERTICAL_CENTER)
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A2:Q2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:Q3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:Q4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:Q6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A7:Q7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:Q7')->getFont()->setSize(16)->setBold(true);
     }
 
     /**
@@ -81,23 +99,105 @@ class TrainBridge implements FromCollection, WithHeadings, WithStyles, WithStric
     private function headingValues()
     {
         return [
-            'NO.',
-            'WILAYAH',
-            'LINTAS',
-            'PETAK',
-            'KM/HM',
-            'KORIDOR',
-            'NO. BH',
-            'JEMBATAN',
-            'JENIS BANGUNAN',
-            'BENANG',
-            'DI PASANG',
-            'DI GANTI',
-            'DI PERKUAT',
-            'VOLUME ANDAS (BUAH)',
-            'JUMLAH BANTALAN (BUAH)',
-            'JUMLAH BAUT (BUAH)',
-            'KETERANGAN',
+            [
+                'KEMENTRIAN PERHUBUNGAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DIREKTORAT JENDERAL PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [
+                'DEPO SARANA PENGGERAK & TANPA PENGGERAK ',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+                '',
+            ],
+            [],
+            [
+                'NO.',
+                'WILAYAH',
+                'LINTAS',
+                'PETAK',
+                'KM/HM',
+                'KORIDOR',
+                'NO. BH',
+                'JEMBATAN',
+                'JENIS BANGUNAN',
+                'BENANG',
+                'DI PASANG',
+                'DI GANTI',
+                'DI PERKUAT',
+                'VOLUME ANDAS (BUAH)',
+                'JUMLAH BANTALAN (BUAH)',
+                'JUMLAH BAUT (BUAH)',
+                'KETERANGAN',
+            ]
         ];
     }
 
