@@ -101,7 +101,7 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     {
         return [
             [
-                'KEMENTRIAN PERHUBUNGAN',
+                'KEMENTERIAN PERHUBUNGAN',
                 '',
                 '',
                 '',

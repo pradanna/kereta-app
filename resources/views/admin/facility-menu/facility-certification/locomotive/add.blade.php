@@ -108,7 +108,7 @@
                             <label for="facility_number" class="form-label">No. Sarana <span
                                     class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="facility_number" name="facility_number"
-                                placeholder="Nomor Sarana">
+                                placeholder="Contoh: CC2061345">
                             @if ($errors->has('facility_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('facility_number') }}

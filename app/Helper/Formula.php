@@ -89,11 +89,13 @@ class Formula
             foreach ($areas as $area) {
                 $qty_locomotive = $facility_locomotives
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '>', Formula::ExpirationLimit)
+//                    ->where('expired_in', '>', Formula::ExpirationLimit)
+                    ->where('expired_in', '>', 0)
                     ->count();
                 $qty_locomotive_expired = $facility_locomotives
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+//                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+                    ->where('expired_in', '<=', 0)
                     ->count();
 
                 $qty_train = $facility_trains
