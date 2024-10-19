@@ -42,7 +42,8 @@
                         <label for="status-option" class="form-label d-none">Status</label>
                         <select class="select2 form-control" name="status-option" id="status-option" style="width: 100%;">
                             <option value="">Semua Status</option>
-                            <option value="1">Berlaku</option>
+                            <option value="2">Berlaku</option>
+                            <option value="1">Akan Habis Masa Berlaku</option>
                             <option value="0">Habis Masa Berlaku</option>
                         </select>
                     </div>
@@ -382,9 +383,15 @@
                     deleteEvent();
                 },
                 createdRow: function(row, data, index) {
-                    if (data['expired_in'] < expiration) {
+                    if (data['expired_in'] < 0) {
                         $('td', row).css({
                             'background-color': '#fecba1'
+                        });
+                    }
+
+                    if (data['expired_in'] > 1 && data['expired_in'] < 31) {
+                        $('td', row).css({
+                            'background-color': '#ece75f'
                         });
                     }
                 },

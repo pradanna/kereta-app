@@ -71,12 +71,19 @@ class FacilityTrainController extends CustomController
             ->get()->append(['expired_in', 'status']);
 
         if ($status !== '') {
-            if ($status === '1') {
-                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+            if ($status === '2') {
+                $data = $data->where('expired_in', '>=', 31)->values();
             }
 
+            if ($status === '1') {
+                $data = $data->whereBetween('expired_in', [1, 30])->values();
+            }
+//            if ($status === '1') {
+//                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+//            }
+
             if ($status === '0') {
-                $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+                $data = $data->where('expired_in', '<=', 0)->values();
             }
         }
         return $data;

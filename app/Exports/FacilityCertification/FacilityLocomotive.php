@@ -51,25 +51,25 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
-        $sheet->mergeCells('A1:I1');
-        $sheet->mergeCells('A2:I2');
-        $sheet->mergeCells('A3:I3');
-        $sheet->mergeCells('J1:K3');
-        $sheet->mergeCells('A4:K4');
-        $sheet->mergeCells('A5:K5');
-        $sheet->mergeCells('A6:K6');
+        $sheet->mergeCells('A1:H1');
+        $sheet->mergeCells('A2:H2');
+        $sheet->mergeCells('A3:H3');
+        $sheet->mergeCells('I1:K6');
+        $sheet->mergeCells('A4:H4');
+        $sheet->mergeCells('A5:H5');
+        $sheet->mergeCells('A6:H6');
         $sheet->mergeCells('A7:K7');
-        $sheet->getStyle('A1:I1')
+        $sheet->getStyle('A1:H1')
             ->getAlignment()
             ->setVertical(Alignment::VERTICAL_CENTER)
             ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-        $sheet->getStyle('A2:I2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A3:I3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('J1:K3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A4:K4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A5:K5')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A6:K6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A2:H2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:H3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('I1:K6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:H4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A5:H5')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:H6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A7:K7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A1:K7')->getFont()->setSize(16)->setBold(true);
 
@@ -129,7 +129,7 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
             ],
             [],
             [
-                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                'DATA SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
                 '',
                 '',
                 '',
@@ -238,24 +238,24 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
         // TODO: Implement drawings() method.
         $drawing = new Drawing();
         $drawing->setName('logo');
-        $drawing->setPath(public_path('images/local/logodishub.png'));
-        $drawing->setHeight(40); // Mengatur tinggi gambar
-        $drawing->setCoordinates('J2'); // Lokasi di sheet (misalnya A1)
+        $drawing->setPath(public_path('images/local/logodjka.png'));
+        $drawing->setHeight(60); // Mengatur tinggi gambar
+        $drawing->setCoordinates('J3'); // Lokasi di sheet (misalnya A1)
         $drawing->setOffsetX(0);
 
         $drawing2 = new Drawing();
         $drawing2->setName('logodjka');
-        $drawing2->setPath(public_path('images/local/logodjka.png'));
-        $drawing2->setHeight(40); // Mengatur tinggi gambar
-        $drawing2->setCoordinates('J2'); // Lokasi di sheet (misalnya A1)
-        $drawing2->setOffsetX(45);
+        $drawing2->setPath(public_path('images/local/logodishub.png'));
+        $drawing2->setHeight(60); // Mengatur tinggi gambar
+        $drawing2->setCoordinates('J3'); // Lokasi di sheet (misalnya A1)
+        $drawing2->setOffsetX(65);
 
         $drawing3 = new Drawing();
         $drawing3->setName('logodjkaw');
         $drawing3->setPath(public_path('images/local/logo_btp.png'));
-        $drawing3->setHeight(40); // Mengatur tinggi gambar
-        $drawing3->setCoordinates('J2'); // Lokasi di sheet (misalnya A1)
-        $drawing3->setOffsetX(90);
+        $drawing3->setHeight(60); // Mengatur tinggi gambar
+        $drawing3->setCoordinates('J3'); // Lokasi di sheet (misalnya A1)
+        $drawing3->setOffsetX(125);
 
         return [$drawing, $drawing2, $drawing3];
     }
