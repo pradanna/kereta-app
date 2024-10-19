@@ -107,7 +107,7 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="facility_number" class="form-label">No. Sarana <span
+                            <label for="facility_number" class="form-label">No. Sarana (Contoh: CC2061345) <span
                                     class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="facility_number" name="facility_number"
                                 placeholder="Contoh: CC2061345" value="{{ $data->facility_number }}">
