@@ -61,12 +61,26 @@ class FacilityWagonController extends CustomController
             ->get()->append(['expired_in', 'status']);
 
         if ($status !== '') {
-            if ($status === '1') {
-                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+//            if ($status === '1') {
+//                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+//            }
+//
+//            if ($status === '0') {
+//                $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+//            }
+            if ($status === '2') {
+                $data = $data->where('expired_in', '>=', 31)->values();
             }
 
+            if ($status === '1') {
+                $data = $data->whereBetween('expired_in', [1, 30])->values();
+            }
+//            if ($status === '1') {
+//                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+//            }
+
             if ($status === '0') {
-                $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+                $data = $data->where('expired_in', '<=', 0)->values();
             }
         }
         return $data;
@@ -125,7 +139,8 @@ class FacilityWagonController extends CustomController
                     'wagon_sub_type_id' => null,
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
-                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
+//                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
+                    'service_start_date' => $this->postField('service_start_date').'-01-01',
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                     'description' => $this->postField('description'),
@@ -165,7 +180,8 @@ class FacilityWagonController extends CustomController
                     'wagon_sub_type_id' => null,
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
-                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
+//                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
+                    'service_start_date' => $this->postField('service_start_date').'-01-01',
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                     'description' => $this->postField('description'),

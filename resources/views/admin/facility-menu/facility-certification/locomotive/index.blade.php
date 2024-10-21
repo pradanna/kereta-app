@@ -358,17 +358,32 @@
                 let facilityNumber = data['facility_number'];
                 let testingNumber = data['testing_number'];
                 let serviceStartDate = data['service_start_date'];
+
+
                 let serviceExpiredDate = data['service_expired_date'];
                 let expiredIn = data['expired_in'];
                 let description = data['description'];
-                let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+                // let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+                let status = 'BERLAKU';
+
+                if (data['expired_in'] < 0) {
+                    status = 'HABIS MASA BERLAKU';
+                }
+
+                if (data['expired_in'] > 1 && data['expired_in'] < 31) {
+                    status = 'AKAN HABIS MASA BERLAKU'
+                }
+
+
+                const tmpDate = new Date(serviceStartDate);
+                let serviceStartDateValue = tmpDate.getFullYear();
                 // $('#locomotive_type').val(locomotiveType);
                 $('#area').val(area);
                 $('#storehouse').val(storehouse + ' (' + storehouseType + ')');
                 $('#ownership').val(ownership);
                 $('#facility_number').val(facilityNumber);
                 $('#testing_number').val(testingNumber);
-                $('#service_start_date').val(serviceStartDate);
+                $('#service_start_date').val(serviceStartDateValue);
                 $('#service_expired_date').val(serviceExpiredDate);
                 $('#status').val(status);
                 $('#expired_in').val(expiredIn);

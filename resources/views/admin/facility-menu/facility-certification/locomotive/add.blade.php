@@ -136,7 +136,7 @@
                             <label for="service_start_date" class="form-label">Mulai Dinas <span
                                     class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="service_start_date"
-                                name="service_start_date" placeholder="dd-mm-yyyy">
+                                name="service_start_date" placeholder="yyyy">
                             @if ($errors->has('service_start_date'))
                                 <div class="text-danger">
                                     {{ $errors->first('service_start_date') }}

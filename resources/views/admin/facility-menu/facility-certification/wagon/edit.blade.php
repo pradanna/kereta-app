@@ -107,10 +107,10 @@
                 <div class="row mb-3">
                     <div class="col-6">
                         <div class="form-group w-100">
-                            <label for="facility_number" class="form-label">No. Sarana <span
+                            <label for="facility_number" class="form-label">No. Sarana (Contoh: CC2061345) <span
                                     class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control" id="facility_number" name="facility_number"
-                                placeholder="Nomor Sarana" value="{{ $data->facility_number }}">
+                                placeholder="Contoh: CC2061345" value="{{ $data->facility_number }}">
                             @if ($errors->has('facility_number'))
                                 <div class="text-danger">
                                     {{ $errors->first('facility_number') }}
@@ -138,7 +138,7 @@
                             <label for="service_start_date" class="form-label">Mulai Dinas <span
                                     class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="service_start_date"
-                                name="service_start_date" placeholder="dd-mm-yyyy">
+                                name="service_start_date" placeholder="yyyy">
                             @if ($errors->has('service_start_date'))
                                 <div class="text-danger">
                                     {{ $errors->first('service_start_date') }}
@@ -235,9 +235,17 @@
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('.datepicker').datepicker({
+
+            $('#service_start_date').datepicker({
+                format: 'yyyy',
+                viewMode: "years",
+                minViewMode: "years"
+            });
+
+            $('#service_expired_date').datepicker({
                 format: 'dd-mm-yyyy',
             });
+
             generateStorehouseOption();
             $('#area').on('change', function(e) {
                 generateStorehouseOption();

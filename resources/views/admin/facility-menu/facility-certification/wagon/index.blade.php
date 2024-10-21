@@ -45,7 +45,8 @@
                             <select class="select2 form-control" name="status-option" id="status-option"
                                 style="width: 100%;">
                                 <option value="">Semua Status</option>
-                                <option value="1">Berlaku</option>
+                                <option value="2">Berlaku</option>
+                                <option value="1">Akan Habis Masa Berlaku</option>
                                 <option value="0">Habis Masa Berlaku</option>
                             </select>
                         </div>
@@ -326,9 +327,20 @@
                     deleteEvent();
                 },
                 createdRow: function(row, data, index) {
-                    if (data['expired_in'] < expiration) {
+                    // if (data['expired_in'] < expiration) {
+                    //     $('td', row).css({
+                    //         'background-color': '#fecba1'
+                    //     });
+                    // }
+                    if (data['expired_in'] < 0) {
                         $('td', row).css({
                             'background-color': '#fecba1'
+                        });
+                    }
+
+                    if (data['expired_in'] > 1 && data['expired_in'] < 31) {
+                        $('td', row).css({
+                            'background-color': '#ece75f'
                         });
                     }
                 },
@@ -360,14 +372,26 @@
                 let serviceExpiredDate = data['service_expired_date'];
                 let expiredIn = data['expired_in'];
                 let description = data['description'];
-                let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+                // let status = data['status'] === 'valid' ? 'BERLAKU' : 'HABIS MASA BERLAKU';
+                let status = 'BERLAKU';
+
+                if (data['expired_in'] < 0) {
+                    status = 'HABIS MASA BERLAKU';
+                }
+
+                if (data['expired_in'] > 1 && data['expired_in'] < 31) {
+                    status = 'AKAN HABIS MASA BERLAKU'
+                }
+
+                const tmpDate = new Date(serviceStartDate);
+                let serviceStartDateValue = tmpDate.getFullYear();
                 // $('#wagon_sub_type').val(wagonSubType);
                 $('#area').val(area);
                 $('#storehouse').val(storehouse + ' (' + storehouseType + ')');
                 $('#ownership').val(ownership);
                 $('#facility_number').val(facilityNumber);
                 $('#testing_number').val(testingNumber);
-                $('#service_start_date').val(serviceStartDate);
+                $('#service_start_date').val(serviceStartDateValue);
                 $('#service_expired_date').val(serviceExpiredDate);
                 $('#status').val(status);
                 $('#expired_in').val(expiredIn);

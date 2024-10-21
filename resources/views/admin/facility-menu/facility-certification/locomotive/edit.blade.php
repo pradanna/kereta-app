@@ -138,7 +138,7 @@
                             <label for="service_start_date" class="form-label">Mulai Dinas <span
                                     class="text-danger ms-1">*</span></label>
                             <input type="text" class="form-control datepicker" id="service_start_date"
-                                name="service_start_date" placeholder="dd-mm-yyyy">
+                                name="service_start_date" placeholder="yyyy">
                             @if ($errors->has('service_start_date'))
                                 <div class="text-danger">
                                     {{ $errors->first('service_start_date') }}
@@ -234,7 +234,14 @@
             $('.select2').select2({
                 width: 'resolve',
             });
-            $('.datepicker').datepicker({
+
+            $('#service_start_date').datepicker({
+                format: 'yyyy',
+                viewMode: "years",
+                minViewMode: "years"
+            });
+
+            $('#service_expired_date').datepicker({
                 format: 'dd-mm-yyyy',
             });
             generateStorehouseOption();

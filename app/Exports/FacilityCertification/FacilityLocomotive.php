@@ -196,7 +196,7 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
                 $datum->facility_number,
                 $datum->area->name,
                 $datum->storehouse->name . ' (' . $datum->storehouse->storehouse_type->name . ')',
-                Carbon::parse($datum->service_start_date)->format('d-m-Y'),
+                Carbon::parse($datum->service_start_date)->format('Y'),
                 Carbon::parse($datum->service_expired_date)->format('d-m-Y'),
                 $datum->testing_number,
                 $datum->expired_in,
