@@ -214,7 +214,7 @@ class FacilityLocomotiveController extends CustomController
         $fileName = 'sertifikasi_lokomotif_' . date('YmdHis') . '.xlsx';
         $data = $this->generateData();
         return Excel::download(
-            new \App\Exports\FacilityCertification\FacilityLocomotive($data),
+            new \App\Exports\FacilityCertification\FacilityLocomotiveData($data),
             $fileName
         );
     }
