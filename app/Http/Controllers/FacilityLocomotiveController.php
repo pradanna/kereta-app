@@ -102,6 +102,7 @@ class FacilityLocomotiveController extends CustomController
         'service_expired_date.required' => 'kolom masa berlaku wajib di isi',
         'testing_number.required' => 'kolom masa berlaku wajib di isi',
     ];
+
     public function store()
     {
         $access = $this->getRoleAccess(Formula::APPMenuFacilityLocomotive);
@@ -121,7 +122,7 @@ class FacilityLocomotiveController extends CustomController
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
 //                    'service_start_date' => Carbon::createFromFormat('Y', $this->postField('service_start_date'))->format('Y-m-d'),
-                    'service_start_date' => $this->postField('service_start_date').'-01-01',
+                    'service_start_date' => $this->postField('service_start_date') . '-01-01',
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                     'description' => $this->postField('description'),
@@ -162,7 +163,7 @@ class FacilityLocomotiveController extends CustomController
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
 //                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
-                    'service_start_date' => $this->postField('service_start_date').'-01-01',
+                    'service_start_date' => $this->postField('service_start_date') . '-01-01',
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                     'description' => $this->postField('description'),
@@ -213,8 +214,15 @@ class FacilityLocomotiveController extends CustomController
     {
         $fileName = 'sertifikasi_lokomotif_' . date('YmdHis') . '.xlsx';
         $data = $this->generateData();
+        $area = $this->request->query->get('area');
+        $queryAreas = Area::with(['service_units']);
+        if ($area !== '') {
+            $queryAreas->where('id', '=', $area);
+        }
+        $areas = $queryAreas->orderBy('name', 'ASC')
+            ->get();
         return Excel::download(
-            new \App\Exports\FacilityCertification\FacilityLocomotiveData($data),
+            new \App\Exports\FacilityCertification\FacilityLocomotiveData($data, $areas),
             $fileName
         );
     }
