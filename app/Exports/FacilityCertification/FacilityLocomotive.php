@@ -240,21 +240,21 @@ class FacilityLocomotive implements FromCollection, WithHeadings, WithStyles, Wi
         $drawing->setName('logo');
         $drawing->setPath(public_path('images/local/logodjka.png'));
         $drawing->setHeight(60); // Mengatur tinggi gambar
-        $drawing->setCoordinates('J3'); // Lokasi di sheet (misalnya A1)
+        $drawing->setCoordinates('I3'); // Lokasi di sheet (misalnya A1)
         $drawing->setOffsetX(0);
 
         $drawing2 = new Drawing();
         $drawing2->setName('logodjka');
         $drawing2->setPath(public_path('images/local/logodishub.png'));
         $drawing2->setHeight(60); // Mengatur tinggi gambar
-        $drawing2->setCoordinates('J3'); // Lokasi di sheet (misalnya A1)
+        $drawing2->setCoordinates('I3'); // Lokasi di sheet (misalnya A1)
         $drawing2->setOffsetX(65);
 
         $drawing3 = new Drawing();
         $drawing3->setName('logodjkaw');
         $drawing3->setPath(public_path('images/local/logo_btp.png'));
         $drawing3->setHeight(60); // Mengatur tinggi gambar
-        $drawing3->setCoordinates('J3'); // Lokasi di sheet (misalnya A1)
+        $drawing3->setCoordinates('I3'); // Lokasi di sheet (misalnya A1)
         $drawing3->setOffsetX(125);
 
         return [$drawing, $drawing2, $drawing3];

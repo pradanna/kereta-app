@@ -12,11 +12,13 @@ class FacilityLocomotiveData implements WithMultipleSheets
     use Exportable;
     private $data;
     private $areas;
+    private $facilitiesData;
 
-    public function __construct($data, $areas)
+    public function __construct($data, $areas, $facilitiesData)
     {
         $this->data = $data;
         $this->areas = $areas;
+        $this->facilitiesData = $facilitiesData;
     }
     /**
      * @inheritDoc
@@ -25,7 +27,7 @@ class FacilityLocomotiveData implements WithMultipleSheets
     {
         // TODO: Implement sheets() method.
         return  [
-            new FacilityLocomotiveSummary($this->data, $this->areas),
+            new FacilityLocomotiveSummary($this->data, $this->areas, $this->facilitiesData),
             new FacilityLocomotive($this->data),
         ];
 

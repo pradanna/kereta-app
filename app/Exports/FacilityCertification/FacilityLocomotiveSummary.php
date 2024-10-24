@@ -13,6 +13,8 @@ use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
@@ -26,11 +28,13 @@ class FacilityLocomotiveSummary implements FromCollection, WithHeadings, WithSty
      */
     private $data;
     private $areas;
+    private $facilitiesData;
 
-    public function __construct($data, $areas)
+    public function __construct($data, $areas, $facilitiesData)
     {
         $this->data = $data;
         $this->areas = $areas;
+        $this->facilitiesData = $facilitiesData;
     }
 
     /**
@@ -79,8 +83,13 @@ class FacilityLocomotiveSummary implements FromCollection, WithHeadings, WithSty
     public function registerEvents(): array
     {
         // TODO: Implement registerEvents() method.
+        $dynamicColumnStart = 2;
+        $numberOfColumns = count($this->areas);
+        $dynamicColumnEnd = $dynamicColumnStart + $numberOfColumns - 1;
+        $lastColumn = $dynamicColumnStart + $numberOfColumns;
+        $lastColumnLetter = Coordinate::stringFromColumnIndex($lastColumn);
         $rowLength = count($this->rowValues()) + 7;
-        $cellRange = 'A7:E' . $rowLength;
+        $cellRange = 'A7:' . $lastColumnLetter . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -107,24 +116,31 @@ class FacilityLocomotiveSummary implements FromCollection, WithHeadings, WithSty
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
-        $sheet->getColumnDimension('B')->setWidth(50);
-        $sheet->mergeCells('A1:E1');
-        $sheet->mergeCells('A2:E2');
-        $sheet->mergeCells('A3:E3');
-        $sheet->mergeCells('A4:E4');
-        $sheet->mergeCells('A5:E5');
-        $sheet->mergeCells('A6:E6');
-        $sheet->getStyle('A1:E1')
+        $dynamicColumnStart = 2;
+        $numberOfColumns = count($this->areas);
+        $dynamicColumnEnd = $dynamicColumnStart + $numberOfColumns - 1;
+        $lastColumn = $dynamicColumnStart + $numberOfColumns;
+        $lastColumnLetter = Coordinate::stringFromColumnIndex($lastColumn);
+        $sheet->getColumnDimension('A')->setAutoSize(false);
+        $sheet->getColumnDimension('A')->setWidth(75);
+
+        $sheet->mergeCells('A1:' . $lastColumnLetter . '1');
+        $sheet->mergeCells('A2:' . $lastColumnLetter . '2');
+        $sheet->mergeCells('A3:' . $lastColumnLetter . '3');
+        $sheet->mergeCells('A4:' . $lastColumnLetter . '4');
+        $sheet->mergeCells('A5:' . $lastColumnLetter . '5');
+        $sheet->mergeCells('A6:' . $lastColumnLetter . '6');
+        $sheet->getStyle('A1:' . $lastColumnLetter . '1')
             ->getAlignment()
             ->setVertical(Alignment::VERTICAL_CENTER)
             ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-        $sheet->getStyle('A2:E2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A3:E3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A4:E4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A5:E5')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A6:E6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A1:E6')->getFont()->setSize(16)->setBold(true);
+        $sheet->getStyle('A2:' . $lastColumnLetter . '2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:' . $lastColumnLetter . '3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:' . $lastColumnLetter . '4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A5:' . $lastColumnLetter . '5')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:' . $lastColumnLetter . '6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:' . $lastColumnLetter . '6')->getFont()->setSize(16)->setBold(true);
     }
 
     /**
@@ -139,41 +155,33 @@ class FacilityLocomotiveSummary implements FromCollection, WithHeadings, WithSty
     private function headingValues()
     {
         $generatedHeadAreas = [];
+        $generatedTitleLine1 = [];
+        $generatedTitleLine2 = [];
+        $generatedTitleLine3 = [];
+        $generatedTitleLine4 = [];
         array_push($generatedHeadAreas, 'JENIS SARANA');
+        array_push($generatedTitleLine1, 'KEMENTERIAN PERHUBUNGAN');
+        array_push($generatedTitleLine2, 'DIREKTORAT JENDERAL PERKERETAAPIAN');
+        array_push($generatedTitleLine3, 'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG');
+        array_push($generatedTitleLine4, 'REKAPITULASI DATA SARANA LOKOMOTIF');
         foreach ($this->areas as $area) {
             array_push($generatedHeadAreas, $area->name);
+            array_push($generatedTitleLine1, '');
+            array_push($generatedTitleLine2, '');
+            array_push($generatedTitleLine3, '');
+            array_push($generatedTitleLine4, '');
         }
         array_push($generatedHeadAreas, 'TOTAL');
+        array_push($generatedTitleLine1, '');
+        array_push($generatedTitleLine2, '');
+        array_push($generatedTitleLine3, '');
+        array_push($generatedTitleLine4, '');
         return [
-            [
-                'KEMENTERIAN PERHUBUNGAN',
-                '',
-                '',
-                '',
-                '',
-            ],
-            [
-                'DIREKTORAT JENDERAL PERKERETAAPIAN',
-                '',
-                '',
-                '',
-                '',
-            ],
-            [
-                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
-                '',
-                '',
-                '',
-                '',
-            ],
+            $generatedTitleLine1,
+            $generatedTitleLine2,
+            $generatedTitleLine3,
             [],
-            [
-                'REKAP DATA SARANA LOKOMOTIF',
-                '',
-                '',
-                '',
-                '',
-            ],
+            $generatedTitleLine4,
             [],
             $generatedHeadAreas,
         ];
@@ -183,28 +191,65 @@ class FacilityLocomotiveSummary implements FromCollection, WithHeadings, WithSty
     {
         $results = [];
         $facilityTypes = [
-            'Lokomotif',
-            'Kereta',
-            'KRD',
-            'KRL',
-            'Gerbong',
-            'Peralatan Khusus'
+            [
+                'key' => 'locomotives',
+                'title' => 'Lokomotif'
+            ],
+            [
+                'key' => 'trains',
+                'title' => 'Kereta'
+            ],
+            [
+                'key' => 'diesel_trains',
+                'title' => 'KRD'
+            ],
+            [
+                'key' => 'electric_trains',
+                'title' => 'KRL'
+            ],
+            [
+                'key' => 'wagons',
+                'title' => 'Gerbong'
+            ],
+            [
+                'key' => 'special_equipments',
+                'title' => 'Peralatan Khusus'
+            ]
         ];
+
+        $arrTotal = [];
+        array_push($arrTotal, 'TOTAL');
+        $matrix = [];
+
         foreach ($facilityTypes as $key => $facilityType) {
-//            $no = $key + 1;
-//            $areaName = $area->name;
-//            $count = $this->data->where('area_id', '=', $area->id)->count();
-//            $validItem = $this->data->where('area_id', '=', $area->id)
-//                ->where('expired_in', '>', 0)
-//                ->count();
-//            $invalidItem = $this->data->where('area_id', '=', $area->id)
-//                ->where('expired_in', '<=', 0)
-//                ->count();
-            $result = [
-                $facilityType,
-            ];
+            $result = [];
+            $matrixLine = [];
+            array_push($result, $facilityType['title']);
+            $facilityKey = $facilityType['key'];
+            /** @var Collection $facilities */
+            $facilities = $this->facilitiesData[$facilityKey];
+            $total = 0;
+            foreach ($this->areas as $area) {
+                $count = $facilities->where('area_id', '=', $area->id)->count();
+                $total += $count;
+                array_push($result, $count);
+                array_push($matrixLine, $count);
+            }
+            array_push($result, $total);
+            array_push($matrixLine, $total);
             array_push($results, $result);
+            array_push($matrix, $matrixLine);
         }
+
+        $columnSums = array_fill(0, count($matrix[0]), 0);
+        foreach ($matrix as $row) {
+            foreach ($row as $colIndex => $value) {
+                $columnSums[$colIndex] += $value;
+            }
+        }
+
+        $summaryLine = array_merge($arrTotal, $columnSums);
+        array_push($results, $summaryLine);
         return $results;
     }
 }
