@@ -89,61 +89,71 @@ class Formula
             foreach ($areas as $area) {
                 $qty_locomotive = $facility_locomotives
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '>', Formula::ExpirationLimit)
+//                    ->where('expired_in', '>', Formula::ExpirationLimit)
+                    ->where('expired_in', '>', 0)
                     ->count();
                 $qty_locomotive_expired = $facility_locomotives
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+//                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+                    ->where('expired_in', '<=', 0)
                     ->count();
 
                 $qty_train = $facility_trains
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '>', Formula::ExpirationLimit)
+                    ->where('expired_in', '>', 0)
                     ->count();
 
                 $qty_train_expired = $facility_trains
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+                    ->where('expired_in', '<=', 0)
                     ->count();
 
                 $qty_diesel_train = $facility_diesel_trains
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '>', Formula::ExpirationLimit)
+//                    ->where('expired_in', '>', Formula::ExpirationLimit)
+                    ->where('expired_in', '>', 0)
                     ->count();
 
                 $qty_diesel_train_expired = $facility_diesel_trains
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+//                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+                    ->where('expired_in', '<=', 0)
                     ->count();
 
                 $qty_electric_train = $facility_electric_trains
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '>', Formula::ExpirationLimit)
+//                    ->where('expired_in', '>', Formula::ExpirationLimit)
+                    ->where('expired_in', '>', 0)
                     ->count();
 
                 $qty_electric_train_expired = $facility_electric_trains
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+//                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+                    ->where('expired_in', '<=', 0)
                     ->count();
 
                 $qty_wagon = $facility_wagons
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '>', Formula::ExpirationLimit)
+//                    ->where('expired_in', '>', Formula::ExpirationLimit)
+                    ->where('expired_in', '>', 0)
                     ->count();
 
                 $qty_wagon_expired = $facility_wagons
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+//                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+                    ->where('expired_in', '<=', 0)
                     ->count();
 
                 $qty_special_equipment = $facility_special_equipment
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '>', Formula::ExpirationLimit)
+//                    ->where('expired_in', '>', Formula::ExpirationLimit)
+                    ->where('expired_in', '>', 0)
                     ->count();
 
                 $qty_special_equipment_expired = $facility_special_equipment
                     ->where('area_id', '=', $area->id)
-                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+//                    ->where('expired_in', '<=', Formula::ExpirationLimit)
+                    ->where('expired_in', '<=', 0)
                     ->count();
 
                 $sum = (

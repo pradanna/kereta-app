@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
@@ -15,9 +16,11 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Worksheet\BaseDrawing;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents
+class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStrictNullComparison, WithTitle, ShouldAutoSize, WithEvents, WithDrawings
 {
     private $data;
 
@@ -41,8 +44,8 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     public function registerEvents(): array
     {
         // TODO: Implement registerEvents() method.
-        $rowLength = count($this->rowValues()) + 1;
-        $cellRange = 'A9:M' . $rowLength;
+        $rowLength = count($this->rowValues()) + 8;
+        $cellRange = 'A8:M' . $rowLength;
         return [
             AfterSheet::class => function (AfterSheet $event) use ($cellRange) {
                 $event->sheet->getStyle($cellRange)->applyFromArray([
@@ -69,21 +72,26 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     public function styles(Worksheet $sheet)
     {
         // TODO: Implement styles() method.
-        $sheet->mergeCells('A1:M1');
-        $sheet->mergeCells('A2:M2');
-        $sheet->mergeCells('A3:M3');
-        $sheet->mergeCells('A4:M4');
-        $sheet->mergeCells('A6:M6');
+        $sheet->mergeCells('A1:J1');
+        $sheet->mergeCells('A2:J2');
+        $sheet->mergeCells('A3:J3');
+        $sheet->mergeCells('A4:J4');
+        $sheet->mergeCells('A5:J5');
+        $sheet->mergeCells('A6:J6');
         $sheet->mergeCells('A7:M7');
-        $sheet->getStyle('A1:M1')
+        $sheet->mergeCells('K1:M6');
+        $sheet->getStyle('A1:J1')
             ->getAlignment()
             ->setVertical(Alignment::VERTICAL_CENTER)
             ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-        $sheet->getStyle('A2:M2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A3:M3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A4:M4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $sheet->getStyle('A6:M6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:J1')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A2:J2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:J3')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A4:J4')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A5:J5')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A6:J6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('K1:M6')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A7:M7')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A1:M7')->getFont()->setSize(16)->setBold(true);
     }
@@ -101,7 +109,7 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     {
         return [
             [
-                'KEMENTRIAN PERHUBUNGAN',
+                'KEMENTERIAN PERHUBUNGAN',
                 '',
                 '',
                 '',
@@ -139,22 +147,9 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
                 '',
                 '',
             ],
-            [
-                'BALAI TEKNIK PERKERETAAPIAN KELAS I SEMARANG',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-                '',
-            ],
             [],
             [
-                'CHEKSHEET SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
+                'DATA SERTIFIKASI KELAIKAN SARANA PERKERETAAPIAN',
                 '',
                 '',
                 '',
@@ -202,6 +197,19 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
     {
         $results = [];
         foreach ($this->data as $key => $datum) {
+            $expirationText = '';
+            if ($datum->expired_in <= 0) {
+                $expirationText = 'HABIS MASA BERLAKU';
+            }
+
+            if ($datum->expired_in >= 1 && $datum->expired_in < 31) {
+                $expirationText = 'AKAN HABIS MASA BERLAKU';
+            }
+
+            if ($datum->expired_in >= 31) {
+                $expirationText = 'BERLAKU';
+            }
+
             $no = $key + 1;
             $engineType = '-';
             switch ($datum->engine_type) {
@@ -225,15 +233,45 @@ class FacilityTrain implements FromCollection, WithHeadings, WithStyles, WithStr
                 $datum->train_type_string,
                 $engineType,
                 $datum->storehouse->name . ' (' . $datum->storehouse->storehouse_type->name . ')',
-                Carbon::parse($datum->service_start_date)->format('d-m-Y'),
+                Carbon::parse($datum->service_start_date)->format('Y'),
                 Carbon::parse($datum->service_expired_date)->format('d-m-Y'),
                 $datum->testing_number,
                 $datum->expired_in,
-                ($datum->expired_in <= Formula::ExpirationLimit ? 'HABIS MASA BERLAKU' : 'BERLAKU'),
+                $expirationText,
                 $datum->description,
             ];
             array_push($results, $result);
         }
         return $results;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function drawings()
+    {
+        // TODO: Implement drawings() method.
+        $drawing = new Drawing();
+        $drawing->setName('logo');
+        $drawing->setPath(public_path('images/local/logodjka.png'));
+        $drawing->setHeight(60); // Mengatur tinggi gambar
+        $drawing->setCoordinates('L3'); // Lokasi di sheet (misalnya A1)
+        $drawing->setOffsetX(0);
+
+        $drawing2 = new Drawing();
+        $drawing2->setName('logodjka');
+        $drawing2->setPath(public_path('images/local/logodishub.png'));
+        $drawing2->setHeight(60); // Mengatur tinggi gambar
+        $drawing2->setCoordinates('L3'); // Lokasi di sheet (misalnya A1)
+        $drawing2->setOffsetX(65);
+
+        $drawing3 = new Drawing();
+        $drawing3->setName('logodjkaw');
+        $drawing3->setPath(public_path('images/local/logo_btp.png'));
+        $drawing3->setHeight(60); // Mengatur tinggi gambar
+        $drawing3->setCoordinates('L3'); // Lokasi di sheet (misalnya A1)
+        $drawing3->setOffsetX(125);
+
+        return [$drawing, $drawing2, $drawing3];
     }
 }

@@ -10,6 +10,9 @@ use App\Models\AccessMenu;
 use App\Models\Area;
 use App\Models\FacilityCertification;
 use App\Models\FacilityLocomotive;
+use App\Models\FacilitySpecialEquipment;
+use App\Models\FacilityTrain;
+use App\Models\FacilityWagon;
 use App\Models\LocomotiveType;
 use App\Models\ServiceUnit;
 use Carbon\Carbon;
@@ -50,12 +53,19 @@ class FacilityLocomotiveController extends CustomController
             ->get()->append(['expired_in', 'status']);
 
         if ($status !== '') {
-            if ($status === '1') {
-                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+            if ($status === '2') {
+                $data = $data->where('expired_in', '>=', 31)->values();
             }
 
+            if ($status === '1') {
+                $data = $data->whereBetween('expired_in', [1, 30])->values();
+            }
+//            if ($status === '1') {
+//                $data = $data->where('expired_in', '>', Formula::ExpirationLimit)->values();
+//            }
+
             if ($status === '0') {
-                $data = $data->where('expired_in', '<=', Formula::ExpirationLimit)->values();
+                $data = $data->where('expired_in', '<=', 0)->values();
             }
         }
         return $data;
@@ -95,6 +105,7 @@ class FacilityLocomotiveController extends CustomController
         'service_expired_date.required' => 'kolom masa berlaku wajib di isi',
         'testing_number.required' => 'kolom masa berlaku wajib di isi',
     ];
+
     public function store()
     {
         $access = $this->getRoleAccess(Formula::APPMenuFacilityLocomotive);
@@ -113,7 +124,8 @@ class FacilityLocomotiveController extends CustomController
                     'locomotive_type_id' => null,
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
-                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
+//                    'service_start_date' => Carbon::createFromFormat('Y', $this->postField('service_start_date'))->format('Y-m-d'),
+                    'service_start_date' => $this->postField('service_start_date') . '-01-01',
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                     'description' => $this->postField('description'),
@@ -153,7 +165,8 @@ class FacilityLocomotiveController extends CustomController
                     'locomotive_type_id' => null,
                     'ownership' => $this->postField('ownership'),
                     'facility_number' => $this->postField('facility_number'),
-                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
+//                    'service_start_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_start_date'))->format('Y-m-d'),
+                    'service_start_date' => $this->postField('service_start_date') . '-01-01',
                     'service_expired_date' => Carbon::createFromFormat('d-m-Y', $this->postField('service_expired_date'))->format('Y-m-d'),
                     'testing_number' => $this->postField('testing_number'),
                     'description' => $this->postField('description'),
@@ -204,8 +217,45 @@ class FacilityLocomotiveController extends CustomController
     {
         $fileName = 'sertifikasi_lokomotif_' . date('YmdHis') . '.xlsx';
         $data = $this->generateData();
+        $area = $this->request->query->get('area');
+        $queryAreas = Area::with(['service_units']);
+        if ($area !== '') {
+            $queryAreas->where('id', '=', $area);
+        }
+        $areas = $queryAreas->orderBy('name', 'ASC')
+            ->get();
+
+        $facilityLocomotiveQuery = FacilityLocomotive::with(['area']);
+        $facilityTrainsQuery = FacilityTrain::with(['area'])->where('engine_type', '=', 'train');
+        $facilityDieselTrainsQuery = FacilityTrain::with(['area'])->where('engine_type', '=', 'diesel-train');
+        $facilityElectricTrainsQuery = FacilityTrain::with(['area'])->where('engine_type', '=', 'electric-train');
+        $facilityWagonsQuery = FacilityWagon::with(['area']);
+        $facilitySpecialEquipmentsQuery = FacilitySpecialEquipment::with(['area']);
+        if ($area !== '') {
+            $facilityLocomotiveQuery->where('area_id', '=', $area);
+            $facilityTrainsQuery->where('area_id', '=', $area);
+            $facilityDieselTrainsQuery->where('area_id', '=', $area);
+            $facilityElectricTrainsQuery->where('area_id', '=', $area);
+            $facilityWagonsQuery->where('area_id', '=', $area);
+            $facilitySpecialEquipmentsQuery->where('area_id', '=', $area);
+        }
+        $facilityLocomotives = $facilityLocomotiveQuery->get()->append(['expired_in']);
+        $facilityTrains = $facilityTrainsQuery->get()->append(['expired_in']);
+        $facilityDieselTrains = $facilityDieselTrainsQuery->get()->append(['expired_in']);
+        $facilityElectricTrains = $facilityElectricTrainsQuery->get()->append(['expired_in']);
+        $facilityWagons = $facilityWagonsQuery->get()->append(['expired_in']);
+        $facilitySpecialEquipments = $facilitySpecialEquipmentsQuery->get()->append(['expired_in']);
+
+        $facilitiesData = [
+            'locomotives' => $facilityLocomotives,
+            'trains' => $facilityTrains,
+            'diesel_trains' => $facilityDieselTrains,
+            'electric_trains' => $facilityElectricTrains,
+            'wagons' => $facilityWagons,
+            'special_equipments' => $facilitySpecialEquipments
+        ];
         return Excel::download(
-            new \App\Exports\FacilityCertification\FacilityLocomotive($data),
+            new \App\Exports\FacilityCertification\FacilityLocomotiveData($data, $areas, $facilitiesData),
             $fileName
         );
     }
