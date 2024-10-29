@@ -8,7 +8,9 @@ use App\Helper\CustomController;
 use App\Helper\Formula;
 use App\Models\Area;
 use App\Models\FacilityElectricTrain;
+use App\Models\FacilityLocomotive;
 use App\Models\FacilitySpecialEquipment;
+use App\Models\FacilityTrain;
 use App\Models\FacilityWagon;
 use App\Models\SpecialEquipmentType;
 use App\Models\TrainType;
@@ -222,8 +224,45 @@ class FacilitySpecialEquipmentController extends CustomController
     {
         $fileName = 'sertifikasi_peralatan_khusus_' . date('YmdHis') . '.xlsx';
         $data = $this->generateData();
+        $area = $this->request->query->get('area');
+        $queryAreas = Area::with(['service_units']);
+        if ($area !== '') {
+            $queryAreas->where('id', '=', $area);
+        }
+        $areas = $queryAreas->orderBy('name', 'ASC')
+            ->get();
+
+        $facilityLocomotiveQuery = FacilityLocomotive::with(['area']);
+        $facilityTrainsQuery = FacilityTrain::with(['area'])->where('engine_type', '=', 'train');
+        $facilityDieselTrainsQuery = FacilityTrain::with(['area'])->where('engine_type', '=', 'diesel-train');
+        $facilityElectricTrainsQuery = FacilityTrain::with(['area'])->where('engine_type', '=', 'electric-train');
+        $facilityWagonsQuery = FacilityWagon::with(['area']);
+        $facilitySpecialEquipmentsQuery = FacilitySpecialEquipment::with(['area']);
+        if ($area !== '') {
+            $facilityLocomotiveQuery->where('area_id', '=', $area);
+            $facilityTrainsQuery->where('area_id', '=', $area);
+            $facilityDieselTrainsQuery->where('area_id', '=', $area);
+            $facilityElectricTrainsQuery->where('area_id', '=', $area);
+            $facilityWagonsQuery->where('area_id', '=', $area);
+            $facilitySpecialEquipmentsQuery->where('area_id', '=', $area);
+        }
+        $facilityLocomotives = $facilityLocomotiveQuery->get()->append(['expired_in']);
+        $facilityTrains = $facilityTrainsQuery->get()->append(['expired_in']);
+        $facilityDieselTrains = $facilityDieselTrainsQuery->get()->append(['expired_in']);
+        $facilityElectricTrains = $facilityElectricTrainsQuery->get()->append(['expired_in']);
+        $facilityWagons = $facilityWagonsQuery->get()->append(['expired_in']);
+        $facilitySpecialEquipments = $facilitySpecialEquipmentsQuery->get()->append(['expired_in']);
+
+        $facilitiesData = [
+            'locomotives' => $facilityLocomotives,
+            'trains' => $facilityTrains,
+            'diesel_trains' => $facilityDieselTrains,
+            'electric_trains' => $facilityElectricTrains,
+            'wagons' => $facilityWagons,
+            'special_equipments' => $facilitySpecialEquipments
+        ];
         return Excel::download(
-            new \App\Exports\FacilityCertification\FacilitySpecialEquipment($data),
+            new \App\Exports\FacilityCertification\FacilitySpecialEquipmentData($data, $areas, $facilitiesData),
             $fileName
         );
     }

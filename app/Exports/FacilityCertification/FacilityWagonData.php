@@ -6,9 +6,8 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class FacilityLocomotiveData implements WithMultipleSheets
+class FacilityWagonData implements WithMultipleSheets
 {
-
     use Exportable;
     private $data;
     private $areas;
@@ -20,6 +19,7 @@ class FacilityLocomotiveData implements WithMultipleSheets
         $this->areas = $areas;
         $this->facilitiesData = $facilitiesData;
     }
+
     /**
      * @inheritDoc
      */
@@ -28,8 +28,7 @@ class FacilityLocomotiveData implements WithMultipleSheets
         // TODO: Implement sheets() method.
         return  [
             new FacilitySummary($this->areas, $this->facilitiesData),
-            new FacilityLocomotive($this->data),
+            new FacilityWagon($this->data),
         ];
-
     }
 }
